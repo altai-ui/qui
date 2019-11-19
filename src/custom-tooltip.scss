@@ -1,0 +1,78 @@
+.chart-js-tooltip {
+  position: absolute;
+  z-index: 3;
+  transition: opacity 0.5s;
+  pointer-events: none;
+
+  .tooltip-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 242px;
+    padding: 8px 16px 10px;
+    background-color: var(--color-white);
+    box-shadow: 0 0 8px 0 rgba(151, 151, 151, 0.5);
+  }
+
+  .tooltip-wrapper-title {
+    margin: 0 0 4px;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-dark-gray);
+  }
+
+  .tooltip-wrapper-triangle {
+    position: absolute;
+    top: calc(100% - 8px);
+    left: 50%;
+    z-index: 2;
+    width: 16px;
+    height: 16px;
+    background-color: var(--color-white);
+    box-shadow: 0 0 8px 0 rgba(151, 151, 151, 0.5);
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  .tooltip-wrapper-value {
+    margin: 0 0 4px;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-black);
+  }
+
+  .tooltip-wrapper-center-white {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    z-index: 3;
+    width: 4px;
+    height: 100%;
+    background-color: var(--color-white);
+    transform: translateX(-50%);
+    opacity: 0;
+  }
+
+  .tooltip-wrapper-rect-white {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    z-index: 3;
+    width: 30px;
+    height: 15px;
+    background-color: var(--color-white);
+    transform: translateX(-50%);
+  }
+
+  .tooltip-wrapper-inner {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .tooltip-wrapper-color {
+    width: 12px;
+    height: 4px;
+    margin-right: 8px;
+    transform: translateY(-2px);
+  }
+}

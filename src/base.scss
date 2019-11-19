@@ -1,0 +1,131 @@
+html,
+body {
+  height: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 768px;
+  margin: 0;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  color: var(--color-dark-silver);
+  background-color: var(--color-back-gray);
+}
+
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
+  overflow-x: hidden;
+
+  &__content {
+    display: block;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: auto;
+    width: 100%;
+  }
+  @media (max-width: 1024px) {
+    width: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+.input-required-wrapper {
+  position: relative;
+}
+
+.page-wrap {
+  .page-wrap__top {
+    padding-top: var(--page-wrap-padding);
+    padding-bottom: calc(var(--page-wrap-padding) * 1.5);
+  }
+
+  .page-wrap__top-prev {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    color: var(--color-dark-silver);
+  }
+
+  .page-wrap__top-btn {
+    a {
+      display: block;
+      color: inherit;
+    }
+  }
+
+  .page-wrap__title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 500;
+  }
+
+  .page-wrap__content {
+    padding-bottom: var(--page-wrap-padding);
+  }
+
+  .page-wrap__tabs {
+    margin-bottom: 30px;
+  }
+}
+
+.tab-list {
+  position: relative;
+
+  .tabs__items {
+    width: 100%;
+
+    .tabs__item {
+      justify-content: center;
+      width: 272px;
+      text-align: center;
+
+      .breath-r {
+        margin-right: 0;
+        padding: 10px 16px;
+      }
+    }
+  }
+}
+
+.input-star {
+  position: absolute;
+  top: -19px;
+  left: -19px;
+}
+
+button {
+  cursor: pointer;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+@-moz-document url-prefix() {
+  input[type='number'] {
+    appearance: textfield;
+  }
+}
+
+body .text-error {
+  color: var(--color-reddish);
+}

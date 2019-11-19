@@ -1,0 +1,76 @@
+@import 'mixins/mixins';
+@import 'common/var';
+@import './popper';
+
+@include b(popover) {
+  position: absolute;
+  z-index: $--index-popper;
+  min-width: 150px;
+
+  // custom style
+  max-width: 295px;
+  margin-top: -32px;
+  padding: $--popover-padding;
+  font-size: $--popover-font-size;
+  line-height: 1.4;
+  text-align: left;
+  color: $--color-text-regular;
+  background: $--popover-fill;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  outline: none;
+  box-shadow: $--box-shadow-light;
+  transform: translateX(-23px) translateY(48%);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: 10px;
+    z-index: 1;
+    width: 16px;
+    height: 16px;
+    background-image: url('~@/assets/icons/icon-question/hint-hover.svg');
+    background-repeat: no-repeat;
+  }
+  // custom style end
+
+  @include m(plain) {
+    padding: $--popover-padding-large;
+  }
+
+  @include e(title) {
+    margin-bottom: 12px;
+    font-size: $--popover-title-font-size;
+    line-height: 1;
+    color: $--popover-title-color;
+  }
+
+  @include e(reference) {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin: 0 16px -3px;
+    vertical-align: text-top;
+    background-image: url('~@/assets/icons/icon-question/hint.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    outline: none;
+    cursor: pointer;
+    user-select: none;
+
+    &:focus:not(.focusing),
+    &:focus:hover {
+      outline-width: 0;
+    }
+
+    &:hover {
+      background-image: url('~@/assets/icons/icon-question/hint-hover.svg');
+    }
+  }
+
+  &:focus:active,
+  &:focus {
+    outline-width: 0;
+  }
+}

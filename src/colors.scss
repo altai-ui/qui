@@ -1,0 +1,37 @@
+@import './theme/common/var';
+
+:root {
+  // base color
+  --color-white: #{$--color-white};
+  --color-black: #{$--color-black};
+  --warm-grey-color: #{$--color-info};
+
+  // style guide colors
+  --color-dark-gray: #979797;
+  --color-medium-gray: #cdcdcd;
+  --color-light-gray: #e6e6e6;
+  --color-pale-gray: #ececec;
+  --color-back-gray: #f3f3f3;
+  --color-white-gray: #fafafa;
+  --color-dark-silver: #{$--dark-silver};
+  --color-silver: #{$--color-silver};
+  --color-greenish: #{$--color-success};
+  --color-pale-green: #92cbaf;
+  --color-mint: #{$--color-mint};
+  --color-slate-10: rgba(72, 93, 116, 0.1);
+  --color-dark-blue: #0f569d;
+  --color-water-blue: #{$--color-primary};
+  --color-sky-blue: #6eb7ff;
+  --color-water-blue-50: rgba(25, 118, 210, 0.5);
+  --color-water-blue-15: rgba(25, 118, 210, 0.15);
+  --color-very-light-blue: #f3f9ff;
+  --color-reddish: #{$--color-danger};
+  --color-dull-yellow: #{$--color-warning};
+  --color-seafoam-blue: #56c2be;
+  --color-sea-blue: #076598;
+  --color-dusk-blue: #2c669f;
+  --color-clear-day: #effff7;
+  --color-indochine: #c66300;
+  --color-flush-orange: #ff8103;
+  --color-dusty-pink: #e07785;
+}

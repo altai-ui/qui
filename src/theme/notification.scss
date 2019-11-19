@@ -1,0 +1,99 @@
+@import 'mixins/mixins';
+@import 'common/var';
+
+@include b(notification) {
+  position: fixed;
+  display: flex;
+  box-sizing: border-box;
+  width: $--notification-width;
+  padding: $--notification-padding;
+  overflow: hidden;
+  background-color: $--color-white;
+  border: 1px solid $--notification-border-color;
+  border-radius: $--notification-radius;
+  box-shadow: $--notification-shadow;
+  transition: opacity 0.3s, transform 0.3s, left 0.3s, right 0.3s, top 0.4s,
+    bottom 0.3s;
+
+  &.right {
+    right: 16px;
+  }
+
+  &.left {
+    left: 16px;
+  }
+
+  @include e(group) {
+    margin-left: $--notification-group-margin;
+  }
+
+  @include e(title) {
+    margin: 0;
+    font-weight: 700;
+    font-size: $--notification-title-font-size;
+    color: $--notification-title-color;
+  }
+
+  @include e(content) {
+    margin: 6px 0 0 0;
+    font-size: $--notification-font-size;
+    line-height: 21px;
+    text-align: justify;
+    color: $--notification-color;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  @include e(icon) {
+    width: $--notification-icon-size;
+    height: $--notification-icon-size;
+    font-size: $--notification-icon-size;
+  }
+
+  @include e(closeBtn) {
+    position: absolute;
+    top: 18px;
+    right: 15px;
+    font-size: $--notification-close-font-size;
+    color: $--notification-close-color;
+    cursor: pointer;
+
+    &:hover {
+      color: $--notification-close-hover-color;
+    }
+  }
+
+  .el-icon-success {
+    color: $--notification-success-color;
+  }
+
+  .el-icon-error {
+    color: $--notification-danger-color;
+  }
+
+  .el-icon-info {
+    color: $--notification-info-color;
+  }
+
+  .el-icon-warning {
+    color: $--notification-warning-color;
+  }
+}
+
+.el-notification-fade-enter {
+  &.right {
+    right: 0;
+    transform: translateX(100%);
+  }
+
+  &.left {
+    left: 0;
+    transform: translateX(-100%);
+  }
+}
+
+.el-notification-fade-leave-active {
+  opacity: 0;
+}

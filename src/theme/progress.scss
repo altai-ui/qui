@@ -1,0 +1,130 @@
+@import 'mixins/mixins';
+@import 'mixins/utils';
+@import 'common/var';
+
+@include b(progress) {
+  position: relative;
+  line-height: 1;
+
+  @include e(text) {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 14px;
+    line-height: 1;
+    vertical-align: middle;
+    color: $--color-text-regular;
+
+    i {
+      display: block;
+      vertical-align: middle;
+    }
+  }
+
+  @include m(circle) {
+    display: inline-block;
+
+    .el-progress__text {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      margin: 0;
+      text-align: center;
+      transform: translate(0, -50%);
+
+      i {
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  @include m(without-text) {
+    .el-progress__text {
+      display: none;
+    }
+
+    .el-progress-bar {
+      display: block;
+      margin-right: 0;
+      padding-right: 0;
+    }
+  }
+
+  @include m(text-inside) {
+    .el-progress-bar {
+      margin-right: 0;
+      padding-right: 0;
+    }
+  }
+
+  @include when(success) {
+    .el-progress-bar__inner {
+      background-color: $--color-success;
+    }
+
+    .el-progress__text {
+      color: $--color-success;
+    }
+  }
+
+  @include when(exception) {
+    .el-progress-bar__inner {
+      background-color: $--color-danger;
+    }
+
+    .el-progress__text {
+      color: $--color-danger;
+    }
+  }
+}
+
+@include b(progress-bar) {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+  margin-right: -55px;
+  padding-right: 50px;
+  vertical-align: middle;
+
+  @include e(outer) {
+    position: relative;
+    height: 6px;
+    overflow: hidden;
+    vertical-align: middle;
+    background-color: $--border-color-lighter;
+    border-radius: 100px;
+  }
+  @include e(inner) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    line-height: 1;
+    text-align: right;
+    white-space: nowrap;
+    background-color: $--color-primary;
+    border-radius: 100px;
+    transition: width 0.6s ease;
+
+    @include utils-vertical-center;
+  }
+
+  @include e(innerText) {
+    display: inline-block;
+    margin: 0 5px;
+    font-size: 12px;
+    vertical-align: middle;
+    color: $--color-white;
+  }
+}
+
+@keyframes progress {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 32px 0;
+  }
+}
