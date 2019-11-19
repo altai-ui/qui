@@ -20,5 +20,5 @@ Import в Scss
 @import '~@mt/theme-city/src/base';
 @import '~@mt/theme-city/src/helpers';
 @import '~@mt/theme-city/src/custom-tooltip';
-@import '~@mt/theme-city/src/theme';
+@import '~@mt/theme-city/src/main';
 ```
