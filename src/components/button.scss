@@ -186,7 +186,7 @@
     );
   }
   @include m(medium) {
-    width: 176px; // custom
+    width: 176px; //custom
     @include button-size(
       $--button-medium-padding-vertical,
       $--button-medium-padding-horizontal,
@@ -206,11 +206,6 @@
     );
     @include when(circle) {
       padding: $--button-small-padding-vertical;
-    }
-    @include when(loading) {
-      .el-icon-loading {
-        top: 8px; // custom
-      }
     }
   }
   @include m(mini) {

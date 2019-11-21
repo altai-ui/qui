@@ -289,7 +289,7 @@
         width: 16px;
         height: 16px;
         background-color: transparent;
-        background-image: url('~@/assets/icons/drop-slected.svg');
+        background-image: url('#{$--icon-path}/drop-slected.svg');
         background-repeat: no-repeat;
         transform: translateY(-50%);
       }

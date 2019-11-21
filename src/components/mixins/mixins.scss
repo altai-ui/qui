@@ -207,7 +207,7 @@
 // custom
 @mixin lockedField($x: 12px, $y: center) {
   background-color: $--color-white;
-  background-image: url('/static/i/icons/locked-gray.svg');
+  background-image: url('#{$--icon-path}/locked-gray.svg');
   background-repeat: no-repeat;
   background-position: calc(100% - #{$x}) $y;
 }

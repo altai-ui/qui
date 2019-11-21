@@ -137,7 +137,7 @@
     box-sizing: border-box;
 
     // cut tag inside theirselves if width is not enough
-    max-width: 100%;
+    max-width: 80%;
     margin: 2px 0 2px 6px;
     background-color: lighten($--color-silver, 11%);
     border-color: transparent;

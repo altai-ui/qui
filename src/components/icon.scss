@@ -1,17 +1,11 @@
+@import 'common/var';
+
 @font-face {
   font-display: swap;
   font-style: normal;
   font-weight: 400;
   font-family: 'element-icons';
-  src: url('/fonts/element-icons.woff') format('woff'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-}
-
-@font-face {
-  font-style: normal;
-  font-weight: 400;
-  font-family: 'mtfont';
-  src: url('/fonts/mtfont.woff') format('woff'),
-    /* chrome, firefox */ url('/fonts/mtfont.ttf') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  src: url('#{$--font-path}/element-icons.woff') format('woff'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
 }
 
 [class^='el-icon-'],
@@ -30,40 +24,6 @@
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-[class^='el-icon-mt-'],
-[class*=' el-icon-mt-'] {
-  font-size: 28px;
-  font-family: 'mtfont' !important;
-}
-
-.el-icon-mt-add::before {
-  content: 'b';
-}
-
-.el-icon-mt-pencil::before {
-  content: 'a';
-}
-
-.el-icon-mt-copy::before {
-  content: 'c';
-}
-
-.el-icon-mt-play::before {
-  content: 'e';
-}
-
-.el-icon-mt-pause::before {
-  content: 'f';
-}
-
-.el-icon-mt-stop::before {
-  content: 'g';
-}
-
-.el-icon-mt-delete::before {
-  content: 'd';
 }
 
 .el-icon-info::before {
@@ -343,7 +303,7 @@
 }
 
 .el-icon-loading::before {
-  content: url('~@/assets/loader-classic.svg');
+  content: url('#{$--icon-path}/loader-classic.svg');
 }
 
 .el-icon-loading {

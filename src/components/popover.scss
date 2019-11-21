@@ -30,7 +30,7 @@
     z-index: 1;
     width: 16px;
     height: 16px;
-    background-image: url('~@/assets/icons/icon-question/hint-hover.svg');
+    background-image: url('#{$--icon-path}/icon-question/hint-hover.svg');
     background-repeat: no-repeat;
   }
   // custom style end
@@ -52,7 +52,7 @@
     height: 16px;
     margin: 0 16px -3px;
     vertical-align: text-top;
-    background-image: url('~@/assets/icons/icon-question/hint.svg');
+    background-image: url('#{$--icon-path}/icon-question/hint.svg');
     background-repeat: no-repeat;
     background-position: center;
     outline: none;
@@ -65,7 +65,7 @@
     }
 
     &:hover {
-      background-image: url('~@/assets/icons/icon-question/hint-hover.svg');
+      background-image: url('#{$--icon-path}/icon-question/hint-hover.svg');
     }
   }
 

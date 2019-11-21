@@ -35,6 +35,12 @@ body {
     flex-basis: auto;
     width: 100%;
   }
+
+  &_demo {
+    .notifications {
+      margin-top: 40px;
+    }
+  }
   @media (max-width: 1024px) {
     width: auto;
   }
@@ -104,14 +110,199 @@ body {
   }
 }
 
+.impers-modal {
+  width: 470px;
+  padding: 20px;
+  font-size: 12px;
+  text-align: center;
+
+  &__header {
+    margin: 0;
+  }
+
+  &__type {
+    margin: 38px 0 0 0;
+    font-weight: 700;
+    color: var(--warm-grey-color);
+  }
+
+  &__email {
+    margin: 0 0 20px 0;
+    color: var(--warm-grey-color);
+    border-bottom: 1px solid var(--color-pale-gray);
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 38px 0 0 0;
+  }
+}
+// imperson end
+
+.custom-modal {
+  width: 440px;
+  margin: 16px;
+
+  .custom-modal__info {
+    margin-top: 38px;
+  }
+
+  .custom-modal__id {
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--warm-grey-color);
+  }
+
+  .custom-modal__id-value {
+    margin-top: 2px;
+    padding-bottom: 2px;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--warm-grey-color);
+    border-bottom: 1px solid var(--light-grey);
+  }
+
+  .custom-modal__desc {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .custom-modal__buttons {
+    margin-top: 50px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 12px;
+    line-height: 12px;
+  }
+
+  a {
+    color: var(--header-bg-color);
+  }
+}
+
+.datepicker-block {
+  position: relative;
+}
+
 .input-star {
   position: absolute;
   top: -19px;
   left: -19px;
 }
 
+.notifications {
+  max-width: 632px;
+  margin-top: 0;
+}
+
+body .notify {
+  position: relative;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: var(--header-height);
+  margin: 0 0 5px;
+  padding: 16px 56px 16px 96px;
+
+  font-size: 14px;
+  line-height: 24px;
+
+  color: var(--color-white);
+  background-color: var(--color-dark-blue);
+  border-left: 5px solid var(--color-dark-blue);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 24px;
+    width: 32px;
+    height: 32px;
+    background-image: url('#{$--icon-path}/demo-icons/demo-warning.svg');
+    background-repeat: no-repeat;
+    transform: translateY(-50%);
+  }
+
+  .notification-content {
+    display: block;
+  }
+
+  a {
+    color: var(--color-white);
+    text-decoration: underline;
+  }
+
+  &.warn {
+    background-color: var(--color-dull-yellow);
+    border-left-color: var(--color-dull-yellow);
+  }
+
+  &.error {
+    background-color: var(--color-reddish);
+    border-left-color: var(--color-reddish);
+
+    &::before {
+      background-image: url('#{$--icon-path}/demo-icons/demo-error.svg');
+    }
+  }
+
+  &.success {
+    background-color: var(--color-greenish);
+    border-left-color: var(--color-greenish);
+
+    &::before {
+      background-image: url('#{$--icon-path}/demo-icons/demo-success.svg');
+    }
+  }
+}
+
 button {
   cursor: pointer;
+}
+
+.typeahead {
+  .form-control {
+    height: 32px;
+    font-size: 14px;
+    color: var(--color-black);
+    letter-spacing: 0.2px;
+
+    &:focus {
+      border-color: var(--color-water-blue);
+      box-shadow: none;
+    }
+  }
+
+  .list-group {
+    &.shadow {
+      box-shadow: none !important;
+    }
+  }
+
+  .list-group-item {
+    padding: 6px 12px;
+    font-size: 14px;
+    color: var(--color-dark-gray);
+    letter-spacing: 0.2px;
+    background-color: var(--color-white);
+    border: none;
+    border-bottom: 1px solid var(--color-white);
+    cursor: pointer;
+
+    strong {
+      font-weight: 400;
+      color: var(--color-black);
+    }
+
+    &:hover {
+      background-color: var(--color-white);
+    }
+  }
 }
 
 input[type='number']::-webkit-inner-spin-button,
@@ -124,6 +315,16 @@ input[type='number']::-webkit-outer-spin-button {
   input[type='number'] {
     appearance: textfield;
   }
+}
+
+.field-message-error {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 4px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-reddish);
+  letter-spacing: 0.2px;
 }
 
 body .text-error {
