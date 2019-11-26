@@ -75,17 +75,16 @@
 
   @include e(item) {
     margin: 0;
-    padding: 0 20px;
+    padding: 0 16px;
     list-style: none;
     font-size: $--font-size-base;
     line-height: 36px;
-    color: $--color-text-regular;
+    color: $--color-black;
     outline: none;
     cursor: pointer;
 
     &:not(.is-disabled):hover,
     &:focus {
-      color: $--dropdown-menuItem-hover-color;
       background-color: $--dropdown-menuItem-hover-fill;
     }
 

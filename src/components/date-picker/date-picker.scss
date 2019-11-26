@@ -17,6 +17,10 @@
     position: relative;
   }
 
+  &.hide-now .el-picker-panel__footer .el-button--text {
+    display: none;
+  }
+
   .el-picker-panel__content {
     width: 292px;
   }
