@@ -49,6 +49,18 @@
     url('/static/fonts/Robotobold.woff') format('woff');
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol {
+  margin-top: 0;
+}
+
 a,
 .link {
   color: var(--color-water-blue);
@@ -61,6 +73,7 @@ a,
 }
 
 h1 {
+  margin-top: 0;
   font-size: 24px;
 }
 
