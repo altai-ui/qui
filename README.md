@@ -3,10 +3,26 @@
 
 ## Использование
 
+В корне проекта необходимо создать файл .yarnrc или .npmrc и добавить туда запись:
+
+.yarnrc
+```
+"@mt:registry" "http://nexus.mt.ru:8081/repository/mt-npm/"
+```
+.npmrc
+```
+@mt:registry=http://nexus.mt.ru:8081/repository/mt-npm/
+```
+
 ### Установка пакета
 
 ```bash
-yarn --registry http://nexus.mt.ru:8081/repository/mt-npm add @mt/theme-city
+yarn add @mt/theme-city
+```
+ 
+Если при установке возникнет ошибка "integrity check failure", выполнить следующую команду
+```
+yarn --update-checksums
 ```
 
 ### Import в Scss
