@@ -1,0 +1,36 @@
+@import 'mixins/mixins';
+@import 'common/var';
+@import 'common/transition';
+
+@include b(collapse-item) {
+  @include e(header) {
+    display: flex;
+    font-weight: 400;
+    outline: none;
+    cursor: pointer;
+    @include e(arrow) {
+      margin: 0 8px 0 auto;
+      font-weight: 300;
+      transition: transform 0.3s;
+      @include when(active) {
+        transform: rotate(90deg);
+      }
+    }
+
+    &.focusing:focus:not(:hover) {
+      color: $--color-primary;
+    }
+  }
+
+  @include e(wrap) {
+    box-sizing: border-box;
+    overflow: hidden;
+    will-change: height;
+  }
+
+  @include e(content) {
+    font-size: $--collapse-content-size;
+    line-height: 1.769230769230769;
+    color: $--collapse-content-color;
+  }
+}

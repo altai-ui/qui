@@ -1,0 +1,47 @@
+@import '../common/var';
+
+@include b(month-table) {
+  margin: -1px;
+  border-collapse: collapse;
+  font-size: 12px;
+
+  td {
+    padding: 20px 3px;
+    text-align: center;
+    cursor: pointer;
+
+    &.today {
+      .cell {
+        font-weight: 700;
+        color: $--color-primary;
+      }
+    }
+
+    &.disabled .cell {
+      color: $--color-text-placeholder;
+      background-color: $--background-color-base;
+      cursor: not-allowed;
+
+      &:hover {
+        color: $--color-text-placeholder;
+      }
+    }
+
+    .cell {
+      display: block;
+      width: 48px;
+      height: 32px;
+      margin: 0 auto;
+      line-height: 32px;
+      color: $--datepicker-color;
+
+      &:hover {
+        color: $--datepicker-text-hover-color;
+      }
+    }
+
+    &.current:not(.disabled) .cell {
+      color: $--datepicker-active-color;
+    }
+  }
+}

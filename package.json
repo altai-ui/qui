@@ -1,0 +1,38 @@
+{
+  "name": "@mt/theme-city",
+  "version": "1.0.0",
+  "description": "MT City theme",
+  "author": "Akhmedov Samir",
+  "scripts": {
+    "storybook": "start-storybook -p 6006"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@mt/theme-city": "^1.0.0",
+    "element-ui": "^2.13.0",
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@storybook/addon-actions": "^5.2.8",
+    "@storybook/addon-centered": "^5.2.8",
+    "@storybook/addon-links": "^5.2.8",
+    "@storybook/addons": "^5.2.8",
+    "@storybook/vue": "^5.2.8",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
+    "babel-preset-vue": "^2.0.2",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-vue": "^6.0.1",
+    "node-sass": "^4.13.0",
+    "sass-loader": "^8.0.0",
+    "vue-loader": "^15.7.2",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  }
+}

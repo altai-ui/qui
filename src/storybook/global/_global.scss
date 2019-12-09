@@ -1,0 +1,26 @@
+.el-row {
+  margin-bottom: 20px;
+}
+
+.demo {
+  width: 800px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.block {
+  padding: 10px 0;
+  text-align: center;
+  flex: 1;
+}
+
+.demonstration {
+  display: block;
+  color: #8492a6;
+  font-size: 14px;
+  margin-bottom: 20px;
+}

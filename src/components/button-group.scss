@@ -1,0 +1,20 @@
+.el-button-group {
+  .el-button {
+    margin: 0;
+    color: var(--color-dark-silver);
+    background-color: var(--color-white);
+    border-color: var(--color-medium-gray);
+
+    &.is-active {
+      color: var(--color-white);
+      background-color: var(--color-water-blue);
+      border-color: var(--color-water-blue);
+      cursor: default;
+      opacity: 1;
+
+      + .el-button {
+        border-left-color: var(--color-water-blue);
+      }
+    }
+  }
+}

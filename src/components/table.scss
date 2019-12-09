@@ -1,0 +1,560 @@
+@import 'mixins/mixins';
+@import 'checkbox';
+@import 'tag';
+@import 'tooltip';
+@import 'common/var';
+
+@include b(table) {
+  position: relative;
+  flex: 1;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 14px;
+  color: var(--color-dark-silver);
+  background-color: $--color-white;
+
+  @include e(empty-block) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    min-height: 60px;
+    text-align: center;
+  }
+
+  @include e(empty-text) {
+    width: 50%;
+    // min-height doesn't work in IE10 and IE11 https://github.com/philipwalton/flexbugs#3-min-height-on-a-flex-container-wont-apply-to-its-flex-items
+    // set empty text line height up to contrainer min-height as workaround.
+    line-height: 60px;
+    color: $--color-text-secondary;
+  }
+
+  @include e(expand-column) {
+    .cell {
+      padding: 0;
+      text-align: center;
+    }
+  }
+
+  @include e(expand-icon) {
+    position: relative;
+    height: 20px;
+    font-size: 12px;
+    color: $--color-info;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+
+    @include m(expanded) {
+      transform: rotate(90deg);
+    }
+
+    > .el-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -5px;
+      margin-left: -5px;
+    }
+  }
+
+  @include e(expanded-cell) {
+    background-color: $--color-white;
+
+    &[class*='cell'] {
+      padding: 20px 50px;
+    }
+
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
+
+  @include m(fit) {
+    border-right: 0;
+    border-bottom: 0;
+
+    th.gutter,
+    td.gutter {
+      border-right-width: 1px;
+    }
+  }
+
+  @include m(scrollable-x) {
+    .el-table__body-wrapper {
+      overflow-x: auto;
+    }
+  }
+
+  @include m(scrollable-y) {
+    .el-table__body-wrapper {
+      overflow-y: auto;
+    }
+  }
+
+  thead {
+    font-weight: 500;
+    color: $--table-header-color;
+
+    &.is-group {
+      th {
+        background-color: $--background-color-base;
+      }
+    }
+  }
+
+  th,
+  td {
+    position: relative;
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 12px 0;
+    vertical-align: middle;
+    text-align: left;
+    text-overflow: ellipsis;
+
+    @include when(center) {
+      text-align: center;
+    }
+
+    @include when(right) {
+      text-align: right;
+    }
+
+    &.gutter {
+      width: 15px;
+      padding: 0;
+      border-right-width: 0;
+      border-bottom-width: 0;
+    }
+
+    &.is-hidden {
+      > * {
+        visibility: hidden;
+      }
+    }
+  }
+
+  @include m(medium) {
+    th,
+    td {
+      padding: 10px 0;
+    }
+  }
+
+  @include m(small) {
+    font-size: 12px;
+
+    th,
+    td {
+      padding: 8px 0;
+    }
+  }
+
+  @include m(mini) {
+    font-size: 12px;
+
+    th,
+    td {
+      padding: 6px 0;
+    }
+  }
+
+  tr {
+    background-color: $--color-white;
+
+    input[type='checkbox'] {
+      margin: 0;
+    }
+  }
+
+  th.is-leaf,
+  td {
+    border-bottom: $--table-border;
+  }
+
+  th.is-sortable {
+    cursor: pointer;
+  }
+
+  th {
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: $--table-header-background;
+    user-select: none;
+
+    div {
+      display: inline-block;
+      box-sizing: border-box;
+      overflow: hidden;
+      line-height: 40px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    > .cell {
+      position: relative;
+      display: inline-block;
+      box-sizing: border-box;
+      width: 100%;
+      vertical-align: middle;
+      text-overflow: ellipsis;
+      word-wrap: normal;
+
+      &.highlight {
+        color: $--color-primary;
+      }
+    }
+
+    &.required > div::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 5px;
+      vertical-align: middle;
+      background-color: $--color-danger;
+      border-radius: 50%;
+    }
+  }
+
+  td {
+    div {
+      box-sizing: border-box;
+    }
+
+    &.gutter {
+      width: 0;
+    }
+  }
+
+  .cell {
+    box-sizing: border-box;
+    padding-right: 10px;
+    padding-left: 10px;
+    overflow: hidden;
+    font-weight: 400;
+    line-height: 23px;
+    white-space: normal;
+    text-overflow: ellipsis;
+    word-break: normal;
+
+    &.el-tooltip {
+      min-width: 50px;
+      white-space: nowrap;
+    }
+  }
+
+  @include m((group, border)) {
+    border: $--table-border;
+
+    @include share-rule(border-pseudo) {
+      content: '';
+      position: absolute;
+      z-index: 1;
+      background-color: $--table-border-color;
+    }
+
+    &::after {
+      @include extend-rule(border-pseudo);
+      top: 0;
+      right: 0;
+      width: 1px;
+      height: 100%;
+    }
+  }
+
+  &::before {
+    @include extend-rule(border-pseudo);
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+  }
+
+  // table--border
+  @include m(border) {
+    border-right: none;
+    border-bottom: none;
+
+    &.el-loading-parent--relative {
+      border-color: transparent;
+    }
+
+    th,
+    td {
+      border-right: $--table-border;
+
+      &:first-child .cell {
+        padding-left: 10px;
+      }
+    }
+
+    th.gutter:last-of-type {
+      border-bottom: $--table-border;
+      border-bottom-width: 1px;
+    }
+
+    & th {
+      border-bottom: $--table-border;
+    }
+  }
+
+  @include m(hidden) {
+    visibility: hidden;
+  }
+
+  @include e((fixed, fixed-right)) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    box-shadow: $--table-fixed-box-shadow;
+
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 4;
+      width: 100%;
+      height: 1px;
+      background-color: $--border-color-lighter;
+    }
+  }
+
+  @include e(fixed-right-patch) {
+    position: absolute;
+    top: -1px;
+    right: 0;
+    background-color: $--color-white;
+    border-bottom: $--table-border;
+  }
+
+  @include e(fixed-right) {
+    top: 0;
+    right: 0;
+    left: auto;
+
+    .el-table__fixed-header-wrapper,
+    .el-table__fixed-body-wrapper,
+    .el-table__fixed-footer-wrapper {
+      right: 0;
+      left: auto;
+    }
+  }
+
+  @include e(fixed-header-wrapper) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+  }
+
+  @include e(fixed-footer-wrapper) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+
+    & tbody td {
+      color: $--table-text-color;
+      background-color: $--table-row-hover-background;
+      border-top: $--table-border;
+    }
+  }
+
+  @include e(fixed-body-wrapper) {
+    position: absolute;
+    top: 37px;
+    left: 0;
+    z-index: 3;
+    overflow: hidden;
+  }
+
+  @include e((header-wrapper, body-wrapper, footer-wrapper)) {
+    width: 100%;
+  }
+
+  @include e(footer-wrapper) {
+    margin-top: -1px;
+
+    td {
+      border-top: $--table-border;
+    }
+  }
+
+  @include e((header, body, footer)) {
+    border-collapse: separate;
+    table-layout: fixed;
+  }
+
+  @include e((header-wrapper, footer-wrapper)) {
+    overflow: hidden;
+
+    & tbody td {
+      color: $--table-text-color;
+      background-color: $--table-row-hover-background;
+    }
+  }
+
+  @include e(body-wrapper) {
+    position: relative;
+    overflow: hidden;
+
+    @include when(scrolling-none) {
+      ~ .el-table__fixed,
+      ~ .el-table__fixed-right {
+        box-shadow: none;
+      }
+    }
+
+    @include when(scrolling-left) {
+      ~ .el-table__fixed {
+        box-shadow: none;
+      }
+    }
+
+    @include when(scrolling-right) {
+      ~ .el-table__fixed-right {
+        box-shadow: none;
+      }
+    }
+
+    .el-table--border {
+      @include when(scrolling-right) {
+        ~ .el-table__fixed-right {
+          border-left: $--table-border;
+        }
+      }
+
+      @include when(scrolling-left) {
+        ~ .el-table__fixed {
+          border-right: $--table-border;
+        }
+      }
+    }
+  }
+
+  .caret-wrapper {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    width: 24px;
+    height: 34px;
+    overflow: initial;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+
+  .sort-caret {
+    position: absolute;
+    left: 7px;
+    width: 0;
+    height: 0;
+    border: solid 5px transparent;
+
+    &.ascending {
+      top: 5px;
+      border-bottom-color: $--color-text-placeholder;
+    }
+
+    &.descending {
+      bottom: 7px;
+      border-top-color: $--color-text-placeholder;
+    }
+  }
+
+  .ascending .sort-caret.ascending {
+    border-bottom-color: $--color-primary;
+  }
+
+  .descending .sort-caret.descending {
+    border-top-color: $--color-primary;
+  }
+
+  .hidden-columns {
+    position: absolute;
+    z-index: -1;
+    visibility: hidden;
+  }
+
+  @include m(striped) {
+    & .el-table__body {
+      & tr.el-table__row--striped {
+        td {
+          background-color: $--color-white;
+        }
+
+        &.current-row td {
+          background-color: $--table-current-row-background;
+        }
+      }
+    }
+  }
+
+  @include e(body) {
+    tr.hover-row {
+      &,
+      &.el-table__row--striped {
+        &,
+        &.current-row {
+          > td {
+            background-color: $--table-current-row-background;
+          }
+        }
+      }
+    }
+
+    tr.current-row > td {
+      background-color: $--table-current-row-background;
+    }
+  }
+
+  @include e(column-resize-proxy) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 200px;
+    z-index: 10;
+    width: 0;
+    border-left: $--table-border;
+  }
+
+  @include e(column-filter-trigger) {
+    display: inline-block;
+    line-height: 34px;
+    cursor: pointer;
+
+    & i {
+      font-size: 12px;
+      color: $--color-info;
+      transform: scale(0.75);
+    }
+  }
+
+  @include m(enable-row-transition) {
+    .el-table__body td {
+      transition: background-color 0.25s ease;
+    }
+  }
+
+  @include m(enable-row-hover) {
+    .el-table__body tr:hover > td {
+      background-color: $--table-row-hover-background;
+    }
+  }
+
+  @include m(fluid-height) {
+    .el-table__fixed,
+    .el-table__fixed-right {
+      bottom: 0;
+      overflow: hidden;
+    }
+  }
+}

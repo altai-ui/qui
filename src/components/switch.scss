@@ -1,0 +1,119 @@
+@import 'mixins/mixins';
+@import 'common/var';
+
+@include b(switch) {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: $--switch-height;
+  font-size: $--switch-font-size;
+  line-height: $--switch-height;
+  vertical-align: middle;
+  @include when(disabled) {
+    & .el-switch__core,
+    & .el-switch__label {
+      cursor: not-allowed;
+    }
+  }
+
+  @include e(label) {
+    display: inline-block;
+    height: $--switch-height;
+    font-weight: 500;
+    font-size: $--switch-font-size;
+    vertical-align: middle;
+    color: $--color-text-primary;
+    cursor: pointer;
+    transition: 0.2s;
+
+    @include when(active) {
+      color: $--color-primary;
+    }
+
+    @include m(left) {
+      margin-right: 10px;
+    }
+    @include m(right) {
+      margin-left: 10px;
+    }
+
+    & * {
+      display: inline-block;
+      font-size: $--switch-font-size;
+      line-height: 1;
+    }
+  }
+
+  @include e(input) {
+    position: absolute;
+    width: 0;
+    height: 0;
+    margin: 0;
+    opacity: 0;
+  }
+
+  @include e(core) {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    width: $--switch-width;
+    height: $--switch-height;
+    margin: 0;
+    vertical-align: middle;
+    background: $--switch-off-color;
+    border: 1px solid $--switch-off-color;
+    border-radius: $--switch-core-border-radius;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      width: $--switch-button-size;
+      height: $--switch-button-size;
+      background-color: $--color-white;
+      border-radius: $--border-radius-circle;
+      transition: all 0.3s;
+    }
+  }
+
+  @include when(checked) {
+    .el-switch__core {
+      background-color: $--switch-on-color;
+      border-color: $--switch-on-color;
+
+      &::after {
+        left: 100%;
+        margin-left: -$--switch-button-size - 1px;
+      }
+    }
+  }
+
+  @include when(disabled) {
+    opacity: 0.6;
+  }
+
+  @include m(wide) {
+    .el-switch__label {
+      &.el-switch__label--left {
+        span {
+          left: 10px;
+        }
+      }
+
+      &.el-switch__label--right {
+        span {
+          right: 10px;
+        }
+      }
+    }
+  }
+
+  & .label-fade-enter,
+  & .label-fade-leave-active {
+    opacity: 0;
+  }
+}
