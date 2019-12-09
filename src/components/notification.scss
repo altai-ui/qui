@@ -39,7 +39,7 @@
     border-left-color: var(--color-reddish);
 
     &::before {
-      background-image: url('~@mt/theme-city/src/components/icons/notify/error.svg');
+      background-image: url('#{$--icon-path}/notify/error.svg');
     }
   }
 
@@ -48,7 +48,7 @@
     border-left-color: var(--color-greenish);
 
     &::before {
-      background-image: url('~@mt/theme-city/src/components/icons/notify/success.svg');
+      background-image: url('#{$--icon-path}/notify/success.svg');
     }
   }
 
@@ -105,7 +105,7 @@
     width: 32px;
     height: 32px;
     font-size: 0;
-    background-image: url('~@mt/theme-city/src/components/icons/notify/warning.svg');
+    background-image: url('#{$--icon-path}/notify/warning.svg');
     background-repeat: no-repeat;
     transform: translateY(-50%);
   }
@@ -124,7 +124,7 @@
   }
 
   .el-icon-success {
-    background-image: url('~@mt/theme-city/src/components/icons/notify/success.svg');
+    background-image: url('#{$--icon-path}/notify/success.svg');
 
     & + .el-notification__group {
       background-color: var(--color-greenish);
@@ -136,7 +136,7 @@
   }
 
   .el-icon-error {
-    background-image: url('~@mt/theme-city/src/components/icons/notify/error.svg');
+    background-image: url('#{$--icon-path}/notify/error.svg');
 
     & + .el-notification__group {
       background-color: var(--color-reddish);

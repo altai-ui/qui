@@ -4,6 +4,7 @@
 
 ### Запуск песочницы
 ```
+yarn storybook
 npm run storybook
 ```
 
