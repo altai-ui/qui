@@ -2,7 +2,7 @@ import { configure } from '@storybook/vue'
 
 import Vue from 'vue'
 
-import '../src/storybook/global/_global.scss'
+import '../storybook/global/_global.scss'
 
 import ElementUI from 'element-ui'
 import lang from 'element-ui/lib/locale/lang/ru-RU'
@@ -81,4 +81,4 @@ import '../src/components/cascader-panel.scss'
 locale.use(lang)
 Vue.use(ElementUI)
 
-configure(require.context('../src', true, /\.stories\.js$/), module)
+configure(require.context('../storybook', true, /\.stories\.js$/), module)
