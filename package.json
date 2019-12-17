@@ -1,14 +1,18 @@
 {
-  "name": "@mt/theme-city",
-  "version": "1.0.0",
-  "description": "MT City theme",
-  "author": "Akhmedov Samir",
+  "name": "@qvant/design-system",
+  "version": "0.1.0",
+  "description": "Qvant design system",
+  "repository": "http://gitlab.mt-tech.ru/city/design-system.git",
+  "author": "Qvant",
   "scripts": {
     "storybook": "start-storybook -p 6006"
   },
+  "publishConfig": {
+    "registry": "http://nexus.mt.ru:8081/repository/qvant/"
+  },
   "license": "ISC",
   "dependencies": {
-    "@mt/theme-city": "^1.0.0",
+    "@qvant/design-system": "^1.0.0",
     "element-ui": "^2.13.0",
     "vue": "^2.6.10"
   },
