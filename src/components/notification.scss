@@ -4,56 +4,22 @@
 @include b(notification) {
   position: fixed;
   top: 0;
-
   display: flex;
   align-items: center;
-  min-height: var(--header-height);
   margin: 0 0 5px;
   padding: $--notification-padding;
   overflow: hidden;
   font-size: 14px;
   line-height: 24px;
-  color: var(--color-white);
-
+  color: #485d74;
+  background-color: #fff;
   border-radius: $--notification-radius;
   box-shadow: $--notification-shadow;
   transition: opacity 0.3s, transform 0.3s, left 0.3s, right 0.3s, top 0.4s,
     bottom 0.3s;
 
-  a {
-    color: var(--color-white);
-    text-decoration: underline;
-
-    &:hover {
-      text-decoration: none;
-    }
-  }
-
-  &.warn {
-    background-color: var(--color-dull-yellow);
-    border-left-color: var(--color-dull-yellow);
-  }
-
-  &.error {
-    background-color: var(--color-reddish);
-    border-left-color: var(--color-reddish);
-
-    &::before {
-      background-image: url('#{$--icon-path}/notify/error.svg');
-    }
-  }
-
-  &.success {
-    background-color: var(--color-greenish);
-    border-left-color: var(--color-greenish);
-
-    &::before {
-      background-image: url('#{$--icon-path}/notify/success.svg');
-    }
-  }
-
   &.right {
-    right: 0;
+    right: 16px;
   }
 
   &.left {
@@ -61,109 +27,76 @@
   }
 
   @include e(group) {
-    min-width: 380px;
-    max-width: 640px;
+    width: 440px;
     margin-left: $--notification-group-margin;
-    padding: 0 56px 0 96px;
+    padding: 18px 45px 18px 22px;
     font-size: 14px;
     line-height: 24px;
-    background-color: transparent;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: -1;
-      background-color: transparent;
-    }
+    background-color: #fff;
+    border-left: 5px solid transparent;
   }
 
   @include e(title) {
     margin: 0;
     font-weight: 700;
     font-size: $--notification-title-font-size;
-    color: $--notification-title-color;
+    color: inherit;
   }
 
   @include e(content) {
     font-size: $--notification-font-size;
-    text-align: justify;
-    color: $--notification-color;
+    line-height: 24px;
+    text-align: left;
+    color: inherit;
 
     p {
       margin: 0;
     }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
   }
 
   @include e(icon) {
-    position: absolute;
-    top: 50%;
-    left: 30px;
-    width: 32px;
-    height: 32px;
-    font-size: 0;
-    background-image: url('#{$--icon-path}/notify/warning.svg');
-    background-repeat: no-repeat;
-    transform: translateY(-50%);
+    display: none;
   }
 
   @include e(closeBtn) {
     position: absolute;
-    top: 18px;
-    right: 15px;
+    top: 10px;
+    right: 10px;
     font-size: $--notification-close-font-size;
-    color: $--notification-close-color;
+    color: var(--color-dark-gray);
     cursor: pointer;
-
-    &:hover {
-      color: $--notification-close-hover-color;
-    }
   }
 
   .el-icon-success {
-    background-image: url('#{$--icon-path}/notify/success.svg');
-
     & + .el-notification__group {
-      background-color: var(--color-greenish);
-
-      &::before {
-        background-color: var(--color-greenish);
-      }
+      border-left-color: #86c981;
     }
   }
 
   .el-icon-error {
-    background-image: url('#{$--icon-path}/notify/error.svg');
-
     & + .el-notification__group {
-      background-color: var(--color-reddish);
-
-      &::before {
-        background-color: var(--color-reddish);
-      }
+      border-left-color: #ea5970;
     }
   }
 
   .el-icon-info {
     & + .el-notification__group {
-      background-color: var(--color-dark-blue);
-
-      &::before {
-        background-color: var(--color-dark-blue);
-      }
+      border-left-color: #2e87ec;
     }
   }
 
   .el-icon-warning {
     & + .el-notification__group {
-      background-color: $--notification-warning-color;
-
-      &::before {
-        background-color: $--notification-warning-color;
-      }
+      border-left-color: #fdc122;
     }
   }
 }

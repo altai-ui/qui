@@ -336,9 +336,9 @@ $--message-danger-color: $--color-danger !default;
 /* Notification
 -------------------------- */
 $--notification-width: 356px !default;
-$--notification-padding: 16px 0 !default;
-$--notification-radius: 0 !default;
-$--notification-shadow: none !default;
+$--notification-padding: 0 !default;
+$--notification-radius: 6px !default;
+$--notification-shadow: 0 2px 26px 0 rgba(173, 173, 173, 0.49) !default;
 $--notification-border-color: $--border-color-lighter !default;
 $--notification-icon-size: 24px !default;
 $--notification-close-font-size: $--message-close-size !default;

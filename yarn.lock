@@ -798,7 +798,7 @@
 "@mt/theme-city@^1.0.0":
   version "1.0.0"
   resolved "http://nexus.mt.ru:8081/repository/mt-npm/@mt/theme-city/-/theme-city-1.0.0.tgz#5775d081c4eb1b3dddb26b48e89a00c797322ee1"
-  integrity sha512-PqY9C74lv86TZI0+OVOaK1n1Qkwr94KG32jDyVfmBBNdKojaxYF5B/T2z7NMwmRXA+YnkyTnKCCsb3OuM5HJ9A==
+  integrity "sha1-SSLX48374MglW79Wnraliai+988= sha512-cTcxk6HaVGQvVLtV8x8c9ElR5s1Zm7ERMC7OAz2ySN0JLPE3TXZF7FEz8tYJVznoT1F6QEHtTFV3kt5nCKooKg=="
   dependencies:
     "@mt/theme-city" "^1.0.0"
     element-ui "^2.13.0"
