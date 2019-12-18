@@ -8,8 +8,8 @@ import ElementUI from 'element-ui'
 import lang from 'element-ui/lib/locale/lang/ru-RU'
 import locale from 'element-ui/lib/locale'
 
-import '../src/main.scss'
-import '../src/components/index.scss'
+import '../src/fonts.scss';
+import '../src/all.scss';
 
 locale.use(lang)
 Vue.use(ElementUI)

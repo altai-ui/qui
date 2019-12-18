@@ -1,12 +1,5 @@
 @import 'common/var';
 
-@font-face {
-  font-display: swap;
-  font-style: normal;
-  font-weight: 400;
-  font-family: 'element-icons';
-  src: url('fonts/element-icons.woff') format('woff'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-}
 [class^='el-icon-'],
 [class*=' el-icon-'] {
   display: inline-block;

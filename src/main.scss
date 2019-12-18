@@ -1,7 +1,34 @@
 @import './vars.scss';
 @import './colors.scss';
-@import './base.scss';
 @import './helpers.scss';
 @import './normalize.scss';
 @import './bootstrap-template.scss';
 @import './animation.scss';
+
+@import 'components/common/var';
+@import 'components/common/typography';
+@import 'components/common/transition.scss';
+
+@import 'components/mixins/mixins';
+
+@import 'components/icon.scss';
+
+@include b(main) {
+  // IE11 supports the <main> element partially https://caniuse.com/#search=main
+  display: block;
+  flex: 1;
+  flex-basis: auto;
+  box-sizing: border-box;
+  padding: $--main-padding;
+  overflow: auto;
+}
+
+body {
+  margin: 0;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  color: var(--color-dark-silver);
+  background-color: var(--color-back-gray);
+}
