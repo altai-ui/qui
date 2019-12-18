@@ -795,15 +795,6 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@mt/theme-city@^1.0.0":
-  version "1.0.0"
-  resolved "http://nexus.mt.ru:8081/repository/mt-npm/@mt/theme-city/-/theme-city-1.0.0.tgz#5775d081c4eb1b3dddb26b48e89a00c797322ee1"
-  integrity "sha1-SSLX48374MglW79Wnraliai+988= sha512-cTcxk6HaVGQvVLtV8x8c9ElR5s1Zm7ERMC7OAz2ySN0JLPE3TXZF7FEz8tYJVznoT1F6QEHtTFV3kt5nCKooKg=="
-  dependencies:
-    "@mt/theme-city" "^1.0.0"
-    element-ui "^2.13.0"
-    vue "^2.6.10"
-
 "@nodelib/fs.stat@^1.1.2":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"

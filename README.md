@@ -1,112 +1,112 @@
-# theme-city
-> Стили MT_CITY 
+# design-system
+> inherited by:
+- City
+- Publisher
 
 
-### Запуск песочницы
+### run sandbox (run here)
 ```
 yarn storybook
 npm run storybook
 ```
 
-## Использование
-
-В корне своего проекта необходимо создать файл .yarnrc или .npmrc и добавить туда запись:
-
-.yarnrc
-```
-"@mt:registry" "http://nexus.mt.ru:8081/repository/mt-npm/"
-```
-.npmrc
-```
-@mt:registry=http://nexus.mt.ru:8081/repository/mt-npm/
-```
-
-### Установка пакета
+### install to project (run from project)
 
 ```bash
-yarn add @mt/theme-city
+yarn add @qvant/design-system
 ```
  
-Если при установке возникнет ошибка "integrity check failure", выполнить следующую команду
+if you get the error "integrity check failure", run it:
 ```
 yarn --update-checksums
 ```
 
-### Import в Scss
+Create .yarnrc or .npmrc in your project's root:
 
-Общие стили
-```scss
-@import '~@mt/theme-city/src/main.scss';
+.yarnrc
+```
+"@qvant:registry" "http://nexus.mt.ru:8081/repository/qvant/"
+```
+.npmrc
+```
+@qvant:registry=http://nexus.mt.ru:8081/repository/qvant/
 ```
 
-Стили компонентов
+### import into Scss
+
+main styles
 ```scss
-@import "~@mt/theme-city/src/components/base.scss";
-@import "~@mt/theme-city/src/components/pagination.scss";
-@import "~@mt/theme-city/src/components/dialog.scss";
-@import "~@mt/theme-city/src/components/autocomplete.scss";
-@import "~@mt/theme-city/src/components/dropdown.scss";
-@import "~@mt/theme-city/src/components/dropdown-menu.scss";
-@import "~@mt/theme-city/src/components/dropdown-item.scss";
-@import "~@mt/theme-city/src/components/menu.scss";
-@import "~@mt/theme-city/src/components/submenu.scss";
-@import "~@mt/theme-city/src/components/menu-item.scss";
-@import "~@mt/theme-city/src/components/menu-item-group.scss";
-@import "~@mt/theme-city/src/components/input.scss";
-@import "~@mt/theme-city/src/components/input-number.scss";
-@import "~@mt/theme-city/src/components/radio.scss";
-@import "~@mt/theme-city/src/components/radio-group.scss";
-@import "~@mt/theme-city/src/components/radio-button.scss";
-@import "~@mt/theme-city/src/components/checkbox.scss";
-@import "~@mt/theme-city/src/components/checkbox-button.scss";
-@import "~@mt/theme-city/src/components/checkbox-group.scss";
-@import "~@mt/theme-city/src/components/switch.scss";
-@import "~@mt/theme-city/src/components/select.scss";
-@import "~@mt/theme-city/src/components/button.scss";
-@import "~@mt/theme-city/src/components/button-group.scss";
-@import "~@mt/theme-city/src/components/table.scss";
-@import "~@mt/theme-city/src/components/table-column.scss";
-@import "~@mt/theme-city/src/components/date-picker.scss";
-@import "~@mt/theme-city/src/components/time-select.scss";
-@import "~@mt/theme-city/src/components/time-picker.scss";
-@import "~@mt/theme-city/src/components/popover.scss";
-@import "~@mt/theme-city/src/components/tooltip.scss";
-@import "~@mt/theme-city/src/components/message-box.scss";
-@import "~@mt/theme-city/src/components/breadcrumb.scss";
-@import "~@mt/theme-city/src/components/breadcrumb-item.scss";
-@import "~@mt/theme-city/src/components/form.scss";
-@import "~@mt/theme-city/src/components/form-item.scss";
-@import "~@mt/theme-city/src/components/tabs.scss";
-@import "~@mt/theme-city/src/components/tab-pane.scss";
-@import "~@mt/theme-city/src/components/tag.scss";
-@import "~@mt/theme-city/src/components/tree.scss";
-@import "~@mt/theme-city/src/components/alert.scss";
-@import "~@mt/theme-city/src/components/notification.scss";
-@import "~@mt/theme-city/src/components/slider.scss";
-@import "~@mt/theme-city/src/components/loading.scss";
-@import "~@mt/theme-city/src/components/row.scss";
-@import "~@mt/theme-city/src/components/col.scss";
-@import "~@mt/theme-city/src/components/upload.scss";
-@import "~@mt/theme-city/src/components/progress.scss";
-@import "~@mt/theme-city/src/components/spinner.scss";
-@import "~@mt/theme-city/src/components/message.scss";
-@import "~@mt/theme-city/src/components/badge.scss";
-@import "~@mt/theme-city/src/components/card.scss";
-@import "~@mt/theme-city/src/components/rate.scss";
-@import "~@mt/theme-city/src/components/steps.scss";
-@import "~@mt/theme-city/src/components/step.scss";
-@import "~@mt/theme-city/src/components/carousel.scss";
-@import "~@mt/theme-city/src/components/scrollbar.scss";
-@import "~@mt/theme-city/src/components/carousel-item.scss";
-@import "~@mt/theme-city/src/components/collapse.scss";
-@import "~@mt/theme-city/src/components/collapse-item.scss";
-@import "~@mt/theme-city/src/components/cascader.scss";
-@import "~@mt/theme-city/src/components/color-picker.scss";
-@import "~@mt/theme-city/src/components/transfer.scss";
-@import "~@mt/theme-city/src/components/container.scss";
-@import "~@mt/theme-city/src/components/header.scss";
-@import "~@mt/theme-city/src/components/aside.scss";
-@import "~@mt/theme-city/src/components/main.scss";
-@import "~@mt/theme-city/src/components/footer.scss";
-@import "~@mt/theme-city/src/components/cascader-panel.scss";
+@import '~@qvant/design-system/src/main.scss';
+```
+
+components
+```scss
+@import "~@qvant/design-system/src/components/base.scss";
+@import "~@qvant/design-system/src/components/pagination.scss";
+@import "~@qvant/design-system/src/components/dialog.scss";
+@import "~@qvant/design-system/src/components/autocomplete.scss";
+@import "~@qvant/design-system/src/components/dropdown.scss";
+@import "~@qvant/design-system/src/components/dropdown-menu.scss";
+@import "~@qvant/design-system/src/components/dropdown-item.scss";
+@import "~@qvant/design-system/src/components/menu.scss";
+@import "~@qvant/design-system/src/components/submenu.scss";
+@import "~@qvant/design-system/src/components/menu-item.scss";
+@import "~@qvant/design-system/src/components/menu-item-group.scss";
+@import "~@qvant/design-system/src/components/input.scss";
+@import "~@qvant/design-system/src/components/input-number.scss";
+@import "~@qvant/design-system/src/components/radio.scss";
+@import "~@qvant/design-system/src/components/radio-group.scss";
+@import "~@qvant/design-system/src/components/radio-button.scss";
+@import "~@qvant/design-system/src/components/checkbox.scss";
+@import "~@qvant/design-system/src/components/checkbox-button.scss";
+@import "~@qvant/design-system/src/components/checkbox-group.scss";
+@import "~@qvant/design-system/src/components/switch.scss";
+@import "~@qvant/design-system/src/components/select.scss";
+@import "~@qvant/design-system/src/components/button.scss";
+@import "~@qvant/design-system/src/components/button-group.scss";
+@import "~@qvant/design-system/src/components/table.scss";
+@import "~@qvant/design-system/src/components/table-column.scss";
+@import "~@qvant/design-system/src/components/date-picker.scss";
+@import "~@qvant/design-system/src/components/time-select.scss";
+@import "~@qvant/design-system/src/components/time-picker.scss";
+@import "~@qvant/design-system/src/components/popover.scss";
+@import "~@qvant/design-system/src/components/tooltip.scss";
+@import "~@qvant/design-system/src/components/message-box.scss";
+@import "~@qvant/design-system/src/components/breadcrumb.scss";
+@import "~@qvant/design-system/src/components/breadcrumb-item.scss";
+@import "~@qvant/design-system/src/components/form.scss";
+@import "~@qvant/design-system/src/components/form-item.scss";
+@import "~@qvant/design-system/src/components/tabs.scss";
+@import "~@qvant/design-system/src/components/tab-pane.scss";
+@import "~@qvant/design-system/src/components/tag.scss";
+@import "~@qvant/design-system/src/components/tree.scss";
+@import "~@qvant/design-system/src/components/alert.scss";
+@import "~@qvant/design-system/src/components/notification.scss";
+@import "~@qvant/design-system/src/components/slider.scss";
+@import "~@qvant/design-system/src/components/loading.scss";
+@import "~@qvant/design-system/src/components/row.scss";
+@import "~@qvant/design-system/src/components/col.scss";
+@import "~@qvant/design-system/src/components/upload.scss";
+@import "~@qvant/design-system/src/components/progress.scss";
+@import "~@qvant/design-system/src/components/spinner.scss";
+@import "~@qvant/design-system/src/components/message.scss";
+@import "~@qvant/design-system/src/components/badge.scss";
+@import "~@qvant/design-system/src/components/card.scss";
+@import "~@qvant/design-system/src/components/rate.scss";
+@import "~@qvant/design-system/src/components/steps.scss";
+@import "~@qvant/design-system/src/components/step.scss";
+@import "~@qvant/design-system/src/components/carousel.scss";
+@import "~@qvant/design-system/src/components/scrollbar.scss";
+@import "~@qvant/design-system/src/components/carousel-item.scss";
+@import "~@qvant/design-system/src/components/collapse.scss";
+@import "~@qvant/design-system/src/components/collapse-item.scss";
+@import "~@qvant/design-system/src/components/cascader.scss";
+@import "~@qvant/design-system/src/components/color-picker.scss";
+@import "~@qvant/design-system/src/components/transfer.scss";
+@import "~@qvant/design-system/src/components/container.scss";
+@import "~@qvant/design-system/src/components/header.scss";
+@import "~@qvant/design-system/src/components/aside.scss";
+@import "~@qvant/design-system/src/components/main.scss";
+@import "~@qvant/design-system/src/components/footer.scss";
+@import "~@qvant/design-system/src/components/cascader-panel.scss";
 ```

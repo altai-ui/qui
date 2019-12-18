@@ -125,11 +125,6 @@
     position: relative;
     pointer-events: none;
 
-    .el-icon-loading {
-      position: absolute;
-      left: 10px;
-    }
-
     &::before {
       content: '';
       position: absolute;
