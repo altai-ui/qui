@@ -8,7 +8,6 @@ import ElementUI from 'element-ui'
 import lang from 'element-ui/lib/locale/lang/ru-RU'
 import locale from 'element-ui/lib/locale'
 
-import '../src/fonts.scss';
 import '../src/all.scss';
 
 locale.use(lang)
