@@ -4,7 +4,7 @@
   font-weight: 300;
   font-family: 'Roboto';
   src: local('Roboto Light'), local('Roboto-Light'),
-    url('fonts/Robotolight.woff') format('woff');
+    url('#{fonts-path}/Robotolight.woff') format('woff');
 }
 
 @font-face {
@@ -13,7 +13,7 @@
   font-weight: 400;
   font-family: 'Roboto';
   src: local('Roboto'), local('Roboto-Regular'),
-    url('fonts/Robotoext.woff') format('woff');
+    url('#{fonts-path}/Robotoext.woff') format('woff');
 }
 
 @font-face {
@@ -22,7 +22,7 @@
   font-weight: 400;
   font-family: 'Roboto';
   src: local('Roboto'), local('Roboto-Regular'),
-    url('fonts/Roboto.woff') format('woff');
+    url('#{fonts-path}/Roboto.woff') format('woff');
 }
 @font-face {
   font-display: swap;
@@ -30,7 +30,7 @@
   font-weight: 400;
   font-family: 'Roboto';
   src: local('Roboto Italic'), local('Roboto-Italic'),
-    url('fonts/Robotoitalic.woff') format('woff');
+    url('#{fonts-path}/Robotoitalic.woff') format('woff');
 }
 @font-face {
   font-display: swap;
@@ -38,7 +38,7 @@
   font-weight: 500;
   font-family: 'Roboto';
   src: local('Roboto Medium'), local('Roboto-Medium'),
-    url('fonts/Robotomedium.woff') format('woff');
+    url('#{fonts-path}/Robotomedium.woff') format('woff');
 }
 @font-face {
   font-display: swap;
@@ -46,7 +46,7 @@
   font-weight: 700;
   font-family: 'Roboto';
   src: local('Roboto Bold'), local('Roboto-Bold'),
-    url('fonts/Robotobold.woff') format('woff');
+    url('#{fonts-path}/Robotobold.woff') format('woff');
 }
 
 @font-face {
@@ -54,5 +54,5 @@
   font-style: normal;
   font-weight: 400;
   font-family: 'element-icons';
-  src: url('fonts/element-icons.woff') format('woff'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  src: url('#{fonts-path}/element-icons.woff') format('woff'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
 }

@@ -12,6 +12,7 @@
 @import 'components/mixins/mixins';
 
 @import 'components/icon.scss';
+@import 'components/fonts.scss';
 
 @include b(main) {
   // IE11 supports the <main> element partially https://caniuse.com/#search=main
