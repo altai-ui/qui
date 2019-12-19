@@ -1,5 +1,15 @@
 @import './main.scss';
 
+body {
+  margin: 0;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  color: var(--color-dark-silver);
+  background-color: var(--color-back-gray);
+}
+
 @import './components/pagination.scss';
 @import './components/dialog.scss';
 @import './components/autocomplete.scss';
