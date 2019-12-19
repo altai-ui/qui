@@ -41,7 +41,6 @@ main styles
 
 components
 ```scss
-@import "~@qvant/design-system/src/components/base.scss";
 @import "~@qvant/design-system/src/components/pagination.scss";
 @import "~@qvant/design-system/src/components/dialog.scss";
 @import "~@qvant/design-system/src/components/autocomplete.scss";
