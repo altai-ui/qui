@@ -6,6 +6,6 @@ RUN yarn install --update-checksums && yarn build-storybook
 FROM nginx:alpine
 EXPOSE 80
 
-COPY --from=build-stage /app/.out /usr/share/nginx/html
+COPY --from=build-stage /app/storybook-static /usr/share/nginx/html
 ADD nginx.conf /etc/nginx/nginx.conf
 CMD ["nginx", "-g", "daemon off;"]
