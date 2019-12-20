@@ -1,0 +1,29 @@
+stages:
+  - build-and-push
+  - deploy
+
+variables:
+  DOCKER_IMAGE_BASENAME: harbor.vmet.ro/city/design-system
+  DOCKER_IMAGE: $DOCKER_IMAGE_BASENAME:$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID
+
+build-and-push:
+  stage: build-and-push
+  script:
+  - echo "$HARBOR_PASSWORD" | docker login -u "$HARBOR_USER" --password-stdin harbor.vmet.ro
+  - docker build -t $DOCKER_IMAGE .
+  - docker push $DOCKER_IMAGE
+
+
+deploy:
+  stage: deploy
+  image: harbor.vmet.ro/devops/deployer:latest
+  script:
+  - git clone http://gitlab-ci-token:$CI_JOB_TOKEN@gitlab.mt-tech.ru/gitlab/devops.git
+  - PROJECT_NAME_SANITIZED=$(echo ${CI_PROJECT_NAME} | tr '_' '-')
+  - |
+    helm upgrade --install --force \
+      --set app.image.tag=${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID} \
+      --set ingress.host=${CI_COMMIT_REF_SLUG} \
+      --namespace=${PROJECT_NAME_SANITIZED}-${CI_COMMIT_REF_SLUG}  \
+      --kubeconfig devops/deploy/configs/kubernetes-dev-admin.conf \
+      ${PROJECT_NAME_SANITIZED}-${CI_COMMIT_REF_SLUG} ./k8s
