@@ -5,7 +5,8 @@
   "repository": "http://gitlab.mt-tech.ru/city/design-system.git",
   "author": "Qvant",
   "scripts": {
-    "storybook": "start-storybook -p 6006"
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook -c .storybook -o .out"
   },
   "publishConfig": {
     "registry": "http://nexus.mt.ru:8081/repository/qvant/"
