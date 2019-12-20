@@ -1,7 +1,7 @@
 FROM node:12.8.1-alpine as build-stage
 WORKDIR /app
 COPY . .
-RUN yarn install &&  yarn --update-checksums && yarn build-storybook
+RUN yarn install  --update-checksums && yarn build-storybook
 
 FROM nginx:alpine
 EXPOSE 80
