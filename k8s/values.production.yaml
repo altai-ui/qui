@@ -1,0 +1,7 @@
+replicaCount: 1
+
+ingress:
+  domain: design-system.wi-fi.ru
+  subDomain: ""
+  host: ""
+

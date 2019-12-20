@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "k8s.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}-app
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}-app
+        image: {{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}
+        envFrom:
+          - secretRef:
+              name: {{ .Chart.Name }}
+        ports:
+        - name: appport
+          containerPort: {{ .Values.app.port }}
