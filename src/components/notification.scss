@@ -1,118 +1,174 @@
 @import 'mixins/mixins';
 @import 'common/var';
+@import 'button';
+@import './popper';
 
-@include b(notification) {
-  position: fixed;
-  top: 0;
-  display: flex;
-  align-items: center;
-  margin: 0 0 5px;
-  padding: $--notification-padding;
-  overflow: hidden;
-  font-size: 14px;
-  line-height: 24px;
-  color: #485d74;
-  background-color: #fff;
-  border-radius: $--notification-radius;
-  box-shadow: $--notification-shadow;
-  transition: opacity 0.3s, transform 0.3s, left 0.3s, right 0.3s, top 0.4s,
-    bottom 0.3s;
+@include b(dropdown) {
+  position: relative;
+  display: inline-block;
+  font-size: $--font-size-base;
+  color: $--color-text-regular;
 
-  &.right {
-    right: 16px;
+  .el-button-group {
+    display: block;
+
+    .el-button {
+      float: none;
+    }
   }
 
-  &.left {
-    left: 16px;
-  }
+  & .el-dropdown__caret-button {
+    position: relative;
+    padding-right: 5px;
+    padding-left: 5px;
+    border-left: none;
 
-  @include e(group) {
-    width: 440px;
-    margin-left: $--notification-group-margin;
-    padding: 18px 45px 18px 22px;
-    font-size: 14px;
-    line-height: 24px;
-    background-color: #fff;
-    border-left: 5px solid transparent;
-  }
+    &::before {
+      $gap: 5px;
 
-  @include e(title) {
-    margin: 0;
-    font-weight: 700;
-    font-size: $--notification-title-font-size;
-    color: inherit;
-  }
-
-  @include e(content) {
-    font-size: $--notification-font-size;
-    line-height: 24px;
-    text-align: left;
-    color: inherit;
-
-    p {
-      margin: 0;
+      content: '';
+      position: absolute;
+      top: $gap;
+      bottom: $gap;
+      left: 0;
+      display: block;
+      width: 1px;
+      background: mix(#fff, transparent, 50%);
     }
 
-    a {
-      color: inherit;
-      text-decoration: underline;
+    &:hover {
+      &::before {
+        top: 0;
+        bottom: 0;
+      }
+    }
 
-      &:hover {
-        text-decoration: none;
+    & .el-dropdown__icon {
+      padding-left: 0;
+    }
+  }
+  @include e(icon) {
+    margin: 0 3px;
+    font-size: 12px;
+  }
+
+  .el-dropdown-selfdefine {
+    // 自定义
+    &:focus:active,
+    &:focus:not(.focusing) {
+      outline-width: 0;
+    }
+  }
+}
+
+@include b(dropdown-menu) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  margin: 5px 0;
+  padding: 10px 0;
+  background-color: $--color-white;
+  border: 1px solid $--border-color-lighter;
+  border-radius: $--border-radius-base;
+  box-shadow: $--dropdown-menu-box-shadow;
+
+  @include e(item) {
+    margin: 0;
+    padding: 0 20px;
+    list-style: none;
+    font-size: $--font-size-base;
+    line-height: 36px;
+    color: $--color-text-regular;
+    outline: none;
+    cursor: pointer;
+
+    &:not(.is-disabled):hover,
+    &:focus {
+      color: $--dropdown-menuItem-hover-color;
+      background-color: $--dropdown-menuItem-hover-fill;
+    }
+
+    @include m(divided) {
+      $divided-offset: 6px;
+
+      position: relative;
+      margin-top: $divided-offset;
+      border-top: 1px solid $--border-color-lighter;
+
+      &::before {
+        content: '';
+        display: block;
+        height: $divided-offset;
+        margin: 0 -20px;
+        background-color: $--color-white;
+      }
+    }
+
+    @include when(disabled) {
+      color: $--font-color-disabled-base;
+      cursor: default;
+      pointer-events: none;
+    }
+  }
+
+  @include m(medium) {
+    padding: 6px 0;
+
+    @include e(item) {
+      padding: 0 17px;
+      font-size: 14px;
+      line-height: 30px;
+
+      &.el-dropdown-menu__item--divided {
+        $divided-offset: 6px;
+        margin-top: $divided-offset;
+
+        &::before {
+          height: $divided-offset;
+          margin: 0 -17px;
+        }
       }
     }
   }
 
-  @include e(icon) {
-    display: none;
-  }
+  @include m(small) {
+    padding: 6px 0;
 
-  @include e(closeBtn) {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: $--notification-close-font-size;
-    color: var(--color-dark-gray);
-    cursor: pointer;
-  }
+    @include e(item) {
+      padding: 0 15px;
+      font-size: 13px;
+      line-height: 27px;
 
-  .el-icon-success {
-    & + .el-notification__group {
-      border-left-color: #86c981;
+      &.el-dropdown-menu__item--divided {
+        $divided-offset: 4px;
+        margin-top: $divided-offset;
+
+        &::before {
+          height: $divided-offset;
+          margin: 0 -15px;
+        }
+      }
     }
   }
 
-  .el-icon-error {
-    & + .el-notification__group {
-      border-left-color: #ea5970;
+  @include m(mini) {
+    padding: 3px 0;
+
+    @include e(item) {
+      padding: 0 10px;
+      font-size: 12px;
+      line-height: 24px;
+
+      &.el-dropdown-menu__item--divided {
+        $divided-offset: 3px;
+        margin-top: $divided-offset;
+
+        &::before {
+          height: $divided-offset;
+          margin: 0 -10px;
+        }
+      }
     }
   }
-
-  .el-icon-info {
-    & + .el-notification__group {
-      border-left-color: #2e87ec;
-    }
-  }
-
-  .el-icon-warning {
-    & + .el-notification__group {
-      border-left-color: #fdc122;
-    }
-  }
-}
-
-.el-notification-fade-enter {
-  &.right {
-    right: 0;
-    transform: translateX(100%);
-  }
-
-  &.left {
-    left: 0;
-    transform: translateX(-100%);
-  }
-}
-
-.el-notification-fade-leave-active {
-  opacity: 0;
 }
