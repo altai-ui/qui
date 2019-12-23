@@ -1,0 +1,27 @@
+replicaCount: 1
+
+app:
+  image:
+    repository: harbor.vmet.ro/city/design-system
+    tag: latest
+    pullPolicy: Always
+  port: 80
+
+nginx:
+  port: 80
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  path: /
+  domain: k8s.develop.wi-fi.ru
+  subDomain: design-system
+  host: test

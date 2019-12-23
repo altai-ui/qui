@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ include "k8s.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "k8s.name" . }}
+    helm.sh/chart: {{ include "k8s.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  rules:
+  - host: {{ include "k8s.fqdn" . }}
+    http:
+      paths:
+      - path: {{ .Values.ingress.path }}
+        backend:
+          serviceName: {{ include "k8s.fullname" . }}
+          servicePort: {{ .Values.app.port }}
