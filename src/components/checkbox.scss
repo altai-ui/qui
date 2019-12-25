@@ -48,6 +48,17 @@
       .el-checkbox__inner {
         width: $--checkbox-bordered-medium-input-width;
         height: $--checkbox-bordered-medium-input-height;
+
+        &::after {
+          width: 3px;
+          height: 8px;
+          position: absolute;
+          left: 4px;
+          top: 0;
+          border: 1.5px solid #fff;
+          border-top: 0;
+          border-left: 0;
+        }
       }
     }
 
@@ -66,8 +77,14 @@
         height: $--checkbox-bordered-small-input-height;
 
         &::after {
-          width: 2px;
-          height: 6px;
+          width: 3px;
+          height: 6.5px;
+          position: absolute;
+          left: 3px;
+          top: 0;
+          border: 1.5px solid #fff;
+          border-top: 0;
+          border-left: 0;
         }
       }
     }
@@ -87,8 +104,14 @@
         height: $--checkbox-bordered-mini-input-height;
 
         &::after {
-          width: 2px;
-          height: 6px;
+          width: 3px;
+          height: 6.5px;
+          position: absolute;
+          left: 3px;
+          top: 0;
+          border: 1.5px solid #fff;
+          border-top: 0;
+          border-left: 0;
         }
       }
     }

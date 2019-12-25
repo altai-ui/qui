@@ -25,7 +25,7 @@
       </el-checkbox-group>
     </div>
     <div style="margin-top: 20px">
-      <el-checkbox-group v-model="checkboxGroup2" size="mini" disabled>
+      <el-checkbox-group v-model="checkboxGroup2" size="mini">
         <el-checkbox label="Option1" border></el-checkbox>
         <el-checkbox label="Option2" border></el-checkbox>
       </el-checkbox-group>
