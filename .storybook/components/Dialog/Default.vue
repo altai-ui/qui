@@ -1,6 +1,6 @@
 <template>
   <div class="demo">
-    <el-button type="text" @click="dialogVisible = true"
+    <el-button @click="dialogVisible = true"
       >click to open the Dialog</el-button
     >
 
@@ -39,3 +39,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.demo {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
