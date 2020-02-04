@@ -25,6 +25,7 @@
     cursor: pointer;
     transition: $--all-transition;
     appearance: none;
+    border-color: var(--color-medium-gray);
 
     @include button-size(
       $--button-padding-vertical,
