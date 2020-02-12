@@ -164,7 +164,7 @@
     background-color: $--radio-input-fill;
     border: $--radio-input-border;
     border-radius: $--radio-input-border-radius;
-    box-shadow: 0 0 1px $--color-info-lighten;
+    box-shadow: 0 0 1px #000;
     cursor: pointer;
 
     &:hover {

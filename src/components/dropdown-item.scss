@@ -1,0 +1,9 @@
+.el-select-dropdown__item {
+  span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space:nowrap;
+    width: 450px;
+    display: inline-block;
+  }
+}
