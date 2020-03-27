@@ -803,7 +803,7 @@
 "@qvant/design-system@0.1.1":
   version "0.1.1"
   resolved "http://nexus.mt.ru:8081/repository/qvant/@qvant/design-system/-/design-system-0.1.1.tgz#3fe705047be5f4c359fd2497a3d2ceec984b2ee3"
-  integrity "sha1-2xkhcZnbgXujW9Qnt8KDk5Ol7Co= sha512-Q5i3SC9XrAmT+O/Apq+NDuRRq2+aU+nrNo+GGd4BAcbxODj4eLAeNKx7xABVXMHW0dtaR4EnPDT0vxhyEGdQkw=="
+  integrity "sha1-zAMy84STPZrtgDLzLThFTjH9Too= sha512-SSxBmoR3tMtnix5cRMH/uGfz8Wf1xDoq6dYHmOLjuagRYTDzCCEaqOlBWRRcuSK75h3jza6o1GxgqWkS+MUmjg=="
   dependencies:
     "@qvant/design-system" "0.1.1"
     element-ui "^2.13.0"

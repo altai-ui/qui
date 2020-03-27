@@ -141,14 +141,11 @@
 
   @include when(required) {
     @include pseudo('not(.is-no-asterisk)') {
-      & > .el-form-item__label::before {
+      & > .el-form-item__label:before,
+      & .el-form-item__label-wrap > .el-form-item__label:before {
         content: '*';
-        position: absolute;
-        top: 1px;
-        left: -19px;
-        margin-right: 0;
-        font-size: 18px;
         color: $--color-danger;
+        margin-right: 4px;
       }
     }
   }
