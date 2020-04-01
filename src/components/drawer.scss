@@ -114,6 +114,7 @@ $directions: rtl, ltr, ttb, btt;
   flex-direction: column;
   box-sizing: border-box;
   overflow: hidden;
+  outline: none;
   background-color: var(--color-white);
   box-shadow: 0 8px 10px -5px rgba(0, 0, 0, 0.2),
     0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12);
@@ -134,12 +135,20 @@ $directions: rtl, ltr, ttb, btt;
   }
 
   &__header {
+    padding: 40px 24px 0 32px;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 24px;
+    color: var(--color-dark-silver);
+    text-transform: capitalize;
+
     display: flex;
     align-items: center;
     margin-bottom: 32px;
-    padding: $--dialog-padding-primary;
-    padding-bottom: 0;
-    color: rgb(114, 118, 123);
+
+    span {
+      outline: none;
+    }
 
     & > :first-child {
       flex: 1;
@@ -159,6 +168,11 @@ $directions: rtl, ltr, ttb, btt;
     background-color: transparent;
     border: none;
     cursor: pointer;
+    outline: none;
+
+    &:focus {
+      color: var(--color-sky-blue);
+    }
   }
 
   &__body {
