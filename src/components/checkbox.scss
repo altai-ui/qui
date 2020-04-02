@@ -22,6 +22,10 @@
     border: $--border-base;
     border-radius: $--border-radius-base;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     &.is-checked {
       border-color: $--color-primary;
     }
@@ -51,10 +55,8 @@
 
         &::after {
           width: 3px;
-          height: 8px;
+          height: 7px;
           position: absolute;
-          left: 4px;
-          top: 0;
           border: 1.5px solid #fff;
           border-top: 0;
           border-left: 0;
@@ -80,8 +82,6 @@
           width: 3px;
           height: 6.5px;
           position: absolute;
-          left: 3px;
-          top: 0;
           border: 1.5px solid #fff;
           border-top: 0;
           border-left: 0;
@@ -96,7 +96,6 @@
 
       .el-checkbox__label {
         font-size: $--button-mini-font-size;
-        line-height: 12px;
       }
 
       .el-checkbox__inner {
@@ -107,9 +106,7 @@
           width: 3px;
           height: 6.5px;
           position: absolute;
-          left: 3px;
-          top: 0;
-          border: 1.5px solid #fff;
+          border: 1px solid #fff;
           border-top: 0;
           border-left: 0;
         }
@@ -120,7 +117,7 @@
   @include e(input) {
     position: relative;
     display: inline-block;
-    line-height: 0;
+    line-height: 1;
     vertical-align: middle;
     white-space: nowrap;
     outline: none;
@@ -178,7 +175,9 @@
         border-color: $--checkbox-checked-input-border-color;
 
         &::after {
-          transform: rotate(45deg) scaleY(1);
+          top: 50%;
+          left: 50%;
+          transform: rotate(45deg) scaleY(1) translate(-105%, -25%);
         }
       }
 
@@ -199,13 +198,13 @@
         &::before {
           content: '';
           position: absolute;
-          top: 8px;
+          top: 50%;
           right: 0;
           left: 0;
           display: block;
-          height: 6px;
+          height: 25%;
           background-color: $--checkbox-checked-icon-color;
-          transform: scale(0.5);
+          transform: scale(0.5) translateY(-100%);
         }
 
         &::after {
@@ -224,8 +223,6 @@
     background-color: $--checkbox-input-fill;
     border: $--checkbox-input-border;
     border-radius: $--checkbox-input-border-radius;
-    transition: border-color 0.25s cubic-bezier(0.71, -0.46, 0.29, 1.46),
-      background-color 0.25s cubic-bezier(0.71, -0.46, 0.29, 1.46);
 
     &:hover {
       border-color: $--checkbox-input-border-color-hover;
@@ -244,7 +241,6 @@
       border-left: 0;
       transform: rotate(45deg) scaleY(0);
       transform-origin: center;
-      transition: transform 0.15s ease-in 0.05s;
     }
   }
 
@@ -291,7 +287,6 @@
     border-left: 0;
     outline: none;
     cursor: pointer;
-    transition: $--all-transition;
     appearance: none;
     @include utils-user-select(none);
 

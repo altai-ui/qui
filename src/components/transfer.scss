@@ -220,10 +220,18 @@
     height: 14px;
     border-radius: 3px;
 
+    &.is-indeterminate {
+      &::before {
+        height: 3px;
+      }
+    }
+
     &::after {
       left: 4px;
       width: 3px;
       height: 6px;
+      border-right-width: 1.5px;
+      border-bottom-width: 1.5px;
     }
   }
 }
