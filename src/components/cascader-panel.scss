@@ -114,23 +114,6 @@
 
   > .el-checkbox {
     margin-right: 0;
-
-    .el-checkbox__inner {
-      width: 20px;
-      height: 20px;
-
-      &::before {
-        top: 6px;
-      }
-
-      &::after {
-        top: 1px;
-        left: 5px;
-        width: 6px;
-        height: 10px;
-        border-width: 2px;
-      }
-    }
   }
 
   > .el-radio {
