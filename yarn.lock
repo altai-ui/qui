@@ -894,7 +894,7 @@
 "@qvant/design-system@0.1.1":
   version "0.1.1"
   resolved "http://nexus.mt.ru:8081/repository/qvant/@qvant/design-system/-/design-system-0.1.1.tgz#e64379ed9d9b4af943d6947f17dbd77c7eececab"
-  integrity "sha1-2eP4ZldLGrUc+7hgCLGGv0oqme4= sha512-WXZTkENN4XGfXl7/CUJP3r2oJ6fP020ZQWN838tiZ352KTI39QIKg5CXbsN85FMXuffH7/HhENH4U5OAQqeOdw=="
+  integrity "sha1-U8AhcJmthG/fQ9cIQ5SVrnPMX/E= sha512-dVqjvffT8lr+FffPTSpqnX40Ipqkz1sWsiOyFKZcaL0yZU7jHkZO1Do2cbD6TYf3+soIFr/kdzG2Peg/iBJAXg=="
   dependencies:
     "@qvant/design-system" "0.1.1"
     element-ui "^2.13.0"
