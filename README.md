@@ -1,7 +1,8 @@
 # design-system
 > inherited by:
 - City
-- Publisher
+- Publisher (SSP)
+- DSP
 
 
 ### run sandbox (run here)
