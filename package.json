@@ -1,8 +1,8 @@
 {
-  "name": "@qvant/design-system",
-  "version": "0.1.1",
-  "description": "Qvant design system",
-  "repository": "http://gitlab.mt-tech.ru/city/design-system.git",
+  "name": "@qvant/neumorphism-design-system",
+  "version": "0.1.0",
+  "description": "Qvant Neumorphism design system",
+  "repository": "http://gitlab.mt-tech.ru/city/neumorphism-design-system.git",
   "author": "Qvant",
   "scripts": {
     "storybook": "start-storybook -p 6006",
@@ -15,7 +15,7 @@
   "dependencies": {
     "element-ui": "^2.13.0",
     "vue": "^2.6.10",
-    "@qvant/design-system": "0.1.1"
+    "@qvant/neumorphism-design-system": "0.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
