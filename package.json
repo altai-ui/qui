@@ -15,7 +15,7 @@
   "dependencies": {
     "element-ui": "^2.13.0",
     "vue": "^2.6.10",
-    "@qvant/neumorphism-design-system": "0.1.1"
+    "@qvant/neumorphism-design-system": "0.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
