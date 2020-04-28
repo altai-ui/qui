@@ -1,0 +1,148 @@
+@import 'mixins/mixins';
+@import 'common/var';
+
+@include b(alert) {
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: $--alert-padding;
+  overflow: hidden;
+  background-color: $--color-white;
+  border-radius: $--alert-border-radius;
+  opacity: 1;
+  transition: opacity 0.2s;
+
+  @include when(light) {
+    .el-alert__closebtn {
+      color: $--color-text-placeholder;
+    }
+  }
+
+  @include when(dark) {
+    .el-alert__closebtn {
+      color: $--color-white;
+    }
+
+    .el-alert__description {
+      color: $--color-white;
+    }
+  }
+
+  @include when(center) {
+    justify-content: center;
+  }
+
+  @include m(success) {
+    &.is-light {
+      color: $--color-success;
+      background-color: $--alert-success-color;
+
+      .el-alert__description {
+        color: $--color-success;
+      }
+    }
+
+    &.is-dark {
+      color: $--color-white;
+      background-color: $--color-success;
+    }
+  }
+
+  @include m(info) {
+    &.is-light {
+      color: $--color-info;
+      background-color: $--alert-info-color;
+    }
+
+    &.is-dark {
+      color: $--color-white;
+      background-color: $--color-info;
+    }
+
+    .el-alert__description {
+      color: $--color-info;
+    }
+  }
+
+  @include m(warning) {
+    &.is-light {
+      color: $--color-warning;
+      background-color: $--alert-warning-color;
+
+      .el-alert__description {
+        color: $--color-warning;
+      }
+    }
+
+    &.is-dark {
+      color: $--color-white;
+      background-color: $--color-warning;
+    }
+  }
+
+  @include m(error) {
+    &.is-light {
+      color: $--color-danger;
+      background-color: $--alert-danger-color;
+
+      .el-alert__description {
+        color: $--color-danger;
+      }
+    }
+
+    &.is-dark {
+      color: $--color-white;
+      background-color: $--color-danger;
+    }
+  }
+
+  @include e(content) {
+    display: table-cell;
+    padding: 0 8px;
+  }
+
+  @include e(icon) {
+    width: $--alert-icon-size;
+    font-size: $--alert-icon-size;
+    @include when(big) {
+      width: $--alert-icon-large-size;
+      font-size: $--alert-icon-large-size;
+    }
+  }
+
+  @include e(title) {
+    font-size: $--alert-title-font-size;
+    line-height: 18px;
+    @include when(bold) {
+      font-weight: 700;
+    }
+  }
+
+  & .el-alert__description {
+    margin: 5px 0 0 0;
+    font-size: $--alert-description-font-size;
+  }
+
+  @include e(closebtn) {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: $--alert-close-font-size;
+    cursor: pointer;
+    opacity: 1;
+
+    @include when(customed) {
+      top: 9px;
+      font-style: normal;
+      font-size: $--alert-close-customed-font-size;
+    }
+  }
+}
+
+.el-alert-fade-enter,
+.el-alert-fade-leave-active {
+  opacity: 0;
+}

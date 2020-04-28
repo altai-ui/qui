@@ -2,32 +2,53 @@
   <div>
     <div>
       <el-checkbox-group v-model="checkboxGroup1">
-        <el-checkbox-button v-for="city in cities" :label="city" :key="city">{{
-          city
-        }}</el-checkbox-button>
-      </el-checkbox-group>
-    </div>
-    <div style="margin-top: 20px">
-      <el-checkbox-group v-model="checkboxGroup2" size="medium">
-        <el-checkbox-button v-for="city in cities" :label="city" :key="city">{{
-          city
-        }}</el-checkbox-button>
-      </el-checkbox-group>
-    </div>
-    <div style="margin-top: 20px">
-      <el-checkbox-group v-model="checkboxGroup3" size="small">
         <el-checkbox-button
           v-for="city in cities"
-          :label="city"
-          :disabled="city === 'Beijing'"
           :key="city"
-          >{{ city }}</el-checkbox-button
-        >
+          :label="city"
+        >{{
+          city
+        }}</el-checkbox-button>
       </el-checkbox-group>
     </div>
     <div style="margin-top: 20px">
-      <el-checkbox-group v-model="checkboxGroup4" size="mini" disabled>
-        <el-checkbox-button v-for="city in cities" :label="city" :key="city">{{
+      <el-checkbox-group
+        v-model="checkboxGroup2"
+        size="medium"
+      >
+        <el-checkbox-button
+          v-for="city in cities"
+          :key="city"
+          :label="city"
+        >{{
+          city
+        }}</el-checkbox-button>
+      </el-checkbox-group>
+    </div>
+    <div style="margin-top: 20px">
+      <el-checkbox-group
+        v-model="checkboxGroup3"
+        size="small"
+      >
+        <el-checkbox-button
+          v-for="city in cities"
+          :key="city"
+          :label="city"
+          :disabled="city === 'Beijing'"
+        >{{ city }}</el-checkbox-button>
+      </el-checkbox-group>
+    </div>
+    <div style="margin-top: 20px">
+      <el-checkbox-group
+        v-model="checkboxGroup4"
+        size="mini"
+        disabled
+      >
+        <el-checkbox-button
+          v-for="city in cities"
+          :key="city"
+          :label="city"
+        >{{
           city
         }}</el-checkbox-button>
       </el-checkbox-group>
@@ -36,7 +57,7 @@
 </template>
 
 <script>
-const cityOptions = ['Shanghai', 'Beijing', 'Guangzhou', 'Shenzhen']
+const cityOptions = ['Shanghai', 'Beijing', 'Guangzhou', 'Shenzhen'];
 
 export default {
   data() {
@@ -46,7 +67,7 @@ export default {
       checkboxGroup3: ['Shanghai'],
       checkboxGroup4: ['Shanghai'],
       cities: cityOptions
-    }
+    };
   }
-}
+};
 </script>

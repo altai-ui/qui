@@ -1,8 +1,8 @@
 <template>
   <div style="text-align: center">
     <el-transfer
-      style="text-align: left; display: inline-block"
       v-model="value"
+      style=" display: inline-block;text-align: left"
       filterable
       :left-default-checked="[2, 3]"
       :right-default-checked="[1]"
@@ -13,25 +13,27 @@
         noChecked: '${total}',
         hasChecked: '${checked}/${total}'
       }"
-      @change="handleChange"
       :data="data"
+      @change="handleChange"
     >
       <el-button
-        class="transfer-footer"
         slot="left-footer"
+        class="transfer-footer"
         size="small"
       >Operation</el-button>
       <el-button
-        class="transfer-footer"
         slot="right-footer"
+        class="transfer-footer"
         size="small"
       >Operation</el-button>
     </el-transfer>
-    <p style="text-align: center; margin: 50px 0 20px">Customize data items using scoped slot</p>
+    <p style=" margin: 50px 0 20px;text-align: center">
+      Customize data items using scoped slot
+    </p>
     <div style="text-align: center">
       <el-transfer
-        style="text-align: left; display: inline-block"
         v-model="value4"
+        style=" display: inline-block;text-align: left"
         filterable
         :left-default-checked="[2, 3]"
         :right-default-checked="[1]"
@@ -41,18 +43,20 @@
           noChecked: '${total}',
           hasChecked: '${checked}/${total}'
         }"
-        @change="handleChange"
         :data="data"
+        @change="handleChange"
       >
-        <span slot-scope="{ option }">{{ option.key }} - {{ option.label }}</span>
+        <span
+          slot-scope="{ option }"
+        >{{ option.key }} - {{ option.label }}</span>
         <el-button
-          class="transfer-footer"
           slot="left-footer"
+          class="transfer-footer"
           size="small"
         >Operation</el-button>
         <el-button
-          class="transfer-footer"
           slot="right-footer"
+          class="transfer-footer"
           size="small"
         >Operation</el-button>
       </el-transfer>
@@ -70,17 +74,17 @@
 <script>
 export default {
   data() {
-    const generateData = _ => {
-      const data = []
-      for (let i = 1; i <= 15; i++) {
+    const generateData = () => {
+      const data = [];
+      for (let i = 1; i <= 15; i += 1) {
         data.push({
           key: i,
           label: `Option ${i}`,
           disabled: i % 4 === 0
-        })
+        });
       }
-      return data
-    }
+      return data;
+    };
     return {
       data: generateData(),
       value: [1],
@@ -90,15 +94,15 @@ export default {
           <span>
             {option.key} - {option.label}
           </span>
-        )
+        );
       }
-    }
+    };
   },
 
   methods: {
     handleChange(value, direction, movedKeys) {
-      console.log(value, direction, movedKeys)
+      console.log(value, direction, movedKeys);
     }
   }
-}
+};
 </script>

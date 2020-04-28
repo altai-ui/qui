@@ -1,32 +1,32 @@
 <template>
   <div>
-    <div style="margin-top: 20px; display: flex">
+    <div style=" display: flex;margin-top: 20px">
       <el-checkbox
         v-model="checked1"
         label="Option1"
         border
-      ></el-checkbox>
+      />
       <el-checkbox
         v-model="checked2"
         label="Option2"
         border
-      ></el-checkbox>
+      />
     </div>
-    <div style="margin-top: 20px; display: flex">
+    <div style=" display: flex;margin-top: 20px">
       <el-checkbox
         v-model="checked3"
         label="Option1"
         border
         size="medium"
-      ></el-checkbox>
+      />
       <el-checkbox
         v-model="checked4"
         label="Option2"
         border
         size="medium"
-      ></el-checkbox>
+      />
     </div>
-    <div style="margin-top: 20px; display: flex">
+    <div style=" display: flex;margin-top: 20px">
       <el-checkbox-group
         v-model="checkboxGroup1"
         size="small"
@@ -35,15 +35,15 @@
         <el-checkbox
           label="Option1"
           border
-        ></el-checkbox>
+        />
         <el-checkbox
           label="Option2"
           border
           disabled
-        ></el-checkbox>
+        />
       </el-checkbox-group>
     </div>
-    <div style="margin-top: 20px; display: flex">
+    <div style=" display: flex;margin-top: 20px">
       <el-checkbox-group
         v-model="checkboxGroup2"
         size="mini"
@@ -52,11 +52,11 @@
         <el-checkbox
           label="Option1"
           border
-        ></el-checkbox>
+        />
         <el-checkbox
           label="Option2"
           border
-        ></el-checkbox>
+        />
       </el-checkbox-group>
     </div>
   </div>
@@ -72,7 +72,7 @@ export default {
       checked4: true,
       checkboxGroup1: [],
       checkboxGroup2: []
-    }
+    };
   }
-}
+};
 </script>

@@ -1,6 +1,10 @@
 <template>
   <div class="demo">
-    <el-table ref="filterTable" :data="tableData" style="width: 100%">
+    <el-table
+      ref="filterTable"
+      :data="tableData"
+      style="width: 100%"
+    >
       <el-table-column
         prop="date"
         label="Date"
@@ -14,11 +18,17 @@
           { text: '2016-05-04', value: '2016-05-04' }
         ]"
         :filter-method="filterHandler"
-      >
-      </el-table-column>
-      <el-table-column prop="name" label="Name" width="180"> </el-table-column>
-      <el-table-column prop="address" label="Address" :formatter="formatter">
-      </el-table-column>
+      />
+      <el-table-column
+        prop="name"
+        label="Name"
+        width="180"
+      />
+      <el-table-column
+        prop="address"
+        label="Address"
+        :formatter="formatter"
+      />
       <el-table-column
         prop="tag"
         label="Tag"
@@ -34,8 +44,7 @@
           <el-tag
             :type="scope.row.tag === 'Home' ? 'primary' : 'success'"
             disable-transitions
-            >{{ scope.row.tag }}</el-tag
-          >
+          >{{ scope.row.tag }}</el-tag>
         </template>
       </el-table-column>
     </el-table>
@@ -72,25 +81,25 @@ export default {
           tag: 'Office'
         }
       ]
-    }
+    };
   },
   methods: {
     resetDateFilter() {
-      this.$refs.filterTable.clearFilter('date')
+      this.$refs.filterTable.clearFilter('date');
     },
     clearFilter() {
-      this.$refs.filterTable.clearFilter()
+      this.$refs.filterTable.clearFilter();
     },
-    formatter(row, column) {
-      return row.address
+    formatter(row) {
+      return row.address;
     },
     filterTag(value, row) {
-      return row.tag === value
+      return row.tag === value;
     },
     filterHandler(value, row, column) {
-      const property = column['property']
-      return row[property] === value
+      const property = column.property;
+      return row[property] === value;
     }
   }
-}
+};
 </script>

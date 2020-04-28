@@ -2,7 +2,11 @@
   <div class="demo">
     <div class="block">
       <span class="demonstration">Display all tags (default)</span>
-      <el-cascader :options="options" :props="props" clearable></el-cascader>
+      <el-cascader
+        :options="options"
+        :props="props"
+        clearable
+      />
     </div>
     <div class="block">
       <span class="demonstration">Collapse tags</span>
@@ -11,7 +15,7 @@
         :props="props"
         collapse-tags
         clearable
-      ></el-cascader>
+      />
     </div>
   </div>
 </template>
@@ -104,7 +108,7 @@ export default {
           ]
         }
       ]
-    }
+    };
   }
-}
+};
 </script>

@@ -1,6 +1,10 @@
 <template>
   <div class="demo">
-    <el-popover placement="right" width="400" trigger="click">
+    <el-popover
+      placement="right"
+      width="400"
+      trigger="click"
+    >
       <el-table :data="gridData">
         <el-table-column
           width="150"
@@ -49,7 +53,7 @@ export default {
           address: 'New York City'
         }
       ]
-    }
+    };
   }
-}
+};
 </script>

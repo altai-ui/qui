@@ -1,22 +1,34 @@
 <template>
   <div class="demo">
     <el-row>
-      <el-button plain @click="open1">
+      <el-button
+        plain
+        @click="open1"
+      >
         Success
       </el-button>
     </el-row>
     <el-row>
-      <el-button plain @click="open2">
+      <el-button
+        plain
+        @click="open2"
+      >
         Warning
       </el-button>
     </el-row>
     <el-row>
-      <el-button plain @click="open3">
+      <el-button
+        plain
+        @click="open3"
+      >
         Info
       </el-button>
     </el-row>
     <el-row>
-      <el-button plain @click="open4">
+      <el-button
+        plain
+        @click="open4"
+      >
         Error
       </el-button>
     </el-row>
@@ -31,7 +43,7 @@ export default {
         title: 'Success',
         message: 'This is a success message',
         type: 'success'
-      })
+      });
     },
 
     open2() {
@@ -39,22 +51,22 @@ export default {
         title: 'Warning',
         message: 'This is a warning message',
         type: 'warning'
-      })
+      });
     },
 
     open3() {
       this.$notify.info({
         title: 'Info',
         message: 'This is an info message'
-      })
+      });
     },
 
     open4() {
       this.$notify.error({
         title: 'Error',
         message: 'This is an error message'
-      })
+      });
     }
   }
-}
+};
 </script>

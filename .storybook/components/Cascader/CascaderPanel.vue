@@ -1,6 +1,6 @@
 <template>
   <div class="demo">
-    <el-cascader-panel :options="options"></el-cascader-panel>
+    <el-cascader-panel :options="options" />
   </div>
 </template>
 
@@ -276,7 +276,7 @@ export default {
           ]
         }
       ]
-    }
+    };
   }
-}
+};
 </script>

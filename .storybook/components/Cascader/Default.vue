@@ -1,15 +1,15 @@
 <template>
   <div class="demo">
     <div class="block">
-      <span class="demonstration"
-        >Child options expand when clicked (default)</span
-      >
+      <span
+        class="demonstration"
+      >Child options expand when clicked (default)</span>
       <el-cascader
         v-model="value"
         :options="options"
-        @change="handleChange"
         clearable
-      ></el-cascader>
+        @change="handleChange"
+      />
     </div>
     <div class="block">
       <span class="demonstration">Child options expand when hovered</span>
@@ -17,9 +17,9 @@
         v-model="value"
         :options="options"
         :props="{ expandTrigger: 'hover' }"
-        @change="handleChange"
         clearable
-      ></el-cascader>
+        @change="handleChange"
+      />
     </div>
   </div>
 </template>
@@ -297,12 +297,12 @@ export default {
           ]
         }
       ]
-    }
+    };
   },
   methods: {
     handleChange(value) {
-      console.log(value)
+      console.log(value);
     }
   }
-}
+};
 </script>

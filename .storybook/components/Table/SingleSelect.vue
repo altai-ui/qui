@@ -4,15 +4,27 @@
       ref="singleTable"
       :data="tableData"
       highlight-current-row
-      @current-change="handleCurrentChange"
       style="width: 100%"
+      @current-change="handleCurrentChange"
     >
-      <el-table-column type="index" width="50"> </el-table-column>
-      <el-table-column property="date" label="Date" width="120">
-      </el-table-column>
-      <el-table-column property="name" label="Name" width="120">
-      </el-table-column>
-      <el-table-column property="address" label="Address"> </el-table-column>
+      <el-table-column
+        type="index"
+        width="50"
+      />
+      <el-table-column
+        property="date"
+        label="Date"
+        width="120"
+      />
+      <el-table-column
+        property="name"
+        label="Name"
+        width="120"
+      />
+      <el-table-column
+        property="address"
+        label="Address"
+      />
     </el-table>
     <div style="margin-top: 20px">
       <el-button @click="setCurrent(tableData[1])">Select second row</el-button>
@@ -48,16 +60,16 @@ export default {
         }
       ],
       currentRow: null
-    }
+    };
   },
 
   methods: {
     setCurrent(row) {
-      this.$refs.singleTable.setCurrentRow(row)
+      this.$refs.singleTable.setCurrentRow(row);
     },
     handleCurrentChange(val) {
-      this.currentRow = val
+      this.currentRow = val;
     }
   }
-}
+};
 </script>

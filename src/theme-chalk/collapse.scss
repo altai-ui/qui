@@ -1,0 +1,64 @@
+@import 'mixins/mixins';
+@import 'common/var';
+@import 'common/transition';
+
+@include b(collapse) {
+  border-top: 1px solid $--collapse-border-color;
+  border-bottom: 1px solid $--collapse-border-color;
+}
+@include b(collapse-item) {
+  @include when(disabled) {
+    .el-collapse-item__header {
+      color: $--font-color-disabled-base;
+      cursor: not-allowed;
+    }
+  }
+  @include e(header) {
+    display: flex;
+    align-items: center;
+    height: $--collapse-header-height;
+    font-weight: 500;
+    font-size: $--collapse-header-font-size;
+    line-height: $--collapse-header-height;
+    color: $--collapse-header-font-color;
+    background-color: $--collapse-header-background-color;
+    border-bottom: 1px solid $--collapse-border-color;
+    outline: none;
+    cursor: pointer;
+    transition: border-bottom-color 0.3s;
+    @include e(arrow) {
+      margin: 0 8px 0 auto;
+      font-weight: 300;
+      transition: transform 0.3s;
+      @include when(active) {
+        transform: rotate(90deg);
+      }
+    }
+
+    &.focusing:focus:not(:hover) {
+      color: $--color-primary;
+    }
+    @include when(active) {
+      border-bottom-color: transparent;
+    }
+  }
+
+  @include e(wrap) {
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: $--collapse-content-background-color;
+    border-bottom: 1px solid $--collapse-border-color;
+    will-change: height;
+  }
+
+  @include e(content) {
+    padding-bottom: 25px;
+    font-size: $--collapse-content-font-size;
+    line-height: 1.769230769230769;
+    color: $--collapse-content-font-color;
+  }
+
+  &:last-child {
+    margin-bottom: -1px;
+  }
+}

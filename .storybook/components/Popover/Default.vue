@@ -36,16 +36,17 @@
     </el-row>
     <el-row>
       <el-popover
+        v-model="visible"
         placement="bottom"
         title="Title"
         width="200"
         trigger="manual"
         content="this is content, this is content, this is content"
-        v-model="visible"
       >
-        <el-button slot="reference" @click="visible = !visible"
-          >Manual to activate</el-button
-        >
+        <el-button
+          slot="reference"
+          @click="visible = !visible"
+        >Manual to activate</el-button>
       </el-popover>
     </el-row>
   </div>
@@ -56,7 +57,7 @@ export default {
   data() {
     return {
       visible: false
-    }
+    };
   }
-}
+};
 </script>

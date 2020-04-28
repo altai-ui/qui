@@ -8,8 +8,7 @@
         end: '18:30'
       }"
       placeholder="Select time"
-    >
-    </el-time-select>
+    />
   </div>
 </template>
 
@@ -18,7 +17,7 @@ export default {
   data() {
     return {
       value: ''
-    }
+    };
   }
-}
+};
 </script>

@@ -1,19 +1,31 @@
 <template>
   <div>
     <el-row>
-      <el-input placeholder="Please Input" v-model="input1"> </el-input>
+      <el-input
+        v-model="input1"
+        placeholder="Please Input"
+      />
     </el-row>
     <el-row>
-      <el-input size="medium" placeholder="Please Input" v-model="input2">
-      </el-input>
+      <el-input
+        v-model="input2"
+        size="medium"
+        placeholder="Please Input"
+      />
     </el-row>
     <el-row>
-      <el-input size="small" placeholder="Please Input" v-model="input3">
-      </el-input>
+      <el-input
+        v-model="input3"
+        size="small"
+        placeholder="Please Input"
+      />
     </el-row>
     <el-row>
-      <el-input size="mini" placeholder="Please Input" v-model="input4">
-      </el-input>
+      <el-input
+        v-model="input4"
+        size="mini"
+        placeholder="Please Input"
+      />
     </el-row>
   </div>
 </template>
@@ -26,7 +38,7 @@ export default {
       input2: '',
       input3: '',
       input4: ''
-    }
+    };
   }
-}
+};
 </script>

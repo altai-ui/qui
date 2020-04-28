@@ -8,8 +8,7 @@
         range-separator="To"
         start-placeholder="Start month"
         end-placeholder="End month"
-      >
-      </el-date-picker>
+      />
     </div>
     <div class="block">
       <span class="demonstration">With quick options</span>
@@ -22,8 +21,7 @@
         start-placeholder="Start month"
         end-placeholder="End month"
         :picker-options="pickerOptions"
-      >
-      </el-date-picker>
+      />
     </div>
   </div>
 </template>
@@ -37,31 +35,31 @@ export default {
           {
             text: 'This month',
             onClick(picker) {
-              picker.$emit('pick', [new Date(), new Date()])
+              picker.$emit('pick', [new Date(), new Date()]);
             }
           },
           {
             text: 'This year',
             onClick(picker) {
-              const end = new Date()
-              const start = new Date(new Date().getFullYear(), 0)
-              picker.$emit('pick', [start, end])
+              const end = new Date();
+              const start = new Date(new Date().getFullYear(), 0);
+              picker.$emit('pick', [start, end]);
             }
           },
           {
             text: 'Last 6 months',
             onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              start.setMonth(start.getMonth() - 6)
-              picker.$emit('pick', [start, end])
+              const end = new Date();
+              const start = new Date();
+              start.setMonth(start.getMonth() - 6);
+              picker.$emit('pick', [start, end]);
             }
           }
         ]
       },
       value1: '',
       value2: ''
-    }
+    };
   }
-}
+};
 </script>
