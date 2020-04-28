@@ -1,6 +1,9 @@
 <template>
-  <el-input placeholder="Please input" v-model="input" :disabled="true">
-  </el-input>
+  <el-input
+    v-model="input"
+    placeholder="Please input"
+    :disabled="true"
+  />
 </template>
 
 <script>
@@ -8,7 +11,7 @@ export default {
   data() {
     return {
       input: ''
-    }
+    };
   }
-}
+};
 </script>

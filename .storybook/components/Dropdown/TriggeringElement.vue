@@ -3,7 +3,8 @@
     <el-row>
       <el-dropdown>
         <el-button type="primary">
-          Dropdown List<i class="el-icon-arrow-down el-icon--right"></i>
+          Dropdown List
+          <i class="el-icon-arrow-down el-icon--right" />
         </el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>Action 1</el-dropdown-item>
@@ -15,7 +16,11 @@
       </el-dropdown>
     </el-row>
     <el-row>
-      <el-dropdown split-button type="primary" @click="handleClick">
+      <el-dropdown
+        split-button
+        type="primary"
+        @click="handleClick"
+      >
         Dropdown List
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>Action 1</el-dropdown-item>
@@ -33,9 +38,11 @@
 .el-dropdown {
   vertical-align: top;
 }
+
 .el-dropdown + .el-dropdown {
   margin-left: 15px;
 }
+
 .el-icon-arrow-down {
   font-size: 12px;
 }
@@ -45,8 +52,8 @@
 export default {
   methods: {
     handleClick() {
-      alert('button click')
+      console.log('button click');
     }
   }
-}
+};
 </script>

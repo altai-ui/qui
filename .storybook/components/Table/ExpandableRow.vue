@@ -1,6 +1,9 @@
 <template>
   <div class="demo">
-    <el-table :data="tableData" style="width: 100%">
+    <el-table
+      :data="tableData"
+      style="width: 100%"
+    >
       <el-table-column type="expand">
         <template slot-scope="props">
           <p>State: {{ props.row.state }}</p>
@@ -9,8 +12,14 @@
           <p>Zip: {{ props.row.zip }}</p>
         </template>
       </el-table-column>
-      <el-table-column label="Date" prop="date"> </el-table-column>
-      <el-table-column label="Name" prop="name"> </el-table-column>
+      <el-table-column
+        label="Date"
+        prop="date"
+      />
+      <el-table-column
+        label="Name"
+        prop="name"
+      />
     </el-table>
   </div>
 </template>
@@ -77,7 +86,7 @@ export default {
           zip: 'CA 90036'
         }
       ]
-    }
+    };
   }
-}
+};
 </script>

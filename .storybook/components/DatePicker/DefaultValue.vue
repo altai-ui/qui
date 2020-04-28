@@ -7,8 +7,7 @@
         type="date"
         placeholder="Pick a date"
         default-value="2010-10-01"
-      >
-      </el-date-picker>
+      />
     </div>
     <div class="block">
       <span class="demonstration">Daterange</span>
@@ -19,8 +18,7 @@
         start-placeholder="Start Date"
         end-placeholder="End Date"
         default-value="2010-10-01"
-      >
-      </el-date-picker>
+      />
     </div>
   </div>
 </template>
@@ -31,7 +29,7 @@ export default {
     return {
       value1: '',
       value2: ''
-    }
+    };
   }
-}
+};
 </script>

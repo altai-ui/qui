@@ -1,21 +1,16 @@
-const path = require('path')
+const path = require('path');
 
-module.exports = async ({ config, mode }) => {
+module.exports = async ({ config }) => {
   config.module.rules.push({
     test: /\.scss$/,
     use: [
       'style-loader',
       'css-loader',
       {
-        loader: 'sass-loader',
-        options: {
-          prependData: `
-            @import "./src/components/common/var.scss";
-          `
-        }
+        loader: 'sass-loader'
       }
     ],
     include: path.resolve(__dirname, '../')
-  })
-  return config
-}
+  });
+  return config;
+};

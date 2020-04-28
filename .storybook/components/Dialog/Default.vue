@@ -31,26 +31,26 @@ export default {
   data() {
     return {
       dialogVisible: false
-    }
+    };
   },
   methods: {
     handleClose(done) {
       this.$confirm('Are you sure to close this dialog?')
-        .then(_ => {
-          done()
+        .then(() => {
+          done();
         })
-        .catch(_ => {})
+        .catch(() => {});
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .demo {
-  height: 100vh;
-  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100vw;
+  height: 100vh;
 }
 </style>

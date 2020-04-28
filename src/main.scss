@@ -1,26 +1,15 @@
-@import './vars.scss';
-@import './colors.scss';
-@import './helpers.scss';
 @import './normalize.scss';
-@import './bootstrap-template.scss';
-@import './animation.scss';
 
-@import 'components/common/var';
+@import './theme-chalk/main.scss';
+@import './theme-chalk/common/transition.scss';
+@import './colors.scss';
 
-@import './fonts.scss';
-@import './icon.scss';
-
-@import 'components/common/typography';
-@import 'components/common/transition.scss';
-
-@import 'components/mixins/mixins';
-
-@include b(main) {
-  // IE11 supports the <main> element partially https://caniuse.com/#search=main
-  display: block;
-  flex: 1;
-  flex-basis: auto;
-  box-sizing: border-box;
-  padding: $--main-padding;
-  overflow: auto;
+body {
+  margin: 0;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: 'Gilroy', sans-serif;
+  color: rgba(29, 28, 26, 0.64);
+  background-color: #e5e5e5;
 }

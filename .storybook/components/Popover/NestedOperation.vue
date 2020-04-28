@@ -1,14 +1,22 @@
 <template>
   <div class="demo">
-    <el-popover placement="top" width="160" v-model="visible">
+    <el-popover
+      v-model="visible"
+      placement="top"
+      width="160"
+    >
       <p>Are you sure to delete this?</p>
-      <div style="text-align: right; margin: 0">
-        <el-button size="mini" type="text" @click="visible = false"
-          >cancel</el-button
-        >
-        <el-button type="primary" size="mini" @click="visible = false"
-          >confirm</el-button
-        >
+      <div style=" margin: 0;text-align: right">
+        <el-button
+          size="mini"
+          type="text"
+          @click="visible = false"
+        >cancel</el-button>
+        <el-button
+          type="primary"
+          size="mini"
+          @click="visible = false"
+        >confirm</el-button>
       </div>
       <el-button slot="reference">Delete</el-button>
     </el-popover>
@@ -20,7 +28,7 @@ export default {
   data() {
     return {
       visible: false
-    }
+    };
   }
-}
+};
 </script>

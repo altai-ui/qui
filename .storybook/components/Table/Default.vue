@@ -5,11 +5,22 @@
       :default-sort="{ prop: 'date', order: 'descending' }"
       style="width: 100%"
     >
-      <el-table-column prop="date" label="Date" sortable width="180">
-      </el-table-column>
-      <el-table-column prop="name" label="Name" width="180"> </el-table-column>
-      <el-table-column prop="address" label="Address" :formatter="formatter">
-      </el-table-column>
+      <el-table-column
+        prop="date"
+        label="Date"
+        sortable
+        width="180"
+      />
+      <el-table-column
+        prop="name"
+        label="Name"
+        width="180"
+      />
+      <el-table-column
+        prop="address"
+        label="Address"
+        :formatter="formatter"
+      />
     </el-table>
   </div>
 </template>
@@ -40,12 +51,12 @@ export default {
           address: 'No. 189, Grove St, Los Angeles'
         }
       ]
-    }
+    };
   },
   methods: {
-    formatter(row, column) {
-      return row.address
+    formatter(row) {
+      return row.address;
     }
   }
-}
+};
 </script>

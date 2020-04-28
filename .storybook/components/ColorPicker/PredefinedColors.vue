@@ -1,7 +1,10 @@
 <template>
   <div class="demo">
-    <el-color-picker v-model="color" show-alpha :predefine="predefineColors">
-    </el-color-picker>
+    <el-color-picker
+      v-model="color"
+      show-alpha
+      :predefine="predefineColors"
+    />
   </div>
 </template>
 
@@ -26,7 +29,7 @@ export default {
         'hsla(209, 100%, 56%, 0.73)',
         '#c7158577'
       ]
-    }
+    };
   }
-}
+};
 </script>

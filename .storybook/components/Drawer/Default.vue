@@ -8,12 +8,10 @@
     </el-radio-group>
 
     <el-button
-      @click="drawer = true"
       type="primary"
       style="margin-left: 16px;"
-    >
-      open
-    </el-button>
+      @click="drawer = true"
+    >open</el-button>
 
     <el-drawer
       append-to-body
@@ -33,17 +31,17 @@ export default {
     return {
       drawer: false,
       direction: 'rtl'
-    }
+    };
   },
 
   methods: {
     handleClose(done) {
       this.$confirm('Are you sure you want to close this?')
-        .then(_ => {
-          done()
+        .then(() => {
+          done();
         })
-        .catch(_ => {})
+        .catch(() => {});
     }
   }
-}
+};
 </script>

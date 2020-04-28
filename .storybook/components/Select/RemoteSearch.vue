@@ -14,8 +14,7 @@
       :key="item.value"
       :label="item.label"
       :value="item.value"
-    >
-    </el-option>
+    />
   </el-select>
 </template>
 
@@ -79,27 +78,27 @@ export default {
         'Wisconsin',
         'Wyoming'
       ]
-    }
+    };
   },
   mounted() {
     this.list = this.states.map(item => {
-      return { value: `value:${item}`, label: `label:${item}` }
-    })
+      return { value: `value:${item}`, label: `label:${item}` };
+    });
   },
   methods: {
     remoteMethod(query) {
       if (query !== '') {
-        this.loading = true
+        this.loading = true;
         setTimeout(() => {
-          this.loading = false
+          this.loading = false;
           this.options = this.list.filter(item => {
-            return item.label.toLowerCase().indexOf(query.toLowerCase()) > -1
-          })
-        }, 200)
+            return item.label.toLowerCase().indexOf(query.toLowerCase()) > -1;
+          });
+        }, 200);
       } else {
-        this.options = []
+        this.options = [];
       }
     }
   }
-}
+};
 </script>

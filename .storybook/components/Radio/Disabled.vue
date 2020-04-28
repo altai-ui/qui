@@ -1,9 +1,15 @@
 <template>
   <div>
-    <el-radio disabled v-model="radio" label="disabled">Option A</el-radio>
-    <el-radio disabled v-model="radio" label="selected and disabled"
-      >Option B</el-radio
-    >
+    <el-radio
+      v-model="radio"
+      disabled
+      label="disabled"
+    >Option A</el-radio>
+    <el-radio
+      v-model="radio"
+      disabled
+      label="selected and disabled"
+    >Option B</el-radio>
   </div>
 </template>
 
@@ -12,7 +18,7 @@ export default {
   data() {
     return {
       radio: 'selected and disabled'
-    }
+    };
   }
-}
+};
 </script>

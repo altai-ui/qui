@@ -1,9 +1,0 @@
-.el-form-item {
-  &.is-error {
-    /deep/ .el-checkbox {
-      .el-checkbox__inner {
-        border-color: $--color-danger;
-      }
-    }
-  }
-}

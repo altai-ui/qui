@@ -1,5 +1,8 @@
 <template>
-  <el-select v-model="value" placeholder="Select">
+  <el-select
+    v-model="value"
+    placeholder="Select"
+  >
     <el-option-group
       v-for="group in options"
       :key="group.label"
@@ -10,8 +13,7 @@
         :key="item.value"
         :label="item.label"
         :value="item.value"
-      >
-      </el-option>
+      />
     </el-option-group>
   </el-select>
 </template>
@@ -57,7 +59,7 @@ export default {
         }
       ],
       value: ''
-    }
+    };
   }
-}
+};
 </script>

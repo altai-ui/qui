@@ -3,28 +3,35 @@
     <el-row>
       <div class="block">
         <span class="demonstration">Default</span>
-        <el-select v-model="value1" multiple placeholder="Select">
+        <el-select
+          v-model="value1"
+          multiple
+          placeholder="Select"
+        >
           <el-option
             v-for="item in options"
             :key="item.value"
             :label="item.label"
             :value="item.value"
-          >
-          </el-option>
+          />
         </el-select>
       </div>
     </el-row>
     <el-row>
       <div class="block">
         <span class="demonstration">Collapse tags</span>
-        <el-select v-model="value2" multiple collapse-tags placeholder="Select">
+        <el-select
+          v-model="value2"
+          multiple
+          collapse-tags
+          placeholder="Select"
+        >
           <el-option
             v-for="item in options"
             :key="item.value"
             :label="item.label"
             :value="item.value"
-          >
-          </el-option>
+          />
         </el-select>
       </div>
     </el-row>
@@ -59,7 +66,7 @@ export default {
       ],
       value1: [],
       value2: []
-    }
+    };
   }
-}
+};
 </script>

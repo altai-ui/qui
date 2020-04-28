@@ -1,0 +1,12 @@
+{
+  "*.js": ["prettier --write", "git add"],
+  "*.scss": ["stylelint --fix", "prettier --write", "git add"],
+  "*.vue": [
+    "stylelint --fix",
+    "prettier --parser vue --write",
+    "eslint --fix --no-ignore",
+    "git add"
+  ],
+  "{*.json,.*rc}": ["prettier --parser json --write", "git add"],
+  "*.{yaml,yml}": ["prettier --parser yaml --write", "git add"]
+}

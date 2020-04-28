@@ -5,16 +5,27 @@
       style="width: 100%"
       :row-class-name="tableRowClassName"
     >
-      <el-table-column prop="date" label="Date" width="180"> </el-table-column>
-      <el-table-column prop="name" label="Name" width="180"> </el-table-column>
-      <el-table-column prop="address" label="Address"> </el-table-column>
+      <el-table-column
+        prop="date"
+        label="Date"
+        width="180"
+      />
+      <el-table-column
+        prop="name"
+        label="Name"
+        width="180"
+      />
+      <el-table-column
+        prop="address"
+        label="Address"
+      />
     </el-table>
   </div>
 </template>
 
 <style>
 .el-table .warning-row {
-  background: oldlace;
+  background: #fdf5e6;
 }
 
 .el-table .success-row {
@@ -24,16 +35,6 @@
 
 <script>
 export default {
-  methods: {
-    tableRowClassName({ row, rowIndex }) {
-      if (rowIndex === 1) {
-        return 'warning-row'
-      } else if (rowIndex === 3) {
-        return 'success-row'
-      }
-      return ''
-    }
-  },
   data() {
     return {
       tableData: [
@@ -58,7 +59,18 @@ export default {
           address: 'No. 189, Grove St, Los Angeles'
         }
       ]
+    };
+  },
+  methods: {
+    tableRowClassName({ rowIndex }) {
+      if (rowIndex === 1) {
+        return 'warning-row';
+      }
+      if (rowIndex === 3) {
+        return 'success-row';
+      }
+      return '';
     }
   }
-}
+};
 </script>
