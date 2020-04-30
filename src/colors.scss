@@ -41,7 +41,7 @@
     1px 1px 4px var(--box-shadow-color-secondary),
     4px 4px 8px var(--box-shadow-color-secondary),
     -4px -4px 8px rgba(255, 255, 255, 0.8);
-  --box-shadow-pressed: -1px -1px 3px var(--box-shadow-color-primary),
+  --bos-shadow-pressed: -1px -1px 3px var(--box-shadow-color-primary),
     1px 1px 3px var(--box-shadow-color-secondary);
   --box-shadow-focus: inset 2px 2px 3px rgba(174, 174, 192, 0.2),
     inset -2px -2px 3px rgba(255, 255, 255, 0.7);
@@ -52,4 +52,10 @@
     4px 4px 8px var(--box-shadow-color-secondary), -4px -4px 12px #fff;
 
   --border-error: 1px solid var(--color-secondary-orange);
+
+  //font
+  --font-weight-bold: 600;
+  //button
+  --line-height-button: 15px;
+  --letter-spacing-button: 0.03em;
 }

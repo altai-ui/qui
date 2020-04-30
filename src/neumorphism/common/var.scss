@@ -89,7 +89,7 @@ $--color-info-lighter: mix($--color-white, $--color-info, 90%) !default;
 /// color|1|Font Color|2
 $--color-text-primary: #303133 !default;
 /// color|1|Font Color|2
-$--color-text-regular: #606266 !default;
+$--color-text-regular: #fff !default;
 /// color|1|Font Color|2
 $--color-text-secondary: #909399 !default;
 /// color|1|Font Color|2
@@ -129,7 +129,9 @@ $--border-radius-zero: 0 !default;
 
 // Box-shadow
 /// boxShadow|1|Shadow|1
-$--box-shadow-base: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04) !default;
+$--box-shadow-base: -1px -1px 3px rgba(255, 255, 255, 0.25),
+  1px 1px 3px rgba(174, 174, 192, 0.4), 4px 4px 8px rgba(174, 174, 192, 0.4),
+  -4px -4px 12px #fff;
 // boxShadow|1|Shadow|1
 $--box-shadow-dark: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.12) !default;
 /// boxShadow|1|Shadow|1
@@ -141,7 +143,7 @@ $--fill-base: $--color-white !default;
 
 /* Typography
 -------------------------- */
-$--font-path: 'theme-chalk/fonts' !default;
+$--font-path: 'neumorphism/fonts' !default;
 $--font-display: 'auto' !default;
 /// fontSize|1|Font Size|0
 $--font-size-extra-large: 20px !default;
@@ -156,7 +158,7 @@ $--font-size-small: 13px !default;
 /// fontSize|1|Font Size|0
 $--font-size-extra-small: 12px !default;
 /// fontWeight|1|Font Weight|1
-$--font-weight-primary: 500 !default;
+$--font-weight-primary: 600 !default;
 /// fontWeight|1|Font Weight|1
 $--font-weight-secondary: 100 !default;
 /// fontLineHeight|1|Line Height|2
@@ -501,24 +503,17 @@ $--tab-vertical-header-count-fill: $--color-text-secondary !default;
 
 /* Button
 -------------------------- */
-/// fontSize||Font|1
-$--button-font-size: $--font-size-base !default;
-/// fontWeight||Font|1
+$--button-font-size: 12px !default;
 $--button-font-weight: $--font-weight-primary !default;
-/// borderRadius||Border|2
 $--button-border-radius: $--border-radius-base !default;
-/// padding||Spacing|3
 $--button-padding-vertical: 12px !default;
-/// padding||Spacing|3
 $--button-padding-horizontal: 20px !default;
+$--button-letter-spacing: 0.03em !default;
+$--button-line-height: 15px;
 
-/// fontSize||Font|1
 $--button-medium-font-size: $--font-size-base !default;
-/// borderRadius||Border|2
 $--button-medium-border-radius: $--border-radius-base !default;
-/// padding||Spacing|3
 $--button-medium-padding-vertical: 10px !default;
-/// padding||Spacing|3
 $--button-medium-padding-horizontal: 20px !default;
 
 /// fontSize||Font|1
