@@ -1,0 +1,121 @@
+$--base-path: '.' !default;
+
+@font-face {
+  font-style: normal;
+  font-weight: 400;
+  font-family: 'qicon';
+  src: url('#{$--base-path}/icons/qicon.woff?29042020') format('woff');
+  font-display: block;
+}
+
+.icon-accout-settings::before {
+  content: '\e900';
+}
+
+.el-icon-arrow-left::before {
+  content: '\e901';
+}
+
+.el-icon-arrow-right::before {
+  content: '\e902';
+}
+
+.icon-bell-ring::before {
+  content: '\e903';
+}
+
+.icon-bell::before {
+  content: '\e904';
+}
+
+.icon-calendar-refresh::before {
+  content: '\e905';
+}
+
+.icon-calendar::before {
+  content: '\e906';
+}
+
+.icon-checkbox-square-multiply::before {
+  content: '\e907';
+}
+
+.icon-close::before {
+  content: '\e908';
+}
+
+.icon-cloud-upload::before {
+  content: '\e909';
+}
+
+.icon-diagram::before {
+  content: '\e90a';
+}
+
+.icon-dots::before {
+  content: '\e90b';
+}
+
+.icon-file::before {
+  content: '\e90c';
+}
+
+.icon-lock::before {
+  content: '\e90d';
+}
+
+.icon-logout::before {
+  content: '\e90e';
+}
+
+.icon-pause::before {
+  content: '\e90f';
+}
+
+.icon-pic::before {
+  content: '\e910';
+}
+
+.icon-proceed-fill::before {
+  content: '\e911';
+}
+
+.icon-proceed-stroke::before {
+  content: '\e912';
+}
+
+.icon-question::before {
+  content: '\e913';
+}
+
+.icon-reverse::before {
+  content: '\e914';
+}
+
+.icon-search::before {
+  content: '\e915';
+}
+
+.icon-settings::before {
+  content: '\e916';
+}
+
+.icon-stop-fill::before {
+  content: '\e917';
+}
+
+.icon-stop-stroke::before {
+  content: '\e918';
+}
+
+.icon-trash::before {
+  content: '\e919';
+}
+
+.icon-triangle-down::before {
+  content: '\e91a';
+}
+
+.icon-triangle-up::before {
+  content: '\e91b';
+}
