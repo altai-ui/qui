@@ -254,53 +254,10 @@ $--checkbox-button-checked-border-color: $--color-primary !default;
 $--radio-font-size: $--font-size-base !default;
 /// fontWeight||Font|1
 $--radio-font-weight: $--font-weight-primary !default;
-/// color||Color|0
-$--radio-font-color: $--color-text-regular !default;
-$--radio-input-height: 14px !default;
-$--radio-input-width: 14px !default;
+$--radio-input-height: 24px !default;
+$--radio-input-width: 24px !default;
 /// borderRadius||Border|2
 $--radio-input-border-radius: $--border-radius-circle !default;
-/// color||Color|0
-$--radio-input-background-color: $--color-white !default;
-$--radio-input-border: $--border-base !default;
-/// color||Color|0
-$--radio-input-border-color: $--border-color-base !default;
-/// color||Color|0
-$--radio-icon-color: $--color-white !default;
-
-$--radio-disabled-input-border-color: $--disabled-border-base !default;
-$--radio-disabled-input-fill: $--disabled-fill-base !default;
-$--radio-disabled-icon-color: $--disabled-fill-base !default;
-
-$--radio-disabled-checked-input-border-color: $--disabled-border-base !default;
-$--radio-disabled-checked-input-fill: $--disabled-fill-base !default;
-$--radio-disabled-checked-icon-color: $--color-text-placeholder !default;
-
-/// color||Color|0
-$--radio-checked-font-color: $--color-primary !default;
-/// color||Color|0
-$--radio-checked-input-border-color: $--color-primary !default;
-/// color||Color|0
-$--radio-checked-input-background-color: $--color-white !default;
-/// color||Color|0
-$--radio-checked-icon-color: $--color-primary !default;
-
-$--radio-input-border-color-hover: $--color-primary !default;
-
-$--radio-bordered-height: 40px !default;
-$--radio-bordered-padding: 12px 20px 0 10px !default;
-$--radio-bordered-medium-padding: 10px 20px 0 10px !default;
-$--radio-bordered-small-padding: 8px 15px 0 10px !default;
-$--radio-bordered-mini-padding: 6px 15px 0 10px !default;
-$--radio-bordered-medium-input-height: 14px !default;
-$--radio-bordered-medium-input-width: 14px !default;
-$--radio-bordered-medium-height: 36px !default;
-$--radio-bordered-small-input-height: 12px !default;
-$--radio-bordered-small-input-width: 12px !default;
-$--radio-bordered-small-height: 32px !default;
-$--radio-bordered-mini-input-height: 12px !default;
-$--radio-bordered-mini-input-width: 12px !default;
-$--radio-bordered-mini-height: 28px !default;
 
 /// fontSize||Font|1
 $--radio-button-font-size: $--font-size-base !default;

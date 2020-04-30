@@ -8,6 +8,11 @@
       v-model="radio"
       label="2"
     >Option B</el-radio>
+    <el-radio
+      v-model="radio"
+      label="3"
+      disabled
+    >Option C (disabled)</el-radio>
   </div>
 </template>
 
