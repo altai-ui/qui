@@ -96,79 +96,6 @@
     cursor: not-allowed;
   }
 
-  @include m(small) {
-    .btn-prev,
-    .btn-next,
-    .el-pager li,
-    .el-pager li.btn-quicknext,
-    .el-pager li.btn-quickprev,
-    .el-pager li:last-child {
-      min-width: 22px;
-      height: 22px;
-      font-size: 12px;
-      line-height: 22px;
-      border-color: transparent;
-    }
-
-    .arrow.disabled {
-      visibility: hidden;
-    }
-
-    .more::before,
-    li.more::before {
-      line-height: 24px;
-    }
-
-    span:not([class*='suffix']),
-    button {
-      height: 22px;
-      line-height: 22px;
-    }
-
-    @include e(editor) {
-      height: 22px;
-
-      &.el-input .el-input__inner {
-        height: 22px;
-      }
-    }
-  }
-
-  @include e(sizes) {
-    margin: 0 10px 0 0;
-    font-weight: 400;
-    color: $--color-text-regular;
-
-    .el-input .el-input__inner {
-      padding-left: 8px;
-      font-size: $--pagination-font-size;
-
-      &:hover {
-        border-color: $--pagination-hover-color;
-      }
-    }
-  }
-
-  @include e(total) {
-    margin-right: 10px;
-    font-weight: 400;
-    color: $--color-text-regular;
-  }
-
-  @include e(jump) {
-    margin-left: 24px;
-    font-weight: 400;
-    color: $--color-text-regular;
-
-    .el-input__inner {
-      padding: 0 3px;
-    }
-  }
-
-  @include e(rightwrapper) {
-    float: right;
-  }
-
   @include e(editor) {
     box-sizing: border-box;
     height: $--pagination-button-height;
@@ -203,10 +130,7 @@
       color: var(--color-primary-blue);
       background-color: var(--color-controls-medium);
       border-radius: 4px;
-      box-shadow: -1px -1px 4px #fff,
-        1px 1px 4px var(--box-shadow-color-secondary),
-        4px 4px 8px var(--box-shadow-color-secondary),
-        -4px -4px 8px var(--color-opacity-primary);
+      box-shadow: var(--box-shadow-primary);
 
       &.disabled {
         color: $--color-text-placeholder;
