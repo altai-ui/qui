@@ -5,7 +5,7 @@
 
 @include b(pagination) {
   padding: 2px 5px;
-  font-weight: 700;
+  font-weight: 500;
   color: $--pagination-font-color;
   white-space: nowrap;
   @include utils-clearfix;
@@ -63,6 +63,10 @@
     }
   }
 
+  .more.el-icon-more::before {
+    content: '...';
+  }
+
   .btn-prev,
   .btn-next {
     margin: 0;
@@ -74,8 +78,8 @@
 
     .el-icon {
       display: block;
-      font-weight: 700;
-      font-size: 12px;
+      font-size: 9px;
+      font-family: 'qicon' !important;
     }
   }
 
@@ -194,11 +198,15 @@
     .btn-prev,
     .btn-next,
     .el-pager li {
-      min-width: 30px;
-      margin: 0 5px;
-      color: $--color-text-regular;
-      background-color: $--color-info-lighter;
-      border-radius: 2px;
+      min-width: 40px;
+      margin: 0 4px;
+      color: var(--color-primary-blue);
+      background-color: var(--color-controls-medium);
+      border-radius: 4px;
+      box-shadow: -1px -1px 4px #fff,
+        1px 1px 4px var(--box-shadow-color-secondary),
+        4px 4px 8px var(--box-shadow-color-secondary),
+        -4px -4px 8px var(--color-opacity-primary);
 
       &.disabled {
         color: $--color-text-placeholder;
@@ -210,18 +218,30 @@
       padding: 0;
 
       &:disabled {
-        color: $--color-text-placeholder;
+        color: var(--color-opacity-gray-medium);
+        box-shadow: var(--box-shadow-pressed);
+      }
+
+      &:not(:disabled) {
+        &:hover {
+          color: var(--color-primary-black);
+          background-color: var(--color-controls-dark);
+          box-shadow: var(--box-shadow-hover);
+        }
       }
     }
 
     .el-pager li:not(.disabled) {
       &:hover {
-        color: $--pagination-hover-color;
+        color: var(--color-primary-black);
+        background-color: var(--color-controls-dark);
+        box-shadow: var(--box-shadow-hover);
       }
 
       &.active {
-        color: $--color-white;
-        background-color: $--color-primary;
+        color: var(--color-primary-black);
+        background-color: var(--color-controls-primary);
+        box-shadow: var(--box-shadow-pressed);
       }
     }
 
@@ -245,10 +265,6 @@
   vertical-align: top;
   user-select: none;
 
-  .more::before {
-    line-height: 30px;
-  }
-
   li {
     display: inline-block;
     box-sizing: border-box;
@@ -265,8 +281,7 @@
 
     &.btn-quicknext,
     &.btn-quickprev {
-      line-height: 28px;
-      color: $--pagination-button-color;
+      color: var(--color-primary-blue);
 
       &.disabled {
         color: $--color-text-placeholder;
