@@ -2,23 +2,19 @@
   <div>
     <el-button
       type="primary"
-      icon="el-icon-edit"
-    />
-    <el-button
-      type="primary"
-      icon="el-icon-share"
-    />
-    <el-button
-      type="primary"
-      icon="el-icon-delete"
-    />
-    <el-button
-      type="primary"
       icon="el-icon-search"
     >Search</el-button>
-    <el-button type="primary">
+    <el-button plain>
       Upload
       <i class="el-icon-upload el-icon-right" />
     </el-button>
+    <el-button
+      icon="el-icon-share"
+      plain
+    />
+    <el-button
+      circle
+      icon="el-icon-delete"
+    />
   </div>
 </template>
