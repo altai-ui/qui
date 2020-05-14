@@ -1,18 +1,31 @@
 <template>
   <div>
     <el-radio
-      v-model="radio"
+      v-model="radio1"
       label="1"
-    >Option A</el-radio>
+    >Вариант A</el-radio>
+    <br /><br />
     <el-radio
-      v-model="radio"
+      v-model="radio1"
       label="2"
-    >Option B</el-radio>
+    >Вариант B</el-radio>
+    <br /><br />
     <el-radio
-      v-model="radio"
+      v-model="radio1"
       label="3"
+    >Option C</el-radio>
+    <br /><br />
+    <el-radio
+      v-model="radio1"
+      label="4"
       disabled
-    >Option C (disabled)</el-radio>
+    >Неактивный вариант</el-radio>
+    <br /><br />
+    <el-radio
+      v-model="radio2"
+      label="1"
+      disabled
+    >Выбранный и неактивный вариант</el-radio>
   </div>
 </template>
 
@@ -20,7 +33,8 @@
 export default {
   data() {
     return {
-      radio: '1'
+      radio1: '1',
+      radio2: '1'
     };
   }
 };

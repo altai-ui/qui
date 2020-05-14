@@ -41,7 +41,7 @@
     1px 1px 4px var(--box-shadow-color-secondary),
     4px 4px 8px var(--box-shadow-color-secondary),
     -4px -4px 8px rgba(255, 255, 255, 0.8);
-  --bos-shadow-pressed: -1px -1px 3px var(--box-shadow-color-primary),
+  --box-shadow-pressed: -1px -1px 3px var(--box-shadow-color-primary),
     1px 1px 3px var(--box-shadow-color-secondary);
   --box-shadow-focus: inset 2px 2px 3px rgba(174, 174, 192, 0.2),
     inset -2px -2px 3px rgba(255, 255, 255, 0.7);
@@ -53,7 +53,11 @@
 
   --border-error: 1px solid var(--color-secondary-orange);
 
+  --border-radius-base: 4px;
+
   //font
+  --font-size-base: 14px;
+  --font-weight-base: 500;
   --font-weight-bold: 600;
   //button
   --line-height-button: 15px;

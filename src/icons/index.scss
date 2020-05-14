@@ -8,114 +8,158 @@ $--base-path: '.' !default;
   font-display: block;
 }
 
-.icon-accout-settings::before {
+.icon-account-fill::before {
   content: '\e900';
 }
 
-.el-icon-arrow-left::before {
+.icon-account-group::before {
   content: '\e901';
 }
 
-.el-icon-arrow-right::before {
+.icon-account-settings-fill::before {
   content: '\e902';
 }
 
-.icon-bell-ring::before {
+.icon-arow-left-fill::before {
   content: '\e903';
 }
 
-.icon-bell::before {
+.icon-arow-right-fill::before {
   content: '\e904';
 }
 
-.icon-calendar-refresh::before {
+.icon-bell-fill::before {
   content: '\e905';
 }
 
-.icon-calendar::before {
+.icon-bell-ring-fill::before {
   content: '\e906';
 }
 
-.icon-checkbox-square-multiply::before {
+.icon-calendar-refresh-stroke::before {
   content: '\e907';
 }
 
-.icon-close::before {
+.icon-calendar-stroke::before {
   content: '\e908';
 }
 
-.icon-cloud-upload::before {
+.icon-checkbox-round-fill::before {
   content: '\e909';
 }
 
-.icon-diagram::before {
+.icon-checkbox-square-multiply-non-stroke::before {
   content: '\e90a';
 }
 
-.icon-dots::before {
+.icon-close-fill::before {
   content: '\e90b';
 }
 
-.icon-file::before {
+.icon-cloud-upload-fill::before {
   content: '\e90c';
 }
 
-.icon-lock::before {
+.icon-diagram-round-fill::before {
   content: '\e90d';
 }
 
-.icon-logout::before {
+.icon-dots-3-horizontal-fill::before {
   content: '\e90e';
 }
 
-.icon-pause::before {
+.icon-envelope-edit::before {
   content: '\e90f';
 }
 
-.icon-pic::before {
+.icon-file-fill::before {
   content: '\e910';
 }
 
-.icon-proceed-fill::before {
+.icon-graph-gisto::before {
   content: '\e911';
 }
 
-.icon-proceed-stroke::before {
+.icon-lock-stroke::before {
   content: '\e912';
 }
 
-.icon-question::before {
+.icon-logout-fill::before {
   content: '\e913';
 }
 
-.icon-reverse::before {
+.icon-minus-stroke::before {
   content: '\e914';
 }
 
-.icon-search::before {
+.icon-pause-fill::before {
   content: '\e915';
 }
 
-.icon-settings::before {
+.icon-pic-stroke::before {
   content: '\e916';
 }
 
-.icon-stop-fill::before {
+.icon-proceed-fill::before {
   content: '\e917';
 }
 
-.icon-stop-stroke::before {
+.icon-proceed-stroke::before {
   content: '\e918';
 }
 
-.icon-trash::before {
+.icon-question-stroke::before {
   content: '\e919';
 }
 
-.icon-triangle-down::before {
+.icon-question::before {
   content: '\e91a';
 }
 
-.icon-triangle-up::before {
+.icon-reverse-fill::before {
   content: '\e91b';
+}
+
+.icon-rubles::before {
+  content: '\e91c';
+}
+
+.icon-search-fill::before {
+  content: '\e91d';
+}
+
+.icon-settings-vertical-fill::before {
+  content: '\e91e';
+}
+
+.icon-stop-fill::before {
+  content: '\e91f';
+}
+
+.icon-stop-stroke::before {
+  content: '\e920';
+}
+
+.icon-trash-bin-fill::before {
+  content: '\e921';
+}
+
+.icon-triangle-down-fill::before {
+  content: '\e922';
+}
+
+.icon-triangle-up-fill::before {
+  content: '\e923';
+}
+
+.icon-view-list::before {
+  content: '\e924';
+}
+
+.icon-wallet::before {
+  content: '\e925';
+}
+
+.icon-wifi::before {
+  content: '\e926';
 }
