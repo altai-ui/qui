@@ -1,15 +1,15 @@
 @import './normalize.scss';
 
-@import './theme-chalk/main.scss';
-@import './theme-chalk/common/transition.scss';
-@import './colors.scss';
+@import './neumorphism/main.scss';
+@import './neumorphism/common/transition.scss';
+@import './vars.scss';
 
 body {
   margin: 0;
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.5;
+  font-weight: var(--font-weight-base);
+  font-size: var(--font-size-base);
+  line-height: 18px;
   font-family: 'Gilroy', sans-serif;
-  color: rgba(29, 28, 26, 0.64);
-  background-color: #e5e5e5;
+  color: var(--color-opacity-gray-dark);
+  background-color: var(--color-controls-light);
 }

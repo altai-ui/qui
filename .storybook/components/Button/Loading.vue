@@ -2,7 +2,11 @@
   <div>
     <el-button
       type="primary"
-      :loading="true"
+      loading
+    >Loading</el-button>
+    <el-button
+      plain
+      loading
     >Loading</el-button>
   </div>
 </template>

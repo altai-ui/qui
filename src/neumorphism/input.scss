@@ -1,0 +1,212 @@
+@import 'mixins/mixins';
+
+@include b(textarea) {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  font-size: var(--font-size-base);
+  line-height: 18px;
+
+  @include e(inner) {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px 16px;
+    font-size: inherit;
+    line-height: inherit;
+    color: var(--color-primary-black);
+    background-color: var(--color-controls-medium);
+    border: none;
+    border-radius: var(--border-radius-base);
+    outline: none;
+    box-shadow: var(--box-shadow-primary);
+    resize: vertical;
+
+    &::placeholder {
+      color: var(--color-opacity-gray-medium);
+      opacity: 1;
+    }
+  }
+
+  &:not(.is-disabled) {
+    @include e(inner) {
+      &:hover {
+        background-color: var(--color-controls-dark);
+        box-shadow: var(--box-shadow-hover);
+      }
+
+      &:focus {
+        background-color: var(--color-controls-primary);
+        outline: none;
+        box-shadow: var(--box-shadow-focus);
+      }
+
+      &:active {
+        background-color: var(--color-controls-primary);
+        outline: none;
+        box-shadow: var(--box-shadow-pressed);
+      }
+    }
+  }
+
+  @include when(disabled) {
+    .el-textarea__inner {
+      padding-right: 40px;
+      color: var(--color-opacity-gray-dark);
+      background-color: var(--color-controls-dark);
+      cursor: not-allowed;
+    }
+
+    &::after {
+      content: '\e90d';
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 17px;
+      font-family: 'qicon';
+    }
+  }
+
+  @include when(exceed) {
+    .el-textarea__inner {
+      border: var(--border-error);
+    }
+  }
+}
+
+@include b(input) {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  font-size: var(--font-size-base);
+
+  @include e(inner) {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 40px;
+    padding: 0 16px;
+    font-size: inherit;
+    line-height: 40px;
+    color: var(--color-primary-black);
+    background-color: var(--color-controls-medium);
+    border: none;
+    border-radius: var(--border-radius-base);
+    outline: none;
+    box-shadow: var(--box-shadow-primary);
+    transition: $--border-transition-base;
+    -webkit-appearance: none;
+
+    &::placeholder {
+      color: var(--color-opacity-gray-medium);
+      opacity: 1;
+    }
+  }
+
+  &:not(.is-disabled) {
+    @include e(inner) {
+      &:hover {
+        background-color: var(--color-controls-dark);
+        box-shadow: var(--box-shadow-hover);
+      }
+
+      &:focus {
+        background-color: var(--color-controls-primary);
+        outline: none;
+        box-shadow: var(--box-shadow-focus);
+      }
+
+      &:active {
+        background-color: var(--color-controls-primary);
+        outline: none;
+        box-shadow: var(--box-shadow-pressed);
+      }
+    }
+  }
+
+  @include e(suffix) {
+    position: absolute;
+    top: 0;
+    right: 4px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+
+  @include e(suffix-inner) {
+    display: block;
+    pointer-events: all;
+  }
+
+  @include e(icon) {
+    width: 24px;
+    height: 24px;
+    margin-top: auto;
+    margin-bottom: auto;
+    line-height: 24px;
+    text-align: center;
+    color: var(--color-primary-blue);
+    cursor: pointer;
+
+    &.el-icon-circle-close::before {
+      content: '\e908';
+      font-size: 20px;
+      font-family: 'qicon';
+    }
+  }
+
+  @include e(validateIcon) {
+    pointer-events: none;
+  }
+
+  @include when(active) {
+    .el-input__inner {
+      outline: none;
+    }
+  }
+
+  @include when(disabled) {
+    &::after {
+      content: '\e90d';
+      position: absolute;
+      top: calc(50% - 9px);
+      right: 8px;
+      font-size: 17px;
+      font-family: 'qicon';
+      cursor: not-allowed;
+    }
+
+    .el-input__inner {
+      padding-right: 40px;
+      color: var(--color-opacity-gray-dark);
+      background-color: var(--color-controls-dark);
+      cursor: not-allowed;
+    }
+
+    .el-input__icon {
+      cursor: not-allowed;
+    }
+  }
+
+  @include when(exceed) {
+    .el-input__inner {
+      border: var(--border-error);
+    }
+  }
+
+  @include m(suffix) {
+    .el-input__inner {
+      padding-right: 32px;
+    }
+  }
+}
+
+/** disalbe default clear on IE */
+.el-input__inner::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
+}

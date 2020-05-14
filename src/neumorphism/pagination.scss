@@ -1,0 +1,97 @@
+@import 'mixins/mixins';
+
+@include b(pagination) {
+  display: flex;
+  font-weight: var(--font-weight-base);
+  font-size: var(--font-size-base);
+  white-space: nowrap;
+
+  .btn-prev,
+  .btn-next {
+    padding: 0;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+
+    .el-icon {
+      display: block;
+      font-size: 26px;
+      font-family: 'qicon' !important;
+    }
+
+    .el-icon-arrow-left::before {
+      content: '\e903';
+    }
+
+    .el-icon-arrow-right::before {
+      content: '\e904';
+    }
+  }
+
+  .btn-prev,
+  .btn-next,
+  .el-pager .number,
+  .el-pager .more {
+    box-sizing: border-box;
+    min-width: 40px;
+    height: 40px;
+    margin: 0 4px;
+    line-height: 40px;
+    vertical-align: top;
+    text-align: center;
+    color: var(--color-primary-blue);
+    background-color: var(--color-controls-medium);
+    border-radius: var(--border-radius-base);
+    box-shadow: var(--box-shadow-primary);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-primary-black);
+      background-color: var(--color-controls-dark);
+      box-shadow: var(--box-shadow-hover);
+    }
+
+    &.disabled,
+    &:disabled {
+      color: var(--color-opacity-gray-medium);
+      background-color: var(--color-controls-dark);
+      box-shadow: var(--box-shadow-pressed);
+      cursor: not-allowed;
+    }
+  }
+
+  .more.el-icon-more::before {
+    content: '...';
+  }
+}
+
+@include b(pager) {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  user-select: none;
+
+  .more,
+  .number {
+    padding: 0 4px;
+
+    &.btn-quicknext,
+    &.btn-quickprev {
+      color: var(--color-primary-blue);
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    &.active {
+      color: var(--color-primary-black);
+      background-color: var(--color-controls-primary);
+      box-shadow: var(--box-shadow-pressed);
+      cursor: default;
+    }
+  }
+}

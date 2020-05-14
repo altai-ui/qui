@@ -1,0 +1,165 @@
+$--base-path: '.' !default;
+
+@font-face {
+  font-style: normal;
+  font-weight: 400;
+  font-family: 'qicon';
+  src: url('#{$--base-path}/icons/qicon.woff?29042020') format('woff');
+  font-display: block;
+}
+
+.icon-account-fill::before {
+  content: '\e900';
+}
+
+.icon-account-group::before {
+  content: '\e901';
+}
+
+.icon-account-settings-fill::before {
+  content: '\e902';
+}
+
+.icon-arow-left-fill::before {
+  content: '\e903';
+}
+
+.icon-arow-right-fill::before {
+  content: '\e904';
+}
+
+.icon-bell-fill::before {
+  content: '\e905';
+}
+
+.icon-bell-ring-fill::before {
+  content: '\e906';
+}
+
+.icon-calendar-refresh-stroke::before {
+  content: '\e907';
+}
+
+.icon-calendar-stroke::before {
+  content: '\e908';
+}
+
+.icon-checkbox-round-fill::before {
+  content: '\e909';
+}
+
+.icon-checkbox-square-multiply-non-stroke::before {
+  content: '\e90a';
+}
+
+.icon-close-fill::before {
+  content: '\e90b';
+}
+
+.icon-cloud-upload-fill::before {
+  content: '\e90c';
+}
+
+.icon-diagram-round-fill::before {
+  content: '\e90d';
+}
+
+.icon-dots-3-horizontal-fill::before {
+  content: '\e90e';
+}
+
+.icon-envelope-edit::before {
+  content: '\e90f';
+}
+
+.icon-file-fill::before {
+  content: '\e910';
+}
+
+.icon-graph-gisto::before {
+  content: '\e911';
+}
+
+.icon-lock-stroke::before {
+  content: '\e912';
+}
+
+.icon-logout-fill::before {
+  content: '\e913';
+}
+
+.icon-minus-stroke::before {
+  content: '\e914';
+}
+
+.icon-pause-fill::before {
+  content: '\e915';
+}
+
+.icon-pic-stroke::before {
+  content: '\e916';
+}
+
+.icon-proceed-fill::before {
+  content: '\e917';
+}
+
+.icon-proceed-stroke::before {
+  content: '\e918';
+}
+
+.icon-question-stroke::before {
+  content: '\e919';
+}
+
+.icon-question::before {
+  content: '\e91a';
+}
+
+.icon-reverse-fill::before {
+  content: '\e91b';
+}
+
+.icon-rubles::before {
+  content: '\e91c';
+}
+
+.icon-search-fill::before {
+  content: '\e91d';
+}
+
+.icon-settings-vertical-fill::before {
+  content: '\e91e';
+}
+
+.icon-stop-fill::before {
+  content: '\e91f';
+}
+
+.icon-stop-stroke::before {
+  content: '\e920';
+}
+
+.icon-trash-bin-fill::before {
+  content: '\e921';
+}
+
+.icon-triangle-down-fill::before {
+  content: '\e922';
+}
+
+.icon-triangle-up-fill::before {
+  content: '\e923';
+}
+
+.icon-view-list::before {
+  content: '\e924';
+}
+
+.icon-wallet::before {
+  content: '\e925';
+}
+
+.icon-wifi::before {
+  content: '\e926';
+}

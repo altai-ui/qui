@@ -1,0 +1,131 @@
+.el-radio {
+  --radio-color-base: var(--color-primary-black);
+  --radio-color-disabled: var(--color-opacity-gray-dark);
+
+  --radio-background-color-base: var(--color-controls-primary);
+  --radio-background-color-hover: var(--color-controls-dark);
+  --radio-background-color-focus: var(--color-controls-primary);
+  --radio-background-color-checked: var(--color-controls-primary);
+  --radio-background-color-disabled: var(--color-controls-dark);
+
+  --radio-dot-color-base: var(--color-primary-blue);
+  --radio-dot-color-disabled: var(--color-opacity-gray-dark);
+
+  --radio-box-shadow-base: -1px -1px 3px rgba(255, 255, 255, 0.25),
+    1px 1px 3px rgba(174, 174, 192, 0.4),
+    inset -1px -1px 1px rgba(255, 255, 255, 0.7),
+    inset 1px 1px 2px rgba(174, 174, 192, 0.2);
+  --radio-box-shadow-focus: -1px -1px 3px rgba(255, 255, 255, 0.25),
+    1px 1px 3px rgba(174, 174, 192, 0.4), 4px 4px 10px rgba(174, 174, 192, 0.4),
+    -4px -4px 10px rgba(255, 255, 255, 0.25),
+    inset -1px -1px 1px rgba(255, 255, 255, 0.7),
+    inset 1px 1px 2px rgba(174, 174, 192, 0.2);
+
+  position: relative;
+  display: inline-block;
+  font-weight: var(--font-weight-base);
+  font-size: var(--font-size-base);
+  line-height: 1;
+  color: var(--radio-color-base);
+  white-space: nowrap;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+
+  &:not(:last-child) {
+    margin-right: 32px;
+  }
+
+  &__label {
+    display: inline-block;
+    padding-left: 16px;
+    font-size: var(--font-size-base);
+    line-height: 18px;
+    vertical-align: middle;
+
+    .el-radio.is-disabled & {
+      color: var(--radio-color-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  &__input {
+    position: relative;
+    display: inline-block;
+    line-height: 0;
+    vertical-align: middle;
+    white-space: nowrap;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+
+  &__inner {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 24px;
+    height: 24px;
+    background-color: var(--radio-background-color-base);
+    border-radius: 100%;
+    outline: none;
+    box-shadow: var(--radio-box-shadow-base);
+    cursor: pointer;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 12px;
+      height: 12px;
+      background-color: var(--radio-dot-color-base);
+      border-radius: 100%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.15s ease-in;
+    }
+
+    .el-radio.is-checked & {
+      background-color: var(--radio-background-color-checked);
+
+      &::after {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    .el-radio:not(.is-disabled):focus & {
+      background-color: var(--radio-background-color-focus);
+      box-shadow: var(--radio-box-shadow-focus);
+    }
+
+    &,
+    .el-radio:not(.is-disabled):focus &,
+    .el-radio.is-checked & {
+      &:hover {
+        background-color: var(--radio-background-color-hover);
+      }
+    }
+
+    .el-radio.is-disabled & {
+      background-color: var(--radio-background-color-disabled);
+      cursor: not-allowed;
+
+      &::after {
+        background-color: var(--radio-dot-color-disabled);
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  &__original {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: 0;
+    outline: none;
+    opacity: 0;
+  }
+}

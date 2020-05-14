@@ -1,0 +1,65 @@
+:root {
+  --color-primary: #de4b7a;
+  --color-primary-purple: #d048b4;
+  --color-primary-blue: #4162f0;
+  --color-primary-blue-light: #74aff8;
+  --color-primary-blue-aqua: #5ecae7;
+  --color-primary-black: #1d1c1a;
+
+  --color-secondary-orange: #f95e2d;
+  --color-secondary-green: #40ba3e;
+
+  --color-opacity-primary: rgba(255, 255, 255, 0.64);
+  --color-opacity-gray-light: rgba(29, 28, 26, 0.16);
+  --color-opacity-gray-medium: rgba(29, 28, 26, 0.32);
+  --color-opacity-gray-dark: rgba(29, 28, 26, 0.64);
+
+  --color-controls-primary: #fafafa;
+  --color-controls-light: #f4f4f6;
+  --color-controls-medium: #f0f0f3;
+  --color-controls-dark: #eaeaea;
+
+  --gradient-primary: linear-gradient(
+    101.12deg,
+    var(--color-primary) 0.76%,
+    var(--color-primary-purple) 100%
+  );
+
+  --gradient-secondary: linear-gradient(
+    180deg,
+    var(--color-primary) -27.44%,
+    var(--color-primary-blue) 100.54%
+  );
+
+  --box-shadow-color-primary: rgba(255, 255, 255, 0.25);
+  --box-shadow-color-secondary: rgba(174, 174, 192, 0.4);
+
+  --box-shadow-primary: -1px -1px 3px var(--box-shadow-color-primary),
+    1px 1px 3px var(--box-shadow-color-secondary),
+    4px 4px 8px var(--box-shadow-color-secondary), -4px -4px 12px #fff;
+  --box-shadow-hover: -1px -1px 4px var(--box-shadow-color-primary),
+    1px 1px 4px var(--box-shadow-color-secondary),
+    4px 4px 8px var(--box-shadow-color-secondary),
+    -4px -4px 8px rgba(255, 255, 255, 0.8);
+  --box-shadow-pressed: -1px -1px 3px var(--box-shadow-color-primary),
+    1px 1px 3px var(--box-shadow-color-secondary);
+  --box-shadow-focus: inset 2px 2px 3px rgba(174, 174, 192, 0.2),
+    inset -2px -2px 3px rgba(255, 255, 255, 0.7);
+  --box-shadow-disabled: -1px -1px 3px var(--box-shadow-color-primary),
+    1px 1px 3px var(--box-shadow-color-secondary);
+  --box-shadow-error: -1px -1px 3px var(--box-shadow-color-primary),
+    1px 1px 3px var(--box-shadow-color-secondary),
+    4px 4px 8px var(--box-shadow-color-secondary), -4px -4px 12px #fff;
+
+  --border-error: 1px solid var(--color-secondary-orange);
+
+  --border-radius-base: 4px;
+
+  //font
+  --font-size-base: 14px;
+  --font-weight-base: 500;
+  --font-weight-bold: 600;
+  //button
+  --line-height-button: 15px;
+  --letter-spacing-button: 0.03em;
+}
