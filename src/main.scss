@@ -2,12 +2,12 @@
 
 @import './neumorphism/main.scss';
 @import './neumorphism/common/transition.scss';
-@import './colors.scss';
+@import './vars.scss';
 
 body {
   margin: 0;
-  font-weight: 500;
-  font-size: 14px;
+  font-weight: var(--font-weight-base);
+  font-size: var(--font-size-base);
   line-height: 18px;
   font-family: 'Gilroy', sans-serif;
   color: var(--color-opacity-gray-dark);

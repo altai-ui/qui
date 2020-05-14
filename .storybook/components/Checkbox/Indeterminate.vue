@@ -3,9 +3,9 @@
     <el-checkbox
       v-model="checkAll"
       :indeterminate="isIndeterminate"
+      style="margin-bottom: 16px"
       @change="handleCheckAllChange"
-    >Check all</el-checkbox>
-    <div style="margin: 15px 0;" />
+    >Выбрать все</el-checkbox>
     <el-checkbox-group
       v-model="checkedCities"
       @change="handleCheckedCitiesChange"
@@ -22,12 +22,12 @@
 </template>
 
 <script>
-const cityOptions = ['Shanghai', 'Beijing', 'Guangzhou', 'Shenzhen'];
+const cityOptions = ['Вариант A', 'Вариант B', 'Option C', 'Option D'];
 export default {
   data() {
     return {
       checkAll: false,
-      checkedCities: ['Shanghai', 'Beijing'],
+      checkedCities: ['Вариант A', 'Option C'],
       cities: cityOptions,
       isIndeterminate: true
     };

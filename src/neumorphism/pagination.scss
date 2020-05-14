@@ -1,64 +1,63 @@
 @import 'mixins/mixins';
-@import 'mixins/utils';
-@import 'common/var';
-@import 'select';
 
 @include b(pagination) {
-  padding: 2px 5px;
-  font-weight: 500;
-  color: $--pagination-font-color;
+  display: flex;
+  font-weight: var(--font-weight-base);
+  font-size: var(--font-size-base);
   white-space: nowrap;
-  @include utils-clearfix;
 
-  span:not([class*='suffix']),
-  button {
-    display: inline-block;
-    box-sizing: border-box;
-    min-width: $--pagination-button-width;
-    height: $--pagination-button-height;
-    font-size: $--pagination-font-size;
-    line-height: $--pagination-button-height;
-    vertical-align: top;
-  }
-
-  .el-input__inner {
-    line-height: normal;
-    text-align: center;
-    -moz-appearance: textfield;
-  }
-
-  // pagesize 的下拉 icon
-  .el-input__suffix {
-    right: 0;
-    transform: scale(0.8);
-  }
-
-  .el-select .el-input {
-    width: 100px;
-    margin: 0 5px;
-
-    .el-input__inner {
-      padding-right: 25px;
-      border-radius: $--pagination-border-radius;
-    }
-  }
-
-  button {
-    padding: 0 6px;
-    background: transparent;
+  .btn-prev,
+  .btn-next {
+    padding: 0;
     border: none;
 
     &:focus {
       outline: none;
     }
 
-    &:hover {
-      color: $--pagination-hover-color;
+    .el-icon {
+      display: block;
+      font-size: 26px;
+      font-family: 'qicon' !important;
     }
 
+    .el-icon-arrow-left::before {
+      content: '\e903';
+    }
+
+    .el-icon-arrow-right::before {
+      content: '\e904';
+    }
+  }
+
+  .btn-prev,
+  .btn-next,
+  .el-pager .number,
+  .el-pager .more {
+    box-sizing: border-box;
+    min-width: 40px;
+    height: 40px;
+    margin: 0 4px;
+    line-height: 40px;
+    vertical-align: top;
+    text-align: center;
+    color: var(--color-primary-blue);
+    background-color: var(--color-controls-medium);
+    border-radius: var(--border-radius-base);
+    box-shadow: var(--box-shadow-primary);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-primary-black);
+      background-color: var(--color-controls-dark);
+      box-shadow: var(--box-shadow-hover);
+    }
+
+    &.disabled,
     &:disabled {
-      color: $--pagination-button-disabled-color;
-      background-color: $--pagination-button-disabled-background-color;
+      color: var(--color-opacity-gray-medium);
+      background-color: var(--color-controls-dark);
+      box-shadow: var(--box-shadow-pressed);
       cursor: not-allowed;
     }
   }
@@ -66,170 +65,32 @@
   .more.el-icon-more::before {
     content: '...';
   }
-
-  .btn-prev,
-  .btn-next {
-    margin: 0;
-    color: $--pagination-button-color;
-    background: center center no-repeat;
-    background-color: $--pagination-background-color;
-    background-size: 16px;
-    cursor: pointer;
-
-    .el-icon {
-      display: block;
-      font-size: 9px;
-      font-family: 'qicon' !important;
-    }
-  }
-
-  .btn-prev {
-    padding-right: 12px;
-  }
-
-  .btn-next {
-    padding-left: 12px;
-  }
-
-  .el-pager li.disabled {
-    color: $--color-text-placeholder;
-    cursor: not-allowed;
-  }
-
-  @include e(editor) {
-    box-sizing: border-box;
-    height: $--pagination-button-height;
-    margin: 0 2px;
-    padding: 0 2px;
-    line-height: 18px;
-
-    text-align: center;
-    border-radius: $--pagination-border-radius;
-
-    &.el-input {
-      width: 50px;
-    }
-
-    &.el-input .el-input__inner {
-      height: $--pagination-button-height;
-    }
-
-    .el-input__inner::-webkit-inner-spin-button,
-    .el-input__inner::-webkit-outer-spin-button {
-      margin: 0;
-      -webkit-appearance: none;
-    }
-  }
-
-  @include when(background) {
-    .btn-prev,
-    .btn-next,
-    .el-pager li {
-      min-width: 40px;
-      margin: 0 4px;
-      color: var(--color-primary-blue);
-      background-color: var(--color-controls-medium);
-      border-radius: 4px;
-      box-shadow: var(--box-shadow-primary);
-
-      &.disabled {
-        color: $--color-text-placeholder;
-      }
-    }
-
-    .btn-prev,
-    .btn-next {
-      padding: 0;
-
-      &:disabled {
-        color: var(--color-opacity-gray-medium);
-        box-shadow: var(--box-shadow-pressed);
-      }
-
-      &:not(:disabled) {
-        &:hover {
-          color: var(--color-primary-black);
-          background-color: var(--color-controls-dark);
-          box-shadow: var(--box-shadow-hover);
-        }
-      }
-    }
-
-    .el-pager li:not(.disabled) {
-      &:hover {
-        color: var(--color-primary-black);
-        background-color: var(--color-controls-dark);
-        box-shadow: var(--box-shadow-hover);
-      }
-
-      &.active {
-        color: var(--color-primary-black);
-        background-color: var(--color-controls-primary);
-        box-shadow: var(--box-shadow-pressed);
-      }
-    }
-
-    &.el-pagination--small {
-      .btn-prev,
-      .btn-next,
-      .el-pager li {
-        min-width: 22px;
-        margin: 0 3px;
-      }
-    }
-  }
 }
 
 @include b(pager) {
-  display: inline-block;
+  display: flex;
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 0;
-  vertical-align: top;
   user-select: none;
 
-  li {
-    display: inline-block;
-    box-sizing: border-box;
-    min-width: $--pagination-button-width;
-    height: $--pagination-button-height;
-    margin: 0;
+  .more,
+  .number {
     padding: 0 4px;
-    font-size: $--pagination-font-size;
-    line-height: $--pagination-button-height;
-    vertical-align: top;
-    text-align: center;
-    background: $--pagination-background-color;
-    cursor: pointer;
 
     &.btn-quicknext,
     &.btn-quickprev {
       color: var(--color-primary-blue);
 
-      &.disabled {
-        color: $--color-text-placeholder;
+      &:hover {
+        cursor: pointer;
       }
     }
 
-    &.btn-quickprev:hover {
-      cursor: pointer;
-    }
-
-    &.btn-quicknext:hover {
-      cursor: pointer;
-    }
-
-    &.active + li {
-      border-left: 0;
-    }
-
-    &:hover {
-      color: $--pagination-hover-color;
-    }
-
     &.active {
-      color: $--pagination-hover-color;
+      color: var(--color-primary-black);
+      background-color: var(--color-controls-primary);
+      box-shadow: var(--box-shadow-pressed);
       cursor: default;
     }
   }

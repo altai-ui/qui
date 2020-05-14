@@ -18,7 +18,7 @@
   background-color: var(--color-primary);
   background-image: var(--gradient-primary);
   border: none;
-  border-radius: 4px;
+  border-radius: var(--border-radius-base);
   outline: none;
   box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.25),
     1px 1px 3px rgba(174, 174, 192, 0.4), 4px 4px 8px rgba(174, 174, 192, 0.4),

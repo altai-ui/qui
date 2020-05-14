@@ -1,30 +1,55 @@
-@import 'mixins/mixins';
-@import 'mixins/utils';
-@import 'mixins/button';
-@import 'common/var';
+.el-radio {
+  --radio-color-base: var(--color-primary-black);
+  --radio-color-disabled: var(--color-opacity-gray-dark);
 
-@include b(radio) {
+  --radio-background-color-base: var(--color-controls-primary);
+  --radio-background-color-hover: var(--color-controls-dark);
+  --radio-background-color-focus: var(--color-controls-primary);
+  --radio-background-color-checked: var(--color-controls-primary);
+  --radio-background-color-disabled: var(--color-controls-dark);
+
+  --radio-dot-color-base: var(--color-primary-blue);
+  --radio-dot-color-disabled: var(--color-opacity-gray-dark);
+
+  --radio-box-shadow-base: -1px -1px 3px rgba(255, 255, 255, 0.25),
+    1px 1px 3px rgba(174, 174, 192, 0.4),
+    inset -1px -1px 1px rgba(255, 255, 255, 0.7),
+    inset 1px 1px 2px rgba(174, 174, 192, 0.2);
+  --radio-box-shadow-focus: -1px -1px 3px rgba(255, 255, 255, 0.25),
+    1px 1px 3px rgba(174, 174, 192, 0.4), 4px 4px 10px rgba(174, 174, 192, 0.4),
+    -4px -4px 10px rgba(255, 255, 255, 0.25),
+    inset -1px -1px 1px rgba(255, 255, 255, 0.7),
+    inset 1px 1px 2px rgba(174, 174, 192, 0.2);
+
   position: relative;
   display: inline-block;
-  margin-right: 30px;
-  font-weight: $--radio-font-weight;
-  font-size: $--font-size-base;
+  font-weight: var(--font-weight-base);
+  font-size: var(--font-size-base);
   line-height: 1;
-  color: $--color-black;
+  color: var(--radio-color-base);
   white-space: nowrap;
   outline: none;
   cursor: pointer;
-  @include utils-user-select(none);
+  user-select: none;
 
-  &:last-child {
-    margin-right: 0;
+  &:not(:last-child) {
+    margin-right: 32px;
   }
 
-  .el-radio__label {
+  &__label {
+    display: inline-block;
+    padding-left: 16px;
+    font-size: var(--font-size-base);
+    line-height: 18px;
     vertical-align: middle;
+
+    .el-radio.is-disabled & {
+      color: var(--radio-color-disabled);
+      cursor: not-allowed;
+    }
   }
 
-  @include e(input) {
+  &__input {
     position: relative;
     display: inline-block;
     line-height: 0;
@@ -33,85 +58,66 @@
     border: none;
     outline: none;
     cursor: pointer;
-
-    @include when(disabled) {
-      .el-radio__inner {
-        cursor: not-allowed;
-
-        &::after,
-        & + .el-radio__label {
-          cursor: not-allowed;
-        }
-      }
-
-      &.is-checked .el-radio__inner,
-      .el-radio__inner {
-        background-color: var(--color-controls-dark);
-      }
-
-      &.is-checked {
-        .el-radio__inner {
-          &::after {
-            background-color: var(--color-opacity-gray-dark);
-          }
-        }
-      }
-
-      & + span.el-radio__label {
-        color: $--color-black;
-        cursor: not-allowed;
-      }
-    }
-
-    @include when(checked) {
-      .el-radio__inner {
-        background: var(--color-controls-primary);
-        border: none;
-        box-shadow: var(--box-shadow-pressed);
-
-        &::after {
-          transform: translate(-50%, -50%) scale(1);
-        }
-      }
-
-      & + .el-radio__label {
-        color: $--color-black;
-      }
-    }
   }
 
-  @include e(inner) {
+  &__inner {
     position: relative;
     display: inline-block;
     box-sizing: border-box;
-    width: $--radio-input-width;
-    height: $--radio-input-height;
-    background-color: var(--color-controls-medium);
-    border-radius: $--radio-input-border-radius;
+    width: 24px;
+    height: 24px;
+    background-color: var(--radio-background-color-base);
+    border-radius: 100%;
     outline: none;
-    box-shadow: var(--box-shadow-primary);
+    box-shadow: var(--radio-box-shadow-base);
     cursor: pointer;
-
-    &:hover {
-      background-color: var(--color-controls-dark);
-      box-shadow: var(--box-shadow-hover);
-    }
 
     &::after {
       content: '';
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 10px;
-      height: 10px;
-      background-color: var(--color-primary-blue);
-      border-radius: $--radio-input-border-radius;
+      width: 12px;
+      height: 12px;
+      background-color: var(--radio-dot-color-base);
+      border-radius: 100%;
       transform: translate(-50%, -50%) scale(0);
       transition: transform 0.15s ease-in;
     }
+
+    .el-radio.is-checked & {
+      background-color: var(--radio-background-color-checked);
+
+      &::after {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    .el-radio:not(.is-disabled):focus & {
+      background-color: var(--radio-background-color-focus);
+      box-shadow: var(--radio-box-shadow-focus);
+    }
+
+    &,
+    .el-radio:not(.is-disabled):focus &,
+    .el-radio.is-checked & {
+      &:hover {
+        background-color: var(--radio-background-color-hover);
+      }
+    }
+
+    .el-radio.is-disabled & {
+      background-color: var(--radio-background-color-disabled);
+      cursor: not-allowed;
+
+      &::after {
+        background-color: var(--radio-dot-color-disabled);
+        cursor: not-allowed;
+      }
+    }
   }
 
-  @include e(original) {
+  &__original {
     position: absolute;
     top: 0;
     right: 0;
@@ -121,17 +127,5 @@
     margin: 0;
     outline: none;
     opacity: 0;
-  }
-
-  &:focus:not(.is-focus):not(:active):not(.is-disabled) {
-    /*获得焦点时 样式提醒*/
-    .el-radio__inner {
-      box-shadow: var(--box-shadow-focus);
-    }
-  }
-
-  @include e(label) {
-    padding-left: 8px;
-    font-size: $--radio-font-size;
   }
 }
