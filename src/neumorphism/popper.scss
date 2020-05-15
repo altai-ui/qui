@@ -10,6 +10,8 @@
     height: 0;
     border-style: solid;
     border-color: transparent;
+
+    opacity: 0;
   }
 
   .popper__arrow {
@@ -23,7 +25,7 @@
   }
 
   &[x-placement^='top'] {
-    margin-bottom: #{$--popover-arrow-size + 6};
+    margin-bottom: 8px;
   }
 
   &[x-placement^='top'] .popper__arrow {
@@ -42,7 +44,7 @@
   }
 
   &[x-placement^='bottom'] {
-    margin-top: #{$--popover-arrow-size + 6};
+    margin-top: 8px;
   }
 
   &[x-placement^='bottom'] .popper__arrow {

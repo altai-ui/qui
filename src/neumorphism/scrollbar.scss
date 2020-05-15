@@ -33,8 +33,8 @@
     display: block;
     width: 0;
     height: 0;
-    background-color: $--scrollbar-background-color;
-    border-radius: inherit;
+    background: var(--color-primary-blue);
+    border-radius: 4px;
     cursor: pointer;
     transition: 0.3s background-color;
 
@@ -45,16 +45,16 @@
 
   @include e(bar) {
     position: absolute;
-    right: 2px;
-    bottom: 2px;
+    right: 4px;
+    bottom: 4px;
     z-index: 1;
     border-radius: 4px;
     opacity: 0;
     transition: opacity 120ms ease-out;
 
     @include when(vertical) {
-      top: 2px;
-      width: 6px;
+      top: 6px;
+      width: 2px;
 
       > div {
         width: 100%;
@@ -62,8 +62,8 @@
     }
 
     @include when(horizontal) {
-      left: 2px;
-      height: 6px;
+      left: 6px;
+      height: 2px;
 
       > div {
         height: 100%;

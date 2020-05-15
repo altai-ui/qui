@@ -71,15 +71,6 @@
     }
   }
 
-  @include e(dropdown) {
-    margin: 5px 0;
-    font-size: $--cascader-menu-font-size;
-    background: $--cascader-menu-fill;
-    border: $--cascader-menu-border;
-    border-radius: $--cascader-menu-radius;
-    box-shadow: $--cascader-menu-shadow;
-  }
-
   @include e(tags) {
     position: absolute;
     top: 50%;
@@ -127,7 +118,7 @@
   }
 
   @include e(suggestion-list) {
-    max-height: 204px;
+    max-height: 304px;
     margin: 0;
     padding: 6px 0;
     font-size: $--font-size-base;
