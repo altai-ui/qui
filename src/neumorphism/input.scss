@@ -1,212 +1,174 @@
-@import 'mixins/mixins';
+.el-input,
+.el-textarea {
+  --field-color-base: var(--color-primary-black);
+  --field-color-placeholder: var(--color-opacity-gray-medium);
+  --field-color-disabled: var(--color-opacity-gray-dark);
 
-@include b(textarea) {
+  --field-icon-color-base: var(--color-primary-blue);
+  --field-icon-color-hover: var(--color-primary-black);
+  --field-icon-color-inactive: var(--color-opacity-gray-dark);
+
+  --field-background-color-base: var(--color-controls-medium);
+  --field-background-color-hover: var(--color-controls-dark);
+  --field-background-color-focus: var(--color-controls-primary);
+  --field-background-color-disabled: var(--color-controls-dark);
+
+  --field-box-shadow-base: -1px -1px 3px rgba(255, 255, 255, 0.25),
+    1px 1px 3px rgba(174, 174, 192, 0.4), 4px 4px 8px rgba(174, 174, 192, 0.4),
+    -4px -4px 12px #fff;
+  --field-box-shadow-hover: -1px -1px 4px rgba(255, 255, 255, 0.25),
+    1px 1px 4px rgba(174, 174, 192, 0.4), 4px 4px 8px rgba(174, 174, 192, 0.4),
+    -4px -4px 8px rgba(255, 255, 255, 0.8);
+  --field-box-shadow-focus: -1px -1px 3px rgba(255, 255, 255, 0.25),
+    1px 1px 3px rgba(174, 174, 192, 0.4),
+    inset -1px -1px 1px rgba(255, 255, 255, 0.7),
+    inset 1px 1px 2px rgba(174, 174, 192, 0.2);
+  --field-box-shadow-disabled: -1px -1px 3px rgba(255, 255, 255, 0.25),
+    1px 1px 3px rgba(174, 174, 192, 0.4);
+
   position: relative;
   display: inline-block;
   width: 100%;
-  font-size: var(--font-size-base);
-  line-height: 18px;
 
-  @include e(inner) {
-    display: block;
-    box-sizing: border-box;
-    width: 100%;
-    padding: 8px 16px;
-    font-size: inherit;
-    line-height: inherit;
-    color: var(--color-primary-black);
-    background-color: var(--color-controls-medium);
-    border: none;
-    border-radius: var(--border-radius-base);
-    outline: none;
-    box-shadow: var(--box-shadow-primary);
-    resize: vertical;
-
-    &::placeholder {
-      color: var(--color-opacity-gray-medium);
-      opacity: 1;
-    }
-  }
-
-  &:not(.is-disabled) {
-    @include e(inner) {
-      &:hover {
-        background-color: var(--color-controls-dark);
-        box-shadow: var(--box-shadow-hover);
-      }
-
-      &:focus {
-        background-color: var(--color-controls-primary);
-        outline: none;
-        box-shadow: var(--box-shadow-focus);
-      }
-
-      &:active {
-        background-color: var(--color-controls-primary);
-        outline: none;
-        box-shadow: var(--box-shadow-pressed);
-      }
-    }
-  }
-
-  @include when(disabled) {
-    .el-textarea__inner {
-      padding-right: 40px;
-      color: var(--color-opacity-gray-dark);
-      background-color: var(--color-controls-dark);
-      cursor: not-allowed;
-    }
-
-    &::after {
-      content: '\e90d';
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      font-size: 17px;
-      font-family: 'qicon';
-    }
-  }
-
-  @include when(exceed) {
-    .el-textarea__inner {
-      border: var(--border-error);
-    }
-  }
-}
-
-@include b(input) {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  font-size: var(--font-size-base);
-
-  @include e(inner) {
+  &__inner {
     display: inline-block;
     box-sizing: border-box;
     width: 100%;
     height: 40px;
     padding: 0 16px;
-    font-size: inherit;
-    line-height: 40px;
-    color: var(--color-primary-black);
-    background-color: var(--color-controls-medium);
+    font-size: var(--font-size-base);
+    line-height: 20px;
+    color: var(--field-color-base);
+    background-color: var(--field-background-color-base);
     border: none;
     border-radius: var(--border-radius-base);
-    outline: none;
-    box-shadow: var(--box-shadow-primary);
-    transition: $--border-transition-base;
-    -webkit-appearance: none;
+    box-shadow: var(--field-box-shadow-base);
 
     &::placeholder {
-      color: var(--color-opacity-gray-medium);
+      color: var(--field-color-placeholder);
       opacity: 1;
     }
-  }
 
-  &:not(.is-disabled) {
-    @include e(inner) {
-      &:hover {
-        background-color: var(--color-controls-dark);
-        box-shadow: var(--box-shadow-hover);
-      }
+    &:hover {
+      background-color: var(--field-background-color-hover);
+      box-shadow: var(--field-box-shadow-hover);
+    }
 
-      &:focus {
-        background-color: var(--color-controls-primary);
-        outline: none;
-        box-shadow: var(--box-shadow-focus);
-      }
-
-      &:active {
-        background-color: var(--color-controls-primary);
-        outline: none;
-        box-shadow: var(--box-shadow-pressed);
-      }
+    &:focus {
+      background-color: var(--field-background-color-focus);
+      outline: none;
+      box-shadow: var(--field-box-shadow-focus);
     }
   }
 
-  @include e(suffix) {
+  &.is-disabled::after {
+    content: '\e912';
     position: absolute;
     top: 0;
-    right: 4px;
-    display: flex;
-    align-items: center;
+    right: 8px;
+    font-size: 24px;
+    line-height: 40px;
+    font-family: 'qicon';
+    cursor: not-allowed;
+  }
+}
+
+.el-input {
+  &__inner {
+    -webkit-appearance: none;
+
+    /** disable default clear on IE */
+    &::-ms-clear {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    .el-input.is-disabled & {
+      color: var(--field-color-disabled);
+      background-color: var(--field-background-color-disabled);
+      cursor: not-allowed;
+    }
+
+    .el-input.is-disabled &,
+    .el-input--suffix & {
+      padding-right: 40px;
+    }
+  }
+
+  &__suffix {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
     height: 100%;
     text-align: center;
     transition: all 0.3s;
     pointer-events: none;
+
+    .el-input.is-disabled & {
+      display: none;
+    }
   }
 
-  @include e(suffix-inner) {
+  &__suffix-inner {
     display: block;
     pointer-events: all;
   }
 
-  @include e(icon) {
-    width: 24px;
-    height: 24px;
-    margin-top: auto;
-    margin-bottom: auto;
-    line-height: 24px;
+  &__icon {
+    width: 40px;
     text-align: center;
-    color: var(--color-primary-blue);
+    color: var(--field-icon-color-inactive);
+
+    &:not(:last-child) {
+      display: none;
+    }
+
+    &::before {
+      font-size: 24px;
+      line-height: 40px;
+    }
+  }
+
+  &__clear {
+    color: var(--field-icon-color-base);
     cursor: pointer;
 
+    &:focus,
+    &:hover {
+      color: var(--field-icon-color-hover);
+    }
+
+    &.el-icon-circle-close,
+    &.el-icon-view {
+      &::before {
+        font-family: 'qicon';
+      }
+    }
+
     &.el-icon-circle-close::before {
-      content: '\e908';
-      font-size: 20px;
-      font-family: 'qicon';
-    }
-  }
-
-  @include e(validateIcon) {
-    pointer-events: none;
-  }
-
-  @include when(active) {
-    .el-input__inner {
-      outline: none;
-    }
-  }
-
-  @include when(disabled) {
-    &::after {
-      content: '\e90d';
-      position: absolute;
-      top: calc(50% - 9px);
-      right: 8px;
-      font-size: 17px;
-      font-family: 'qicon';
-      cursor: not-allowed;
+      content: '\e90b';
     }
 
-    .el-input__inner {
-      padding-right: 40px;
-      color: var(--color-opacity-gray-dark);
-      background-color: var(--color-controls-dark);
-      cursor: not-allowed;
-    }
-
-    .el-input__icon {
-      cursor: not-allowed;
-    }
-  }
-
-  @include when(exceed) {
-    .el-input__inner {
-      border: var(--border-error);
-    }
-  }
-
-  @include m(suffix) {
-    .el-input__inner {
-      padding-right: 32px;
+    &.el-icon-view::before {
+      content: '\e92d';
     }
   }
 }
 
-/** disalbe default clear on IE */
-.el-input__inner::-ms-clear {
-  display: none;
-  width: 0;
-  height: 0;
+.el-textarea {
+  &__inner {
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    resize: vertical;
+
+    .el-textarea.is-disabled & {
+      padding-right: 40px;
+      color: var(--field-color-disabled);
+      background-color: var(--field-background-color-disabled);
+      cursor: not-allowed;
+    }
+  }
 }

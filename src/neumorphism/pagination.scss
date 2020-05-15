@@ -1,6 +1,20 @@
-@import 'mixins/mixins';
+.el-pagination {
+  --pagination-color-base: var(--color-primary-blue);
+  --pagination-color-hover: var(--color-primary-black);
+  --pagination-color-selected: var(--color-primary-black);
+  --pagination-color-disabled: var(--color-opacity-gray-dark);
 
-@include b(pagination) {
+  --pagination-background-color-base: var(--color-controls-medium);
+  --pagination-background-color-hover: var(--color-controls-dark);
+  --pagination-background-color-selected: var(--color-controls-primary);
+  --pagination-background-color-disabled: var(--color-controls-dark);
+
+  --pagination-box-shadow-primary: -1px -1px 4px #fff,
+    1px 1px 4px rgba(174, 174, 192, 0.4), 4px 4px 8px rgba(174, 174, 192, 0.4),
+    -4px -4px 8px rgba(255, 255, 255, 0.25);
+  --pagination-box-shadow-secondary: -1px -1px 3px rgba(255, 255, 255, 0.25),
+    1px 1px 3px rgba(174, 174, 192, 0.4);
+
   display: flex;
   font-weight: var(--font-weight-base);
   font-size: var(--font-size-base);
@@ -17,7 +31,7 @@
 
     .el-icon {
       display: block;
-      font-size: 26px;
+      font-size: 24px;
       font-family: 'qicon' !important;
     }
 
@@ -30,10 +44,31 @@
     }
   }
 
+  .more {
+    &.el-icon-more::before {
+      content: '...';
+    }
+
+    &.el-icon-d-arrow-left,
+    &.el-icon-d-arrow-right {
+      display: block;
+      font-size: 24px;
+      font-family: 'qicon' !important;
+    }
+
+    &.el-icon-d-arrow-left::before {
+      content: '\e92c';
+    }
+
+    &.el-icon-d-arrow-right::before {
+      content: '\e927';
+    }
+  }
+
   .btn-prev,
   .btn-next,
-  .el-pager .number,
-  .el-pager .more {
+  .number,
+  .more {
     box-sizing: border-box;
     min-width: 40px;
     height: 40px;
@@ -41,57 +76,46 @@
     line-height: 40px;
     vertical-align: top;
     text-align: center;
-    color: var(--color-primary-blue);
-    background-color: var(--color-controls-medium);
+    color: var(--pagination-color-base);
+    background-color: var(--pagination-background-color-base);
     border-radius: var(--border-radius-base);
-    box-shadow: var(--box-shadow-primary);
+    box-shadow: var(--pagination-box-shadow-primary);
     cursor: pointer;
 
-    &:hover {
-      color: var(--color-primary-black);
-      background-color: var(--color-controls-dark);
-      box-shadow: var(--box-shadow-hover);
-    }
-
-    &.disabled,
-    &:disabled {
-      color: var(--color-opacity-gray-medium);
-      background-color: var(--color-controls-dark);
-      box-shadow: var(--box-shadow-pressed);
-      cursor: not-allowed;
+    &:hover,
+    &:focus {
+      color: var(--pagination-color-hover);
+      background-color: var(--pagination-background-color-hover);
     }
   }
 
-  .more.el-icon-more::before {
-    content: '...';
+  .number,
+  .more {
+    padding: 0 4px;
+
+    &.active {
+      color: var(--pagination-color-selected);
+      background-color: var(--pagination-background-color-selected);
+      box-shadow: var(--pagination-box-shadow-secondary);
+      cursor: default;
+    }
+  }
+
+  .btn-prev:disabled,
+  .btn-next:disabled,
+  .number.disabled,
+  .more.disabled {
+    color: var(--pagination-color-disabled);
+    background-color: var(--pagination-background-color-disabled);
+    box-shadow: var(--pagination-box-shadow-secondary);
+    cursor: not-allowed;
   }
 }
 
-@include b(pager) {
+.el-pager {
   display: flex;
   margin: 0;
   padding: 0;
   list-style: none;
   user-select: none;
-
-  .more,
-  .number {
-    padding: 0 4px;
-
-    &.btn-quicknext,
-    &.btn-quickprev {
-      color: var(--color-primary-blue);
-
-      &:hover {
-        cursor: pointer;
-      }
-    }
-
-    &.active {
-      color: var(--color-primary-black);
-      background-color: var(--color-controls-primary);
-      box-shadow: var(--box-shadow-pressed);
-      cursor: default;
-    }
-  }
 }

@@ -8,158 +8,204 @@ $--base-path: '.' !default;
   font-display: block;
 }
 
-.icon-account-fill::before {
+[class^='q-icon-'],
+[class*=' q-icon-'] {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 1;
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'qicon' !important;
+  vertical-align: baseline;
+  text-transform: none;
+  speak: none;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.q-icon-account-fill::before {
   content: '\e900';
 }
 
-.icon-account-group::before {
+.q-icon-account-group::before {
   content: '\e901';
 }
 
-.icon-account-settings-fill::before {
+.q-icon-account-settings-fill::before {
   content: '\e902';
 }
 
-.icon-arow-left-fill::before {
+.q-icon-arow-left-fill::before {
   content: '\e903';
 }
 
-.icon-arow-right-fill::before {
+.q-icon-arow-right-fill::before {
   content: '\e904';
 }
 
-.icon-bell-fill::before {
+.q-icon-bell-fill::before {
   content: '\e905';
 }
 
-.icon-bell-ring-fill::before {
+.q-icon-bell-ring-fill::before {
   content: '\e906';
 }
 
-.icon-calendar-refresh-stroke::before {
+.q-icon-calendar-refresh-stroke::before {
   content: '\e907';
 }
 
-.icon-calendar-stroke::before {
+.q-icon-calendar-stroke::before {
   content: '\e908';
 }
 
-.icon-checkbox-round-fill::before {
+.q-icon-checkbox-round-fill::before {
   content: '\e909';
 }
 
-.icon-checkbox-square-multiply-non-stroke::before {
+.q-icon-checkbox-square-multiply-non-stroke::before {
   content: '\e90a';
 }
 
-.icon-close-fill::before {
+.q-icon-close-fill::before {
   content: '\e90b';
 }
 
-.icon-cloud-upload-fill::before {
+.q-icon-cloud-upload-fill::before {
   content: '\e90c';
 }
 
-.icon-diagram-round-fill::before {
+.q-icon-diagram-round-fill::before {
   content: '\e90d';
 }
 
-.icon-dots-3-horizontal-fill::before {
+.q-icon-dots-3-horizontal-fill::before {
   content: '\e90e';
 }
 
-.icon-envelope-edit::before {
+.q-icon-envelope-edit::before {
   content: '\e90f';
 }
 
-.icon-file-fill::before {
+.q-icon-file-fill::before {
   content: '\e910';
 }
 
-.icon-graph-gisto::before {
+.q-icon-graph-gisto::before {
   content: '\e911';
 }
 
-.icon-lock-stroke::before {
+.q-icon-lock-stroke::before {
   content: '\e912';
 }
 
-.icon-logout-fill::before {
+.q-icon-logout-fill::before {
   content: '\e913';
 }
 
-.icon-minus-stroke::before {
+.q-icon-minus-stroke::before {
   content: '\e914';
 }
 
-.icon-pause-fill::before {
+.q-icon-pause-fill::before {
   content: '\e915';
 }
 
-.icon-pic-stroke::before {
+.q-icon-pic-stroke::before {
   content: '\e916';
 }
 
-.icon-proceed-fill::before {
+.q-icon-proceed-fill::before {
   content: '\e917';
 }
 
-.icon-proceed-stroke::before {
+.q-icon-proceed-stroke::before {
   content: '\e918';
 }
 
-.icon-question-stroke::before {
+.q-icon-question-stroke::before {
   content: '\e919';
 }
 
-.icon-question::before {
+.q-icon-question::before {
   content: '\e91a';
 }
 
-.icon-reverse-fill::before {
+.q-icon-reverse-fill::before {
   content: '\e91b';
 }
 
-.icon-rubles::before {
+.q-icon-rubles::before {
   content: '\e91c';
 }
 
-.icon-search-fill::before {
+.q-icon-search-fill::before {
   content: '\e91d';
 }
 
-.icon-settings-vertical-fill::before {
+.q-icon-settings-vertical-fill::before {
   content: '\e91e';
 }
 
-.icon-stop-fill::before {
+.q-icon-stop-fill::before {
   content: '\e91f';
 }
 
-.icon-stop-stroke::before {
+.q-icon-stop-stroke::before {
   content: '\e920';
 }
 
-.icon-trash-bin-fill::before {
+.q-icon-trash-bin-fill::before {
   content: '\e921';
 }
 
-.icon-triangle-down-fill::before {
+.q-icon-triangle-down-fill::before {
   content: '\e922';
 }
 
-.icon-triangle-up-fill::before {
+.q-icon-triangle-up-fill::before {
   content: '\e923';
 }
 
-.icon-view-list::before {
+.q-icon-view-list::before {
   content: '\e924';
 }
 
-.icon-wallet::before {
+.q-icon-wallet::before {
   content: '\e925';
 }
 
-.icon-wifi::before {
+.q-icon-wifi::before {
   content: '\e926';
+}
+
+.q-icon-triangle-right-fill::before {
+  content: '\e927';
+}
+
+.q-icon-arow-down-fill::before {
+  content: '\e928';
+}
+
+.q-icon-arow-up-fill::before {
+  content: '\e929';
+}
+
+.q-icon-left-fill::before {
+  content: '\e92a';
+}
+
+.q-icon-right-fill::before {
+  content: '\e92b';
+}
+
+.q-icon-triangle-left-fill::before {
+  content: '\e92c';
+}
+
+.q-icon-eye-stroke::before {
+  content: '\e92d';
 }
