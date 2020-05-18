@@ -17,6 +17,16 @@
         clearable
       />
     </div>
+    <div class="block">
+      <span class="demonstration">Collapse tags disabled</span>
+      <el-cascader
+        :options="options"
+        :props="props"
+        collapse-tags
+        clearable
+        disabled
+      />
+    </div>
   </div>
 </template>
 
@@ -86,6 +96,7 @@ export default {
         {
           value: 23,
           label: 'North America',
+          disabled: true,
           children: [
             {
               value: 24,

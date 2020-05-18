@@ -1,5 +1,6 @@
 <template>
   <div class="demo">
+    <span class="demonstration">Default</span>
     <el-cascader-panel :options="options" />
   </div>
 </template>

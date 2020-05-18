@@ -6,15 +6,11 @@
 
 @include b(cascader-panel) {
   display: flex;
-  font-weight: 500;
-  font-size: $--cascader-menu-font-size;
-  font-size: 14px;
-  line-height: 20px;
 }
 
 @include b(cascader-menu) {
   box-sizing: border-box;
-  min-width: 194px;
+  min-width: 200px;
   overflow: visible;
   color: var(--color-primary-blue);
 
@@ -48,15 +44,6 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
-  }
-
-  @include e(empty-text) {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    text-align: center;
-    color: $--cascader-color-empty;
-    transform: translate(-50%, -50%);
   }
 }
 
@@ -93,16 +80,13 @@
     margin-bottom: 0;
   }
 
-  &.is-selectable.in-active-path {
-    color: $--cascader-menu-font-color;
-  }
-
   &:not(.is-disabled) {
     cursor: pointer;
 
     &:hover {
       position: relative;
       z-index: 1;
+      color: var(--color-primary-black);
       background: var(--color-controls-dark);
     }
   }
@@ -118,15 +102,27 @@
       1px 1px 3px rgba(174, 174, 192, 0.4);
   }
 
+  .el-cascader-node__postfix::before {
+    content: '\e927';
+    font-size: 22px;
+    font-family: 'qicon';
+  }
+
   @include when(disabled) {
-    color: $--cascader-node-color-disabled;
+    color: var(--color-opacity-gray-dark);
     cursor: not-allowed;
+
+    .el-cascader-node__postfix {
+      &::before {
+        content: '\e912';
+        font-size: 24px;
+        font-family: 'qicon';
+      }
+    }
   }
 
   @include e(prefix) {
-    position: absolute;
-    left: 2px;
-    transform: scale(0.7);
+    display: none;
   }
 
   @include e(postfix) {

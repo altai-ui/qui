@@ -21,6 +21,26 @@
         @change="handleChange"
       />
     </div>
+    <div class="block">
+      <span class="demonstration">Disabled field</span>
+      <el-cascader
+        v-model="value"
+        disabled
+        :options="options"
+        clearable
+        @change="handleChange"
+      />
+    </div>
+    <div class="block">
+      <span class="demonstration">Filterable field</span>
+      <el-cascader
+        v-model="value"
+        :options="options"
+        clearable
+        filterable
+        @change="handleChange"
+      />
+    </div>
   </div>
 </template>
 
