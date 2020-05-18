@@ -1028,8 +1028,9 @@ $--base-path: '.' !default;
   content: '\e7b3';
 }
 
+// we don't have circle, it's always default cross
 .el-icon-circle-close::before {
-  content: '\e78d';
+  content: '\e6db';
 }
 
 .el-icon-circle-check::before {

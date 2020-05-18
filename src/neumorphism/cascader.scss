@@ -19,6 +19,7 @@
   }
 
   .el-input {
+    font-size: 16px;
     cursor: pointer;
 
     .el-input__inner {
@@ -26,6 +27,12 @@
 
       &:focus {
         border-color: $--input-focus-border;
+      }
+    }
+
+    .el-input__icon {
+      &::before {
+        font-size: 16px;
       }
     }
 
@@ -39,7 +46,7 @@
     }
 
     .el-icon-circle-close:hover {
-      color: $--input-clear-hover-color;
+      color: var(--color-primary-blue);
     }
 
     @include when(focus) {

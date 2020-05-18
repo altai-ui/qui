@@ -125,7 +125,8 @@
 
   @include e(prefix) {
     position: absolute;
-    left: 10px;
+    left: 2px;
+    transform: scale(0.7);
   }
 
   @include e(postfix) {
