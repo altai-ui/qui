@@ -72,7 +72,7 @@
     .el-tag {
       display: inline-flex;
       align-items: center;
-      max-width: 100%;
+      max-width: calc(100% - 15px);
       margin: 2px 0 2px 8px;
       color: var(--color-opacity-gray-dark);
       text-overflow: ellipsis;
