@@ -100,12 +100,17 @@
     background-color: var(--color-controls-primary);
     box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.25),
       1px 1px 3px rgba(174, 174, 192, 0.4);
+
+    .el-cascader-node__postfix::before {
+      color: var(--color-primary-blue);
+    }
   }
 
   .el-cascader-node__postfix::before {
     content: '\e927';
     font-size: 22px;
     font-family: 'qicon';
+    color: var(--color-primary-black);
   }
 
   @include when(disabled) {

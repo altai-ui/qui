@@ -29,6 +29,10 @@
         font-size: 24px;
         font-family: 'qicon';
       }
+
+      &:hover {
+        color: var(--color-primary-blue);
+      }
     }
 
     .el-icon-arrow-down {
@@ -41,6 +45,7 @@
       }
 
       &:hover {
+        color: var(--color-primary-blue);
         background-color: unset;
       }
 
