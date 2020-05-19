@@ -6,9 +6,11 @@
 @include b(button) {
   display: inline-block;
   box-sizing: border-box;
+  max-height: 40px;
   padding: 12px 40px;
   font-weight: var(--font-weight-bold);
   font-size: 12px;
+  line-height: 20px;
   line-height: var(--line-height-button);
   text-align: center;
   color: #fff;
@@ -24,7 +26,7 @@
     1px 1px 3px rgba(174, 174, 192, 0.4), 4px 4px 8px rgba(174, 174, 192, 0.4),
     -4px -4px 12px #fff;
   cursor: pointer;
-  transition: 0.1s;
+  transition: background-color 0.1s;
   -webkit-appearance: none;
   @include utils-user-select(none);
 
@@ -53,9 +55,21 @@
     border: 0;
   }
 
+  .el-icon-right {
+    margin-left: 10px;
+  }
+
   & [class*='el-icon-'] {
     & + span {
       margin-left: 5px;
+    }
+  }
+
+  & [class*='q-icon-'] {
+    transform: scale(1.5);
+
+    & + span {
+      margin-left: 10px;
     }
   }
 
@@ -110,7 +124,20 @@
 
   @include when(loading) {
     position: relative;
+    padding: 4px 40px;
     pointer-events: none;
+
+    span {
+      display: none;
+    }
+
+    .el-icon-loading {
+      &::before {
+        content: '\e91b';
+        font-size: 30px;
+        font-family: 'qicon';
+      }
+    }
 
     &::before {
       content: '';
@@ -119,14 +146,15 @@
       right: 0;
       bottom: 0;
       left: 0;
-      background-color: rgba(255, 255, 255, 0.35);
       border-radius: inherit;
       pointer-events: none;
     }
   }
 
   @include when(circle) {
-    padding: 12px;
+    max-width: 24px;
+    max-height: 24px;
+    padding: 6px;
     line-height: 12px;
     color: var(--color-primary-blue);
     background: var(--color-controls-dark);
