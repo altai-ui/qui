@@ -124,14 +124,19 @@
 
   @include when(loading) {
     position: relative;
-    padding: 4px 40px;
+    padding: 12px 40px;
     pointer-events: none;
 
     span {
-      display: none;
+      margin-left: 0;
+      visibility: hidden;
     }
 
     .el-icon-loading {
+      position: absolute;
+      top: calc(50% - 15px);
+      left: calc(50% - 14px);
+
       &::before {
         content: '\e91b';
         font-size: 30px;
