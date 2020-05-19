@@ -17,7 +17,7 @@ deploy:
   stage: deploy
   image: harbor.vmet.ro/devops/deployer:latest
   script:
-    - git clone http://gitlab-ci-token:$CI_JOB_TOKEN@gitlab.mt-tech.ru/gitlab/devops.git
+    - git clone http://gitlab-ci-token:$CI_JOB_TOKEN@gitlab.mt-tech.ru/root/devops.git
     - PROJECT_NAME_SANITIZED=$(echo ${CI_PROJECT_NAME} | tr '_' '-')
     - |
       helm upgrade --install --force \
