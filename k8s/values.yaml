@@ -23,5 +23,5 @@ ingress:
     nginx.ingress.kubernetes.io/rewrite-target: /
   path: /
   domain: k8s.develop.wi-fi.ru
-  subDomain: design-system
+  subDomain: neumorphism-design-system
   host: test
