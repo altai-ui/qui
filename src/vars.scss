@@ -32,25 +32,19 @@
     var(--color-primary-blue) 100.54%
   );
 
-  --box-shadow-color-primary: rgba(255, 255, 255, 0.25);
-  --box-shadow-color-secondary: rgba(174, 174, 192, 0.4);
-
-  --box-shadow-primary: -1px -1px 3px var(--box-shadow-color-primary),
-    1px 1px 3px var(--box-shadow-color-secondary),
-    4px 4px 8px var(--box-shadow-color-secondary), -4px -4px 12px #fff;
-  --box-shadow-hover: -1px -1px 4px var(--box-shadow-color-primary),
-    1px 1px 4px var(--box-shadow-color-secondary),
-    4px 4px 8px var(--box-shadow-color-secondary),
+  --box-shadow-primary: -1px -1px 3px rgba(255, 255, 255, 0.25),
+    1px 1px 3px rgba(174, 174, 192, 0.4), 4px 4px 8px rgba(174, 174, 192, 0.4),
+    -4px -4px 12px #fff;
+  --box-shadow-hover: -1px -1px 4px rgba(255, 255, 255, 0.25),
+    1px 1px 4px rgba(174, 174, 192, 0.4), 4px 4px 8px rgba(174, 174, 192, 0.4),
     -4px -4px 8px rgba(255, 255, 255, 0.8);
-  --box-shadow-pressed: -1px -1px 3px var(--box-shadow-color-primary),
-    1px 1px 3px var(--box-shadow-color-secondary);
+  --box-shadow-pressed: -1px -1px 3px rgba(255, 255, 255, 0.25),
+    1px 1px 3px rgba(174, 174, 192, 0.4);
   --box-shadow-focus: inset 2px 2px 3px rgba(174, 174, 192, 0.2),
     inset -2px -2px 3px rgba(255, 255, 255, 0.7);
-  --box-shadow-disabled: -1px -1px 3px var(--box-shadow-color-primary),
-    1px 1px 3px var(--box-shadow-color-secondary);
-  --box-shadow-error: -1px -1px 3px var(--box-shadow-color-primary),
-    1px 1px 3px var(--box-shadow-color-secondary),
-    4px 4px 8px var(--box-shadow-color-secondary), -4px -4px 12px #fff;
+  --box-shadow-error: -1px -1px 3px rgba(255, 255, 255, 0.25),
+    1px 1px 3px rgba(174, 174, 192, 0.4), 4px 4px 8px rgba(174, 174, 192, 0.4),
+    -4px -4px 12px #fff;
 
   --border-error: 1px solid var(--color-secondary-orange);
 
