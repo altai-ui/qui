@@ -1,21 +1,53 @@
 <template>
-  <el-select
-    v-model="value"
-    multiple
-    filterable
-    remote
-    reserve-keyword
-    placeholder="Please enter a keyword"
-    :remote-method="remoteMethod"
-    :loading="loading"
-  >
-    <el-option
-      v-for="item in options"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value"
-    />
-  </el-select>
+  <div class="demo">
+    <el-row>
+      <div class="block">
+        <span class="demonstration">Remote search</span>
+        <el-select
+          v-model="value"
+          multiple
+          filterable
+          remote
+          reserve-keyword
+          clearable
+          placeholder="Введите ключевое слово"
+          :remote-method="remoteMethod"
+          :loading="loading"
+        >
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </div>
+    </el-row>
+    <el-row>
+      <div class="block">
+        <span class="demonstration">Disabled</span>
+        <el-select
+          v-model="value"
+          multiple
+          filterable
+          remote
+          reserve-keyword
+          clearable
+          disabled
+          placeholder="Введите ключевое слово"
+          :remote-method="remoteMethod"
+          :loading="loading"
+        >
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </div>
+    </el-row>
+  </div>
 </template>
 
 <script>
@@ -94,7 +126,7 @@ export default {
           this.options = this.list.filter(item => {
             return item.label.toLowerCase().indexOf(query.toLowerCase()) > -1;
           });
-        }, 200);
+        }, 2000);
       } else {
         this.options = [];
       }

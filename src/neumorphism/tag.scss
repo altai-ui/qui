@@ -1,213 +1,63 @@
-@import 'mixins/mixins';
-@import 'common/var';
-
-@mixin genTheme(
-  $backgroundColorWeight,
-  $borderColorWeight,
-  $fontColorWeight,
-  $hoverColorWeight
-) {
-  color: mix($--tag-primary-color, $--color-white, $fontColorWeight);
-  background-color: mix(
-    $--tag-primary-color,
-    $--color-white,
-    $backgroundColorWeight
-  );
-  border-color: mix($--tag-primary-color, $--color-white, $borderColorWeight);
-
-  @include when(hit) {
-    border-color: $--tag-primary-color;
-  }
-
-  .el-tag__close {
-    color: mix($--tag-primary-color, $--color-white, $fontColorWeight);
-
-    &:hover {
-      color: $--color-white;
-      background-color: mix(
-        $--tag-primary-color,
-        $--color-white,
-        $hoverColorWeight
-      );
-    }
-  }
-
-  &.el-tag--info {
-    color: mix($--tag-info-color, $--color-white, $fontColorWeight);
-    background-color: mix(
-      $--tag-info-color,
-      $--color-white,
-      $backgroundColorWeight
-    );
-    border-color: mix($--tag-info-color, $--color-white, $borderColorWeight);
-
-    @include when(hit) {
-      border-color: $--tag-info-color;
-    }
-
-    .el-tag__close {
-      color: mix($--tag-info-color, $--color-white, $fontColorWeight);
-
-      &:hover {
-        color: $--color-white;
-        background-color: mix(
-          $--tag-info-color,
-          $--color-white,
-          $hoverColorWeight
-        );
-      }
-    }
-  }
-
-  &.el-tag--success {
-    color: mix($--tag-success-color, $--color-white, $fontColorWeight);
-    background-color: mix(
-      $--tag-success-color,
-      $--color-white,
-      $backgroundColorWeight
-    );
-    border-color: mix($--tag-success-color, $--color-white, $borderColorWeight);
-
-    @include when(hit) {
-      border-color: $--tag-success-color;
-    }
-
-    .el-tag__close {
-      color: mix($--tag-success-color, $--color-white, $fontColorWeight);
-
-      &:hover {
-        color: $--color-white;
-        background-color: mix(
-          $--tag-success-color,
-          $--color-white,
-          $hoverColorWeight
-        );
-      }
-    }
-  }
-
-  &.el-tag--warning {
-    color: mix($--tag-warning-color, $--color-white, $fontColorWeight);
-    background-color: mix(
-      $--tag-warning-color,
-      $--color-white,
-      $backgroundColorWeight
-    );
-    border-color: mix($--tag-warning-color, $--color-white, $borderColorWeight);
-
-    @include when(hit) {
-      border-color: $--tag-warning-color;
-    }
-
-    .el-tag__close {
-      color: mix($--tag-warning-color, $--color-white, $fontColorWeight);
-
-      &:hover {
-        color: $--color-white;
-        background-color: mix(
-          $--tag-warning-color,
-          $--color-white,
-          $hoverColorWeight
-        );
-      }
-    }
-  }
-
-  &.el-tag--danger {
-    color: mix($--tag-danger-color, $--color-white, $fontColorWeight);
-    background-color: mix(
-      $--tag-danger-color,
-      $--color-white,
-      $backgroundColorWeight
-    );
-    border-color: mix($--tag-danger-color, $--color-white, $borderColorWeight);
-
-    @include when(hit) {
-      border-color: $--tag-danger-color;
-    }
-
-    .el-tag__close {
-      color: mix($--tag-danger-color, $--color-white, $fontColorWeight);
-
-      &:hover {
-        color: $--color-white;
-        background-color: mix(
-          $--tag-danger-color,
-          $--color-white,
-          $hoverColorWeight
-        );
-      }
-    }
-  }
-}
-
-@include b(tag) {
-  @include genTheme(10%, 20%, 100%, 100%);
+.el-tag {
+  position: relative;
   display: inline-block;
   box-sizing: border-box;
-  height: 32px;
-  padding: $--tag-padding;
-  font-size: $--tag-font-size;
-  line-height: 30px;
-  color: $--tag-primary-color;
+  margin-top: 2px;
+  margin-right: 4px;
+  margin-bottom: 2px;
+  padding-right: 8px;
+  padding-left: 8px;
   white-space: nowrap;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: $--tag-border-radius;
 
-  .el-icon-close {
+  &--light {
+    color: var(--color-opacity-gray-dark);
+    background-color: var(--color-gray);
+  }
+
+  &--small {
+    height: 20px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .el-cascader &,
+  .el-select & {
+    display: flex;
+    max-width: 100%;
+
+    &:first-child {
+      max-width: 70%;
+    }
+  }
+
+  &__close {
     position: relative;
-    top: -1px;
-    right: -5px;
-    width: 16px;
-    height: 16px;
-    font-size: 12px;
-    line-height: 16px;
-    vertical-align: middle;
+    top: 0;
+    right: 0;
+    margin-right: -6px;
+    vertical-align: top;
     text-align: center;
-    border-radius: 50%;
     cursor: pointer;
+    pointer-events: auto;
 
     &::before {
+      content: '\e90b';
       display: block;
+      font-size: 16px;
+      font-family: 'qicon';
     }
-  }
 
-  @include m(dark) {
-    @include genTheme(100%, 100%, 0, 80%);
-  }
+    .el-tag--small & {
+      width: 20px;
+      height: 20px;
 
-  @include m(plain) {
-    @include genTheme(0, 40%, 100%, 100%);
-  }
-
-  @include m(medium) {
-    height: 28px;
-    line-height: 26px;
-
-    .el-icon-close {
-      transform: scale(0.8);
+      &::before {
+        line-height: 20px;
+      }
     }
-  }
 
-  @include m(small) {
-    height: 24px;
-    padding: 0 8px;
-    line-height: 22px;
-
-    .el-icon-close {
-      transform: scale(0.8);
-    }
-  }
-
-  @include m(mini) {
-    height: 20px;
-    padding: 0 5px;
-    line-height: 19px;
-
-    .el-icon-close {
-      margin-left: -3px;
-      transform: scale(0.7);
+    &:hover {
+      color: var(--color-primary-black);
     }
   }
 }

@@ -76,8 +76,6 @@ components
 @import '~@qvant/design-system/src/neumorphism/radio-group.scss';
 @import '~@qvant/design-system/src/neumorphism/radio-button.scss';
 @import '~@qvant/design-system/src/neumorphism/checkbox.scss';
-@import '~@qvant/design-system/src/neumorphism/checkbox-button.scss';
-@import '~@qvant/design-system/src/neumorphism/checkbox-group.scss';
 @import '~@qvant/design-system/src/neumorphism/switch.scss';
 @import '~@qvant/design-system/src/neumorphism/select.scss';
 @import '~@qvant/design-system/src/neumorphism/button.scss';
