@@ -1,147 +1,59 @@
-@import 'mixins/mixins';
-@import 'mixins/utils';
-@import 'common/var';
 @import 'select-dropdown';
 @import 'input';
 @import 'tag';
-@import 'option';
 @import 'option-group';
 @import 'scrollbar';
 
-@include b(select) {
+.el-select {
+  --field-color-base: var(--color-primary-black);
+  --field-color-placeholder: var(--color-opacity-gray-medium);
+  --field-color-disabled: var(--color-opacity-gray-dark);
+
   position: relative;
   display: inline-block;
 
-  .el-select__tags > span {
+  &__tags > span {
     display: contents;
   }
 
-  &:hover {
-    .el-input__inner {
-      border-color: $--select-border-color-hover;
-    }
-  }
-
-  .el-input__inner {
-    padding-right: 35px;
-    cursor: pointer;
-
-    &:focus {
-      border-color: $--select-input-focus-border-color;
-    }
-  }
-
-  .el-input {
-    & .el-select__caret {
-      font-size: $--select-input-font-size;
-      color: $--select-input-color;
-      transform: rotateZ(180deg);
-      cursor: pointer;
-      transition: transform 0.3s;
-
-      @include when(reverse) {
-        transform: rotateZ(0deg);
-      }
-
-      @include when(show-close) {
-        font-size: $--select-font-size;
-        text-align: center;
-        color: $--select-input-color;
-        border-radius: $--border-radius-circle;
-        transform: rotateZ(180deg);
-        transition: $--color-transition-base;
-
-        &:hover {
-          color: $--select-close-hover-color;
-        }
-      }
-    }
-
-    &.is-disabled {
-      & .el-input__inner {
-        cursor: not-allowed;
-
-        &:hover {
-          border-color: $--select-disabled-border;
-        }
-      }
-    }
-
-    &.is-focus .el-input__inner {
-      border-color: $--select-input-focus-border-color;
-    }
-  }
-
-  > .el-input {
-    display: block;
-  }
-
-  @include e(input) {
+  &__input {
     height: 28px;
-    margin-left: 15px;
+    margin-left: 8px;
     padding: 0;
-    font-size: $--select-font-size;
-    color: $--select-multiple-input-color;
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--field-color-base);
     background-color: transparent;
     border: none;
     outline: none;
     appearance: none;
-    @include when(mini) {
-      height: 14px;
-    }
   }
 
-  @include e(close) {
-    position: absolute;
-    top: 8px;
-    right: 25px;
-    z-index: $--index-top;
-    font-size: $--select-input-font-size;
-    line-height: 18px;
-    color: $--select-input-color;
-    cursor: pointer;
-
-    &:hover {
-      color: $--select-close-hover-color;
-    }
-  }
-
-  @include e(tags) {
+  &__tags {
     position: absolute;
     top: 50%;
-    z-index: $--index-normal;
+    left: 8px;
+    z-index: 1;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    line-height: normal;
+    width: calc(100% - 48px) !important;
     white-space: normal;
     transform: translateY(-50%);
+    pointer-events: none;
   }
 
-  .el-tag__close {
-    margin-top: -2px;
+  &__tags-text {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
-  .el-tag {
-    box-sizing: border-box;
-    margin: 2px 0 2px 6px;
-    background-color: #f0f2f5;
-    border-color: transparent;
-
-    &__close.el-icon-close {
-      top: 0;
-      right: -7px;
-      color: $--color-white;
-      background-color: $--color-text-placeholder;
-
-      &:hover {
-        background-color: $--color-text-secondary;
-      }
-
-      &::before {
-        display: block;
-        transform: translate(0, 0.5px);
-      }
-    }
+  &__caret.el-icon-::before {
+    content: '\e91d';
+    font-size: 24px;
+    line-height: 40px;
+    font-family: 'qicon';
   }
 }

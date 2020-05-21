@@ -5,7 +5,8 @@
     filterable
     allow-create
     default-first-option
-    placeholder="Choose tags for your article"
+    clearable
+    placeholder="Введите тег"
   >
     <el-option
       v-for="item in options"

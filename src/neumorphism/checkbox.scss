@@ -76,11 +76,11 @@
     &::after {
       content: '\e909';
       position: absolute;
-      top: -4px;
-      left: -4px;
+      top: 4px;
+      left: 4px;
       box-sizing: content-box;
-      width: 32px;
-      font-size: 32px;
+      width: 16px;
+      font-size: 16px;
       line-height: 1;
       font-family: 'qicon';
       text-align: center;

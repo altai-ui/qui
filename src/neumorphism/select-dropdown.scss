@@ -1,59 +1,143 @@
-@import 'mixins/mixins';
-@import 'common/var';
 @import './popper';
 
-@include b(select-dropdown) {
+.el-select-dropdown {
+  --dropdown-max-height: 204px;
+
+  --dropdown-box-shadow-base: var(--box-shadow-primary);
+  --dropdown-background-color-base: var(--color-controls-medium);
+
+  --dropdown-item-background-color-base: var(--color-controls-medium);
+  --dropdown-item-background-color-hover: var(--color-controls-dark);
+  --dropdown-item-background-color-selected: var(--color-controls-primary);
+  --dropdown-item-background-color-disabled: var(--color-controls-medium);
+
+  --dropdown-item-color-base: var(--color-primary-blue);
+  --dropdown-item-color-hover: var(--color-primary-black);
+  --dropdown-item-color-selected: var(--color-primary-black);
+  --dropdown-item-color-disabled: var(--color-opacity-gray-dark);
+
+  --dropdown-item-mark-color-base: var(--color-primary-blue);
+  --dropdown-item-mark-color-disabled: var(--color-opacity-gray-dark);
+
+  --checkbox-background-color-base: var(--color-controls-primary);
+  --checkbox-background-color-disabled: var(--color-controls-dark);
+
+  --checkbox-box-shadow-base: -1px -1px 3px rgba(255, 255, 255, 0.25),
+    1px 1px 3px rgba(174, 174, 192, 0.4),
+    inset -1px -1px 1px rgba(255, 255, 255, 0.7),
+    inset 1px 1px 2px rgba(174, 174, 192, 0.2);
+
   position: absolute;
-  z-index: #{$--index-top + 1};
+  z-index: 1001;
   box-sizing: border-box;
-  margin: 5px 0;
-  background-color: $--select-dropdown-background;
-  border: $--select-dropdown-border;
-  border-radius: $--border-radius-base;
-  box-shadow: $--select-dropdown-shadow;
+  overflow: hidden;
+  background-color: var(--dropdown-item-background-color-base);
+  border-radius: var(--border-radius-base);
+  box-shadow: var(--dropdown-box-shadow-base);
 
-  @include when(multiple) {
-    & .el-select-dropdown__item.selected {
-      color: $--select-option-selected-font-color;
-      background-color: $--select-dropdown-background;
+  &__item {
+    position: relative;
+    box-sizing: border-box;
+    height: 40px;
+    padding: 10px 16px 8px;
+    overflow: hidden;
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--dropdown-item-color-base);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background-color: var(--dropdown-item-background-color-base);
+    box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.25),
+      1px 1px 3px rgba(174, 174, 192, 0.4);
+    cursor: pointer;
 
-      &.hover {
-        background-color: $--select-option-hover-background;
-      }
+    &:not(:first-child) {
+      margin-top: 1px;
+    }
+
+    &.selected {
+      color: var(--dropdown-item-color-selected);
+      background-color: var(--dropdown-item-background-color-selected);
+    }
+
+    &.hover,
+    &:hover {
+      color: var(--dropdown-item-color-hover);
+      background-color: var(--dropdown-item-background-color-hover);
+    }
+
+    .el-select-dropdown.is-multiple & {
+      padding-left: 40px;
 
       &::after {
-        content: '\e6da';
+        content: '\e909';
         position: absolute;
-        right: 20px;
-        font-weight: 700;
-        font-size: 12px;
-        font-family: 'element-icons';
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        top: 8px;
+        left: 8px;
+        width: 24px;
+        height: 24px;
+        font-size: 16px;
+        line-height: 24px;
+        font-family: 'qicon';
+        text-align: center;
+        color: #fff0;
+        background-color: var(--checkbox-background-color-base);
+        border-radius: var(--border-radius-base);
+        box-shadow: var(--checkbox-box-shadow-base);
+      }
+
+      &.selected {
+        &::after {
+          color: var(--dropdown-item-mark-color-base);
+        }
+
+        &.is-disabled::after {
+          color: var(--dropdown-item-mark-color-disabled);
+        }
+      }
+
+      &.is-disabled::after {
+        background-color: var(--checkbox-background-color-disabled);
+      }
+
+      & > span {
+        display: block;
+      }
+    }
+
+    &.is-disabled {
+      padding-right: 40px;
+      color: var(--dropdown-item-color-disabled);
+      background-color: var(--dropdown-item-background-color-disabled);
+      cursor: not-allowed;
+
+      &::before {
+        content: '\e912';
+        position: absolute;
+        top: 0;
+        right: 8px;
+        font-size: 24px;
+        line-height: 40px;
+        font-family: 'qicon';
+        cursor: not-allowed;
       }
     }
   }
 
-  .el-scrollbar.is-empty .el-select-dropdown__list {
-    padding: 0;
+  &__empty {
+    margin: 0;
+    padding: 10px 16px 8px;
+    color: var(--color-opacity-gray-dark);
   }
-}
 
-@include b(select-dropdown__empty) {
-  margin: 0;
-  padding: $--select-dropdown-empty-padding;
-  font-size: $--select-font-size;
-  text-align: center;
-  color: $--select-dropdown-empty-color;
-}
+  &__wrap {
+    max-height: var(--dropdown-max-height);
+  }
 
-@include b(select-dropdown__wrap) {
-  max-height: $--select-dropdown-max-height;
-}
-
-@include b(select-dropdown__list) {
-  box-sizing: border-box;
-  margin: 0;
-  padding: $--select-dropdown-padding;
-  list-style: none;
+  &__list {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
 }

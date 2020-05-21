@@ -37,7 +37,7 @@
     height: 40px;
     padding: 0 16px;
     font-size: var(--font-size-base);
-    line-height: 20px;
+    line-height: var(--line-height-base);
     color: var(--field-color-base);
     background-color: var(--field-background-color-base);
     border: none;
@@ -46,18 +46,14 @@
 
     &::placeholder {
       color: var(--field-color-placeholder);
+      text-overflow: ellipsis;
       opacity: 1;
     }
 
+    .el-select:hover &,
     &:hover {
       background-color: var(--field-background-color-hover);
       box-shadow: var(--field-box-shadow-hover);
-    }
-
-    &:focus {
-      background-color: var(--field-background-color-focus);
-      outline: none;
-      box-shadow: var(--field-box-shadow-focus);
     }
   }
 
@@ -82,6 +78,13 @@
       display: none;
       width: 0;
       height: 0;
+    }
+
+    &:focus,
+    .el-input.is-focus & {
+      background-color: var(--field-background-color-focus);
+      outline: none;
+      box-shadow: var(--field-box-shadow-focus);
     }
 
     .el-input.is-disabled & {
@@ -129,21 +132,25 @@
       font-size: 24px;
       line-height: 40px;
     }
-  }
-
-  &__clear {
-    color: var(--field-icon-color-base);
-    cursor: pointer;
-
-    &:focus,
-    &:hover {
-      color: var(--field-icon-color-hover);
-    }
 
     &.el-icon-circle-close,
     &.el-icon-view {
+      color: var(--field-icon-color-base);
+    }
+
+    &.el-icon-circle-close,
+    &.el-icon-view,
+    &.el-icon-arrow-up,
+    &.el-icon-arrow-down {
+      cursor: pointer;
+
       &::before {
         font-family: 'qicon';
+      }
+
+      &:focus,
+      &:hover {
+        color: var(--field-icon-color-hover);
       }
     }
 
@@ -154,6 +161,24 @@
     &.el-icon-view::before {
       content: '\e92d';
     }
+
+    &.el-icon-arrow-up::before {
+      content: '\e922';
+    }
+
+    &.el-icon-arrow-up.is-reverse::before {
+      content: '\e923';
+      color: var(--field-icon-color-base);
+    }
+
+    &.el-icon-arrow-down::before {
+      content: '\e922';
+
+      &.is-reverse {
+        content: '\e923';
+        color: var(--field-icon-color-base);
+      }
+    }
   }
 }
 
@@ -163,6 +188,12 @@
     padding-top: 10px;
     padding-bottom: 10px;
     resize: vertical;
+
+    &:focus {
+      background-color: var(--field-background-color-focus);
+      outline: none;
+      box-shadow: var(--field-box-shadow-focus);
+    }
 
     .el-textarea.is-disabled & {
       padding-right: 40px;
