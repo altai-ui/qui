@@ -42,9 +42,6 @@
     1px 1px 3px rgba(174, 174, 192, 0.4);
   --box-shadow-focus: inset 2px 2px 3px rgba(174, 174, 192, 0.2),
     inset -2px -2px 3px rgba(255, 255, 255, 0.7);
-  --box-shadow-error: -1px -1px 3px rgba(255, 255, 255, 0.25),
-    1px 1px 3px rgba(174, 174, 192, 0.4), 4px 4px 8px rgba(174, 174, 192, 0.4),
-    -4px -4px 12px #fff;
 
   --border-error: 1px solid var(--color-secondary-orange);
 
@@ -55,7 +52,7 @@
   --font-size-base: 14px;
   --font-weight-base: 500;
   --font-weight-bold: 600;
+  --letter-spacing: 0.03em;
   //button
   --line-height-button: 15px;
-  --letter-spacing-button: 0.03em;
 }
