@@ -136,6 +136,7 @@
       position: absolute;
       top: calc(50% - 15px);
       left: calc(50% - 14px);
+      animation: rotating 2s linear infinite;
 
       &::before {
         content: '\e91b';
@@ -175,5 +176,15 @@
     &:active {
       box-shadow: var(--box-shadow-pressed);
     }
+  }
+}
+
+@keyframes rotating {
+  0% {
+    transform: rotateZ(0deg);
+  }
+
+  100% {
+    transform: rotateZ(360deg);
   }
 }

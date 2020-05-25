@@ -4,6 +4,18 @@
 @import './neumorphism/common/transition.scss';
 @import './vars.scss';
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-weight: var(--font-weight-base);
@@ -12,4 +24,8 @@ body {
   font-family: 'Gilroy', sans-serif;
   color: var(--color-opacity-gray-dark);
   background-color: var(--color-controls-light);
+}
+
+svg {
+  vertical-align: middle;
 }

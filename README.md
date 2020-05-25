@@ -93,7 +93,6 @@ components
 @import '~@qvant/design-system/src/neumorphism/form.scss';
 @import '~@qvant/design-system/src/neumorphism/form-item.scss';
 @import '~@qvant/design-system/src/neumorphism/tabs.scss';
-@import '~@qvant/design-system/src/neumorphism/tab-pane.scss';
 @import '~@qvant/design-system/src/neumorphism/tag.scss';
 @import '~@qvant/design-system/src/neumorphism/tree.scss';
 @import '~@qvant/design-system/src/neumorphism/alert.scss';
