@@ -9,7 +9,7 @@
       :on-error="handleError"
       :file-list="fileList"
     >
-      <i class="q-icon-cloud-upload-fill"></i>
+      <i class="q-icon-cloud-upload"></i>
       <div class="el-upload__text">загрузить файл</div>
     </el-upload>
   </div>

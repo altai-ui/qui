@@ -4,7 +4,7 @@
       <el-input
         v-model="input1"
         placeholder="С q иконкой"
-        suffix-icon="q-icon-search-fill"
+        suffix-icon="q-icon-search"
       />
     </el-row>
     <el-row>
@@ -19,7 +19,7 @@
       <el-input
         v-model="input1"
         placeholder="С q иконкой и неактивный"
-        suffix-icon="icon-search-fill"
+        suffix-icon="icon-search"
         disabled
       />
     </el-row>

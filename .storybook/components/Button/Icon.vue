@@ -2,7 +2,7 @@
   <div>
     <el-button
       type="primary"
-      icon="q-icon-search-fill"
+      icon="q-icon-search"
     >Q-icon search</el-button>
     <el-button plain>
       El-icon upload
@@ -14,7 +14,7 @@
     />
     <el-button
       circle
-      icon="q-icon-question-stroke"
+      icon="q-icon-question"
     />
   </div>
 </template>
