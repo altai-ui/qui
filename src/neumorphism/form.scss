@@ -41,56 +41,16 @@
   margin-bottom: 22px;
   @include utils-clearfix;
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   & .el-form-item {
     margin-bottom: 0;
   }
 
   & .el-input__validateIcon {
     display: none;
-  }
-
-  @include m(medium) {
-    .el-form-item__label {
-      line-height: 36px;
-    }
-
-    .el-form-item__content {
-      line-height: 36px;
-    }
-  }
-  @include m(small) {
-    .el-form-item__label {
-      line-height: 32px;
-    }
-
-    .el-form-item__content {
-      line-height: 32px;
-    }
-
-    &.el-form-item {
-      margin-bottom: 18px;
-    }
-
-    .el-form-item__error {
-      padding-top: 2px;
-    }
-  }
-  @include m(mini) {
-    .el-form-item__label {
-      line-height: 28px;
-    }
-
-    .el-form-item__content {
-      line-height: 28px;
-    }
-
-    &.el-form-item {
-      margin-bottom: 18px;
-    }
-
-    .el-form-item__error {
-      padding-top: 1px;
-    }
   }
 
   @include e(label-wrap) {
@@ -105,9 +65,10 @@
   @include e(label) {
     float: left;
     box-sizing: border-box;
+    margin-bottom: 10px;
     padding: 0 12px 0 0;
     font-size: var(--font-size-base);
-    line-height: 35px;
+    line-height: 14px;
     vertical-align: middle;
     text-align: right;
     color: #000;
