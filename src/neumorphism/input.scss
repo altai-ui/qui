@@ -39,6 +39,7 @@
     font-size: var(--font-size-base);
     line-height: var(--line-height-base);
     color: var(--field-color-base);
+    text-overflow: ellipsis;
     background-color: var(--field-background-color-base);
     border: none;
     border-radius: var(--border-radius-base);
