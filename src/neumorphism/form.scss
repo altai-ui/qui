@@ -12,7 +12,6 @@
     & .el-form-item__label {
       display: inline-block;
       float: none;
-      padding: 0 0 10px 0;
       text-align: left;
     }
   }
@@ -107,8 +106,8 @@
     float: left;
     box-sizing: border-box;
     padding: 0 12px 0 0;
-    font-size: $--form-label-font-size;
-    line-height: 40px;
+    font-size: var(--font-size-base);
+    line-height: 35px;
     vertical-align: middle;
     text-align: right;
     color: #000;
