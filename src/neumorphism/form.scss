@@ -111,7 +111,7 @@
     line-height: 40px;
     vertical-align: middle;
     text-align: right;
-    color: $--color-text-regular;
+    color: #000;
   }
   @include e(content) {
     position: relative;
@@ -130,7 +130,7 @@
     padding-top: 4px;
     font-size: 12px;
     line-height: 1;
-    color: $--color-danger;
+    color: var(--color-secondary-orange);
 
     @include m(inline) {
       position: relative;
@@ -143,11 +143,11 @@
 
   @include when(required) {
     @include pseudo('not(.is-no-asterisk)') {
-      & > .el-form-item__label::before,
-      & .el-form-item__label-wrap > .el-form-item__label::before {
+      & > .el-form-item__label::after,
+      & .el-form-item__label-wrap > .el-form-item__label::after {
         content: '*';
-        margin-right: 4px;
-        color: $--color-danger;
+        margin-left: 4px;
+        color: var(--color-secondary-orange);
       }
     }
   }
@@ -157,7 +157,7 @@
     & .el-textarea__inner {
       &,
       &:focus {
-        border-color: $--color-danger;
+        border-color: var(--color-secondary-orange);
       }
     }
 
@@ -169,7 +169,7 @@
     }
 
     .el-input__validateIcon {
-      color: $--color-danger;
+      color: var(--color-secondary-orange);
     }
   }
 
