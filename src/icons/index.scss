@@ -212,7 +212,7 @@ $--base-path: '.' !default;
   content: '\e92c';
 }
 
-.q-icon-eye-stroke::before {
+.q-icon-eye::before {
   content: '\e92d';
 }
 
@@ -226,4 +226,16 @@ $--base-path: '.' !default;
 
 .q-icon-lock-fill::before {
   content: '\e930';
+}
+
+.q-icon-database-arrow-down::before {
+  content: '\e931';
+}
+
+.q-icon-router::before {
+  content: '\e932';
+}
+
+.q-icon-eye-close::before {
+  content: '\e933';
 }
