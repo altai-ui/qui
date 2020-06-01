@@ -21,6 +21,10 @@
         label="Address"
         :formatter="formatter"
       />
+      <el-table-column
+        prop="address"
+        label="Very long string with custom Address"
+      />
     </el-table>
   </div>
 </template>
@@ -43,7 +47,8 @@ export default {
         {
           date: '2016-05-04',
           name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles'
+          address:
+            'No. 189, Grove St, Los Angeles, No. 189, Grove St, Los Angeles, No. 189, Grove St, Los Angeles'
         },
         {
           date: '2016-05-01',
