@@ -8,6 +8,7 @@
         range-separator="To"
         start-placeholder="Start month"
         end-placeholder="End month"
+        format="dd MMM yyyy"
       />
     </div>
     <div class="block">
@@ -21,6 +22,7 @@
         start-placeholder="Start month"
         end-placeholder="End month"
         :picker-options="pickerOptions"
+        format="dd MMM yyyy"
       />
     </div>
   </div>

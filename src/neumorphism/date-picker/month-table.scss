@@ -6,20 +6,18 @@
   font-size: 12px;
 
   td {
-    padding: 8px 0;
+    padding-bottom: 16px;
     text-align: center;
     cursor: pointer;
 
     & div {
       box-sizing: border-box;
-      height: 48px;
-      padding: 6px 0;
+      height: 40px;
     }
 
     &.today {
       .cell {
-        font-weight: 700;
-        color: $--color-primary;
+        color: var(--color-primary);
       }
 
       &.start-date .cell,
@@ -40,23 +38,28 @@
 
     .cell {
       display: block;
-      width: 60px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       margin: 0 auto;
-      line-height: 36px;
-      color: $--datepicker-font-color;
-      border-radius: 18px;
+      line-height: 40px;
+      color: var(--color-primary-blue);
+      border-radius: var(--border-radius-base);
+      box-shadow: var(--box-shadow-primary);
 
       &:hover {
-        color: $--datepicker-hover-font-color;
+        color: var(--color-primary-black);
+        background-color: var(--color-controls-dark);
       }
     }
 
-    &.in-range div {
-      background-color: $--datepicker-inrange-background-color;
+    &.in-range .cell {
+      color: #fff;
+      background-color: var(--color-primary-blue);
+      box-shadow: var(--box-shadow-pressed);
 
       &:hover {
-        background-color: $--datepicker-inrange-hover-background-color;
+        color: var(--color-primary-black);
+        background-color: var(--color-controls-dark);
       }
     }
 
@@ -67,22 +70,15 @@
 
     &.start-date .cell,
     &.end-date .cell {
-      color: $--color-white;
-      background-color: $--datepicker-active-color;
-    }
-
-    &.start-date div {
-      border-top-left-radius: 24px;
-      border-bottom-left-radius: 24px;
-    }
-
-    &.end-date div {
-      border-top-right-radius: 24px;
-      border-bottom-right-radius: 24px;
+      color: #fff;
+      background-color: var(--color-primary-blue);
+      box-shadow: var(--box-shadow-pressed);
     }
 
     &.current:not(.disabled) .cell {
-      color: $--datepicker-active-color;
+      color: #fff;
+      background-color: var(--color-primary-blue);
+      box-shadow: var(--box-shadow-pressed);
     }
   }
 }

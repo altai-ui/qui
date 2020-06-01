@@ -6,7 +6,7 @@
         <el-date-picker
           v-model="value1"
           type="week"
-          format="Week WW"
+          format="неделя WW"
           placeholder="Pick a week"
         />
       </div>
@@ -16,6 +16,7 @@
           v-model="value2"
           type="month"
           placeholder="Pick a month"
+          format="dd MMM yyyy"
         />
       </div>
     </div>
@@ -26,6 +27,7 @@
           v-model="value3"
           type="year"
           placeholder="Pick a year"
+          format="dd MMM yyyy"
         />
       </div>
       <div class="block">
@@ -34,6 +36,7 @@
           v-model="value4"
           type="dates"
           placeholder="Pick one or more dates"
+          format="dd MMM yyyy"
         />
       </div>
     </div>

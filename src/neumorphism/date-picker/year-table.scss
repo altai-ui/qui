@@ -10,14 +10,13 @@
   }
 
   td {
-    padding: 20px 3px;
+    padding-bottom: 16px;
     text-align: center;
     cursor: pointer;
 
     &.today {
       .cell {
-        font-weight: 700;
-        color: $--color-primary;
+        color: var(--color-primary);
       }
     }
 
@@ -33,19 +32,24 @@
 
     .cell {
       display: block;
-      width: 48px;
-      height: 32px;
+      width: 40px;
+      height: 40px;
       margin: 0 auto;
-      line-height: 32px;
-      color: $--datepicker-font-color;
+      line-height: 40px;
+      color: var(--color-primary-blue);
+      border-radius: var(--border-radius-base);
+      box-shadow: var(--box-shadow-primary);
 
       &:hover {
-        color: $--datepicker-hover-font-color;
+        color: var(--color-primary-black);
+        background-color: var(--color-controls-dark);
       }
     }
 
     &.current:not(.disabled) .cell {
-      color: $--datepicker-active-color;
+      color: #fff;
+      background-color: var(--color-primary-blue);
+      box-shadow: var(--box-shadow-pressed);
     }
   }
 }

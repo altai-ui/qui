@@ -6,6 +6,7 @@
         v-model="value1"
         type="date"
         placeholder="Pick a day"
+        format="dd MMM yyyy"
       />
     </div>
     <div class="block">
@@ -15,6 +16,7 @@
         type="date"
         placeholder="Pick a day"
         :picker-options="pickerOptions"
+        format="dd MMM yyyy"
       />
     </div>
   </div>

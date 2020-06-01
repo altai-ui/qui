@@ -5,9 +5,9 @@
       <el-date-picker
         v-model="value1"
         type="daterange"
-        range-separator="To"
         start-placeholder="Start date"
         end-placeholder="End date"
+        format="dd MMM yyyy"
       />
     </div>
     <div class="block">
@@ -17,10 +17,10 @@
         type="daterange"
         align="right"
         unlink-panels
-        range-separator="To"
         start-placeholder="Start date"
         end-placeholder="End date"
         :picker-options="pickerOptions"
+        format="dd MMM yyyy"
       />
     </div>
   </div>
