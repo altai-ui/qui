@@ -2,35 +2,22 @@
 @import '../mixins/mixins';
 
 @include b(date-table) {
-  font-size: 12px;
+  font-size: 10px;
   user-select: none;
 
   @include when(week-mode) {
     .el-date-table__row {
       &:hover {
         div {
-          background-color: $--datepicker-inrange-background-color;
-        }
-
-        td.available:hover {
-          color: $--datepicker-font-color;
-        }
-
-        td:first-child div {
-          margin-left: 5px;
-          border-top-left-radius: 15px;
-          border-bottom-left-radius: 15px;
-        }
-
-        td:last-child div {
-          margin-right: 5px;
-          border-top-right-radius: 15px;
-          border-bottom-right-radius: 15px;
+          color: var(--color-primary-black);
+          background-color: var(--color-controls-dark);
         }
       }
 
       &.current div {
-        background-color: $--datepicker-inrange-background-color;
+        color: #fff;
+        background-color: var(--color-primary-blue);
+        box-shadow: var(--box-shadow-primary);
       }
     }
   }
@@ -38,86 +25,68 @@
   td {
     position: relative;
     box-sizing: border-box;
-    width: 32px;
-    height: 30px;
-    padding: 4px 0;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    padding-bottom: 8px;
     text-align: center;
     cursor: pointer;
 
     & div {
       box-sizing: border-box;
-      height: 30px;
-      padding: 3px 0;
+      width: 20px;
+      height: 20px;
+      margin: 0 auto;
+      padding: 0;
+      background-color: var(--color-controls-medium);
+      border-radius: var(--border-radius-base);
+      box-shadow: var(--box-shadow-pressed);
     }
 
     & span {
-      position: absolute;
-      left: 50%;
       display: block;
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
       margin: 0 auto;
-      line-height: 24px;
-      border-radius: 50%;
-      transform: translateX(-50%);
+      line-height: 20px;
     }
 
     &.next-month,
     &.prev-month {
-      color: $--datepicker-off-font-color;
+      color: var(--color-opacity-gray-medium);
     }
 
     &.today {
       position: relative;
 
+      div {
+        border-radius: var(--border-radius-base);
+        box-shadow: var(--box-shadow-pressed);
+      }
+
       span {
-        font-weight: 700;
-        color: $--color-primary;
+        color: var(--color-primary);
       }
 
       &.start-date span,
       &.end-date span {
-        color: $--color-white;
+        color: #fff;
+        box-shadow: var(--box-shadow-primary);
       }
     }
 
-    &.available:hover {
-      color: $--datepicker-hover-font-color;
+    &.available div:hover {
+      color: var(--color-primary-black);
+      background-color: var(--color-controls-dark);
     }
 
-    &.in-range div {
-      background-color: $--datepicker-inrange-background-color;
-
-      &:hover {
-        background-color: $--datepicker-inrange-hover-background-color;
-      }
-    }
-
-    &.current:not(.disabled) span {
-      color: $--color-white;
-      background-color: $--datepicker-active-color;
-    }
-
+    &.current div,
     &.start-date div,
-    &.end-date div {
-      color: $--color-white;
-    }
-
-    &.start-date span,
-    &.end-date span {
-      background-color: $--datepicker-active-color;
-    }
-
-    &.start-date div {
-      margin-left: 5px;
-      border-top-left-radius: 15px;
-      border-bottom-left-radius: 15px;
-    }
-
-    &.end-date div {
-      margin-right: 5px;
-      border-top-right-radius: 15px;
-      border-bottom-right-radius: 15px;
+    &.end-date div,
+    &.in-range div {
+      color: #fff;
+      background-color: var(--color-primary-blue);
+      box-shadow: var(--box-shadow-primary);
     }
 
     &.disabled div {
@@ -128,20 +97,9 @@
     }
 
     &.selected div {
-      margin-right: 5px;
-      margin-left: 5px;
-      background-color: $--datepicker-inrange-background-color;
-      border-radius: 15px;
-
-      &:hover {
-        background-color: $--datepicker-inrange-hover-background-color;
-      }
-    }
-
-    &.selected span {
-      color: $--color-white;
-      background-color: $--datepicker-active-color;
-      border-radius: 15px;
+      color: #fff;
+      background-color: var(--color-primary-blue);
+      box-shadow: var(--box-shadow-primary);
     }
 
     &.week {
@@ -151,9 +109,9 @@
   }
 
   th {
-    padding: 5px;
+    padding-bottom: 4px;
     font-weight: 400;
-    color: $--datepicker-header-font-color;
+    color: var(--color-opacity-gray-dark);
     border-bottom: solid 1px $--border-color-lighter;
   }
 }

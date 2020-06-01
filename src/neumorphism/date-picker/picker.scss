@@ -10,6 +10,22 @@
   &.el-input,
   &.el-input__inner {
     width: 220px;
+
+    &::after {
+      content: '\e908';
+      position: absolute;
+      top: 0;
+      right: 8px;
+      font-size: 24px;
+      line-height: 40px;
+      font-family: 'qicon';
+      cursor: not-allowed;
+    }
+  }
+
+  .el-input__prefix,
+  .el-input__suffix {
+    display: none;
   }
 
   @include m((monthrange)) {
@@ -22,7 +38,7 @@
   @include m((daterange, timerange)) {
     &.el-input,
     &.el-input__inner {
-      width: 350px;
+      width: 220px;
     }
   }
 
@@ -54,13 +70,13 @@
 
   .el-range-input {
     display: inline-block;
-    width: 39%;
+    width: 42%;
     height: 100%;
     margin: 0;
     padding: 0;
-    font-size: $--font-size-base;
-    text-align: center;
-    color: $--color-text-regular;
+    font-size: inherit;
+    line-height: 40px;
+    color: var(--color-primary-black);
     border: none;
     outline: none;
     appearance: none;
@@ -75,20 +91,11 @@
     width: 5%;
     height: 100%;
     margin: 0;
-    padding: 0 5px;
+    padding: 0 2px;
     font-size: 14px;
     line-height: 32px;
     text-align: center;
     color: $--color-text-primary;
-  }
-
-  .el-range__close-icon {
-    display: inline-block;
-    float: right;
-    width: 25px;
-    font-size: 14px;
-    line-height: 32px;
-    color: $--color-text-placeholder;
   }
 }
 
@@ -97,10 +104,33 @@
     display: inline-flex;
     align-items: center;
     padding: 3px 10px;
+
+    background-color: var(--color-controls-medium);
+    border: none;
+    border-radius: var(--border-radius-base);
+    box-shadow: var(--box-shadow-primary);
+
+    &:hover {
+      background-color: var(--color-controls-dark);
+      box-shadow: var(--box-shadow-hover);
+    }
+
+    &.is-active {
+      background-color: var(--color-controls-primary);
+      outline: none;
+      box-shadow: var(--box-shadow-focus);
+    }
   }
 
   .el-range-input {
     line-height: 1;
+    text-align: center;
+    background: none;
+  }
+
+  .el-range__close-icon {
+    width: 45px;
+    visibility: hidden;
   }
 
   @include when(active) {

@@ -2,12 +2,14 @@
 
 @include b(picker-panel) {
   margin: 5px 0;
-  line-height: 30px;
-  color: $--color-text-regular;
-  background: $--color-white;
-  border: 1px solid $--datepicker-border-color;
+  color: var(--color-primary-blue);
+  background: var(--color-controls-medium);
   border-radius: $--border-radius-base;
-  box-shadow: $--box-shadow-light;
+  box-shadow: var(--box-shadow-primary);
+
+  &.el-popper .popper__arrow {
+    display: none;
+  }
 
   @include e((body, body-wrapper)) {
     &::after {
@@ -19,26 +21,25 @@
 
   @include e(content) {
     position: relative;
-    margin: 15px;
+    box-sizing: border-box;
+    padding: 0 8px 8px;
   }
 
   @include e(footer) {
     position: relative;
-    padding: 4px;
+    padding: 0 8px 8px;
     font-size: 0;
-    text-align: right;
-    background-color: $--color-white;
-    border-top: 1px solid $--datepicker-inner-border-color;
+    text-align: center;
   }
 
   @include e(shortcut) {
     display: block;
     width: 100%;
-    padding-left: 12px;
-    font-size: 14px;
-    line-height: 28px;
+    padding-bottom: 8px;
+    font-size: 10px;
+    line-height: 12px;
     text-align: left;
-    color: $--datepicker-font-color;
+    color: var(--color-opacity-gray-dark);
     background-color: transparent;
     border: 0;
     outline: none;
@@ -72,16 +73,46 @@
   }
 
   @include e(icon-btn) {
-    margin-top: 8px;
-    font-size: 12px;
-    color: $--datepicker-icon-color;
-    background: transparent;
+    width: 20px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0;
+    font-size: 20px;
+    font-family: 'qicon' !important;
+    color: var(--color-primary-blue);
+    background: #f0f0f3;
     border: 0;
+    border-radius: 20px;
     outline: none;
+    box-shadow: var(--box-shadow-primary);
     cursor: pointer;
+
+    .is-left & {
+      margin-right: 4px;
+    }
+
+    .is-right & {
+      margin-left: 4px;
+    }
 
     &:hover {
       color: $--datepicker-hover-font-color;
+    }
+
+    &.el-icon-d-arrow-left::before {
+      content: '\e92a';
+    }
+
+    &.el-icon-arrow-left::before {
+      content: '\e92c';
+    }
+
+    &.el-icon-d-arrow-right::before {
+      content: '\e92b';
+    }
+
+    &.el-icon-arrow-right::before {
+      content: '\e927';
     }
 
     @include when(disabled) {
@@ -104,10 +135,9 @@
   top: 0;
   bottom: 0;
   box-sizing: border-box;
-  width: 110px;
-  padding-top: 6px;
+  width: 114px;
+  padding: 16px 8px;
   overflow: auto;
-  background-color: $--color-white;
   border-right: 1px solid $--datepicker-inner-border-color;
 }
 

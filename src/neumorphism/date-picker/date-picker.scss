@@ -3,14 +3,14 @@
 @import './picker-panel.scss';
 
 @include b(date-picker) {
-  width: 322px;
+  width: 220px;
 
   &.has-sidebar.has-time {
     width: 434px;
   }
 
   &.has-sidebar {
-    width: 438px;
+    width: 328px;
   }
 
   &.has-time .el-picker-panel__body-wrapper {
@@ -18,7 +18,7 @@
   }
 
   .el-picker-panel__content {
-    width: 292px;
+    width: 220px;
   }
 
   table {
@@ -43,7 +43,7 @@
   }
 
   @include e(header) {
-    margin: 12px;
+    padding: 14px 8px;
     text-align: center;
 
     @include m(bordered) {
@@ -58,12 +58,12 @@
   }
 
   @include e(header-label) {
-    padding: 0 5px;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 22px;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
     text-align: center;
-    color: $--color-text-regular;
+    color: var(--color-primary-black);
+    text-transform: uppercase;
     cursor: pointer;
 
     &:hover {
@@ -77,10 +77,12 @@
 
   @include e(prev-btn) {
     float: left;
+    margin-right: 4px;
   }
 
   @include e(next-btn) {
     float: right;
+    margin-left: 4px;
   }
 
   @include e(time-wrap) {
