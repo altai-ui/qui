@@ -1,14 +1,24 @@
 <template>
   <div>
-    <el-button :loading="isLoading">Loading</el-button>
-    <el-button
-      plain
-      :loading="isLoading"
-    >Loading</el-button>
     <div class="block">
-      <el-button @click="handleLoadingChange">
-        Switch Loading
-      </el-button>
+      <span
+        class="demonstration"
+      >add prop <b>:loading="true"</b> for showing loading animation</span>
+      <el-row>
+        <el-button :loading="isLoading">Loading</el-button>
+        <el-button
+          plain
+          :loading="isLoading"
+        >Loading</el-button>
+      </el-row>
+    </div>
+    <div class="block">
+      <span class="demonstration">Try!</span>
+      <el-row>
+        <el-button @click="handleLoadingChange">
+          Switch Loading
+        </el-button>
+      </el-row>
     </div>
   </div>
 </template>

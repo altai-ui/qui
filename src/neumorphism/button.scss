@@ -66,10 +66,44 @@
   }
 
   & [class*='q-icon-'] {
-    transform: scale(1.5);
-
     & + span {
       margin-left: 10px;
+    }
+  }
+
+  &.full-width {
+    width: 100%;
+  }
+
+  &.icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    font-size: 16px;
+
+    .el-icon-right {
+      margin-left: 0;
+    }
+
+    .el-icon-left {
+      margin-right: 0;
+    }
+  }
+
+  @include m(medium) {
+    &.icon {
+      width: 40px;
+      height: 40px;
+      font-size: 26px;
+    }
+    @include when(circle) {
+      &.icon {
+        width: 40px;
+        height: 40px;
+      }
     }
   }
 
@@ -158,8 +192,8 @@
   }
 
   @include when(circle) {
-    max-width: 24px;
-    max-height: 24px;
+    width: 24px;
+    height: 24px;
     padding: 6px;
     line-height: 12px;
     color: var(--color-primary-blue);
