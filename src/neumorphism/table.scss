@@ -237,6 +237,7 @@
 
   th {
     overflow: hidden;
+    vertical-align: top;
     user-select: none;
 
     > .cell {
@@ -244,6 +245,7 @@
       display: inline-block;
       box-sizing: border-box;
       width: 100%;
+      min-height: auto;
       padding-right: 12px;
       padding-left: 12px;
       vertical-align: middle;
