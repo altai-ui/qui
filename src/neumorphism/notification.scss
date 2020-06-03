@@ -5,13 +5,12 @@
   position: fixed;
   display: flex;
   box-sizing: border-box;
-  width: $--notification-width;
-  padding: $--notification-padding;
+  width: 552px;
+  padding: 22px 0;
   overflow: hidden;
-  background-color: $--color-white;
-  border: 1px solid $--notification-border-color;
-  border-radius: $--notification-radius;
-  box-shadow: $--notification-shadow;
+  background-color: var(--color-controls-primary);
+  border-radius: var(--border-radius-base);
+  box-shadow: var(--box-shadow-pressed);
   transition: opacity 0.3s, transform 0.3s, left 0.3s, right 0.3s, top 0.4s,
     bottom 0.3s;
 
@@ -24,23 +23,25 @@
   }
 
   @include e(group) {
-    margin-right: $--notification-group-margin-right;
-    margin-left: $--notification-group-margin-left;
+    width: 415px;
+    margin-right: 57px;
+    margin-left: 80px;
   }
 
   @include e(title) {
     margin: 0;
     font-weight: 700;
-    font-size: $--notification-title-font-size;
-    color: $--notification-title-color;
+    font-size: 16px;
+    color: var(--color-primary-black);
   }
 
   @include e(content) {
-    margin: 6px 0 0 0;
-    font-size: $--notification-content-font-size;
-    line-height: 21px;
-    text-align: justify;
-    color: $--notification-content-color;
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--color-primary-black);
 
     p {
       margin: 0;
@@ -48,38 +49,62 @@
   }
 
   @include e(icon) {
-    width: $--notification-icon-size;
-    height: $--notification-icon-size;
-    font-size: $--notification-icon-size;
+    position: absolute;
+    top: 28px;
+    left: 24px;
+
+    &::before {
+      font-size: 32px;
+      font-family: 'qicon';
+    }
   }
 
   @include e(closeBtn) {
     position: absolute;
-    top: 18px;
-    right: 15px;
-    font-size: $--notification-close-font-size;
-    color: $--notification-close-color;
+    top: 32px;
+    right: 16px;
+    font-size: 24px;
+    text-align: center;
+    color: var(--color-primary-blue);
     cursor: pointer;
 
-    &:hover {
-      color: $--notification-close-hover-color;
+    &::before {
+      content: '\e90b';
+      font-size: 24px;
+      font-family: 'qicon';
     }
   }
 
   .el-icon-success {
-    color: $--notification-success-icon-color;
+    color: var(--color-secondary-green);
+
+    &::before {
+      content: '\e909';
+    }
   }
 
   .el-icon-error {
-    color: $--notification-danger-icon-color;
+    color: var(--color-secondary-orange);
+
+    &::before {
+      content: '\e92f';
+    }
   }
 
   .el-icon-info {
-    color: $--notification-info-icon-color;
+    color: var(--color-opacity-gray-medium);
+
+    &::before {
+      content: '\e92e';
+    }
   }
 
   .el-icon-warning {
-    color: $--notification-warning-icon-color;
+    color: var(--color-secondary-yellow);
+
+    &::before {
+      content: '\e92f';
+    }
   }
 }
 
