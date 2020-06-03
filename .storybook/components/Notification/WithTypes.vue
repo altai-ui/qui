@@ -40,7 +40,6 @@ export default {
   methods: {
     open1() {
       this.$notify({
-        title: 'Success',
         message: 'This is a success message',
         type: 'success'
       });
@@ -48,7 +47,6 @@ export default {
 
     open2() {
       this.$notify({
-        title: 'Warning',
         message: 'This is a warning message',
         type: 'warning'
       });
@@ -56,14 +54,12 @@ export default {
 
     open3() {
       this.$notify.info({
-        title: 'Info',
         message: 'This is an info message'
       });
     },
 
     open4() {
       this.$notify.error({
-        title: 'Error',
         message: 'This is an error message'
       });
     }
