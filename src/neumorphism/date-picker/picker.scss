@@ -28,6 +28,22 @@
     display: none;
   }
 
+  .el-input__prefix {
+    display: none;
+  }
+
+  .el-input__suffix {
+    .el-input__icon::before {
+      content: '\e908';
+      font-style: normal;
+      font-family: 'qicon';
+    }
+
+    .el-icon-circle-close::before {
+      content: '\e90b';
+    }
+  }
+
   @include m((monthrange)) {
     &.el-input,
     &.el-input__inner {
