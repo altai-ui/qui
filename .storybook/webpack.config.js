@@ -12,5 +12,6 @@ module.exports = async ({ config }) => {
     ],
     include: path.resolve(__dirname, '../')
   });
+
   return config;
 };

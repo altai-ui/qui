@@ -5,7 +5,7 @@
   "repository": "http://gitlab.mt-tech.ru/city/neumorphism-design-system.git",
   "author": "Qvant",
   "scripts": {
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -s ./public -p 6006",
     "build-storybook": "build-storybook -c .storybook -o .out",
     "stylelint:fix": "stylelint --fix '**/*.{scss,vue}'",
     "prettier": "prettier --write '**/*.{js,vue,scss,json,yml}'",
