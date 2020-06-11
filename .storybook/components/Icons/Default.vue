@@ -84,7 +84,11 @@ export default {
         ['q-icon-eye-close', '\\e933'],
         ['q-icon-target', '\\e934'],
         ['q-icon-comment', '\\e935'],
-        ['q-icon-router-arrow-down', '\\e936']
+        ['q-icon-router-arrow-down', '\\e936'],
+        ['q-icon-plus', '\\e937'],
+        ['q-icon-credit-card', '\\e938'],
+        ['q-icon-alert-fill', '\\e939'],
+        ['q-icon-alert-stroke', '\\e93a']
       ]
     };
   },
