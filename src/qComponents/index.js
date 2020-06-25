@@ -1,6 +1,8 @@
 import QButton from './QButton';
+import QInput from './QInput';
+import QTextarea from './QTextarea';
 
-const components = [QButton];
+const components = [QButton, QInput, QTextarea];
 
 const install = function(Vue) {
   components.forEach(component => {
@@ -32,6 +34,5 @@ if (typeof window !== 'undefined' && window.Vue) {
 export default {
   version: '0.0.1',
   //   locale: locale.use,
-  install,
-  QButton
+  install
 };
