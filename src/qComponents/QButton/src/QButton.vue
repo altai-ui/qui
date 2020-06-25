@@ -24,8 +24,6 @@
   </button>
 </template>
 <script>
-import './QButton.scss';
-
 export default {
   name: 'QButton',
   inject: {
