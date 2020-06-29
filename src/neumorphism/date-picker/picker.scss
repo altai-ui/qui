@@ -9,7 +9,7 @@
 
   &.el-input,
   &.el-input__inner {
-    width: 220px;
+    width: 100%;
 
     &::after {
       content: '\e908';
@@ -44,6 +44,22 @@
     }
   }
 
+  .el-input__prefix {
+    display: none;
+  }
+
+  .el-input__suffix {
+    .el-input__icon::before {
+      content: '\e908';
+      font-style: normal;
+      font-family: 'qicon';
+    }
+
+    .el-icon-circle-close::before {
+      content: '\e90b';
+    }
+  }
+
   @include m((monthrange)) {
     &.el-input,
     &.el-input__inner {
@@ -54,7 +70,7 @@
   @include m((daterange, timerange)) {
     &.el-input,
     &.el-input__inner {
-      width: 220px;
+      width: 100%;
     }
   }
 
@@ -218,28 +234,23 @@
   }
 
   @include when(disabled) {
-    color: $--input-disabled-color;
-    background-color: $--input-disabled-fill;
-    border-color: $--input-disabled-border;
+    color: var(--color-opacity-gray-dark);
+    background-color: var(--color-controls-dark);
     cursor: not-allowed;
 
-    &:hover,
-    &:focus {
-      border-color: $--input-disabled-border;
-    }
-
     input {
-      color: $--input-disabled-color;
-      background-color: $--input-disabled-fill;
+      font-weight: var(--font-weight-base);
+      background-color: var(--color-controls-dark);
       cursor: not-allowed;
 
       &::placeholder {
-        color: $--input-disabled-placeholder-color;
+        color: var(--color-opacity-gray-medium);
       }
     }
 
-    .el-range-separator {
-      color: $--input-disabled-color;
+    .el-range-separator,
+    .el-range-input {
+      color: var(--color-opacity-gray-medium);
     }
   }
 }
