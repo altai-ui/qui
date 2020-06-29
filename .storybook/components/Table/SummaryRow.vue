@@ -4,13 +4,27 @@
       :data="tableData"
       :default-sort="{ prop: 'date', order: 'descending' }"
       style="width: 100%"
+      class="summary-table"
     >
       <el-table-column
         prop="date"
         label="Date"
         sortable
         width="180"
-      />
+        class-name="summary-column"
+      >
+        <template
+          slot="header"
+          slot-scope="scope"
+        >
+          <div class="title-row">
+            {{ scope.column.label }}
+          </div>
+          <div class="summary-row">
+            {{ totalData[scope.column.property] }}
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="name"
         label="Name"
@@ -20,13 +34,11 @@
       <el-table-column
         prop="address"
         label="Address"
-        sortable
         :formatter="formatter"
       />
       <el-table-column
         prop="address"
-        sortable
-        label="Very long string with custom Address"
+        label="Very long  long  long  long string with custom Address Very long  long  long  long string with custom Address"
       />
     </el-table>
   </div>
@@ -36,6 +48,11 @@
 export default {
   data() {
     return {
+      totalData: {
+        date: '2016-05-02',
+        name: 'summary name',
+        adress: 'summary adress'
+      },
       tableData: [
         {
           date: '2016-05-03',
@@ -64,6 +81,9 @@ export default {
   methods: {
     formatter(row) {
       return row.address;
+    },
+    lol(scope) {
+      console.log(scope);
     }
   }
 };

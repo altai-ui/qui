@@ -1,9 +1,13 @@
 <template>
   <div class="demo">
+    <span class="demonstration">
+      If you have links on row you must add 'interactive-row' class to
+      <b>:row-class-name</b> prop</span>
     <el-table
       :data="tableData"
       :default-sort="{ prop: 'date', order: 'descending' }"
       style="width: 100%"
+      row-class-name="interactive-row"
     >
       <el-table-column
         prop="date"
@@ -14,18 +18,15 @@
       <el-table-column
         prop="name"
         label="Name"
-        sortable
         width="180"
       />
       <el-table-column
         prop="address"
         label="Address"
-        sortable
         :formatter="formatter"
       />
       <el-table-column
         prop="address"
-        sortable
         label="Very long string with custom Address"
       />
     </el-table>
@@ -48,23 +49,12 @@ export default {
           address: 'No. 189, Grove St, Los Angeles'
         },
         {
-          date: '2016-05-04',
-          name: 'Tom',
-          address:
-            'No. 189, Grove St, Los Angeles, No. 189, Grove St, Los Angeles, No. 189, Grove St, Los Angeles'
-        },
-        {
           date: '2016-05-01',
           name: 'Tom',
           address: 'No. 189, Grove St, Los Angeles'
         }
       ]
     };
-  },
-  methods: {
-    formatter(row) {
-      return row.address;
-    }
   }
 };
 </script>

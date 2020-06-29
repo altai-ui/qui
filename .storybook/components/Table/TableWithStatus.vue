@@ -4,10 +4,18 @@
       class="demonstration"
     >For styling row with color add <b>:row-class-name</b> prop with following
       values: green-row, red-row, grey-row</span>
+
+    <span
+      class="demonstration"
+    >For styling row with custom color add <b>custom-border</b> class to
+      <b>:row-class-name</b> prop, pass <b>:cell-style</b> prop with
+      <b>--row-custom-border-color</b> which has right color</span>
+
     <el-table
       :data="tableData"
-      style="width: 100%"
+      style="width: 100%;"
       :row-class-name="tableRowClassName"
+      :cell-style="tableRowBorderStyle"
     >
       <el-table-column
         prop="date"
@@ -76,6 +84,16 @@ export default {
     };
   },
   methods: {
+    tableRowBorderStyle({ rowIndex }) {
+      if (rowIndex === 0) {
+        return '--row-custom-border-color: #5ECAE7';
+      }
+      if (rowIndex === 2 || rowIndex === 4) {
+        return '--row-custom-border-color: #F2D22B';
+      }
+      return '';
+    },
+
     tableRowClassName({ rowIndex }) {
       if (rowIndex === 1) {
         return 'green-row';
@@ -86,7 +104,7 @@ export default {
       if (rowIndex === 5) {
         return 'grey-row';
       }
-      return '';
+      return 'custom-border';
     }
   }
 };
