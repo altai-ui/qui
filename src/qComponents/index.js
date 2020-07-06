@@ -1,10 +1,15 @@
+import vClickOutside from 'v-click-outside';
+
 import QButton from './QButton';
 import QInput from './QInput';
 import QTextarea from './QTextarea';
+import QContextMenu from './QContextMenu';
 
-const components = [QButton, QInput, QTextarea];
+const components = [QButton, QInput, QTextarea, QContextMenu];
 
 const install = function(Vue) {
+  Vue.use(vClickOutside);
+
   components.forEach(component => {
     Vue.component(component.name, component);
   });
