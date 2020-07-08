@@ -23,9 +23,11 @@
     </span>
   </button>
 </template>
+
 <script>
 export default {
   name: 'QButton',
+
   inject: {
     qForm: {
       default: ''
@@ -34,6 +36,7 @@ export default {
       default: ''
     }
   },
+
   props: {
     type: {
       type: String,
@@ -79,6 +82,7 @@ export default {
       default: false
     }
   },
+
   computed: {
     classes() {
       const classes = Object.entries({
@@ -99,6 +103,7 @@ export default {
       return classes;
     }
   },
+
   methods: {
     handleClick(evt) {
       this.$emit('click', evt);

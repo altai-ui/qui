@@ -1,6 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { storiesOf, addDecorator } from '@storybook/vue';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import Centered from '@storybook/addon-centered/vue';
 
 addDecorator(Centered);
