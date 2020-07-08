@@ -21,9 +21,14 @@
     </div>
   </el-upload>
 </template>
+
 <script>
 export default {
   methods: {
+    handlePreview() {},
+
+    handleRemove() {},
+
     handleExceed(files, fileList) {
       this.$message.warning(
         `The limit is 3, you selected ${
@@ -31,6 +36,7 @@ export default {
         } files this time, add up to ${files.length + fileList.length} totally`
       );
     },
+
     beforeRemove(file) {
       return this.$confirm(`Cancel the transfert of ${file.name} ?`);
     }

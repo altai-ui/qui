@@ -17,12 +17,15 @@
   "license": "ISC",
   "dependencies": {
     "element-ui": "^2.13.0",
+    "lodash-es": "^4.17.15",
+    "popper.js": "^1.16.1",
     "v-click-outside": "^3.0.1",
     "vue": "^2.6.10"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
     "@storybook/addon-centered": "^5.2.8",
+    "@storybook/theming": "^5.3.19",
     "@storybook/vue": "^5.2.8",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",

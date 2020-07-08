@@ -8,12 +8,12 @@
         <el-button
           icon="q-icon-pic"
           class="icon"
-        ></el-button>
+        />
         <el-button
           plain
           class="icon"
           icon="q-icon-cloud-upload"
-        > </el-button>
+        />
         <el-button
           class="icon"
           circle
@@ -30,7 +30,7 @@
           icon="q-icon-pic"
           class="icon"
           size="medium"
-        ></el-button>
+        />
         <el-button
           plain
           class="icon"

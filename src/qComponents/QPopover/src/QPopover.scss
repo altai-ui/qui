@@ -1,0 +1,51 @@
+.popover-content {
+  position: absolute;
+  z-index: 200000;
+  min-width: 320px;
+  max-width: 552px;
+  min-height: 78px;
+  padding: 28px 24px 24px 80px;
+  text-align: left;
+  color: var(--color-primary-black);
+  letter-spacing: 0.2px;
+  background-color: #fff;
+  border-radius: var(--border-radius-base);
+  box-shadow: var(--box-shadow-primary);
+
+  &__icon {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    text-align: center;
+    color: #fff;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+
+    &::before {
+      font-size: 30px;
+      line-height: 30px;
+    }
+  }
+
+  &__title {
+    min-width: 216px;
+    margin-bottom: 12px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+
+    &_no-content {
+      margin-bottom: 0;
+    }
+  }
+
+  &__inner {
+    max-height: 646px;
+    overflow: auto;
+  }
+
+  &_without-icon {
+    min-height: 20px;
+    padding: 16px;
+  }
+}

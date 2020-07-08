@@ -19,9 +19,11 @@
 export default {
   data() {
     return {
-      error: false
+      error: false,
+      fileList: []
     };
   },
+
   computed: {
     classes() {
       return {
@@ -30,10 +32,12 @@ export default {
       };
     }
   },
+
   methods: {
     handleChange(file, fileList) {
       console.log(file, fileList);
     },
+
     handleError(error) {
       console.log(error);
       this.error = true;
