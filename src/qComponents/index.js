@@ -5,8 +5,18 @@ import QInput from './QInput';
 import QTextarea from './QTextarea';
 import QContextMenu from './QContextMenu';
 import QPopover from './QPopover';
+import QTabs from './QTabs';
+import QTabPane from './QTabPane';
 
-const components = [QButton, QInput, QTextarea, QContextMenu, QPopover];
+const components = [
+  QButton,
+  QInput,
+  QTextarea,
+  QContextMenu,
+  QPopover,
+  QTabs,
+  QTabPane
+];
 
 const install = function(Vue) {
   Vue.use(vClickOutside);
