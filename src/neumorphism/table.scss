@@ -9,9 +9,8 @@
   flex: 1;
   box-sizing: border-box;
   font-weight: var(--font-weight-base);
-  font-size: 14px;
   font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
+  line-height: 20;
   color: var(--color-opacity-gray-dark);
 
   --row-custom-border-color: rgba(0, 0, 0, 0);

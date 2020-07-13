@@ -8,6 +8,7 @@
 @include b(cascader) {
   position: relative;
   display: inline-block;
+  width: 100%;
   font-size: var(--font-size-base);
 
   &:not(.is-disabled):hover {
