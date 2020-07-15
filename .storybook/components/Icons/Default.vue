@@ -30,6 +30,11 @@ export default {
   data() {
     return {
       iconsList: [
+        ['q-icon-change-list', '\\e948'],
+        ['q-icon-wallet-stroke', '\\e949'],
+        ['q-icon-archive-arrow-down', '\\e93e'],
+        ['q-icon-finish-fill', '\\e93f'],
+        ['q-icon-play', '\\e947'],
         ['q-icon-bell', '\\e905'],
         ['q-icon-bell-ring', '\\e906'],
         ['q-icon-triangle-down', '\\e922'],
