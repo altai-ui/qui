@@ -32,6 +32,14 @@ $--base-path: '.' !default;
   font-family: 'qicon' !important;
 }
 
+.q-icon-change-list::before {
+  content: '\e948';
+}
+
+.q-icon-wallet-stroke::before {
+  content: '\e949';
+}
+
 .q-icon-archive-arrow-down::before {
   content: '\e93e';
 }
