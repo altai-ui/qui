@@ -35,14 +35,8 @@
       }
     ],
 
-    "import/extensions": [
-      "error",
-      "always",
-      {
-        "js": "never",
-        "vue": "never"
-      }
-    ],
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
 
     "vue/component-name-in-template-casing": ["error", "kebab-case"],
     "vue/max-attributes-per-line": "warn",

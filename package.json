@@ -18,17 +18,18 @@
   "dependencies": {
     "@popperjs/core": "^2.4.4",
     "element-ui": "^2.13.0",
+    "resize-observer-polyfill": "^1.5.0",
     "lodash-es": "^4.17.15",
     "v-click-outside": "^3.0.1",
-    "vue": "^2.6.10"
+    "vue": "^2.6.11"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.4",
-    "@storybook/addon-centered": "^5.2.8",
-    "@storybook/theming": "^5.3.19",
-    "@storybook/vue": "^5.2.8",
+    "@babel/core": "^7.10.4",
+    "@storybook/addon-centered": "^5.3.19",
+    "@storybook/addon-docs": "^5.3.19",
+    "@storybook/vue": "^5.3.19",
     "babel-eslint": "^10.0.3",
-    "babel-loader": "^8.0.6",
+    "babel-loader": "^8.1.0",
     "babel-preset-vue": "^2.0.2",
     "eslint": "^6.7.2",
     "eslint-config-airbnb-base": "^14.1.0",
@@ -43,8 +44,8 @@
     "stylelint": "^13.3.3",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-order": "^4.0.0",
-    "vue-loader": "^15.7.2",
-    "vue-template-compiler": "^2.6.10"
+    "vue-loader": "^15.9.3",
+    "vue-template-compiler": "^2.6.11"
   },
   "husky": {
     "hooks": {

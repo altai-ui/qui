@@ -1,0 +1,57 @@
+@import 'QSelect-dropdown';
+@import 'src/qComponents/QTag/src/QTag';
+
+.q-select {
+  --field-color-base: var(--color-primary-black);
+  --field-color-placeholder: var(--color-opacity-gray-medium);
+  --field-color-disabled: var(--color-opacity-gray-dark);
+
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  &__tags > span {
+    display: contents;
+  }
+
+  &__input {
+    height: 28px;
+    margin-left: 8px;
+    padding: 0;
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--field-color-base);
+    background-color: transparent;
+    border: none;
+    outline: none;
+    appearance: none;
+  }
+
+  &__tags {
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: calc(100% - 48px) !important;
+    white-space: normal;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  &__tags-text {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &__caret.q-icon-::before {
+    content: '\e91d';
+    font-size: 24px;
+    line-height: 40px;
+    font-family: 'qicon';
+  }
+}

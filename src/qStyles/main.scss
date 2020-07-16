@@ -1,6 +1,11 @@
+@import './transition.scss';
+
+@import './qComponents/QScrollbar/src/QScrollbar.scss';
 @import './qComponents/QButton/src/QButton.scss';
 @import './qComponents/QInput/src/QInput.scss';
 @import './qComponents/QTextarea/src/QTextarea.scss';
+@import './qComponents/QTag/src/QTag.scss';
+@import './qComponents/QSelect/src/QSelect.scss';
 @import './qComponents/QContextMenu/src/QContextMenu.scss';
 @import './qComponents/QPopover/src/QPopover.scss';
 @import './qComponents/QTabs/src/QTabs.scss';
