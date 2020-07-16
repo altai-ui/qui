@@ -6,26 +6,30 @@
     >
       <div
         v-show="isPopoverShown"
-        ref="qPopper"
-        class="popover-content"
-        :class="popoverContentClasses"
-        :style="popoverContentStyles"
+        ref="qPopover"
+        class="q-popover"
+        :class="popoverClasses"
+        :style="popoverStyles"
       >
         <div
           v-if="icon"
-          class="popover-content__icon"
+          class="q-popover__icon"
           :class="icon"
           :style="popoverIconStyles"
         />
-        <div
-          v-if="title"
-          class="popover-content__title"
-          :class="popoverTitleClasses"
-        >
-          {{ title }}
-        </div>
-        <div class="popover-content__inner">
-          <slot />
+        <div class="q-popover__inner">
+          <div
+            v-if="title"
+            class="q-popover__title"
+          >
+            {{ title }}
+          </div>
+          <div
+            v-if="$slots.default"
+            class="q-popover__content"
+          >
+            <slot />
+          </div>
         </div>
       </div>
     </transition>
@@ -35,7 +39,7 @@
 </template>
 
 <script>
-import Popper from 'popper.js';
+import { createPopper } from '@popperjs/core';
 
 function eventOn(element, event, handler) {
   if (element && event && handler) {
@@ -119,6 +123,10 @@ export default {
     popperOptions: {
       type: Object,
       default: () => ({})
+    },
+    appendToBody: {
+      type: Boolean,
+      default: true
     }
   },
 
@@ -131,22 +139,20 @@ export default {
   },
 
   computed: {
-    popoverContentClasses() {
+    popoverClasses() {
       return {
-        'popover-content_without-icon': !this.icon
+        'q-popover_without-icon': !this.icon
       };
     },
 
-    popoverContentStyles() {
+    popoverStyles() {
       return {
-        minWidth:
-          typeof this.minWidth === 'number'
-            ? `${this.minWidth}px`
-            : this.minWidth,
-        maxWidth:
-          typeof this.maxWidth === 'number'
-            ? `${this.maxWidth}px`
-            : this.maxWidth
+        minWidth: Number(this.minWidth)
+          ? `${Number(this.minWidth)}px`
+          : this.minWidth,
+        maxWidth: Number(this.maxWidth)
+          ? `${Number(this.maxWidth)}px`
+          : this.maxWidth
       };
     },
 
@@ -158,31 +164,15 @@ export default {
       return {
         [backgroundProperty]: this.iconColor
       };
-    },
-
-    popoverTitleClasses() {
-      return {
-        'popover-content__title_no-content': !this.$slots.default
-      };
     }
   },
 
   watch: {
     isPopoverShown(value) {
-      if (value) {
+      if (value && !this.popperJS) {
         this.$emit('show');
-
-        if (this.popperJS) {
-          this.popperJS.enableEventListeners();
-          this.popperJS.scheduleUpdate();
-        } else {
-          this.createPopper();
-        }
+        this.createPopper();
       } else {
-        if (this.popperJS) {
-          this.popperJS.disableEventListeners();
-        }
-
         this.$emit('hide');
       }
     }
@@ -201,16 +191,16 @@ export default {
 
     switch (this.trigger) {
       default:
-      case 'hover':
-        eventOn(this.referenceElement, 'mouseover', this.handleMouseOver);
-        eventOn(this.referenceElement, 'mouseout', this.onMouseOut);
-        eventOn(this.$refs.qPopper, 'mouseover', this.handleMouseOver);
-        eventOn(this.$refs.qPopper, 'mouseout', this.onMouseOut);
-        break;
-
       case 'click':
         eventOn(this.referenceElement, 'click', this.togglePopover);
         eventOn(document, 'click', this.handleDocumentClick);
+        break;
+
+      case 'hover':
+        eventOn(this.referenceElement, 'mouseover', this.handleMouseOver);
+        eventOn(this.referenceElement, 'mouseout', this.onMouseOut);
+        eventOn(this.$refs.qPopover, 'mouseover', this.handleMouseOver);
+        eventOn(this.$refs.qPopover, 'mouseout', this.onMouseOut);
         break;
     }
   },
@@ -223,11 +213,20 @@ export default {
 
     this.isPopoverShown = false;
     this.destroy();
+
+    if (this.appendToBody) {
+      const { qPopover } = this.$refs;
+      qPopover.parentNode.removeChild(qPopover);
+    }
   },
 
   methods: {
     async createPopper() {
       await this.$nextTick();
+
+      if (this.appendToBody) {
+        document.body.appendChild(this.$refs.qPopover);
+      }
 
       const options = {
         placement: this.placement,
@@ -235,17 +234,20 @@ export default {
           boundariesElement: 'body',
           gpuAcceleration: false
         },
-        modifiers: {
-          offset: {
-            offset: '0, 16px'
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: [0, 16]
+            }
           }
-        },
+        ],
         ...this.popperOptions
       };
 
-      this.popperJS = new Popper(
+      this.popperJS = createPopper(
         this.referenceElement,
-        this.$refs.qPopper,
+        this.$refs.qPopover,
         options
       );
     },
@@ -283,7 +285,7 @@ export default {
       if (
         this.$el.contains(target) ||
         this.referenceElement.contains(target) ||
-        this.$refs.qPopper.contains(target)
+        this.$refs.qPopover.contains(target)
       ) {
         return;
       }

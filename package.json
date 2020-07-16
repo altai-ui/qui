@@ -16,9 +16,9 @@
   },
   "license": "ISC",
   "dependencies": {
+    "@popperjs/core": "^2.4.4",
     "element-ui": "^2.13.0",
     "lodash-es": "^4.17.15",
-    "popper.js": "^1.16.1",
     "v-click-outside": "^3.0.1",
     "vue": "^2.6.10"
   },

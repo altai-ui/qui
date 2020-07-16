@@ -11,6 +11,7 @@
         class="q-context-trigger__default"
       />
     </div>
+
     <div ref="menu">
       <div
         v-if="isShown"
@@ -78,6 +79,13 @@ export default {
         left: `${this.axisX}px`,
         top: `${this.axisY}px`
       };
+    }
+  },
+
+  beforeDestroy() {
+    if (this.appendToBody) {
+      const { menu } = this.$refs;
+      menu.parentNode.removeChild(menu);
     }
   },
 

@@ -1,10 +1,9 @@
-.popover-content {
-  position: absolute;
-  z-index: 200000;
+.q-popover {
+  display: flex;
+  align-items: flex-start;
   min-width: 320px;
   max-width: 552px;
-  min-height: 78px;
-  padding: 28px 24px 24px 80px;
+  padding: 24px;
   text-align: left;
   color: var(--color-primary-black);
   letter-spacing: 0.2px;
@@ -13,39 +12,44 @@
   box-shadow: var(--box-shadow-primary);
 
   &__icon {
-    position: absolute;
-    top: 24px;
-    left: 24px;
+    margin-right: 16px;
     text-align: center;
     color: #fff;
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
 
     &::before {
-      font-size: 30px;
-      line-height: 30px;
-    }
-  }
-
-  &__title {
-    min-width: 216px;
-    margin-bottom: 12px;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 22px;
-
-    &_no-content {
-      margin-bottom: 0;
+      font-size: 40px;
+      line-height: 40px;
     }
   }
 
   &__inner {
     max-height: 646px;
-    overflow: auto;
+    padding-top: 8px;
+    overflow-y: auto;
+  }
+
+  &__title {
+    min-width: 216px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+
+    & + .q-popover__content {
+      margin-top: 16px;
+    }
+  }
+
+  &__content {
+    font-style: normal;
+    font-weight: var(--font-weight-base);
+    font-size: var(--font-size-base);
+    line-height: 20px;
+    color: var(--color-primary-black);
   }
 
   &_without-icon {
-    min-height: 20px;
     padding: 16px;
   }
 }

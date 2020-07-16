@@ -143,6 +143,16 @@
           >popper.js</a>
         </td>
       </tr>
+      <tr>
+        <td>append-to-body</td>
+        <td>Boolean</td>
+        <td>
+          false
+        </td>
+        <td>
+          -
+        </td>
+      </tr>
     </table>
 
     <h2>Slots:</h2>
