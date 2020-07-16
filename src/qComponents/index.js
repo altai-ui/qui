@@ -3,8 +3,13 @@ import vClickOutside from 'v-click-outside';
 import QButton from './QButton';
 import QInput from './QInput';
 import QTextarea from './QTextarea';
+import QSelect from './QSelect';
+import QOption from './QSelect/QOption';
+import QTag from './QTag';
 import QContextMenu from './QContextMenu';
 import QPopover from './QPopover';
+
+import QScrollbar from './QScrollbar';
 import QTabs from './QTabs';
 import QTabPane from './QTabPane';
 
@@ -12,6 +17,10 @@ const components = [
   QButton,
   QInput,
   QTextarea,
+  QTag,
+  QSelect,
+  QOption,
+  QScrollbar,
   QContextMenu,
   QPopover,
   QTabs,

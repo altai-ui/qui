@@ -19,16 +19,22 @@ requireComponent.keys().forEach(fileName => {
 });
 
 // QComponents stories
-const qRequireComponent = require.context('../qComponents', true, /\.vue$/);
+const qStoryComponents = require.context('../qComponents', true, /\.vue$/);
+const qComponents = require.context('../../src/qComponents', true, /\.vue$/);
 const qwithoutCentered = [];
 
-qRequireComponent.keys().forEach(fileName => {
+qStoryComponents.keys().forEach(fileName => {
   const extractedPath = fileName.match(/\/(.+)\/([\w-]+?(?=\.))/);
-  storiesOf(`Q-components|${extractedPath[1]}`, module).add(
-    extractedPath[2],
-    () => qRequireComponent(fileName).default,
-    {
+  const storyComponent = qStoryComponents(fileName).default;
+  const component = qComponents(
+    `./${extractedPath[1]}/src/${extractedPath[1]}.vue`
+  ).default;
+  storiesOf(`Q-components|${extractedPath[1]}`, module)
+    .addParameters({
+      title: extractedPath[1],
+      component
+    })
+    .add(extractedPath[2], () => storyComponent, {
       centered: { disable: qwithoutCentered.includes(extractedPath[1]) }
-    }
-  );
+    });
 });
