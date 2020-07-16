@@ -40,39 +40,9 @@
         <q-popover
           title="Title"
           icon="q-icon-question"
+          append-to-body
         >
           <q-button slot="reference">Click me</q-button>
-        </q-popover>
-      </div>
-    </div>
-
-    <div class="demo-wrapper__block">
-      <p>Add html content to default slot</p>
-      <el-collapse>
-        <el-collapse-item title="Code">
-          <pre class="demo-wrapper__code">{{ codeFifth }} </pre>
-        </el-collapse-item>
-      </el-collapse>
-      <h3 class="demo-wrapper__sub-title">Result:</h3>
-      <div class="demo-wrapper__result">
-        <q-popover
-          title="Popover"
-          icon="q-icon-question"
-        >
-          <q-button
-            slot="reference"
-            title="click me"
-            circle
-            type="icon"
-            theme="secondary"
-            size="small"
-            icon="q-icon-question-mark"
-          />
-          <div>
-            <div>Размер списка: от 1 000 до 50 000 000 уникальных записей;</div>
-            <div>Формат записей: файл в формате txt или csv;</div>
-            <div>Разделитель записей: запятая, перенос строки, табуляция;</div>
-          </div>
         </q-popover>
       </div>
     </div>
@@ -139,6 +109,34 @@
         </q-popover>
       </div>
     </div>
+
+    <div class="demo-wrapper__block">
+      <p>Add html content to default slot</p>
+      <el-collapse>
+        <el-collapse-item title="Code">
+          <pre class="demo-wrapper__code">{{ codeFifth }} </pre>
+        </el-collapse-item>
+      </el-collapse>
+      <h3 class="demo-wrapper__sub-title">Result:</h3>
+      <div class="demo-wrapper__result">
+        <q-popover icon="q-icon-question">
+          <q-button
+            slot="reference"
+            title="click me"
+            circle
+            type="icon"
+            theme="secondary"
+            size="small"
+            icon="q-icon-question-mark"
+          />
+          <div>
+            <div>Размер списка: от 1 000 до 50 000 000 уникальных записей;</div>
+            <div>Формат записей: файл в формате txt или csv;</div>
+            <div>Разделитель записей: запятая, перенос строки, табуляция;</div>
+          </div>
+        </q-popover>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -156,9 +154,11 @@ export default {
     icon="q-icon-question-mark"
   />
 </q-popover> `,
+
       codeSecond: `<q-popover title="Title" icon="q-icon-question">
     <q-button slot="reference">Click me</q-button>
 </q-popover>`,
+
       codeThird: `<q-popover title="Title" icon="q-icon-question" trigger="hover">
   <q-button
     slot="reference"
@@ -170,6 +170,7 @@ export default {
     icon="q-icon-question-mark"
   />
 </q-popover>`,
+
       codeFourth: `<q-popover title="Title" icon="q-icon-question" placement="right-start">
   <q-button
     slot="reference"
@@ -181,7 +182,17 @@ export default {
     icon="q-icon-question-mark"
   />
 </q-popover>`,
-      codeFifth: `<q-popover title="Title" icon="q-icon-question">
+
+      codeFifth: `<q-popover icon="q-icon-question">
+  <q-button
+    slot="reference"
+    title="click me"
+    circle
+    type="icon"
+    theme="secondary"
+    size="small"
+    icon="q-icon-question-mark"
+  />
   <div>
     <div>Размер списка: от 1 000 до 50 000 000 уникальных записей;</div>
     <div>Формат записей: файл в формате txt или csv;</div>
