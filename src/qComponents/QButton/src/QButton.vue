@@ -7,11 +7,11 @@
     :class="classes"
     @click="handleClick"
   >
-    <i
+    <span
       v-if="loading"
       class="q-icon-loading"
     />
-    <i
+    <span
       v-if="icon && !loading"
       :class="icon"
     />

@@ -21,7 +21,7 @@
     -4px -4px 12px #fff;
   cursor: pointer;
   transition: background-color 0.1s;
-  -webkit-appearance: none;
+  appearance: none;
 
   & + & {
     margin-left: 16px;
