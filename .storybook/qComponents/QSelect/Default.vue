@@ -1,6 +1,5 @@
 <template>
   <div class="demo">
-
     <div class="block">
       <span class="demonstration">Default</span>
       <q-select
@@ -51,7 +50,6 @@
           :disabled="item.disabled"
         />
       </q-select>
-
     </div>
 
     <div class="block">

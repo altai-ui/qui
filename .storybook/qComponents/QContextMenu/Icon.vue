@@ -44,14 +44,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.overflowed {
-  position: relative;
-  overflow: hidden;
-}
-
-.dummy {
-  padding-bottom: 1000px;
-}
-</style>

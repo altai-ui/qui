@@ -1,9 +1,9 @@
 <template>
   <div class="q-context-wrapper">
     <div
-      ref="trigger"
+      ref="reference"
       class="q-context-trigger"
-      @click="openMenu"
+      @click="handleTriggerClick"
     >
       <slot v-if="$slots.default" />
       <button
@@ -12,34 +12,32 @@
       />
     </div>
 
-    <div ref="menu">
-      <div
-        v-if="isShown"
-        v-click-outside="closeMenu"
-        class="q-context-menu"
-        :class="{ 'q-context-menu_is-fixed': !appendToBody }"
-        :style="contextMenuPosition"
+    <div
+      v-show="isContextMenuShown"
+      ref="qContextMenu"
+      class="q-context-menu"
+    >
+      <button
+        v-for="(item, index) in menuItems"
+        :key="index"
+        class="q-context-menu__item"
+        :class="{ 'q-context-menu__item_with-icon': item.icon }"
+        @click.prevent="handleItemClick(item.action)"
       >
-        <button
-          v-for="(item, index) in menuItems"
-          :key="index"
-          class="q-context-menu__item"
-          :class="{ 'q-context-menu__item_with-icon': item.icon }"
-          @click.prevent="handleItemClick(item.action)"
-        >
-          <span
-            v-if="item.icon"
-            class="q-context-menu__icon"
-            :class="item.icon"
-          />
-          {{ item.name }}
-        </button>
-      </div>
+        <span
+          v-if="item.icon"
+          class="q-context-menu__icon"
+          :class="item.icon"
+        />
+        {{ item.name }}
+      </button>
     </div>
   </div>
 </template>
 
 <script>
+import { createPopper } from '@popperjs/core';
+
 export default {
   name: 'QContextMenu',
 
@@ -51,105 +49,98 @@ export default {
       default: 'left',
       validator: value => ['left', 'right'].includes(value)
     },
-    appendToBody: {
-      type: Boolean,
-      default: false
-    },
     menuItems: {
       type: Array,
       required: true
     },
-    rootSelector: {
-      type: String,
-      default: 'body'
+    appendToBody: {
+      type: Boolean,
+      default: true
     }
   },
 
   data() {
     return {
-      isShown: false,
-      axisX: 0,
-      axisY: 0
+      isContextMenuShown: false
     };
   },
 
   computed: {
-    contextMenuPosition() {
-      return {
-        left: `${this.axisX}px`,
-        top: `${this.axisY}px`
-      };
+    placement() {
+      return this.position === 'right' ? 'bottom-start' : 'bottom-end';
     }
   },
 
   beforeDestroy() {
-    if (this.appendToBody) {
-      const { menu } = this.$refs;
-      menu.parentNode.removeChild(menu);
-    }
+    document.removeEventListener('click', this.handleDocumentClick);
+
+    const { qContextMenu } = this.$refs;
+
+    if (qContextMenu?.parentNode === document.body)
+      document.body.removeChild(qContextMenu);
   },
 
   methods: {
-    openMenu() {
-      this.isShown = true;
-
-      this.$nextTick(() => {
-        if (this.appendToBody) {
-          document.body.appendChild(this.$refs.menu);
-        }
-
-        this.calculatePosition();
-
-        document
-          .querySelector(this.rootSelector)
-          .addEventListener('scroll', this.calculatePosition, {
-            passive: true
-          });
-
-        window.addEventListener('resize', this.calculatePosition, {
-          passive: true
-        });
-      });
-    },
-
-    calculatePosition() {
-      const { x, y, width } = this.$refs.trigger.getBoundingClientRect();
-      const menuWidth = this.$refs.menu.children[0].clientWidth;
-      const bodyWidth = document.body.getBoundingClientRect().width;
-
-      this.axisY = y;
-
-      const formulaForWideMenu =
-        this.position === 'right' ? x : x + width - menuWidth;
-      const formulaForNarrowMenu =
-        this.position === 'right' ? x + width - menuWidth : x;
-
-      if (menuWidth > width) {
-        this.axisX = formulaForWideMenu;
-      } else {
-        this.axisX = formulaForNarrowMenu;
+    handleDocumentClick({ target }) {
+      if (
+        this.$refs.reference?.contains(target) ||
+        this.$refs.qContextMenu.contains(target)
+      ) {
+        return;
       }
 
-      if (this.axisX + menuWidth > bodyWidth) {
-        this.axisX = bodyWidth - menuWidth;
-      } else if (this.axisX < 0) {
-        this.axisX = 0;
-      }
+      this.closePopper();
     },
 
-    closeMenu() {
-      this.isShown = false;
-      document
-        .querySelector(this.rootSelector)
-        .removeEventListener('scroll', this.calculatePosition);
+    createPopper() {
+      document.addEventListener('click', this.handleDocumentClick);
+      this.isContextMenuShown = true;
 
-      window.removeEventListener('resize', this.calculatePosition);
-      this.$emit('close');
+      if (this.appendToBody) document.body.appendChild(this.$refs.qContextMenu);
+
+      const options = {
+        placement: this.placement,
+        computeStyle: {
+          boundariesElement: 'body',
+          gpuAcceleration: false
+        },
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: [0, -40]
+            }
+          }
+        ]
+      };
+
+      this.popperJS = createPopper(
+        this.$refs.reference,
+        this.$refs.qContextMenu,
+        options
+      );
+    },
+
+    handleTriggerClick() {
+      if (this.isContextMenuShown) {
+        this.closePopper();
+        return;
+      }
+
+      this.createPopper();
     },
 
     handleItemClick(actionName) {
       this.$emit('action', actionName, this.entity);
-      this.closeMenu();
+      this.closePopper();
+    },
+
+    closePopper() {
+      document.removeEventListener('click', this.handleDocumentClick);
+
+      if (this.appendToBody) document.body.removeChild(this.$refs.qContextMenu);
+
+      this.isContextMenuShown = false;
     }
   }
 };
