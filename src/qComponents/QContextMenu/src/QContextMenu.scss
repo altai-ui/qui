@@ -1,16 +1,10 @@
 .q-context {
   &-menu {
-    position: absolute;
-    z-index: 2100;
     min-width: 150px;
     overflow: hidden;
     background-color: var(--color-controls-medium);
     border-radius: var(--border-radius-base);
     box-shadow: var(--box-shadow-primary);
-
-    &_is-fixed {
-      position: fixed;
-    }
 
     &__icon {
       margin-right: 16px;
@@ -37,7 +31,7 @@
         padding-left: 24px;
       }
 
-      & + & {
+      &:not(:first-child) {
         margin-top: 1px;
       }
 
@@ -74,7 +68,7 @@
       background-color: inherit;
       border: none;
       outline: none;
-      cursor: inherit;
+      cursor: pointer;
 
       &::after {
         content: '\e90e';
@@ -83,15 +77,11 @@
         font-family: 'qicon';
         color: var(--color-primary-blue);
       }
-    }
 
-    &:hover &__default {
-      background-color: var(--color-opacity-gray-light);
-      border-radius: 100%;
+      &:hover {
+        background-color: var(--color-opacity-gray-light);
+        border-radius: 100%;
+      }
     }
-  }
-
-  &-wrapper {
-    position: relative;
   }
 }

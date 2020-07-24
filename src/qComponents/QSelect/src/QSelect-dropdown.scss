@@ -28,21 +28,21 @@
   position: absolute;
   z-index: 1001;
   box-sizing: border-box;
+  margin-top: 8px;
   overflow: hidden;
   background-color: var(--dropdown-item-background-color-base);
   border-radius: var(--border-radius-base);
   box-shadow: var(--dropdown-box-shadow-base);
-  margin-top: 8px;
 
   &__item {
     position: relative;
     box-sizing: border-box;
     height: 40px;
     padding: 10px 16px 8px;
-    text-align: left;
     overflow: hidden;
     font-size: var(--font-size-base);
     line-height: var(--line-height-base);
+    text-align: left;
     color: var(--dropdown-item-color-base);
     white-space: nowrap;
     text-overflow: ellipsis;

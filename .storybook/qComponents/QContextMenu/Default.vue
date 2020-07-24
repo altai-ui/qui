@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="dummy" />
+    <div style="padding-top: 500px"></div>
     <div class="block">
       <span class="demonstration">Default ContextMenu</span>
       <q-context-menu
         ref="contextMenu"
-        root-selector="#root > div"
+        class="default-context"
         :menu-items="menuItems"
         @action="handleAction"
       />
@@ -17,7 +17,7 @@
       >ContextMenu in right side (position="right")</span>
       <q-context-menu
         ref="contextMenu"
-        root-selector="#root > div"
+        class="default-context"
         :menu-items="menuItems"
         position="right"
         @action="handleAction"
@@ -28,7 +28,6 @@
       <span class="demonstration">ContextMenu with custom slot</span>
       <q-context-menu
         ref="contextMenu"
-        root-selector="#root > div"
         :menu-items="menuItems"
         @action="handleAction"
       >
@@ -42,7 +41,6 @@
       >ContextMenu in right side (position="right") with custom slot</span>
       <q-context-menu
         ref="contextMenu"
-        root-selector="#root > div"
         :menu-items="menuItems"
         position="right"
         @action="handleAction"
@@ -50,38 +48,6 @@
         <q-button>Open right menu please</q-button>
       </q-context-menu>
     </div>
-
-    <div class="block">
-      <span
-        class="demonstration"
-      >ContextMenu appended to body <br />(you can set <b>root-id</b> prop if
-        you have custom scroll)</span>
-      <div class="overflowed">
-        <q-context-menu
-          root-selector="#root > div"
-          append-to-body
-          :menu-items="menuItems"
-          @action="handleAction"
-        />
-      </div>
-    </div>
-
-    <div class="block">
-      <span
-        class="demonstration"
-      >ContextMenu in right side (position="right") appended to body
-        <br />(you can set <b>root-id</b> prop if you have custom scroll)</span>
-      <div class="overflowed">
-        <q-context-menu
-          root-selector="#root > div"
-          append-to-body
-          position="right"
-          :menu-items="menuItems"
-          @action="handleAction"
-        />
-      </div>
-    </div>
-    <div class="dummy" />
   </div>
 </template>
 
@@ -115,12 +81,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.overflowed {
-  position: relative;
-  overflow: hidden;
-}
-
-.dummy {
-  padding-bottom: 25vh;
+.default-context {
+  display: inline-block;
+  width: 40px;
 }
 </style>
