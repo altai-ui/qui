@@ -1,21 +1,24 @@
 import vClickOutside from 'v-click-outside';
 
 import QButton from './QButton';
+import { QCheckbox, QCheckboxGroup } from './QCheckbox';
+import QInput from './QInput';
+import QTextarea from './QTextarea';
+import QSelect from './QSelect';
+import QOption from './QSelect/QOption';
+import QTag from './QTag';
 import QCollapse from './QCollapse';
 import QCollapseItem from './QCollapseItem';
 import QContextMenu from './QContextMenu';
-import QInput from './QInput';
 import QPopover from './QPopover';
 import QScrollbar from './QScrollbar';
-import QSelect from './QSelect';
-import QOption from './QSelect/QOption';
 import QTabPane from './QTabPane';
-import QTextarea from './QTextarea';
 import QTabs from './QTabs';
-import QTag from './QTag';
 
 const components = [
   QButton,
+  QCheckbox,
+  QCheckboxGroup,
   QCollapse,
   QCollapseItem,
   QContextMenu,
