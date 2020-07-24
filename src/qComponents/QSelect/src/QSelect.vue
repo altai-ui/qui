@@ -154,11 +154,11 @@
 <script type="text/babel">
 import { isObject, isEqual, debounce, get } from 'lodash-es';
 import QSelectDropdown from './QSelect-dropdown';
+import QOption from './QOption';
 import Focus from '../../mixins/focus';
 import Emitter from '../../mixins/emitter';
 import QTag from '../../QTag/src/QTag';
 import QInput from '../../QInput/src/QInput';
-import QOption from '../QOption/src/QOption';
 
 export default {
   name: 'QSelect',
@@ -175,8 +175,13 @@ export default {
     elForm: {
       default: ''
     },
-
+    qForm: {
+      default: ''
+    },
     QFormItem: {
+      default: ''
+    },
+    ElFormItem: {
       default: ''
     }
   },
@@ -356,7 +361,11 @@ export default {
     },
 
     selectDisabled() {
-      return this.disabled || Boolean(this.elForm?.disabled);
+      return (
+        this.disabled ||
+        Boolean(this.elForm?.disabled) ||
+        Boolean(this.qForm?.disabled)
+      );
     }
   },
 
@@ -391,6 +400,7 @@ export default {
       }
       if (!isEqual(val, oldVal)) {
         this.dispatch('QFormItem', 'q.form.change', val);
+        this.dispatch('ElFormItem', 'el.form.change', val);
       }
     },
 

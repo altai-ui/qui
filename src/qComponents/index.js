@@ -2,10 +2,9 @@ import vClickOutside from 'v-click-outside';
 
 import QButton from './QButton';
 import { QCheckbox, QCheckboxGroup } from './QCheckbox';
+import { QSelect, QOption } from './QSelect';
 import QInput from './QInput';
 import QTextarea from './QTextarea';
-import QSelect from './QSelect';
-import QOption from './QSelect/QOption';
 import QTag from './QTag';
 import QCollapse from './QCollapse';
 import QCollapseItem from './QCollapseItem';

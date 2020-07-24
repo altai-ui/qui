@@ -19,7 +19,7 @@
 
 <script>
 import { isEqual, get, escapeRegExp } from 'lodash-es';
-import Emitter from '../../../mixins/emitter';
+import Emitter from '../../mixins/emitter';
 
 export default {
   name: 'QOption',
