@@ -28,6 +28,7 @@
   position: relative;
   display: inline-block;
   width: 100%;
+  vertical-align: middle;
 
   &__inner {
     display: inline-block;
@@ -56,20 +57,18 @@
     }
   }
 
-  &_disabled::after {
-    content: '\e912';
-    position: absolute;
-    top: 0;
-    right: 8px;
-    font-size: 24px;
-    line-height: 40px;
-    font-family: 'qicon';
-    cursor: not-allowed;
-  }
-}
-
-.q-textarea {
   &_disabled {
+    &::after {
+      content: '\e912';
+      position: absolute;
+      top: 0;
+      right: 8px;
+      font-size: 24px;
+      line-height: 40px;
+      font-family: 'qicon';
+      cursor: not-allowed;
+    }
+
     .q-textarea__inner {
       padding-right: 40px;
       color: var(--field-color-disabled);

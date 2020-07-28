@@ -16,9 +16,9 @@
       display: flex;
       width: 100%;
       padding: 12px 24px;
+      font-weight: var(--font-weight-base);
       font-size: var(--font-size-base);
       line-height: 24px;
-      color: var(--color-dark-silver);
       color: var(--color-primary-blue);
       text-decoration: none;
       white-space: nowrap;
@@ -65,20 +65,15 @@
       display: block;
       width: 40px;
       height: 40px;
-      background-color: inherit;
+      padding: 0;
+      font-size: 24px;
+      color: var(--color-primary-blue);
+      background-color: transparent;
       border: none;
       outline: none;
-      cursor: pointer;
 
-      &::after {
-        content: '\e90e';
-        font-weight: 400;
-        font-size: 24px;
-        font-family: 'qicon';
-        color: var(--color-primary-blue);
-      }
-
-      &:hover {
+      .q-context-trigger:hover & {
+        color: var(--color-primary-black);
         background-color: var(--color-opacity-gray-light);
         border-radius: 100%;
       }

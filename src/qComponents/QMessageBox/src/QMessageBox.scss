@@ -1,0 +1,118 @@
+.q-message-box {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__shadow {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.72);
+  }
+
+  &__container {
+    position: relative;
+    width: 488px;
+    padding: 32px 0 32px 32px;
+    background-color: var(--color-controls-primary);
+    border-radius: var(--border-radius-base);
+    box-shadow: 0 2.76726px 10.6263px rgba(0, 0, 0, 0.0196802),
+      0 6.6501px 25.5364px rgba(0, 0, 0, 0.0282725),
+      0 12.5216px 48.0828px rgba(0, 0, 0, 0.035),
+      0 22.3363px 85.7714px rgba(0, 0, 0, 0.0417275),
+      0 41.7776px 160.426px rgba(0, 0, 0, 0.0503198),
+      0 100px 384px rgba(0, 0, 0, 0.07);
+  }
+
+  &__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 0;
+    font-size: 32px;
+    color: var(--color-primary-blue);
+    background-color: transparent;
+    border: none;
+
+    &:hover,
+    &:focus {
+      color: var(--color-primary-black);
+      outline: none;
+    }
+  }
+
+  &__title {
+    width: 328px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: var(--color-primary-black);
+    word-break: break-word;
+  }
+
+  &__content {
+    margin-top: 16px;
+    padding-right: 32px;
+  }
+
+  &__message,
+  &__submessage {
+    font-weight: var(--font-weight-base);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    word-break: break-word;
+  }
+
+  &__message {
+    color: var(--color-primary-black);
+  }
+
+  &__submessage {
+    margin-top: 24px;
+    color: var(--color-opacity-gray-dark);
+  }
+
+  &__actions {
+    display: flex;
+    margin-top: 24px;
+  }
+}
+
+.q-msgbox-fade-enter-active {
+  animation: q-msgbox-fade-in 0.3s;
+}
+
+.q-msgbox-fade-leave-active {
+  animation: q-msgbox-fade-out 0.3s;
+}
+
+@keyframes q-msgbox-fade-in {
+  0% {
+    transform: translate3d(0, -20px, 0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes q-msgbox-fade-out {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate3d(0, -20px, 0);
+    opacity: 0;
+  }
+}
