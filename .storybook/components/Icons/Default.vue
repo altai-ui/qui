@@ -30,6 +30,8 @@ export default {
   data() {
     return {
       iconsList: [
+        ['q-icon-info-stroke', '\\e94a'],
+        ['q-icon-withdraw-fill', '\\e94b'],
         ['q-icon-change-list', '\\e948'],
         ['q-icon-wallet-stroke', '\\e949'],
         ['q-icon-archive-arrow-down', '\\e93e'],
