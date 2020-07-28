@@ -32,6 +32,14 @@ $--base-path: '.' !default;
   font-family: 'qicon' !important;
 }
 
+.q-icon-info-stroke::before {
+  content: '\e94a';
+}
+
+.q-icon-withdraw-fill::before {
+  content: '\e94b';
+}
+
 .q-icon-change-list::before {
   content: '\e948';
 }
