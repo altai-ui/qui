@@ -22,11 +22,16 @@ body {
   line-height: var(--line-height-base);
   font-family: 'Gilroy', sans-serif;
   color: var(--color-opacity-gray-dark);
+  letter-spacing: var(--letter-spacing-base);
   background-color: var(--color-controls-light);
 }
 
 svg {
   vertical-align: middle;
+}
+
+button {
+  cursor: pointer;
 }
 
 a {

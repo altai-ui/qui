@@ -8,7 +8,7 @@
       <slot v-if="$slots.default" />
       <button
         v-else
-        class="q-context-trigger__default"
+        class="q-context-trigger__default q-icon-dots-3-horizontal"
       />
     </div>
 
