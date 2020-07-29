@@ -153,7 +153,7 @@
 
 <script type="text/babel">
 import { isObject, isEqual, debounce, get } from 'lodash-es';
-import QSelectDropdown from './QSelect-dropdown';
+import QSelectDropdown from './QSelectDropdown';
 import QOption from './QOption';
 import Focus from '../../mixins/focus';
 import Emitter from '../../mixins/emitter';
