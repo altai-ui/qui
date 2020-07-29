@@ -1,5 +1,5 @@
 import QCheckbox from './src/QCheckbox.vue';
-import QCheckboxGroup from './src/QCheckbox-group.vue';
+import QCheckboxGroup from './src/QCheckboxGroup.vue';
 
 /* istanbul ignore next */
 QCheckbox.install = function(Vue) {
