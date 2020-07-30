@@ -6,6 +6,7 @@
     <div
       v-if="isShown"
       class="q-message-box"
+      :style="{ zIndex }"
     >
       <div
         class="q-message-box__shadow"
@@ -79,6 +80,10 @@ export default {
   name: 'QMessageBox',
 
   props: {
+    zIndex: {
+      type: Number,
+      default: null
+    },
     title: {
       type: String,
       default: ''

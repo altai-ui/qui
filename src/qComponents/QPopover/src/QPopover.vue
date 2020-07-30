@@ -40,6 +40,7 @@
 
 <script>
 import { createPopper } from '@popperjs/core';
+import PLACEMENTS from '../../constants/popperPlacements';
 
 function eventOn(element, event, handler) {
   if (element && event && handler) {
@@ -54,21 +55,6 @@ function eventOff(element, event, handler) {
 }
 
 const TRIGGERS = ['click', 'hover'];
-
-const PLACEMENTS = [
-  'top',
-  'top-start',
-  'top-end',
-  'right',
-  'right-start',
-  'right-end',
-  'bottom',
-  'bottom-start',
-  'bottom-end',
-  'left',
-  'left-start',
-  'left-end'
-];
 
 export default {
   name: 'QPopover',
