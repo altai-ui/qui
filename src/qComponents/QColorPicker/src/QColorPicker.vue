@@ -1,0 +1,261 @@
+<template>
+  <div class="q-color-picker">
+    <div
+      ref="trigger"
+      class="q-color-picker-trigger"
+      :class="{
+        'q-color-picker-trigger_is_disabled': isDisabled,
+        'q-color-picker-trigger_is_opened': isPickerShown
+      }"
+      @click="handleTriggerClick"
+    >
+      <!-- @slot _Optional_. HTML element that triggers dropdown -->
+      <slot
+        v-if="$slots.trigger"
+        name="trigger"
+      />
+      <button
+        v-else
+        :disabled="isDisabled"
+        class="q-color-picker-trigger__default"
+      >
+        <div
+          class="q-color-picker-trigger__color"
+          :style="{
+            backgroundColor: value
+          }"
+        />
+        <span :class="iconClasses" />
+      </button>
+    </div>
+
+    <picker-dropdown
+      ref="dropdown"
+      v-click-outside="handleOutsideClick"
+      :is-shown="isPickerShown"
+      :is-clear-btn-shown="clearable"
+      :color="value"
+      :color-format="colorFormat"
+      :alpha-shown="alphaShown"
+      @click.stop
+      @clear="handleClear"
+      @pick="handlePick"
+    />
+  </div>
+</template>
+
+<script>
+import { createPopper } from '@popperjs/core';
+import Color from 'color';
+
+import Emitter from '../../mixins/emitter';
+import PLACEMENTS from '../../constants/popperPlacements';
+import PickerDropdown from './QPickerDropdown';
+
+export default {
+  name: 'QColorPicker',
+
+  components: {
+    PickerDropdown
+  },
+
+  mixins: [Emitter],
+
+  model: {
+    prop: 'value',
+    event: 'change'
+  },
+
+  inject: {
+    elForm: {
+      default: ''
+    },
+    elFormItem: {
+      default: ''
+    },
+    qForm: {
+      default: ''
+    },
+    qFormItem: {
+      default: ''
+    }
+  },
+
+  props: {
+    /**
+     * binding value
+     */
+    value: {
+      type: String,
+      default: null
+    },
+    /**
+     * whether to disable the ColorPicker
+     */
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    /**
+     * whether to show clear button
+     */
+    clearable: {
+      type: Boolean,
+      default: true
+    },
+    /**
+     * whether to display the alpha slider
+     */
+    alphaShown: {
+      type: Boolean,
+      default: false
+    },
+    /**
+     * output color format
+     */
+    colorFormat: {
+      type: String,
+      default: 'hex',
+      validator: value => ['hex', 'rgb'].includes(value)
+    },
+    placement: {
+      type: String,
+      default: 'right-start',
+      validator: value => PLACEMENTS.includes(value)
+    },
+    /**
+     * whether to append the popper menu to body. If the positioning of the popper is wrong, you can try to set this prop to false
+     */
+    appendToBody: {
+      type: Boolean,
+      default: true
+    },
+    popperOptions: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+
+  data() {
+    return {
+      isClickIgnored: false,
+      isPickerShown: false,
+      popperJS: null
+    };
+  },
+
+  computed: {
+    isDisabled() {
+      return (
+        this.disabled ||
+        Boolean(this.elForm?.disabled) ||
+        Boolean(this.qForm?.disabled)
+      );
+    },
+
+    isColorDark() {
+      if (!this.value) return false;
+
+      return Color(this.value).isDark();
+    },
+
+    iconClasses() {
+      return {
+        'q-color-picker-trigger__icon': true,
+        'q-color-picker-trigger__icon_light': this.isColorDark,
+        'q-icon-triangle-down': !this.isDisabled,
+        'q-icon-lock': this.isDisabled
+      };
+    },
+
+    options() {
+      return {
+        placement: this.placement,
+        computeStyle: {
+          boundariesElement: 'body',
+          gpuAcceleration: false
+        },
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: [0, 16]
+            }
+          }
+        ],
+        ...this.popperOptions
+      };
+    }
+  },
+
+  watch: {
+    isPickerShown(value) {
+      if (this.isDisabled || !value) return;
+
+      this.createPopper();
+    }
+  },
+
+  beforeDestroy() {
+    const { dropdown } = this.$refs;
+    if (dropdown?.parentNode === document.body) {
+      document.body.removeChild(dropdown);
+    }
+  },
+
+  methods: {
+    handleOutsideClick() {
+      if (this.isClickIgnored) {
+        this.isClickIgnored = false;
+        return;
+      }
+
+      this.isPickerShown = false;
+    },
+
+    handleTriggerClick() {
+      if (this.isDisabled) return;
+
+      this.isClickIgnored = true;
+      this.isPickerShown = !this.isPickerShown;
+    },
+
+    handleClear() {
+      this.$emit('change', null);
+
+      if (this.value !== null) {
+        this.dispatch('ElFormItem', 'el.form.change', null);
+        this.dispatch('QFormItem', 'q.form.change', null);
+      }
+
+      this.isPickerShown = false;
+    },
+
+    handlePick(value) {
+      this.$emit('change', value);
+
+      if (this.value !== value) {
+        this.dispatch('ElFormItem', 'el.form.change', value);
+        this.dispatch('QFormItem', 'q.form.change', value);
+      }
+
+      this.isPickerShown = false;
+    },
+
+    createPopper() {
+      if (this.popperJS?.destroy) {
+        this.popperJS.destroy();
+        this.popperJS = null;
+      }
+
+      if (this.appendToBody) document.body.appendChild(this.$refs.dropdown.$el);
+
+      this.popperJS = createPopper(
+        this.$refs.trigger,
+        this.$refs.dropdown.$el,
+        this.options
+      );
+    }
+  }
+};
+</script>

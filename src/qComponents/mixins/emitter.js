@@ -9,6 +9,7 @@ function broadcast(componentName, eventName, params) {
     }
   });
 }
+
 export default {
   methods: {
     dispatch(componentName, eventName, params) {
@@ -26,6 +27,7 @@ export default {
         parent.$emit(...[eventName].concat(params));
       }
     },
+
     broadcast(componentName, eventName, params) {
       broadcast.call(this, componentName, eventName, params);
     }

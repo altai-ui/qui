@@ -51,7 +51,7 @@
   @include e(bar) {
     position: relative;
     height: 100%;
-    background: linear-gradient(
+    background-image: linear-gradient(
       to right,
       #f00 0%,
       #ff0 17%,

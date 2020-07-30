@@ -1,0 +1,38 @@
+.q-color-svpanel {
+  position: relative;
+  width: 464px;
+  height: 208px;
+  cursor: pointer;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &::before {
+    background-image: linear-gradient(90deg, #fff, transparent);
+  }
+
+  &::after {
+    background-image: linear-gradient(0, #000, transparent);
+  }
+
+  &__cursor {
+    position: absolute;
+    z-index: 1;
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-controls-light);
+    border-radius: 50%;
+    box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.25),
+      1px 1px 3px rgba(174, 174, 192, 0.4), 4px 4px 8px rgba(174, 174, 192, 0.4),
+      -4px -4px 12px #fff;
+    transform: translate(-4px, -4px);
+    cursor: grab;
+  }
+}

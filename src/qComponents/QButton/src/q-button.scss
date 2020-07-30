@@ -40,7 +40,7 @@
   }
 
   &:visited {
-    background: var(--gradient-primary);
+    background-image: var(--gradient-primary);
     box-shadow: var(--box-shadow-primary);
   }
 
@@ -77,12 +77,13 @@
   &_theme {
     &_secondary {
       color: var(--color-primary-blue);
-      background: var(--color-controls-dark);
+      background-color: var(--color-controls-dark);
+      background-image: none;
       box-shadow: var(--box-shadow-primary);
 
       &:hover {
         color: #fff;
-        background: var(--color-primary);
+        background-color: var(--color-primary);
         box-shadow: var(--box-shadow-hover);
       }
 
@@ -99,7 +100,7 @@
 
   &_disabled {
     color: var(--color-opacity-gray-dark);
-    background: var(--color-controls-dark);
+    background-color: var(--color-controls-dark);
     cursor: not-allowed;
 
     &:active {
@@ -109,7 +110,7 @@
     &.q-button_theme_secondary {
       &:hover {
         color: var(--color-opacity-gray-dark);
-        background: var(--color-controls-dark);
+        background-color: var(--color-controls-dark);
       }
     }
   }

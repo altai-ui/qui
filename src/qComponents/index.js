@@ -9,6 +9,7 @@ import QTextarea from './QTextarea';
 import QTag from './QTag';
 import QCollapse from './QCollapse';
 import QCollapseItem from './QCollapseItem';
+import QColorPicker from './QColorPicker';
 import QContextMenu from './QContextMenu';
 import QMessageBox from './QMessageBox';
 import QPopover from './QPopover';
@@ -24,6 +25,7 @@ const components = [
   QRadioGroup,
   QCollapse,
   QCollapseItem,
+  QColorPicker,
   QContextMenu,
   QInput,
   QMessageBox,

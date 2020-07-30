@@ -66,7 +66,7 @@ export default {
     },
 
     icon() {
-      return this.isActive ? 'q-icon-plus' : 'q-icon-minus';
+      return this.isActive ? 'q-icon-minus' : 'q-icon-plus';
     }
   },
 

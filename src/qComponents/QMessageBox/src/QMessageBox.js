@@ -24,6 +24,13 @@ const Message = function(config = {}) {
     instance[key] = value;
   });
 
+  if (!instance.zIndex) {
+    const zIndex = this.prototype.$ELEMENT.zIndex ?? 2000;
+
+    instance.zIndex = zIndex;
+    this.prototype.$ELEMENT.zIndex = zIndex + 1;
+  }
+
   instance.callback = defaultCallback;
 
   instance.isComponentUsed = Boolean(config.component);
