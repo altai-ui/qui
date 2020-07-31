@@ -101,6 +101,7 @@
   &_disabled {
     color: var(--color-opacity-gray-dark);
     background-color: var(--color-controls-dark);
+    background-image: none;
     cursor: not-allowed;
 
     &:active {

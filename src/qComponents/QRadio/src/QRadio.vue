@@ -36,6 +36,7 @@
     </span>
   </label>
 </template>
+
 <script>
 import Emitter from '../../mixins/emitter';
 
@@ -90,6 +91,7 @@ export default {
           this.$refs.radio.checked = this.model === this.label;
       }
     },
+
     isDisabled() {
       return this.isGroup
         ? this.radioGroup.disabled ||
@@ -100,6 +102,7 @@ export default {
             Boolean(this.elForm?.disabled) ||
             Boolean(this.qForm?.disabled);
     },
+
     tabIndex() {
       return this.isDisabled || (this.isGroup && this.model !== this.label)
         ? -1
@@ -109,6 +112,7 @@ export default {
 
   mounted() {
     let parent = this.$parent;
+
     while (parent) {
       if (parent.$options.componentName !== 'QRadioGroup') {
         parent = parent.$parent;
