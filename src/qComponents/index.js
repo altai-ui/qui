@@ -16,6 +16,7 @@ import QPopover from './QPopover';
 import QScrollbar from './QScrollbar';
 import QTabPane from './QTabPane';
 import QTabs from './QTabs';
+import QDrawer from './QDrawer';
 
 const components = [
   QButton,
@@ -36,7 +37,8 @@ const components = [
   QTabPane,
   QTextarea,
   QTabs,
-  QTag
+  QTag,
+  QDrawer
 ];
 
 let zIndexCounter = 2000;
@@ -93,5 +95,6 @@ export default {
   QTabPane,
   QTextarea,
   QTabs,
-  QTag
+  QTag,
+  QDrawer
 };
