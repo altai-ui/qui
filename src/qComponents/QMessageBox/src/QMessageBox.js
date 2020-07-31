@@ -25,10 +25,7 @@ const Message = function(config = {}) {
   });
 
   if (!instance.zIndex) {
-    const zIndex = this.prototype.$ELEMENT.zIndex ?? 2000;
-
-    instance.zIndex = zIndex;
-    this.prototype.$ELEMENT.zIndex = zIndex + 1;
+    instance.zIndex = this.prototype.$Q?.zIndex ?? 2000;
   }
 
   instance.callback = defaultCallback;

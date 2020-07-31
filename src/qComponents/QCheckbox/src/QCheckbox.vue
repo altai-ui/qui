@@ -48,13 +48,18 @@
     </span>
   </label>
 </template>
+
 <script>
 import { isBoolean } from 'lodash-es';
 import Emitter from '../../mixins/emitter';
 
 export default {
   name: 'QCheckbox',
+
+  componentName: 'QCheckbox',
+
   mixins: [Emitter],
+
   inject: {
     QForm: {
       default: ''
@@ -69,7 +74,7 @@ export default {
       default: ''
     }
   },
-  componentName: 'QCheckbox',
+
   props: {
     value: {
       type: [Object, Array, Boolean],
@@ -83,6 +88,7 @@ export default {
     id: { type: String, default: '' },
     controls: { type: String, default: '' }
   },
+
   data() {
     return {
       selfModel: false,
@@ -91,6 +97,7 @@ export default {
       isGroup: false
     };
   },
+
   computed: {
     model: {
       get() {
@@ -114,6 +121,7 @@ export default {
         }
       }
     },
+
     isChecked() {
       if (isBoolean(this.model)) return this.model;
       if (Array.isArray(this.model)) return this.model.includes(this.label);
@@ -145,15 +153,18 @@ export default {
             Boolean(this.qForm?.disabled);
     }
   },
+
   watch: {
     value(value) {
       this.dispatch('QFormItem', 'q.form.change', value);
       this.dispatch('ElFormItem', 'el.form.change', value);
     }
   },
+
   created() {
     if (this.checked) this.addToStore();
   },
+
   mounted() {
     if (this.indeterminate) {
       this.$el.setAttribute('aria-controls', this.controls);
@@ -180,6 +191,7 @@ export default {
         this.model = false;
       }
     },
+
     handleChange(event) {
       if (this.isLimitExceeded) return;
       const value = event.target.checked;

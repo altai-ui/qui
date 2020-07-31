@@ -7,7 +7,7 @@
         'q-color-picker-trigger_is_disabled': isDisabled,
         'q-color-picker-trigger_is_opened': isPickerShown
       }"
-      @click="handleTriggerClick"
+      @click.prevent="handleTriggerClick"
     >
       <!-- @slot _Optional_. HTML element that triggers dropdown -->
       <slot
@@ -37,6 +37,7 @@
       :color="value"
       :color-format="colorFormat"
       :alpha-shown="alphaShown"
+      :style="{ zIndex }"
       @click.stop
       @clear="handleClear"
       @pick="handlePick"
@@ -138,6 +139,7 @@ export default {
 
   data() {
     return {
+      zIndex: null,
       isClickIgnored: false,
       isPickerShown: false,
       popperJS: null
@@ -192,6 +194,7 @@ export default {
     isPickerShown(value) {
       if (this.isDisabled || !value) return;
 
+      this.zIndex = this.$Q?.zIndex ?? 2000;
       this.createPopper();
     }
   },

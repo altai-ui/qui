@@ -8,6 +8,7 @@
     <slot />
   </component>
 </template>
+
 <script>
 import Emitter from '../../mixins/emitter';
 
@@ -66,10 +67,12 @@ export default {
   mounted() {
     const radios = this.$el.querySelectorAll('[type=radio]');
     const firstLabel = this.$el.querySelectorAll('[role=radio]')[0];
+
     if (![...radios].some(({ checked }) => checked) && firstLabel) {
       firstLabel.tabIndex = 0;
     }
   },
+
   methods: {
     handleKeydown(e) {
       const target = e.target;
@@ -79,6 +82,7 @@ export default {
       const length = radios.length;
       const index = [...radios].indexOf(target);
       const roleRadios = this.$el.querySelectorAll('[role=radio]');
+
       switch (e.keyCode) {
         case keyCode.LEFT:
         case keyCode.UP:
@@ -92,6 +96,7 @@ export default {
             roleRadios[index - 1].focus();
           }
           break;
+
         case keyCode.RIGHT:
         case keyCode.DOWN:
           if (index === length - 1) {
@@ -104,6 +109,7 @@ export default {
             roleRadios[index + 1].focus();
           }
           break;
+
         default:
           break;
       }

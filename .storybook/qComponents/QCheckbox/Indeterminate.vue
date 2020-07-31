@@ -5,9 +5,13 @@
       :indeterminate="isIndeterminate"
       style="margin-bottom: 16px"
       @change="handleCheckAllChange"
-    >Выбрать все</q-checkbox>
+    >
+      Выбрать все
+    </q-checkbox>
+
     <q-checkbox-group
       v-model="checkedCities"
+      direction="horizontal"
       @change="handleCheckedCitiesChange"
     >
       <q-checkbox

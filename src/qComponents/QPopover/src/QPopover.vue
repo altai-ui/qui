@@ -118,6 +118,7 @@ export default {
 
   data() {
     return {
+      zIndex: null,
       popperJS: null,
       referenceElement: null,
       isPopoverShown: false
@@ -133,6 +134,7 @@ export default {
 
     popoverStyles() {
       return {
+        zIndex: this.zIndex,
         minWidth: Number(this.minWidth)
           ? `${Number(this.minWidth)}px`
           : this.minWidth,
@@ -156,6 +158,7 @@ export default {
   watch: {
     isPopoverShown(value) {
       if (value && !this.popperJS) {
+        this.zIndex = this.$Q?.zIndex ?? 2000;
         this.$emit('show');
         this.createPopper();
       } else {
