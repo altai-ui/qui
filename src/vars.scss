@@ -10,16 +10,35 @@
   --color-secondary-green: #40ba3e;
   --color-secondary-yellow: #f2d22b;
 
+  --color-shadow-white-light: rgba(255, 255, 255, 0.25);
+  --color-shadow-white-medium: rgba(255, 255, 255, 0.7);
+  --color-shadow-white-dark: rgba(255, 255, 255, 0.8);
+  --color-shadow-white: #fff;
+  --color-shadow-blue-light: rgba(174, 174, 192, 0.2);
+  --color-shadow-blue-medium: rgba(174, 174, 192, 0.4);
+  --color-shadow-gray-ultra-light: rgba(29, 28, 26, 0.02);
+  --color-shadow-gray-light: rgba(29, 28, 26, 0.03);
+  --color-shadow-gray-medium: rgba(29, 28, 26, 0.04);
+  --color-shadow-gray-dark: rgba(29, 28, 26, 0.05);
+  --color-shadow-gray-ultra-dark: rgba(29, 28, 26, 0.07);
+
+  --color-opacity-primary-light: rgba(255, 255, 255, 0.1);
   --color-opacity-primary: rgba(255, 255, 255, 0.64);
+  --color-opacity-primary-dark: rgba(255, 255, 255, 0.7);
+  --color-opacity-gray-ultra-light: rgba(29, 28, 26, 0.1);
   --color-opacity-gray-light: rgba(29, 28, 26, 0.16);
   --color-opacity-gray-medium: rgba(29, 28, 26, 0.32);
   --color-opacity-gray-dark: rgba(29, 28, 26, 0.64);
 
   --color-gray: #dadada;
+  --color-controls-ultra-light: #fff;
   --color-controls-primary: #fafafa;
   --color-controls-light: #f4f4f6;
   --color-controls-medium: #f0f0f3;
   --color-controls-dark: #eaeaea;
+  --color-controls-ultra-dark: #e2e2e2;
+  --color-controls-dark-2: #c4c4c4;
+  --color-controls-ultra-dark-2: #adacae;
 
   --gradient-primary: linear-gradient(
     101.12deg,
