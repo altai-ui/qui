@@ -57,7 +57,7 @@
 
     @include when(focus) {
       .el-input__inner {
-        background-color: var(--color-controls-primary);
+        background-color: var(--color-tertiary-gray-ultra-light);
         box-shadow: var(--box-shadow-focus);
       }
     }
@@ -80,9 +80,9 @@
       align-items: center;
       max-width: calc(100% - 15px);
       margin: 2px 0 2px 8px;
-      color: var(--color-opacity-gray-dark);
+      color: rgba(var(--color-rgb-gray), 0.64);
       text-overflow: ellipsis;
-      background: var(--color-gray);
+      background: var(--color-tertiary-gray-darker);
       border: none;
       border-radius: 2px;
 
@@ -142,7 +142,7 @@
     line-height: 34px;
     text-align: left;
     color: var(--color-primary-blue);
-    background-color: var(--color-controls-medium);
+    background-color: var(--color-tertiary-gray-light);
     outline: none;
     cursor: pointer;
 
@@ -163,12 +163,12 @@
 
     &:hover {
       color: var(--color-primary-black);
-      background: var(--color-controls-dark);
+      background: var(--color-tertiary-gray);
     }
 
     &.is-checked {
       color: var(--color-primary-black);
-      background-color: var(--color-controls-primary);
+      background-color: var(--color-tertiary-gray-ultra-light);
       box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.25),
         1px 1px 3px rgba(174, 174, 192, 0.4);
 

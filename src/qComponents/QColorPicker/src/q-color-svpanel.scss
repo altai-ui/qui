@@ -15,7 +15,11 @@
   }
 
   &::before {
-    background-image: linear-gradient(90deg, #fff, transparent);
+    background-image: linear-gradient(
+      90deg,
+      var(--color-tertiary-white),
+      transparent
+    );
   }
 
   &::after {
@@ -27,11 +31,12 @@
     z-index: 1;
     width: 8px;
     height: 8px;
-    background-color: var(--color-controls-light);
+    background-color: var(--color-tertiary-gray-lighter);
     border-radius: 50%;
-    box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.25),
-      1px 1px 3px rgba(174, 174, 192, 0.4), 4px 4px 8px rgba(174, 174, 192, 0.4),
-      -4px -4px 12px #fff;
+    box-shadow: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
+      1px 1px 3px rgba(var(--color-rgb-blue), 0.4),
+      4px 4px 8px rgba(var(--color-rgb-blue), 0.4),
+      -4px -4px 12px var(--color-tertiary-white);
     transform: translate(-4px, -4px);
     cursor: grab;
   }

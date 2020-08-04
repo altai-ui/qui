@@ -15,46 +15,46 @@
     line-height: 40px;
     text-align: center;
     color: var(--color-primary-blue);
-    background: var(--color-controls-medium);
+    background: var(--color-tertiary-gray-light);
     border-radius: 4px;
     box-shadow: var(--box-shadow-primary);
 
     &:focus,
     &:focus:active {
       color: var(--color-primary-blue);
-      background-color: var(--color-controls-dark);
+      background-color: var(--color-tertiary-gray);
       outline: none;
     }
 
     &:focus.is-active.is-focus:not(:active) {
-      background-color: var(--color-controls-primary);
+      background-color: var(--color-tertiary-gray-ultra-light);
       box-shadow: var(--box-shadow-pressed);
     }
 
     @include when(active) {
       color: var(--color-primary-black);
-      background-color: var(--color-controls-primary);
+      background-color: var(--color-tertiary-gray-ultra-light);
       box-shadow: var(--box-shadow-pressed);
     }
 
     &:hover {
       color: var(--color-primary-black);
-      background-color: var(--color-controls-dark);
+      background-color: var(--color-tertiary-gray);
       cursor: pointer;
     }
 
     @include when(disabled) {
-      color: var(--color-opacity-gray-dark);
-      background-color: var(--color-controls-dark);
+      color: rgba(var(--color-rgb-gray), 0.64);
+      background-color: var(--color-tertiary-gray);
       cursor: not-allowed;
 
       &:hover {
-        color: var(--color-opacity-gray-dark);
-        background-color: var(--color-controls-dark);
+        color: rgba(var(--color-rgb-gray), 0.64);
+        background-color: var(--color-tertiary-gray);
       }
 
       &:focus {
-        background-color: var(--color-controls-dark);
+        background-color: var(--color-tertiary-gray);
       }
     }
   }

@@ -2,12 +2,14 @@
   --pagination-color-base: var(--color-primary-blue);
   --pagination-color-hover: var(--color-primary-black);
   --pagination-color-selected: var(--color-primary-black);
-  --pagination-color-disabled: var(--color-opacity-gray-dark);
+  --pagination-color-disabled: rgba(var(--color-rgb-gray), 0.64);
 
-  --pagination-background-color-base: var(--color-controls-medium);
-  --pagination-background-color-hover: var(--color-controls-dark);
-  --pagination-background-color-selected: var(--color-controls-primary);
-  --pagination-background-color-disabled: var(--color-controls-dark);
+  --pagination-background-color-base: var(--color-tertiary-gray-light);
+  --pagination-background-color-hover: var(--color-tertiary-gray);
+  --pagination-background-color-selected: var(
+    --color-tertiary-gray-ultra-light
+  );
+  --pagination-background-color-disabled: var(--color-tertiary-gray);
 
   --pagination-box-shadow-primary: -1px -1px 4px #fff,
     1px 1px 4px rgba(174, 174, 192, 0.4), 4px 4px 8px rgba(174, 174, 192, 0.4),

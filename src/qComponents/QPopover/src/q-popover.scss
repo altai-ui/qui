@@ -7,14 +7,14 @@
   text-align: left;
   color: var(--color-primary-black);
   letter-spacing: 0.2px;
-  background-color: #fff;
+  background-color: var(--color-tertiary-white);
   border-radius: var(--border-radius-base);
   box-shadow: var(--box-shadow-primary);
 
   &__icon {
     margin-right: 16px;
     text-align: center;
-    color: #fff;
+    color: var(--color-tertiary-white);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
 

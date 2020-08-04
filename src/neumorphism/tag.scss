@@ -10,8 +10,8 @@
   white-space: nowrap;
 
   &--light {
-    color: var(--color-opacity-gray-dark);
-    background-color: var(--color-gray);
+    color: rgba(var(--color-rgb-gray), 0.64);
+    background-color: var(--color-tertiary-gray-darker);
   }
 
   &--small {

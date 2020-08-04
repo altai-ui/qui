@@ -8,7 +8,7 @@
   width: 552px;
   padding: 22px 0;
   overflow: hidden;
-  background-color: var(--color-controls-primary);
+  background-color: var(--color-tertiary-gray-ultra-light);
   border-radius: var(--border-radius-base);
   box-shadow: var(--box-shadow-pressed);
   transition: opacity 0.3s, transform 0.3s, left 0.3s, right 0.3s, top 0.4s,
@@ -92,7 +92,7 @@
   }
 
   .el-icon-info {
-    color: var(--color-opacity-gray-medium);
+    color: rgba(var(--color-rgb-gray), 0.32);
 
     &::before {
       content: '\e92e';

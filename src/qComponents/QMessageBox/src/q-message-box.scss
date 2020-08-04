@@ -14,21 +14,21 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(255, 255, 255, 0.72);
+    background-color: rgba(var(--color-rgb-white), 0.7);
   }
 
   &__container {
     position: relative;
     width: 488px;
     padding: 32px 0 32px 32px;
-    background-color: var(--color-controls-primary);
+    background-color: var(--color-tertiary-gray-ultra-light);
     border-radius: var(--border-radius-base);
-    box-shadow: 0 2.76726px 10.6263px rgba(0, 0, 0, 0.0196802),
-      0 6.6501px 25.5364px rgba(0, 0, 0, 0.0282725),
-      0 12.5216px 48.0828px rgba(0, 0, 0, 0.035),
-      0 22.3363px 85.7714px rgba(0, 0, 0, 0.0417275),
-      0 41.7776px 160.426px rgba(0, 0, 0, 0.0503198),
-      0 100px 384px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 100px 384px rgba(var(--color-rgb-gray), 0.07),
+      0 41px 162px rgba(var(--color-rgb-gray), 0.05),
+      0 22px 85px rgba(var(--color-rgb-gray), 0.04),
+      0 12px 48px rgba(var(--color-rgb-gray), 0.03),
+      0 7px 25px rgba(var(--color-rgb-gray), 0.03),
+      0 3px 10px rgba(var(--color-rgb-gray), 0.02);
   }
 
   &__close {
@@ -76,7 +76,7 @@
 
   &__submessage {
     margin-top: 24px;
-    color: var(--color-opacity-gray-dark);
+    color: rgba(var(--color-rgb-gray), 0.64);
   }
 
   &__actions {

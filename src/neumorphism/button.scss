@@ -113,7 +113,7 @@
 
   @include when(plain) {
     color: var(--color-primary-blue);
-    background: var(--color-controls-dark);
+    background: var(--color-tertiary-gray);
     box-shadow: var(--box-shadow-primary);
 
     &:hover {
@@ -129,8 +129,8 @@
   }
 
   @include when(disabled) {
-    color: var(--color-opacity-gray-dark);
-    background: var(--color-controls-dark);
+    color: rgba(var(--color-rgb-gray), 0.64);
+    background: var(--color-tertiary-gray);
     cursor: not-allowed;
 
     &:active {
@@ -143,15 +143,15 @@
 
     &.is-plain,
     &.is-circle {
-      color: var(--color-opacity-gray-dark);
+      color: rgba(var(--color-rgb-gray), 0.64);
 
       &:active {
         box-shadow: var(--box-shadow-primary);
       }
 
       &:hover {
-        color: var(--color-opacity-gray-dark);
-        background: var(--color-controls-dark);
+        color: rgba(var(--color-rgb-gray), 0.64);
+        background: var(--color-tertiary-gray);
       }
     }
   }
@@ -197,7 +197,7 @@
     padding: 6px;
     line-height: 12px;
     color: var(--color-primary-blue);
-    background: var(--color-controls-dark);
+    background: var(--color-tertiary-gray);
     border-radius: 50%;
     box-shadow: var(--box-shadow-primary);
 

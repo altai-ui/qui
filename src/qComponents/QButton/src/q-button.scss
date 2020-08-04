@@ -7,7 +7,7 @@
   font-size: 12px;
   line-height: var(--line-height-button);
   text-align: center;
-  color: #fff;
+  color: var(--color-tertiary-white);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-bitton);
   white-space: nowrap;
@@ -16,9 +16,10 @@
   border: none;
   border-radius: var(--border-radius-base);
   outline: none;
-  box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.25),
-    1px 1px 3px rgba(174, 174, 192, 0.4), 4px 4px 8px rgba(174, 174, 192, 0.4),
-    -4px -4px 12px #fff;
+  box-shadow: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
+    1px 1px 3px rgba(var(--color-rgb-blue), 0.4),
+    4px 4px 8px rgba(var(--color-rgb-blue), 0.4),
+    -4px -4px 12px var(--color-tertiary-white);
   cursor: pointer;
   transition: background-color 0.1s;
   appearance: none;
@@ -29,9 +30,10 @@
 
   &:hover {
     background-image: none;
-    box-shadow: -1px -1px 4px rgba(255, 255, 255, 0.25),
-      1px 1px 4px rgba(174, 174, 192, 0.4), 4px 4px 8px rgba(174, 174, 192, 0.4),
-      -4px -4px 8px rgba(255, 255, 255, 0.8);
+    box-shadow: -1px -1px 4px rgba(var(--color-rgb-white), 0.25),
+      1px 1px 4px rgba(var(--color-rgb-blue), 0.4),
+      4px 4px 8px rgba(var(--color-rgb-blue), 0.4),
+      -4px -4px 8px rgba(var(--color-rgb-white), 0.8);
   }
 
   &:active {
@@ -77,12 +79,12 @@
   &_theme {
     &_secondary {
       color: var(--color-primary-blue);
-      background-color: var(--color-controls-dark);
+      background-color: var(--color-tertiary-gray);
       background-image: none;
       box-shadow: var(--box-shadow-primary);
 
       &:hover {
-        color: #fff;
+        color: var(--color-tertiary-white);
         background-color: var(--color-primary);
         box-shadow: var(--box-shadow-hover);
       }
@@ -99,8 +101,8 @@
   }
 
   &_disabled {
-    color: var(--color-opacity-gray-dark);
-    background-color: var(--color-controls-dark);
+    color: rgba(var(--color-rgb-gray), 0.64);
+    background-color: var(--color-tertiary-gray);
     background-image: none;
     cursor: not-allowed;
 
@@ -110,8 +112,8 @@
 
     &.q-button_theme_secondary {
       &:hover {
-        color: var(--color-opacity-gray-dark);
-        background-color: var(--color-controls-dark);
+        color: rgba(var(--color-rgb-gray), 0.64);
+        background-color: var(--color-tertiary-gray);
       }
     }
   }

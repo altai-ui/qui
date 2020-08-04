@@ -1,25 +1,26 @@
 .q-checkbox {
   --checkbox-color-base: var(--color-primary-black);
-  --checkbox-color-disabled: var(--color-opacity-gray-dark);
+  --checkbox-color-disabled: rgba(var(--color-rgb-gray), 0.64);
 
-  --checkbox-background-color-base: var(--color-controls-primary);
-  --checkbox-background-color-hover: var(--color-controls-dark);
-  --checkbox-background-color-focus: var(--color-controls-primary);
-  --checkbox-background-color-checked: var(--color-controls-primary);
-  --checkbox-background-color-disabled: var(--color-controls-dark);
+  --checkbox-background-color-base: var(--color-tertiary-gray-ultra-light);
+  --checkbox-background-color-hover: var(--color-tertiary-gray);
+  --checkbox-background-color-focus: var(--color-tertiary-gray-ultra-light);
+  --checkbox-background-color-checked: var(--color-tertiary-gray-ultra-light);
+  --checkbox-background-color-disabled: var(--color-tertiary-gray);
 
   --checkbox-mark-color-base: var(--color-primary-blue);
-  --checkbox-mark-color-disabled: var(--color-opacity-gray-dark);
+  --checkbox-mark-color-disabled: rgba(var(--color-rgb-gray), 0.64);
 
-  --checkbox-box-shadow-base: -1px -1px 3px rgba(255, 255, 255, 0.25),
-    1px 1px 3px rgba(174, 174, 192, 0.4),
-    inset -1px -1px 1px rgba(255, 255, 255, 0.7),
-    inset 1px 1px 2px rgba(174, 174, 192, 0.2);
-  --checkbox-box-shadow-focus: -1px -1px 3px rgba(255, 255, 255, 0.25),
-    1px 1px 3px rgba(174, 174, 192, 0.4), 4px 4px 10px rgba(174, 174, 192, 0.4),
-    -4px -4px 10px rgba(255, 255, 255, 0.25),
-    inset -1px -1px 1px rgba(255, 255, 255, 0.7),
-    inset 1px 1px 2px rgba(174, 174, 192, 0.2);
+  --checkbox-box-shadow-base: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
+    1px 1px 3px rgba(var(--color-rgb-blue), 0.4),
+    inset -1px -1px 1px rgba(var(--color-rgb-white), 0.7),
+    inset 1px 1px 2px rgba(var(--color-rgb-blue), 0.2);
+  --checkbox-box-shadow-focus: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
+    1px 1px 3px rgba(var(--color-rgb-blue), 0.4),
+    4px 4px 10px rgba(var(--color-rgb-blue), 0.4),
+    -4px -4px 10px rgba(var(--color-rgb-white), 0.25),
+    inset -1px -1px 1px rgba(var(--color-rgb-white), 0.7),
+    inset 1px 1px 2px rgba(var(--color-rgb-blue), 0.2);
 
   position: relative;
   display: inline-flex;
