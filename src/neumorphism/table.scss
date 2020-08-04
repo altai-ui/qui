@@ -11,7 +11,7 @@
   font-weight: var(--font-weight-base);
   font-size: var(--font-size-base);
   line-height: 20px;
-  color: var(--color-opacity-gray-dark);
+  color: rgba(var(--color-rgb-gray), 0.64);
 
   --row-custom-border-color: rgba(0, 0, 0, 0);
 
@@ -38,7 +38,7 @@
     }
 
     &.grey-row td:first-child {
-      border-left-color: var(--color-opacity-gray-medium);
+      border-left-color: rgba(var(--color-rgb-gray), 0.32);
     }
 
     &.custom-border td:first-child {
@@ -264,7 +264,7 @@
           height: 54px;
           padding: 0 12px;
           font-weight: 400;
-          color: var(--color-opacity-gray-dark);
+          color: rgba(var(--color-rgb-gray), 0.64);
         }
       }
     }
@@ -301,7 +301,7 @@
   }
 
   tr {
-    background-color: var(--color-controls-medium);
+    background-color: var(--color-tertiary-gray-light);
 
     input[type='checkbox'] {
       margin: 0;
@@ -684,11 +684,11 @@
     & .el-table__body {
       & tr.el-table__row--striped {
         td {
-          background: var(--color-controls-light);
+          background: var(--color-tertiary-gray-lighter);
         }
 
         &.current-row td {
-          background-color: var(--color-controls-primary);
+          background-color: var(--color-tertiary-gray-ultra-light);
         }
       }
     }
@@ -701,14 +701,14 @@
         &,
         &.current-row {
           > td {
-            background-color: var(--color-controls-primary);
+            background-color: var(--color-tertiary-gray-ultra-light);
           }
         }
       }
     }
 
     tr.current-row > td {
-      background-color: var(--color-controls-primary);
+      background-color: var(--color-tertiary-gray-ultra-light);
     }
   }
 
@@ -741,7 +741,7 @@
   }
 
   .el-table__body tr.interactive-row:hover > td {
-    background-color: var(--color-controls-dark);
+    background-color: var(--color-tertiary-gray);
     cursor: pointer;
   }
 

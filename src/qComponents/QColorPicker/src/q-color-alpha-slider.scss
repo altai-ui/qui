@@ -4,14 +4,30 @@
   height: 16px;
   margin-top: 8px;
   overflow: hidden;
-  background-image: linear-gradient(45deg, #c4c4c4 25%, transparent 25%),
-    linear-gradient(-45deg, #c4c4c4 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #c4c4c4 75%),
-    linear-gradient(-45deg, transparent 75%, #c4c4c4 75%);
+  background-image: linear-gradient(
+      45deg,
+      var(--color-tertiary-gray-ultra-dark) 25%,
+      transparent 25%
+    ),
+    linear-gradient(
+      -45deg,
+      var(--color-tertiary-gray-ultra-dark) 25%,
+      transparent 25%
+    ),
+    linear-gradient(
+      45deg,
+      transparent 75%,
+      var(--color-tertiary-gray-ultra-dark) 75%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 75%,
+      var(--color-tertiary-gray-ultra-dark) 75%
+    );
   background-position: 8px 16px, -8px 8px, 16px 8px, -16px 0;
   background-size: 16px 16px;
   border-radius: var(--border-radius-base);
-  box-shadow: inset 2px 2px 4px rgba(29, 28, 26, 0.32);
+  box-shadow: inset 2px 2px 4px rgba(var(--color-rgb-gray), 0.32);
   cursor: pointer;
 
   &__bar {
@@ -27,9 +43,9 @@
     width: 8px;
     height: 12px;
     margin: 2px;
-    background: #fff;
+    background-color: var(--color-tertiary-white);
     border-radius: 2px;
-    box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.25),
-      1px 1px 3px rgba(174, 174, 192, 0.4);
+    box-shadow: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
+      1px 1px 3px rgba(var(--color-rgb-blue), 0.4);
   }
 }

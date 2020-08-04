@@ -19,7 +19,7 @@
       #f00
     );
     border-radius: var(--border-radius-base);
-    box-shadow: inset 2px 2px 4px rgba(29, 28, 26, 0.32);
+    box-shadow: inset 2px 2px 4px rgba(var(--color-rgb-gray), 0.32);
   }
 
   &__thumb {
@@ -30,9 +30,9 @@
     width: 12px;
     height: 8px;
     margin: 2px;
-    background: #fff;
+    background-color: var(--color-tertiary-white);
     border-radius: 2px;
-    box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.25),
-      1px 1px 3px rgba(174, 174, 192, 0.4);
+    box-shadow: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
+      1px 1px 3px rgba(var(--color-rgb-blue), 0.4);
   }
 }

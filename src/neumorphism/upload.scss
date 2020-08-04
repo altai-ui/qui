@@ -36,7 +36,7 @@
   @include e(tip) {
     margin-top: 7px;
     font-size: 12px;
-    color: var(--color-gray);
+    color: var(--color-tertiary-gray-darker);
   }
 
   iframe {
@@ -57,7 +57,7 @@
   overflow: hidden;
   text-align: center;
   color: var(--color-primary-black);
-  background-color: var(--color-controls-medium);
+  background-color: var(--color-tertiary-gray-light);
   border-radius: 6px;
   outline: none;
   box-shadow: var(--box-shadow-primary);
@@ -71,7 +71,7 @@
     bottom: 8px;
     left: 8px;
     box-sizing: border-box;
-    border: 1px dashed var(--color-opacity-gray-light);
+    border: 1px dashed rgba(var(--color-rgb-gray), 0.16);
   }
 
   .q-icon-cloud-upload {
@@ -102,23 +102,23 @@
 
     em {
       font-style: normal;
-      color: var(--color-gray);
+      color: var(--color-tertiary-gray-darker);
     }
   }
 
   &:hover {
-    background-color: var(--color-controls-dark);
-    border-color: var(--color-gray);
+    background-color: var(--color-tertiary-gray);
+    border-color: var(--color-tertiary-gray-darker);
   }
 
   &:focus {
-    background-color: var(--color-controls-primary);
+    background-color: var(--color-tertiary-gray-ultra-light);
     box-shadow: var(--box-shadow-pressed);
   }
 
   @include when(dragover) {
     background-color: rgba(32, 159, 255, 0.06);
-    border: 2px dashed var(--color-gray);
+    border: 2px dashed var(--color-tertiary-gray-darker);
   }
 }
 
@@ -142,19 +142,19 @@
     font-weight: 500;
     font-size: 10px;
     line-height: 12px;
-    background-color: var(--color-controls-dark);
+    background-color: var(--color-tertiary-gray);
     border-radius: var(--border-radius-base);
     box-shadow: var(--box-shadow-pressed);
 
     &:hover {
-      background-color: var(--color-controls-primary);
+      background-color: var(--color-tertiary-gray-ultra-light);
 
       .el-upload-list__item-name {
         &::after {
           background: linear-gradient(
             90deg,
             rgba(240, 240, 243, 0.2) 0%,
-            var(--color-controls-primary) 31.25% 31.25%
+            var(--color-tertiary-gray-ultra-light) 31.25% 31.25%
           );
         }
       }
@@ -193,13 +193,13 @@
       position: absolute;
       top: -13px;
       right: 0;
-      color: var(--color-opacity-gray-dark);
+      color: rgba(var(--color-rgb-gray), 0.64);
     }
 
     .el-progress-bar {
       margin-right: 0;
       padding-right: 0;
-      background-color: var(--color-controls-medium);
+      background-color: var(--color-tertiary-gray-light);
 
       &__inner {
         background-color: var(--color-primary-blue);
@@ -208,7 +208,7 @@
 
       &__outer {
         height: 5px;
-        background-color: var(--color-opacity-gray-light);
+        background-color: rgba(var(--color-rgb-gray), 0.16);
         border-radius: unset;
       }
     }
@@ -256,7 +256,7 @@
 
       .el-upload-list__item-name:hover,
       .el-upload-list__item-name:focus {
-        background-color: var(--color-controls-primary);
+        background-color: var(--color-tertiary-gray-ultra-light);
         cursor: pointer;
       }
 
@@ -291,7 +291,7 @@
     margin-right: 20px;
     padding-left: 7px;
     overflow: hidden;
-    color: var(--color-opacity-gray-dark);
+    color: rgba(var(--color-rgb-gray), 0.64);
     white-space: nowrap;
     text-overflow: ellipsis;
     transition: color 0.3s;
@@ -307,7 +307,7 @@
       background: linear-gradient(
         90deg,
         rgba(240, 240, 243, 0.2) 0%,
-        var(--color-controls-dark) 31.25%
+        var(--color-tertiary-gray) 31.25%
       );
     }
 
@@ -335,7 +335,7 @@
     color: var(--color-primary-blue);
 
     &:hover {
-      color: var(--color-gray);
+      color: var(--color-tertiary-gray-darker);
     }
   }
 }

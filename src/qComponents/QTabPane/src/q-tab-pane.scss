@@ -15,7 +15,7 @@
     text-align: center;
     color: var(--color-primary-blue);
     letter-spacing: 0.2px;
-    background-color: var(--color-controls-medium);
+    background-color: var(--color-tertiary-gray-light);
     border: none;
     border-radius: var(--border-radius-base);
     outline: none;
@@ -24,7 +24,7 @@
 
     &:hover {
       color: var(--color-primary-black);
-      background-color: var(--color-controls-dark);
+      background-color: var(--color-tertiary-gray);
     }
 
     &:focus {
@@ -34,25 +34,25 @@
     &:active,
     &_active {
       color: var(--color-primary-black);
-      background-color: var(--color-controls-primary);
+      background-color: var(--color-tertiary-gray-ultra-light);
     }
 
     &_active {
       &:hover {
         color: var(--color-primary-black);
-        background-color: var(--color-controls-primary);
+        background-color: var(--color-tertiary-gray-ultra-light);
       }
     }
 
     &_disabled {
-      color: var(--color-opacity-gray-dark);
-      background-color: var(--color-controls-dark);
+      color: rgba(var(--color-rgb-gray), 0.64);
+      background-color: var(--color-tertiary-gray);
       cursor: not-allowed;
 
       &:focus,
       &:hover {
-        color: var(--color-opacity-gray-dark);
-        background-color: var(--color-controls-dark);
+        color: rgba(var(--color-rgb-gray), 0.64);
+        background-color: var(--color-tertiary-gray);
       }
     }
   }
@@ -63,6 +63,6 @@
     font-weight: 500;
     font-size: 10px;
     line-height: 12px;
-    color: var(--color-opacity-gray-medium);
+    color: rgba(var(--color-rgb-gray), 0.32);
   }
 }

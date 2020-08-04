@@ -81,7 +81,7 @@ $positions: right, left;
   z-index: 1;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.72);
+  background-color: rgba(var(--color-rgb-white), 0.72);
 
   &-fade-enter-active {
     animation: q-drawer-fade-in 0.3s;
@@ -108,14 +108,14 @@ $positions: right, left;
     padding: 24px;
     padding-right: 0;
     text-align: left;
-    background-color: var(--color-controls-primary);
-    box-shadow: -1px -1px 3px rgba(174, 174, 192, 0.4),
-      1px 1px 3px rgba(255, 255, 255, 0.25);
+    background-color: var(--color-tertiary-gray-ultra-light);
+    box-shadow: -1px -1px 3px rgba(var(--color-rgb-blue), 0.4),
+      1px 1px 3px rgba(var(--color-rgb-white), 0.25);
 
     &_left {
       left: 0;
-      box-shadow: 1px 1px 3px rgba(174, 174, 192, 0.4),
-        -1px -1px 3px rgba(255, 255, 255, 0.25);
+      box-shadow: 1px 1px 3px rgba(var(--color-rgb-blue), 0.4),
+        -1px -1px 3px rgba(var(--color-rgb-white), 0.25);
     }
   }
 

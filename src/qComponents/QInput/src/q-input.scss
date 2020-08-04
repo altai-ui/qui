@@ -1,29 +1,31 @@
 .q-input {
   --field-color-base: var(--color-primary-black);
-  --field-color-placeholder: var(--color-opacity-gray-medium);
-  --field-color-disabled: var(--color-opacity-gray-dark);
+  --field-color-placeholder: rgba(var(--color-rgb-gray), 0.32);
+  --field-color-disabled: rgba(var(--color-rgb-gray), 0.64);
 
   --field-icon-color-base: var(--color-primary-blue);
   --field-icon-color-hover: var(--color-primary-black);
-  --field-icon-color-inactive: var(--color-opacity-gray-dark);
+  --field-icon-color-inactive: rgba(var(--color-rgb-gray), 0.64);
 
-  --field-background-color-base: var(--color-controls-medium);
-  --field-background-color-hover: var(--color-controls-dark);
-  --field-background-color-focus: var(--color-controls-primary);
-  --field-background-color-disabled: var(--color-controls-dark);
+  --field-background-color-base: var(--color-tertiary-gray-light);
+  --field-background-color-hover: var(--color-tertiary-gray);
+  --field-background-color-focus: var(--color-tertiary-gray-ultra-light);
+  --field-background-color-disabled: var(--color-tertiary-gray);
 
-  --field-box-shadow-base: -1px -1px 3px rgba(255, 255, 255, 0.25),
-    1px 1px 3px rgba(174, 174, 192, 0.4), 4px 4px 8px rgba(174, 174, 192, 0.4),
-    -4px -4px 12px #fff;
-  --field-box-shadow-hover: -1px -1px 4px rgba(255, 255, 255, 0.25),
-    1px 1px 4px rgba(174, 174, 192, 0.4), 4px 4px 8px rgba(174, 174, 192, 0.4),
-    -4px -4px 8px rgba(255, 255, 255, 0.8);
-  --field-box-shadow-focus: -1px -1px 3px rgba(255, 255, 255, 0.25),
-    1px 1px 3px rgba(174, 174, 192, 0.4),
-    inset -1px -1px 1px rgba(255, 255, 255, 0.7),
-    inset 1px 1px 2px rgba(174, 174, 192, 0.2);
-  --field-box-shadow-disabled: -1px -1px 3px rgba(255, 255, 255, 0.25),
-    1px 1px 3px rgba(174, 174, 192, 0.4);
+  --field-box-shadow-base: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
+    1px 1px 3px rgba(var(--color-rgb-blue), 0.4),
+    4px 4px 8px rgba(var(--color-rgb-blue), 0.4),
+    -4px -4px 12px var(--color-tertiary-white);
+  --field-box-shadow-hover: -1px -1px 4px rgba(var(--color-rgb-white), 0.25),
+    1px 1px 4px rgba(var(--color-rgb-blue), 0.4),
+    4px 4px 8px rgba(var(--color-rgb-blue), 0.4),
+    -4px -4px 8px rgba(var(--color-rgb-white), 0.8);
+  --field-box-shadow-focus: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
+    1px 1px 3px rgba(var(--color-rgb-blue), 0.4),
+    inset -1px -1px 1px rgba(var(--color-rgb-white), 0.7),
+    inset 1px 1px 2px rgba(var(--color-rgb-blue), 0.2);
+  --field-box-shadow-disabled: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
+    1px 1px 3px rgba(var(--color-rgb-blue), 0.4);
 
   position: relative;
   display: inline-block;

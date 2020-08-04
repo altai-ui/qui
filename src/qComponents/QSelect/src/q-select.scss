@@ -3,8 +3,8 @@
 
 .q-select {
   --field-color-base: var(--color-primary-black);
-  --field-color-placeholder: var(--color-opacity-gray-medium);
-  --field-color-disabled: var(--color-opacity-gray-dark);
+  --field-color-placeholder: rgba(var(--color-rgb-gray), 0.32);
+  --field-color-disabled: rgba(var(--color-rgb-gray), 0.64);
 
   position: relative;
   display: inline-block;

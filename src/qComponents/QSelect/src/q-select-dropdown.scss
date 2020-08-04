@@ -2,28 +2,30 @@
   --dropdown-max-height: 204px;
 
   --dropdown-box-shadow-base: var(--box-shadow-primary);
-  --dropdown-background-color-base: var(--color-controls-medium);
+  --dropdown-background-color-base: var(--color-tertiary-gray-light);
 
-  --dropdown-item-background-color-base: var(--color-controls-medium);
-  --dropdown-item-background-color-hover: var(--color-controls-dark);
-  --dropdown-item-background-color-selected: var(--color-controls-primary);
-  --dropdown-item-background-color-disabled: var(--color-controls-medium);
+  --dropdown-item-background-color-base: var(--color-tertiary-gray-light);
+  --dropdown-item-background-color-hover: var(--color-tertiary-gray);
+  --dropdown-item-background-color-selected: var(
+    --color-tertiary-gray-ultra-light
+  );
+  --dropdown-item-background-color-disabled: var(--color-tertiary-gray-light);
 
   --dropdown-item-color-base: var(--color-primary-blue);
   --dropdown-item-color-hover: var(--color-primary-black);
   --dropdown-item-color-selected: var(--color-primary-black);
-  --dropdown-item-color-disabled: var(--color-opacity-gray-dark);
+  --dropdown-item-color-disabled: rgba(var(--color-rgb-gray), 0.64);
 
   --dropdown-item-mark-color-base: var(--color-primary-blue);
-  --dropdown-item-mark-color-disabled: var(--color-opacity-gray-dark);
+  --dropdown-item-mark-color-disabled: rgba(var(--color-rgb-gray), 0.64);
 
-  --checkbox-background-color-base: var(--color-controls-primary);
-  --checkbox-background-color-disabled: var(--color-controls-dark);
+  --checkbox-background-color-base: var(--color-tertiary-gray-ultra-light);
+  --checkbox-background-color-disabled: var(--color-tertiary-gray);
 
-  --checkbox-box-shadow-base: -1px -1px 3px rgba(255, 255, 255, 0.25),
-    1px 1px 3px rgba(174, 174, 192, 0.4),
-    inset -1px -1px 1px rgba(255, 255, 255, 0.7),
-    inset 1px 1px 2px rgba(174, 174, 192, 0.2);
+  --checkbox-box-shadow-base: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
+    1px 1px 3px rgba(var(--color-rgb-blue), 0.4),
+    inset -1px -1px 1px rgba(var(--color-rgb-white), 0.7),
+    inset 1px 1px 2px rgba(var(--color-rgb-blue), 0.2);
 
   position: absolute;
   z-index: 1001;
@@ -47,8 +49,8 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     background-color: var(--dropdown-item-background-color-base);
-    box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.25),
-      1px 1px 3px rgba(174, 174, 192, 0.4);
+    box-shadow: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
+      1px 1px 3px rgba(var(--color-rgb-blue), 0.4);
     cursor: pointer;
 
     &:not(:first-child) {
@@ -127,7 +129,7 @@
   &__empty {
     margin: 0;
     padding: 10px 16px 8px;
-    color: var(--color-opacity-gray-dark);
+    color: rgba(var(--color-rgb-gray), 0.64);
   }
 
   &__wrap {

@@ -8,23 +8,23 @@
     align-items: center;
     width: 100%;
     text-align: left;
-    background-color: var(--color-controls-medium);
+    background-color: var(--color-tertiary-gray-light);
     border: none;
     border-radius: var(--border-radius-base);
     outline: none;
-    box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.25),
-      1px 1px 3px rgba(174, 174, 192, 0.4);
+    box-shadow: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
+      1px 1px 3px rgba(var(--color-rgb-blue), 0.4);
     cursor: pointer;
     transition: background-color 0.1s;
 
     .q-collapse-item_active & {
-      background-color: var(--color-controls-primary);
+      background-color: var(--color-tertiary-gray-ultra-light);
       border-radius: var(--border-radius-base) var(--border-radius-base) 0 0;
     }
 
     &:focus,
     &:hover {
-      background-color: var(--color-controls-dark);
+      background-color: var(--color-tertiary-gray);
     }
   }
 
@@ -34,7 +34,7 @@
     font-weight: 600;
     font-size: 16px;
     line-height: 20px;
-    color: var(--color-opacity-gray-dark);
+    color: rgba(var(--color-rgb-gray), 0.64);
 
     .q-collapse-item_active > .q-collapse-item__header:not(:hover) &,
     .q-collapse-item_active > .q-collapse-item__header:not(:focus) & {
@@ -51,10 +51,10 @@
 
   &__body {
     margin-top: 1px;
-    background-color: var(--color-controls-medium);
+    background-color: var(--color-tertiary-gray-light);
     border-radius: 0 0 var(--border-radius-base) var(--border-radius-base);
-    box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.25),
-      1px 1px 3px rgba(174, 174, 192, 0.4);
+    box-shadow: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
+      1px 1px 3px rgba(var(--color-rgb-blue), 0.4);
   }
 
   &__content {

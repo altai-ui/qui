@@ -21,9 +21,9 @@ body {
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
   font-family: 'Gilroy', sans-serif;
-  color: var(--color-opacity-gray-dark);
+  color: rgba(var(--color-rgb-gray), 0.64);
   letter-spacing: var(--letter-spacing-base);
-  background-color: var(--color-controls-light);
+  background-color: var(--color-tertiary-gray-lighter);
 }
 
 svg {
