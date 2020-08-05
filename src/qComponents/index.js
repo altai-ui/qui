@@ -5,6 +5,7 @@ import { QCheckbox, QCheckboxGroup } from './QCheckbox';
 import { QSelect, QOption } from './QSelect';
 import { QRadio, QRadioGroup } from './QRadio';
 import QInput from './QInput';
+import QInputNumber from './QInputNumber';
 import QTextarea from './QTextarea';
 import QTag from './QTag';
 import QCollapse from './QCollapse';
@@ -29,6 +30,7 @@ const components = [
   QColorPicker,
   QContextMenu,
   QInput,
+  QInputNumber,
   QMessageBox,
   QPopover,
   QScrollbar,
@@ -87,6 +89,7 @@ export default {
   QCollapseItem,
   QContextMenu,
   QInput,
+  QInputNumber,
   QMessageBox,
   QPopover,
   QScrollbar,
