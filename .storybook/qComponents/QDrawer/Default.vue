@@ -83,6 +83,7 @@
         :before-close="handleClose"
         :wrapper-closable="false"
         destroy-on-close
+        render-on-mount
       >
         I'm drawer's slot
       </q-drawer>
