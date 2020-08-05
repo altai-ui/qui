@@ -5,6 +5,7 @@
     @after-leave="afterLeave"
   >
     <div
+      v-if="isRendered"
       v-show="visible"
       class="q-drawer"
       :style="{ zIndex }"
@@ -74,12 +75,21 @@ export default {
     customClass: {
       type: String,
       default: ''
+    },
+    appendToBody: {
+      type: Boolean,
+      default: true
+    },
+    renderOnMount: {
+      type: Boolean,
+      default: false
     }
   },
 
   data() {
     return {
-      zIndex: null
+      zIndex: null,
+      isRendered: false
     };
   },
 
@@ -95,23 +105,42 @@ export default {
   },
 
   watch: {
-    visible(isVisible) {
-      if (!isVisible) return;
+    visible: {
+      handler(isVisible) {
+        if (!isVisible) {
+          document.body.style.overflow = '';
 
-      this.$emit('open');
-      this.zIndex = this.$Q?.zIndex ?? 2000;
+          if (this.destroyOnClose) {
+            this.isRendered = false;
+          }
 
-      if (this.destroyOnClose) document.body.appendChild(this.$el);
+          return;
+        }
+
+        this.$emit('open');
+        this.zIndex = this.$Q?.zIndex ?? 2000;
+        document.body.style.overflow = 'hidden';
+
+        if (this.appendToBody && !this.isRendered)
+          document.body.appendChild(this.$el);
+
+        this.isRendered = true;
+      },
+      immediate: true
     }
   },
 
   mounted() {
-    if (this.destroyOnClose) return;
-    document.body.appendChild(this.$el);
+    if (!this.renderOnMount) return;
+
+    this.isRendered = true;
+    if (this.appendToBody) document.body.appendChild(this.$el);
   },
 
   beforeDestroy() {
-    if (this.$el?.parentNode) {
+    document.body.style.overflow = '';
+
+    if (this.$el?.parentNode === document.body) {
       this.$el.parentNode.removeChild(this.$el);
     }
   },
@@ -134,10 +163,6 @@ export default {
     hide() {
       this.$emit('close');
       this.$emit('update:visible', false);
-
-      if (this.destroyOnClose && this.$el?.parentNode) {
-        this.$el.parentNode.removeChild(this.$el);
-      }
     },
 
     closeDrawer() {
