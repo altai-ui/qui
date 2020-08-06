@@ -2,6 +2,7 @@
   <div class="q-tab-pane">
     <div class="q-tab-pane__inner">
       <button
+        type="button"
         class="q-tab-pane__btn"
         :class="getTabBtnClasses"
         :style="tabWidthStyle"

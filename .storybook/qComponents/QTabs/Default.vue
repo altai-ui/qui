@@ -1,5 +1,8 @@
 <template>
-  <div class="demo-wrapper">
+  <div
+    class="demo-wrapper"
+    style="margin: 100px 0;"
+  >
     <div class="demo-wrapper__block">
       <h2 class="demo-wrapper__title">Default QTabs</h2>
       <el-collapse>

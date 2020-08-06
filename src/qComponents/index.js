@@ -15,8 +15,7 @@ import QContextMenu from './QContextMenu';
 import QMessageBox from './QMessageBox';
 import QPopover from './QPopover';
 import QScrollbar from './QScrollbar';
-import QTabPane from './QTabPane';
-import QTabs from './QTabs';
+import { QTabs, QTabPane } from './QTabs';
 import QDrawer from './QDrawer';
 
 const components = [
@@ -36,9 +35,9 @@ const components = [
   QScrollbar,
   QSelect,
   QOption,
-  QTabPane,
   QTextarea,
   QTabs,
+  QTabPane,
   QTag,
   QDrawer
 ];
