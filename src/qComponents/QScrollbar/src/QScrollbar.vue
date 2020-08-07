@@ -41,8 +41,8 @@ export default {
 
   props: {
     native: { type: Boolean, default: false },
-    wrapClass: { type: [Object, String], default: '' },
-    viewClass: { type: [Object, String], default: '' },
+    wrapClass: { type: [Object, String, Array], default: '' },
+    viewClass: { type: [Object, String, Array], default: '' },
     viewStyle: { type: Object, default: null },
     noresize: { type: Boolean, default: false }
   },

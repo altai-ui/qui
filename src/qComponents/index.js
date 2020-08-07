@@ -4,6 +4,7 @@ import QButton from './QButton';
 import { QCheckbox, QCheckboxGroup } from './QCheckbox';
 import { QSelect, QOption } from './QSelect';
 import { QRadio, QRadioGroup } from './QRadio';
+import { QCascader, QCascaderPanel } from './QCascader';
 import QInput from './QInput';
 import QInputNumber from './QInputNumber';
 import QTextarea from './QTextarea';
@@ -21,6 +22,8 @@ import QDrawer from './QDrawer';
 
 const components = [
   QButton,
+  QCascader,
+  QCascaderPanel,
   QCheckbox,
   QCheckboxGroup,
   QRadio,
