@@ -12,6 +12,7 @@ import QCollapse from './QCollapse';
 import QCollapseItem from './QCollapseItem';
 import QColorPicker from './QColorPicker';
 import QContextMenu from './QContextMenu';
+import QDialog from './QDialog';
 import QMessageBox from './QMessageBox';
 import QPopover from './QPopover';
 import QScrollbar from './QScrollbar';
@@ -59,6 +60,8 @@ const install = Vue => {
   Vue.use(vClickOutside);
 
   // eslint-disable-next-line no-param-reassign
+  Vue.prototype.$dialog = QDialog.bind(Vue);
+  // eslint-disable-next-line no-param-reassign
   Vue.prototype.$message = QMessageBox.bind(Vue);
 
   components.forEach(component => {
@@ -87,6 +90,7 @@ export default {
   QCollapse,
   QCollapseItem,
   QContextMenu,
+  QDialog,
   QInput,
   QInputNumber,
   QMessageBox,
