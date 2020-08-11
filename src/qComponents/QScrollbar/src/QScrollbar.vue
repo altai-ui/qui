@@ -1,9 +1,9 @@
 <template>
-  <div class="q-scrollbar">
+  <div :class="classes">
     <div
       ref="wrap"
       class="q-scrollbar__wrap"
-      :class="classes"
+      :class="wrapClasses"
       :style="styles"
       @scroll="handleScroll"
     >
@@ -17,11 +17,13 @@
       </div>
     </div>
     <q-bar
+      v-show="sizeWidth !== ''"
       type="horizontal"
       :move="moveX"
       :size="sizeWidth"
     />
     <q-bar
+      v-show="sizeHeight !== ''"
       type="vertical"
       :move="moveY"
       :size="sizeHeight"
@@ -41,6 +43,12 @@ export default {
 
   props: {
     native: { type: Boolean, default: false },
+    visible: { type: Boolean, default: false },
+    theme: {
+      type: String,
+      default: 'primary',
+      validator: value => ['primary', 'secondary'].includes(value)
+    },
     wrapClass: { type: [Object, String, Array], default: '' },
     viewClass: { type: [Object, String, Array], default: '' },
     viewStyle: { type: Object, default: null },
@@ -52,7 +60,8 @@ export default {
       sizeWidth: '0',
       sizeHeight: '0',
       moveX: 0,
-      moveY: 0
+      moveY: 0,
+      observer: null
     };
   },
 
@@ -61,6 +70,10 @@ export default {
       return this.$refs.wrap;
     },
     classes() {
+      return ['q-scrollbar', this.visible && 'q-scrollbar_visible'];
+    },
+
+    wrapClasses() {
       return [this.wrapClass, { 'q-scrollbar__wrap_hidden-default': true }];
     },
     styles() {
@@ -78,12 +91,20 @@ export default {
 
   mounted() {
     if (this.native) return;
+    this.observer = new MutationObserver(this.update);
+    this.observer.observe(this.$slots.default[0]?.elm, {
+      attributes: true,
+      childList: true,
+      subtree: true
+    });
+
     this.$nextTick(this.update);
     !this.noresize && addResizeListener(this.$refs.resize, this.update);
   },
 
   beforeDestroy() {
     if (this.native) return;
+    this.observer.disconnect();
     !this.noresize && removeResizeListener(this.$refs.resize, this.update);
   },
 

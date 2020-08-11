@@ -148,6 +148,7 @@ export default {
     value(val) {
       if (this.validateEvent) {
         this.dispatch('ElFormItem', 'el.form.change', [val]);
+        this.dispatch('QFormItem', 'q.form.change', [val]);
       }
     },
     type() {

@@ -2,6 +2,7 @@
   position: relative;
   overflow: hidden;
 
+  &_visible,
   &:hover,
   &:active,
   &:focus {
@@ -38,6 +39,15 @@
     &:hover {
       background-color: var(--color-primary-blue);
     }
+
+    &_secondary {
+      background-color: rgba(var(--color-rgb-gray), 0.16);
+
+      &:hover,
+      &:active {
+        background-color: rgba(var(--color-rgb-gray), 0.32);
+      }
+    }
   }
 
   &__bar {
@@ -65,6 +75,16 @@
       > .q-scrollbar__thumb {
         height: 100%;
       }
+    }
+
+    &_secondary.q-scrollbar__bar_vertical {
+      width: 8px;
+      background-color: var(--color-tertiary-gray);
+    }
+
+    &_secondary.q-scrollbar__bar_horizontal {
+      height: 8px;
+      background-color: var(--color-tertiary-gray);
     }
   }
 }

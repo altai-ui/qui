@@ -2,16 +2,22 @@ export default {
   inheritAttrs: false,
 
   inject: {
-    elForm: {
+    ElForm: {
       default: ''
     },
-    elFormItem: {
+    ElFormItem: {
+      default: ''
+    },
+    QForm: {
+      default: ''
+    },
+    QFormItem: {
       default: ''
     }
   },
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       default: ''
     },
     disabled: {
@@ -96,6 +102,7 @@ export default {
       this.$emit('blur', event);
       if (this.validateEvent) {
         this.dispatch('ElFormItem', 'el.form.blur', [this.value]);
+        this.dispatch('QFormItem', 'q.form.blur', [this.value]);
       }
     },
     select() {
