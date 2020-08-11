@@ -1,12 +1,12 @@
 <template>
   <div
     class="q-scrollbar__bar"
-    :class="'q-scrollbar__bar_' + bar.key"
+    :class="classes"
     @mousedown="handleTrackerClick"
   >
     <div
       ref="thumb"
-      class="q-scrollbar__thumb"
+      :class="thumbClasses"
       :style="renderThumbStyle({ size, move, bar })"
       @mousedown="handleThumbClick"
     />
@@ -37,6 +37,18 @@ export default {
   },
 
   computed: {
+    classes() {
+      return [
+        `q-scrollbar__bar_${this.bar.key}`,
+        this.$parent.theme === 'secondary' && 'q-scrollbar__bar_secondary'
+      ];
+    },
+    thumbClasses() {
+      return [
+        'q-scrollbar__thumb',
+        this.$parent.theme === 'secondary' && 'q-scrollbar__thumb_secondary'
+      ];
+    },
     bar() {
       return BAR_MAP[this.type];
     },
