@@ -1,5 +1,5 @@
-@import 'q-select-dropdown';
-@import 'src/qComponents/QTag/src/q-tag';
+@import './q-select-dropdown';
+@import '../../QTag/src/q-tag';
 
 .q-select {
   --field-color-base: var(--color-primary-black);
