@@ -24,17 +24,23 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding: 14px 8px;
+    padding: 14px 0;
     text-align: center;
     text-transform: uppercase;
 
     .is-right & {
-      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+
+    .el-icon-d-arrow-right,
+    .el-icon-arrow-right {
+      order: 2;
     }
 
     div {
-      margin-right: 15px;
-      margin-left: 15px;
+      order: 1;
+      margin-right: 12px;
+      margin-left: 12px;
       font-weight: 600;
       font-size: 12px;
       vertical-align: middle;

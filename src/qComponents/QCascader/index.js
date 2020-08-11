@@ -6,7 +6,7 @@ QCascader.install = function(Vue) {
   Vue.component(QCascader.name, QCascader);
 };
 
-QCascaderPanel.install = function (Vue) {
+QCascaderPanel.install = function(Vue) {
   Vue.component(QCascaderPanel.name, QCascaderPanel);
 };
 
