@@ -11,17 +11,26 @@
 
 <script>
 export default {
+  data() {
+    return { dialogInstance: null };
+  },
+
+  beforeDestroy() {
+    // Use it to destroy dialog in handmode from outside
+    if (this.dialogInstance) this.dialogInstance.$destroy();
+  },
+
   methods: {
     async handleOpenCompBtnClick() {
-      try {
-        const response = await this.$dialog({
-          title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.',
-          component: () => import('../../materials/FormTest')
-        });
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-      }
+      const { answer, instance } = this.$dialog({
+        title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.',
+        component: () => import('../../materials/FormTest')
+      });
+
+      this.dialogInstance = instance;
+
+      console.log('instance', instance);
+      console.log('answer', await answer);
     }
   }
 };
