@@ -36,12 +36,15 @@ const Dialog = function(config = {}) {
     instance.isShown = true;
   });
 
-  return new Promise((resolve, reject) => {
-    currentPromise = {
-      resolve,
-      reject
-    };
-  });
+  return {
+    instance,
+    answer: new Promise((resolve, reject) => {
+      currentPromise = {
+        resolve,
+        reject
+      };
+    })
+  };
 };
 
 export default Dialog;
