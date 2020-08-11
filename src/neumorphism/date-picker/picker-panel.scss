@@ -90,11 +90,11 @@
     cursor: pointer;
 
     .is-left & {
-      margin-right: 4px;
+      margin-left: 4px;
     }
 
     .is-right & {
-      margin-left: 4px;
+      margin-right: 4px;
     }
 
     &:hover {

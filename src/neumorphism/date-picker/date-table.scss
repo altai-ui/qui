@@ -86,7 +86,20 @@
     &.in-range div {
       color: #fff;
       background-color: var(--color-primary-blue);
-      box-shadow: var(--box-shadow-primary);
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: -1;
+        width: 20px;
+        height: 20px;
+        margin: auto;
+        border-radius: 4px;
+        box-shadow: var(--box-shadow-primary);
+      }
     }
 
     &.disabled div {

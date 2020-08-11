@@ -10,22 +10,6 @@
   &.el-input,
   &.el-input__inner {
     width: 100%;
-
-    &::after {
-      content: '\e908';
-      position: absolute;
-      top: 0;
-      right: 8px;
-      font-size: 24px;
-      line-height: 40px;
-      font-family: 'qicon';
-      cursor: not-allowed;
-    }
-  }
-
-  .el-input__prefix,
-  .el-input__suffix {
-    display: none;
   }
 
   .el-input__prefix {
@@ -42,10 +26,6 @@
     .el-icon-circle-close::before {
       content: '\e90b';
     }
-  }
-
-  .el-input__prefix {
-    display: none;
   }
 
   .el-input__suffix {
@@ -115,7 +95,7 @@
     appearance: none;
 
     &::placeholder {
-      color: $--color-text-placeholder;
+      color: rgba(var(--color-rgb-gray), 0.32);
     }
   }
 
@@ -148,7 +128,7 @@
       box-shadow: var(--box-shadow-hover);
     }
 
-    &.is-active {
+    &.is-active:not(.is-disabled) {
       background-color: var(--color-tertiary-gray-ultra-light);
       outline: none;
       box-shadow: var(--box-shadow-focus);
@@ -162,8 +142,24 @@
   }
 
   .el-range__close-icon {
+    position: absolute;
+    right: 0;
     width: 45px;
-    visibility: hidden;
+    font-style: normal;
+    cursor: pointer;
+
+    &.el-icon-circle-close {
+      color: var(--color-primary-blue);
+
+      &:hover {
+        color: var(--color-primary-black);
+      }
+    }
+
+    &::before {
+      content: '\e908';
+      font-family: 'qicon';
+    }
   }
 
   @include when(active) {
@@ -247,6 +243,10 @@
       &::placeholder {
         color: rgba(var(--color-rgb-gray), 0.32);
       }
+    }
+
+    .el-range__close-icon {
+      cursor: not-allowed;
     }
 
     .el-range-separator,
