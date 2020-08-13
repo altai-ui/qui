@@ -29,7 +29,7 @@
 
   position: absolute;
   z-index: 1001;
-  box-sizing: border-box;
+  width: 100%;
   margin-top: 8px;
   overflow: hidden;
   background-color: var(--dropdown-item-background-color-base);
@@ -38,7 +38,6 @@
 
   &__item {
     position: relative;
-    box-sizing: border-box;
     height: 40px;
     padding: 10px 16px 8px;
     overflow: hidden;

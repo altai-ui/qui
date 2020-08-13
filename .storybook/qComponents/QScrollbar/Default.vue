@@ -30,7 +30,7 @@
       <div class="demonstration">add prop <b>:visible="true"</b></div>
       <q-scrollbar
         ref="scrollbar"
-        :visible="true"
+        visible
         wrap-class="scrollbar__wrap"
         view-class="scrollbar__list"
       >
@@ -55,12 +55,13 @@
     </div>
     <br />
     <div class="block">
-      <div class="demonstration">add prop <b>type="secondary"</b></div>
+      <div class="demonstration">add prop <b>theme="secondary"</b></div>
       <q-scrollbar
         ref="scrollbar"
         theme="secondary"
         wrap-class="scrollbar__wrap"
         view-class="scrollbar__list"
+        visible
       >
         <div class="french-bread">
           <p>съешь ещё этих мягких французских булок, да выпей чаю</p>
