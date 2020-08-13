@@ -31,13 +31,11 @@
     text-overflow: ellipsis;
 
     &_last:first-child {
-      font-size: 24px;
-      line-height: 31px;
       color: var(--color-primary-black);
     }
 
-    &_exact-active,
-    &_last {
+    &_exact-active:not(:first-child),
+    &_last:not(:first-child) {
       font-weight: var(--font-weight-bold);
       font-size: 16px;
       line-height: var(--line-height-base);
