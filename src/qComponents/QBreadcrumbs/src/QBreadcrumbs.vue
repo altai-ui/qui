@@ -8,7 +8,7 @@
         exact-active-class="q-breadcrumbs__crumb_exact-active"
         class="q-breadcrumbs__crumb"
       >
-        {{ crumb.name }}
+        {{ crumb.meta.breadcrumb }}
       </router-link>
 
       <span

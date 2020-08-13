@@ -25,7 +25,7 @@ export default {
           path: 'path-b',
           name: 'Очень длинный роут b',
           meta: {
-            breadcrumb: 'Роут b'
+            breadcrumb: 'Очень длинный роут b'
           }
         },
         {
