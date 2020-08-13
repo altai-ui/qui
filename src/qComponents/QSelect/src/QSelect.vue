@@ -174,13 +174,13 @@ export default {
     elForm: {
       default: ''
     },
+    elFormItem: {
+      default: ''
+    },
     qForm: {
       default: ''
     },
-    QFormItem: {
-      default: ''
-    },
-    ElFormItem: {
+    qFormItem: {
       default: ''
     }
   },

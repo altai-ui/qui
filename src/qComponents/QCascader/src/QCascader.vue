@@ -93,16 +93,16 @@ export default {
   mixins: [Emitter],
 
   inject: {
-    QForm: {
+    qForm: {
       default: ''
     },
-    QFormItem: {
+    qFormItem: {
       default: ''
     },
-    ElForm: {
+    elForm: {
       default: ''
     },
-    ElFormItem: {
+    elFormItem: {
       default: ''
     }
   },
