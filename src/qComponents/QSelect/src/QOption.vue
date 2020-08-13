@@ -31,7 +31,7 @@ export default {
 
   props: {
     value: {
-      type: [Object, String],
+      type: [Object, String, Number],
       required: true
     },
     label: { type: [String, Number], default: '' },
@@ -62,10 +62,6 @@ export default {
 
     currentLabel() {
       return this.label ?? (this.isObject ? '' : this.value);
-    },
-
-    currentValue() {
-      return (this.value || this.label) ?? '';
     },
 
     itemSelected() {
