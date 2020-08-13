@@ -110,8 +110,7 @@
       @before-enter="handleMenuEnter"
     >
       <q-select-dropdown
-        v-show="visible"
-        ref="popper"
+        v-if="visible"
         :append-to-body="popperAppendToBody"
       >
         <q-scrollbar

@@ -92,12 +92,11 @@ export default {
   mounted() {
     if (this.native) return;
     this.observer = new MutationObserver(this.update);
-    this.observer.observe(this.$slots.default[0]?.elm, {
+    this.observer.observe(this.$refs.resize, {
       attributes: true,
       childList: true,
       subtree: true
     });
-
     this.$nextTick(this.update);
     !this.noresize && addResizeListener(this.$refs.resize, this.update);
   },
