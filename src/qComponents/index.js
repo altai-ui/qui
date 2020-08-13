@@ -1,6 +1,7 @@
 import vClickOutside from 'v-click-outside';
 
 import QButton from './QButton';
+import QBreadcrumbs from './QBreadcrumbs';
 import { QCheckbox, QCheckboxGroup } from './QCheckbox';
 import { QSelect, QOption } from './QSelect';
 import { QRadio, QRadioGroup } from './QRadio';
@@ -22,6 +23,7 @@ import QDrawer from './QDrawer';
 
 const components = [
   QButton,
+  QBreadcrumbs,
   QCascader,
   QCascaderPanel,
   QCheckbox,
@@ -88,6 +90,7 @@ export default {
   install,
 
   QButton,
+  QBreadcrumbs,
   QCheckbox,
   QCheckboxGroup,
   QCollapse,
