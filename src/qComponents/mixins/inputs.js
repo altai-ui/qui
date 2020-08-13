@@ -2,19 +2,20 @@ export default {
   inheritAttrs: false,
 
   inject: {
-    ElForm: {
+    elForm: {
       default: ''
     },
-    ElFormItem: {
+    elFormItem: {
       default: ''
     },
-    QForm: {
+    qForm: {
       default: ''
     },
-    QFormItem: {
+    qFormItem: {
       default: ''
     }
   },
+
   props: {
     value: {
       type: [String, Number],
@@ -43,6 +44,7 @@ export default {
     label: { type: String, default: '' },
     tabindex: { type: String, default: '' }
   },
+
   data() {
     return {
       hovering: false,
@@ -50,13 +52,20 @@ export default {
       isComposing: false
     };
   },
+
   computed: {
     inputDisabled() {
-      return this.disabled || Boolean(this.elForm?.disabled);
+      return (
+        this.disabled ||
+        Boolean(this.elForm?.disabled) ||
+        Boolean(this.qForm?.disabled)
+      );
     },
+
     nativeInputValue() {
       return String(this.value ?? '');
     },
+
     isClearButtonShown() {
       return (
         this.clearable &&
@@ -66,6 +75,7 @@ export default {
         (this.focused || this.hovering)
       );
     },
+
     isSymbolLimitShown() {
       return (
         this.showSymbolLimit &&
@@ -75,28 +85,35 @@ export default {
         !this.showPassword
       );
     },
+
     upperLimit() {
       return this.$attrs.maxlength ?? this.counterLimit;
     },
+
     textLength() {
       return this.value?.length ?? 0;
     }
   },
+
   watch: {
     nativeInputValue() {
       this.setNativeInputValue();
     }
   },
+
   created() {
     this.$on('inputSelect', this.select);
   },
+
   methods: {
     focus() {
       this.componentRef.focus();
     },
+
     blur() {
       this.componentRef.blur();
     },
+
     handleBlur(event) {
       this.focused = false;
       this.$emit('blur', event);
@@ -105,28 +122,34 @@ export default {
         this.dispatch('QFormItem', 'q.form.blur', [this.value]);
       }
     },
+
     select() {
       this.componentRef.select();
     },
+
     setNativeInputValue() {
       const input = this.componentRef;
       if (!input) return;
       if (input.value === this.nativeInputValue) return;
       input.value = this.nativeInputValue;
     },
+
     handleFocus(event) {
       this.focused = true;
       this.$emit('focus', event);
     },
+
     handleCompositionStart() {
       this.isComposing = true;
     },
+
     handleCompositionEnd(event) {
       if (this.isComposing) {
         this.isComposing = false;
         this.handleInput(event);
       }
     },
+
     handleInput(event) {
       // should not emit input during composition
       if (this.isComposing) return;
@@ -134,6 +157,7 @@ export default {
       // ensure native input value is controlled
       this.$nextTick(this.setNativeInputValue);
     },
+
     handleChange(event) {
       this.$emit('change', event.target.value);
     }

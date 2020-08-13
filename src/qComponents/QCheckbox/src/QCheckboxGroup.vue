@@ -20,10 +20,10 @@ export default {
   mixins: [Emitter],
 
   inject: {
-    QFormItem: {
+    qFormItem: {
       default: ''
     },
-    ElFormItem: {
+    elFormItem: {
       default: ''
     }
   },
