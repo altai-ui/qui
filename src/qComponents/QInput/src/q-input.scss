@@ -45,7 +45,7 @@
     border: none;
     border-radius: var(--border-radius-base);
     box-shadow: var(--field-box-shadow-base);
-    appearance: none;
+    appearance: textfield;
 
     &::placeholder {
       color: var(--field-color-placeholder);
