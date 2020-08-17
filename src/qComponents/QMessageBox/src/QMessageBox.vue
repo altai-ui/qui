@@ -31,25 +31,33 @@
         <template v-else>
           <div class="q-message-box__content">
             <slot>
-              <div
-                v-if="!dangerouslyUseHTMLString"
-                class="q-message-box__message"
-              >
-                {{ message }}
-              </div>
-              <div
-                v-else
-                class="q-message-box__message"
-                v-html="message"
-              />
+              <template v-if="message">
+                <div
+                  v-if="!dangerouslyUseHTMLString"
+                  class="q-message-box__message"
+                >
+                  {{ message }}
+                </div>
+                <div
+                  v-else
+                  class="q-message-box__message"
+                  v-html="message"
+                />
+              </template>
             </slot>
 
-            <div class="q-message-box__submessage">
+            <div
+              v-if="submessage"
+              class="q-message-box__submessage"
+            >
               {{ submessage }}
             </div>
           </div>
 
-          <div class="q-message-box__actions">
+          <div
+            v-if="isActionsSectionShown"
+            class="q-message-box__actions"
+          >
             <q-button
               v-if="confirmButtonText"
               :loading="isConfirmBtnLoading"
@@ -134,6 +142,12 @@ export default {
       isCancelBtnLoading: false,
       callback: null
     };
+  },
+
+  computed: {
+    isActionsSectionShown() {
+      return Boolean(this.confirmButtonText) || Boolean(this.cancelButtonText);
+    }
   },
 
   mounted() {

@@ -33,6 +33,7 @@ const Message = function(config = {}) {
   instance.isComponentUsed = Boolean(config.component);
 
   if (
+    config.message &&
     !instance.isComponentUsed &&
     Object.prototype.hasOwnProperty.call(config.message, 'componentOptions')
   ) {
