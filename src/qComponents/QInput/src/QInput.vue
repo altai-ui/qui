@@ -76,7 +76,15 @@ export default {
       type: String,
       default: 'text',
       validator: value =>
-        ['text', 'email', 'hidden', 'tel', 'url'].includes(value)
+        [
+          'text',
+          'password',
+          'number',
+          'email',
+          'hidden',
+          'tel',
+          'url'
+        ].includes(value)
     },
     autocomplete: {
       type: String,

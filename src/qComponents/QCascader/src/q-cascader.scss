@@ -133,10 +133,12 @@
 }
 
 .q-cascader-menu {
-  min-width: 200px;
-  margin-left: 1px;
-  overflow: visible;
-  color: var(--color-primary-blue);
+  &.q-scrollbar {
+    min-width: 200px;
+    margin-left: 1px;
+    overflow: visible;
+    color: var(--color-primary-blue);
+  }
 
   &__empty-text {
     margin: 6px 0;

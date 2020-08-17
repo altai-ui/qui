@@ -9,7 +9,7 @@
       v-if="isEmpty"
       class="q-cascader-menu__empty-text"
     >
-      {{ panel.noDataText || 'Нет данных' }}
+      {{ noDataText }}
     </div>
     <cascader-node
       v-for="node in nodes"
@@ -81,11 +81,17 @@ export default {
 
       return classes;
     },
+
     isEmpty() {
       return !this.nodes.length;
     },
+
     menuId() {
       return `cascader-menu-${this.id}-${this.index}`;
+    },
+
+    noDataText() {
+      return this.panel?.props?.noDataText ?? 'Нет данных';
     }
   },
 
