@@ -55,7 +55,7 @@
     <div class="block">
       <span class="demonstration">No options</span>
       <q-select
-        v-model="value2"
+        value=""
         multiple
         collapse-tags
         placeholder="Выберите"
@@ -87,25 +87,25 @@ export default {
     return {
       options: [
         {
-          value: 'Вариант 1',
+          value: 'var 1',
           label: 'Вариант 1'
         },
         {
-          value: 'Вариант 2',
+          value: 'var 2',
           label: 'Вариант 2'
         },
         {
-          value: 'Очень длинный примерва варианта 3',
-          label: 'Очень длинный примерва варианта 3'
+          value: 'Очень длинный пример варианта 3',
+          label: 'Очень длинный пример варианта 3'
         },
         {
-          value: 'Вариант 4',
+          value: 'var 3',
           label: 'Вариант 4',
           disabled: true
         },
         {
-          value: 'Очень длинный примерва варианта 5',
-          label: 'Очень длинный примерва варианта 5',
+          value: 'var 5',
+          label: 'Очень длинный пример варианта 5',
           disabled: true
         },
         {
@@ -113,8 +113,8 @@ export default {
           label: 'Option 6'
         }
       ],
-      value1: '',
-      value2: ['Вариант 4']
+      value1: 'var 1',
+      value2: ['var 1', 'var 2']
     };
   }
 };
