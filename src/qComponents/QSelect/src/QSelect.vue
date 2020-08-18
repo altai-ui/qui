@@ -52,8 +52,6 @@
         @focus="handleFocus"
         @keyup="managePlaceholder"
         @keydown="resetInputState"
-        @keydown.down.prevent="navigateOptions('next')"
-        @keydown.up.prevent="navigateOptions('prev')"
         @keydown.enter.prevent="selectOption"
         @keydown.esc.stop.prevent="visible = false"
         @keydown.delete="deletePrevTag"
@@ -78,8 +76,6 @@
       @focus="handleFocus"
       @blur="handleBlur"
       @keyup.native="debouncedOnInputChange"
-      @keydown.native.down.stop.prevent="navigateOptions('next')"
-      @keydown.native.up.stop.prevent="navigateOptions('prev')"
       @keydown.native.enter.prevent="selectOption"
       @keydown.native.esc.stop.prevent="visible = false"
       @keydown.native.tab="visible = false"
@@ -109,12 +105,12 @@
       name="q-zoom-in-top"
       @before-enter="handleMenuEnter"
     >
+      <!-- v-show because of cachedOptions -->
       <q-select-dropdown
-        v-if="visible"
+        v-show="visible"
         :append-to-body="popperAppendToBody"
       >
         <q-scrollbar
-          v-show="isScrollbarShown"
           ref="scrollbar"
           tag="ul"
           wrap-class="q-select-dropdown__wrap"
@@ -123,6 +119,7 @@
           <q-option
             v-if="showNewOption"
             :value="query"
+            :label="query"
             created
           />
           <slot />
@@ -194,7 +191,7 @@ export default {
   props: {
     value: {
       type: [String, Number, Array],
-      required: true
+      default: null
     },
     autocomplete: {
       type: String,
@@ -278,10 +275,6 @@ export default {
   computed: {
     isCanLoadMoreShown() {
       return this.canLoadMore && !this.loading && this.filteredOptionsCount > 0;
-    },
-
-    isScrollbarShown() {
-      return this.options.length > 0 && !this.loading;
     },
 
     tagsStyle() {
@@ -455,6 +448,8 @@ export default {
             }
           }
         }
+
+        this.$nextTick(this.$refs.scrollbar.update);
       }
       this.$emit('visible-change', val);
     },
@@ -574,21 +569,11 @@ export default {
     },
 
     getOption(value) {
-      let option;
-      const isVavueObject = isObject(value);
-      for (let i = this.cachedOptions.length - 1; i >= 0; i -= 1) {
-        const cachedOption = this.cachedOptions[i];
-        const isValuesEqual = isVavueObject
-          ? get(cachedOption.value, this.valueKey) === get(value, this.valueKey)
-          : cachedOption.value === value;
-        if (isValuesEqual) {
-          option = cachedOption;
-          break;
-        }
-      }
+      const option = this.cachedOptions.find(
+        cachedOption => cachedOption.value === value
+      );
       if (option) return option;
-      const label =
-        !isVavueObject && ![null, undefined].includes(value) ? value : '';
+      const label = value ?? '';
       const newOption = {
         value,
         currentLabel: label

@@ -32,7 +32,7 @@
             'q-icon-triangle-down',
             dropDownVisible && 'q-icon-triangle-down_reverse'
           ]"
-          @click.stop="toggleDropDownVisible(!dropDownVisible)"
+          @click="toggleDropDownVisible(dropDownVisible)"
         />
       </template>
     </q-input>
