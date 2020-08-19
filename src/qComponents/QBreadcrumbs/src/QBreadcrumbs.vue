@@ -3,7 +3,7 @@
     <template v-for="crumb in breadcrumbs">
       <router-link
         :key="crumb.path"
-        :to="crumb.path"
+        :to="routerTo(crumb)"
         active-class="q-breadcrumbs__crumb_active"
         exact-active-class="q-breadcrumbs__crumb_exact-active"
         class="q-breadcrumbs__crumb"
@@ -66,6 +66,12 @@ export default {
       if (this.last) return this.last;
 
       return this.crumbs[this.crumbs.length - 1]?.meta.breadcrumb ?? '';
+    }
+  },
+
+  methods: {
+    routerTo({ name, path }) {
+      return name ? { name } : path;
     }
   }
 };
