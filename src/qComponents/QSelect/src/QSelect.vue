@@ -105,11 +105,7 @@
       name="q-zoom-in-top"
       @before-enter="handleMenuEnter"
     >
-      <!-- v-show because of cachedOptions -->
-      <q-select-dropdown
-        v-show="visible"
-        :append-to-body="popperAppendToBody"
-      >
+      <q-select-dropdown ref="dropdown">
         <q-scrollbar
           ref="scrollbar"
           tag="ul"
@@ -122,7 +118,7 @@
             :label="query"
             created
           />
-          <slot />
+          <slot v-if="!loading" />
         </q-scrollbar>
         <template v-if="showEmptyContent">
           <slot
@@ -148,7 +144,15 @@
 </template>
 
 <script type="text/babel">
-import { isObject, isEqual, debounce, get } from 'lodash-es';
+import {
+  isObject,
+  isPlainObject,
+  isEmpty,
+  isEqual,
+  debounce,
+  get
+} from 'lodash-es';
+import { createPopper } from '@popperjs/core';
 import QSelectDropdown from './QSelectDropdown';
 import QOption from './QOption';
 import Focus from '../../mixins/focus';
@@ -190,7 +194,7 @@ export default {
 
   props: {
     value: {
-      type: [String, Number, Array],
+      type: [String, Number, Array, Object],
       default: null
     },
     autocomplete: {
@@ -240,10 +244,7 @@ export default {
       default: 'value'
     },
     collapseTags: { type: Boolean, default: false },
-    popperAppendToBody: {
-      type: Boolean,
-      default: true
-    }
+    appendToBody: { type: Boolean, default: false }
   },
 
   data() {
@@ -268,7 +269,7 @@ export default {
       currentPlaceholder: '',
       menuVisibleOnFocus: false,
       isOnComposition: false,
-      isSilentBlur: false
+      popper: null
     };
   },
 
@@ -398,7 +399,6 @@ export default {
 
     visible(val) {
       if (!val) {
-        this.broadcast('QSelectDropdown', 'destroyPopper');
         this.$refs.input && this.$refs.input.blur();
         this.query = '';
         this.previousQuery = null;
@@ -430,8 +430,10 @@ export default {
             this.currentPlaceholder = this.cachedPlaceHolder;
           }
         }
+
+        this.hidePopper();
       } else {
-        this.broadcast('QSelectDropdown', 'updatePopper');
+        this.showPopper();
         if (this.filterable) {
           this.query = this.remote ? '' : this.selectedLabel;
           this.handleQueryChange(this.query);
@@ -451,13 +453,11 @@ export default {
 
         this.$nextTick(this.$refs.scrollbar.update);
       }
+
       this.$emit('visible-change', val);
     },
 
     options() {
-      this.$nextTick(() => {
-        this.broadcast('QSelectDropdown', 'updatePopper');
-      });
       if (this.multiple) {
         this.resetInputHeight();
       }
@@ -518,6 +518,50 @@ export default {
   },
 
   methods: {
+    createPopper() {
+      if (this.appendToBody) {
+        document.body.appendChild(this.$refs.dropdown.$el);
+        this.$refs.dropdown.$el.style.width = `${this.$refs.reference.$el.clientWidth}px`;
+      }
+
+      this.popper = createPopper(
+        this.$refs.reference.$el,
+        this.$refs.dropdown.$el,
+        {
+          modifiers: [
+            {
+              name: 'offset',
+              options: {
+                offset: [0, 8]
+              }
+            },
+            {
+              name: 'flip',
+              options: {
+                fallbackPlacements: ['top', 'bottom']
+              }
+            }
+          ]
+        }
+      );
+    },
+    destroyPopper() {
+      if (this.popper) {
+        this.popper.destroy();
+        this.popper = null;
+      }
+    },
+
+    showPopper() {
+      this.$refs.dropdown.$el.setAttribute('data-show', '');
+      this.createPopper();
+    },
+
+    hidePopper() {
+      this.$refs.dropdown.$el.removeAttribute('data-show');
+      this.destroyPopper();
+    },
+
     handleComposition(event) {
       const text = event.target.value;
       this.isOnComposition = false;
@@ -569,9 +613,23 @@ export default {
     },
 
     getOption(value) {
-      const option = this.cachedOptions.find(
+      let option = this.cachedOptions.find(
         cachedOption => cachedOption.value === value
       );
+
+      if (isPlainObject(this.value)) {
+        if (isEmpty(this.value)) {
+          return {
+            value: '',
+            currentLabel: ''
+          };
+        }
+        const valueByValuekey = this.value[this.valueKey];
+        option = this.cachedOptions.find(
+          cachedOption => cachedOption.value[this.valueKey] === valueByValuekey
+        );
+      }
+
       if (option) return option;
       const label = value ?? '';
       const newOption = {
@@ -604,6 +662,7 @@ export default {
           result.push(this.getOption(value));
         });
       }
+
       this.selected = result;
       this.$nextTick(() => {
         this.resetInputHeight();
@@ -627,11 +686,7 @@ export default {
 
     handleBlur(event) {
       setTimeout(() => {
-        if (this.isSilentBlur) {
-          this.isSilentBlur = false;
-        } else {
-          this.$emit('blur', event);
-        }
+        this.$emit('blur', event);
       }, 50);
     },
 
@@ -683,10 +738,9 @@ export default {
       this.$nextTick(() => {
         if (!this.$refs.reference) return;
         const inputChildNodes = this.$refs.reference.$el.childNodes;
-        const input = [].filter.call(
-          inputChildNodes,
+        const input = Array.from(inputChildNodes).find(
           item => item.tagName === 'INPUT'
-        )[0];
+        );
         const tags = this.$refs.tags;
         input.style.height =
           this.selected.length === 0
@@ -698,6 +752,7 @@ export default {
                   : 0,
                 this.initialInputHeight
               )}px`;
+        this.popper && this.popper.update();
       });
     },
 
@@ -716,7 +771,7 @@ export default {
       }, 300);
     },
 
-    handleOptionSelect(option, byClick) {
+    handleOptionSelect(option) {
       if (this.multiple) {
         const value = [...(this.value ?? [])];
         const optionIndex = this.getValueIndex(value, option.value);
@@ -741,7 +796,6 @@ export default {
         this.emitChange(option.value);
         this.visible = false;
       }
-      this.isSilentBlur = byClick;
       if (this.visible) return;
       this.$nextTick(() => {
         this.scrollToOption(option);
