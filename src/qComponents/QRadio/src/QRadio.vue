@@ -4,25 +4,24 @@
     :class="[
       { 'q-radio_disabled': isDisabled },
       { 'q-radio_focus': focus },
-      { 'q-radio_checked': model === label }
+      { 'q-radio_checked': isChecked }
     ]"
     role="radio"
-    :aria-checked="model === label"
+    :aria-checked="isChecked"
     :aria-disabled="isDisabled"
     :tabindex="tabIndex"
   >
     <span class="q-radio__input">
       <span class="q-radio__inner" />
       <input
-        ref="radio"
-        v-model="model"
         class="q-radio__original"
-        :value="label"
         type="radio"
         aria-hidden="true"
-        :name="name"
-        :disabled="isDisabled"
         tabindex="-1"
+        :name="name"
+        :value="value"
+        :checked="isChecked"
+        :disabled="isDisabled"
         @focus="focus = true"
         @blur="focus = false"
         @change="handleChange"
@@ -60,53 +59,50 @@ export default {
     }
   },
 
+  model: {
+    prop: 'checked',
+    event: 'change'
+  },
+
   componentName: 'QRadio',
 
   props: {
-    value: { type: [String, Number], default: '' },
-    label: { type: [String, Number], default: '' },
+    label: { type: [String], default: '' },
+    value: { type: [String, Number, Boolean], default: '' },
+    checked: { type: [String, Number, Boolean], default: false },
     disabled: { type: Boolean, default: false },
-    name: { type: String, default: '' }
+    name: { type: String, default: undefined }
   },
 
   data() {
     return {
       focus: false,
-      isGroup: false
+      isGroup: false,
+      radioGroup: null
     };
   },
 
   computed: {
-    model: {
-      get() {
-        return this.isGroup ? this.radioGroup.value : this.value;
-      },
-      set(val) {
-        if (this.isGroup) {
-          this.dispatch('QRadioGroup', 'input', [val]);
-        } else {
-          this.$emit('input', val);
-        }
-        if (this.$refs.radio)
-          this.$refs.radio.checked = this.model === this.label;
-      }
+    isChecked() {
+      if (this.isGroup) return this.radioGroup?.value === this.value;
+
+      if (typeof this.checked === typeof this.value)
+        return this.checked === this.value;
+
+      return Boolean(this.checked);
     },
 
     isDisabled() {
-      return this.isGroup
-        ? this.radioGroup.disabled ||
-            this.disabled ||
-            Boolean(this.elForm?.disabled) ||
-            Boolean(this.qForm?.disabled)
-        : this.disabled ||
-            Boolean(this.elForm?.disabled) ||
-            Boolean(this.qForm?.disabled);
+      return (
+        (this.isGroup && this.radioGroup.disabled) ||
+        this.disabled ||
+        Boolean(this.elForm?.disabled) ||
+        Boolean(this.qForm?.disabled)
+      );
     },
 
     tabIndex() {
-      return this.isDisabled || (this.isGroup && this.model !== this.label)
-        ? -1
-        : 0;
+      return this.isDisabled || (this.isGroup && !this.isChecked) ? -1 : 0;
     }
   },
 
@@ -127,11 +123,11 @@ export default {
 
   methods: {
     handleChange() {
-      this.$nextTick(() => {
-        this.$emit('change', this.model);
-        if (this.isGroup)
-          this.dispatch('QRadioGroup', 'handleChange', this.model);
-      });
+      this.$emit('change', this.value);
+
+      if (this.isGroup) {
+        this.dispatch('QRadioGroup', 'change', this.value);
+      }
     }
   }
 };
