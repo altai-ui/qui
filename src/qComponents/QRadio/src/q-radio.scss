@@ -33,6 +33,10 @@
   cursor: pointer;
   user-select: none;
 
+  &_disabled {
+    cursor: not-allowed;
+  }
+
   &__label {
     margin-top: 3px;
     padding-left: 16px;
@@ -43,7 +47,6 @@
 
     .q-radio_disabled & {
       color: var(--radio-color-disabled);
-      cursor: not-allowed;
     }
   }
 
@@ -53,7 +56,6 @@
     white-space: nowrap;
     border: none;
     outline: none;
-    cursor: pointer;
   }
 
   &__inner {
@@ -66,7 +68,6 @@
     border-radius: 100%;
     outline: none;
     box-shadow: var(--radio-box-shadow-base);
-    cursor: pointer;
 
     &::after {
       content: '';
@@ -104,11 +105,9 @@
 
     .q-radio_disabled & {
       background-color: var(--radio-background-color-disabled);
-      cursor: not-allowed;
 
       &::after {
         background-color: var(--radio-dot-color-disabled);
-        cursor: not-allowed;
       }
     }
   }

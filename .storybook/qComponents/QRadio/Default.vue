@@ -2,30 +2,35 @@
   <div>
     <q-radio
       v-model="radio1"
-      label="1"
-    >Вариант A</q-radio>
+      value="1"
+      label="Вариант A"
+    />
     <br /><br />
     <q-radio
       v-model="radio1"
-      label="2"
-    >Вариант B</q-radio>
+      value="2"
+      label="Вариант B"
+    />
     <br /><br />
     <q-radio
       v-model="radio1"
-      label="3"
-    >Option C</q-radio>
+      value="3"
+      label="Option C"
+    />
     <br /><br />
     <q-radio
       v-model="radio1"
-      label="4"
       disabled
-    >Неактивный вариант</q-radio>
+      value="4"
+      label="Неактивный вариант"
+    />
     <br /><br />
     <q-radio
       v-model="radio2"
-      label="1"
       disabled
-    >Выбранный и неактивный вариант</q-radio>
+      value="1"
+      label="Выбранный и неактивный вариант"
+    />
   </div>
 </template>
 

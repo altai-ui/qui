@@ -24,6 +24,8 @@ export default {
 
   componentName: 'QRadioGroup',
 
+  mixins: [Emitter],
+
   inject: {
     elFormItem: {
       default: ''
@@ -34,7 +36,10 @@ export default {
     }
   },
 
-  mixins: [Emitter],
+  model: {
+    prop: 'value',
+    event: 'change'
+  },
 
   props: {
     value: { type: [String, Number], default: '' },
@@ -54,19 +59,9 @@ export default {
     }
   },
 
-  created() {
-    this.$on('handleChange', value => {
-      this.$emit('change', value);
-    });
-  },
-
-  destroyed() {
-    this.$off('handleChange');
-  },
-
   mounted() {
     const radios = this.$el.querySelectorAll('[type=radio]');
-    const firstLabel = this.$el.querySelectorAll('[role=radio]')[0];
+    const firstLabel = this.$el.querySelector('[role=radio]');
 
     if (![...radios].some(({ checked }) => checked) && firstLabel) {
       firstLabel.tabIndex = 0;
