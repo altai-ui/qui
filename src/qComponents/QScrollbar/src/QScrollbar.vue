@@ -4,7 +4,6 @@
       ref="wrap"
       class="q-scrollbar__wrap"
       :class="wrapClasses"
-      :style="styles"
       @scroll="handleScroll"
     >
       <div
@@ -32,7 +31,6 @@
 </template>
 
 <script>
-import { scrollBarWidth } from './util';
 import { addResizeListener, removeResizeListener } from '../../helpers';
 import QBar from './QBar';
 
@@ -75,17 +73,6 @@ export default {
 
     wrapClasses() {
       return [this.wrapClass, { 'q-scrollbar__wrap_hidden-default': true }];
-    },
-    styles() {
-      const gutter = scrollBarWidth();
-      let styles = {};
-      if (gutter) {
-        const gutterWith = `-${gutter}px`;
-        const gutterStyles = `margin-bottom: ${gutterWith}; margin-right: ${gutterWith};`;
-        styles = gutterStyles;
-      }
-
-      return styles;
     }
   },
 
