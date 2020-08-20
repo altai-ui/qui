@@ -26,15 +26,17 @@
     1px 1px 3px rgba(var(--color-rgb-blue), 0.4),
     inset -1px -1px 1px rgba(var(--color-rgb-white), 0.7),
     inset 1px 1px 2px rgba(var(--color-rgb-blue), 0.2);
-
   position: absolute;
   z-index: 1001;
+  display: none;
   width: 100%;
-  margin-top: 8px;
-  overflow: hidden;
   background-color: var(--dropdown-item-background-color-base);
   border-radius: var(--border-radius-base);
   box-shadow: var(--dropdown-box-shadow-base);
+
+  &[data-show] {
+    display: block;
+  }
 
   &__item {
     position: relative;
@@ -51,6 +53,7 @@
     box-shadow: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
       1px 1px 3px rgba(var(--color-rgb-blue), 0.4);
     cursor: pointer;
+    user-select: none;
 
     &:not(:first-child) {
       margin-top: 1px;

@@ -78,6 +78,21 @@
         />
       </q-select>
     </div>
+    <div class="block">
+      <span class="demonstration">Default</span>
+      <q-select
+        v-model="valueObj"
+        value-key="id"
+      >
+        <q-option
+          v-for="item in objList"
+          :key="item.id"
+          :label="item.name"
+          :value="item"
+        />
+      </q-select>
+
+    </div>
   </div>
 </template>
 
@@ -114,7 +129,9 @@ export default {
         }
       ],
       value1: 'var 1',
-      value2: ['var 1', 'var 2']
+      value2: ['var 1', 'var 2'],
+      valueObj:{id:1,name:'name1'},
+      objList:[{id:1,name:'name1'},{id:2,name:'name2'}],
     };
   }
 };
