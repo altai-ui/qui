@@ -17,26 +17,14 @@
   }
 
   .el-input__suffix {
+    .el-icon-circle-close::before {
+      content: '\e90b';
+    }
+
     .el-input__icon::before {
       content: '\e908';
       font-style: normal;
       font-family: 'qicon';
-    }
-
-    .el-icon-circle-close::before {
-      content: '\e90b';
-    }
-  }
-
-  .el-input__suffix {
-    .el-input__icon::before {
-      content: '\e908';
-      font-style: normal;
-      font-family: 'qicon';
-    }
-
-    .el-icon-circle-close::before {
-      content: '\e90b';
     }
   }
 
@@ -96,6 +84,7 @@
 
     &::placeholder {
       color: rgba(var(--color-rgb-gray), 0.32);
+      opacity: 1;
     }
   }
 
@@ -144,7 +133,7 @@
   .el-range__close-icon {
     position: absolute;
     right: 0;
-    width: 45px;
+    width: 40px;
     font-style: normal;
     cursor: pointer;
 
@@ -156,7 +145,7 @@
       }
     }
 
-    &::before {
+    &:not(.el-icon-circle-close)::before {
       content: '\e908';
       font-family: 'qicon';
     }
