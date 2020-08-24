@@ -42,7 +42,7 @@ export default {
   },
 
   props: {
-    value: { type: [String, Number], default: '' },
+    value: { type: [String, Number, Boolean], default: '' },
     disabled: { type: Boolean, default: false },
     tag: { type: String, default: 'div' },
     direction: {
