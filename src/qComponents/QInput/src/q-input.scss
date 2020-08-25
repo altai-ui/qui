@@ -47,6 +47,12 @@
     box-shadow: var(--field-box-shadow-base);
     appearance: textfield;
 
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      appearance: none;
+      margin: 0;
+    }
+
     &::placeholder {
       color: var(--field-color-placeholder);
       text-overflow: ellipsis;
