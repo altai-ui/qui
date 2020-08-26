@@ -16,6 +16,7 @@ import QColorPicker from './QColorPicker';
 import QContextMenu from './QContextMenu';
 import QDialog from './QDialog';
 import QMessageBox from './QMessageBox';
+import QPagination from './QPagination';
 import QPopover from './QPopover';
 import QScrollbar from './QScrollbar';
 import { QTabs, QTabPane } from './QTabs';
@@ -37,6 +38,7 @@ const components = [
   QInput,
   QInputNumber,
   QMessageBox,
+  QPagination,
   QPopover,
   QScrollbar,
   QSelect,
@@ -100,6 +102,7 @@ export default {
   QInput,
   QInputNumber,
   QMessageBox,
+  QPagination,
   QPopover,
   QScrollbar,
   QSelect,
