@@ -103,7 +103,7 @@ export default {
 
   computed: {
     preparedPageCount() {
-      const pageCount = this.pageCount ?? this.total / this.pageSize;
+      const pageCount = this.pageCount ?? Math.ceil(this.total / this.pageSize);
 
       return pageCount && Number.isFinite(pageCount) ? pageCount : 1;
     },
