@@ -4,7 +4,7 @@
       <span class="demonstration">with <b>total</b> and <b>page-size</b></span>
 
       <q-pagination
-        :total="1000"
+        :total="999"
         :page-size="10"
         :current-page="page"
         @current-change="handleCurrentPageChange"
