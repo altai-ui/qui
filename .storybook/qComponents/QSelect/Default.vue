@@ -91,7 +91,6 @@
           :value="item"
         />
       </q-select>
-
     </div>
   </div>
 </template>
@@ -130,8 +129,11 @@ export default {
       ],
       value1: 'var 1',
       value2: ['var 1', 'var 2'],
-      valueObj:{id:1,name:'name1'},
-      objList:[{id:1,name:'name1'},{id:2,name:'name2'}],
+      valueObj: { id: 1, name: 'name1' },
+      objList: [
+        { id: 1, name: 'name1' },
+        { id: 2, name: 'name2' }
+      ]
     };
   }
 };

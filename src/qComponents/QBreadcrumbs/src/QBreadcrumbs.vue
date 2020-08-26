@@ -2,7 +2,7 @@
   <div class="q-breadcrumbs">
     <template v-for="crumb in breadcrumbs">
       <router-link
-        :key="crumb.path"
+        :key="crumb.name || crumb.path"
         :to="routerTo(crumb)"
         active-class="q-breadcrumbs__crumb_active"
         exact-active-class="q-breadcrumbs__crumb_exact-active"
@@ -12,7 +12,7 @@
       </router-link>
 
       <span
-        :key="`${crumb.path}divider`"
+        :key="`${crumb.name || crumb.path}divider`"
         class="q-breadcrumbs__divider q-icon-arrow-right"
       />
     </template>
