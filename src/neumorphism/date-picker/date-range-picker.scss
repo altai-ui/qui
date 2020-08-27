@@ -26,7 +26,6 @@
     align-items: center;
     padding: 14px 0;
     text-align: center;
-    text-transform: uppercase;
 
     .is-right & {
       justify-content: flex-end;
@@ -39,10 +38,8 @@
 
     div {
       order: 1;
-      margin-right: 12px;
-      margin-left: 12px;
-      font-weight: 600;
-      font-size: 12px;
+      width: 100%;
+      font-size: 10px;
       vertical-align: middle;
       color: var(--color-primary-black);
       white-space: nowrap;
