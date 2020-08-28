@@ -4,8 +4,8 @@
       ref="trigger"
       class="q-color-picker-trigger"
       :class="{
-        'q-color-picker-trigger_is_disabled': isDisabled,
-        'q-color-picker-trigger_is_opened': isPickerShown
+        'q-color-picker-trigger_is-disabled': isDisabled,
+        'q-color-picker-trigger_is-opened': isPickerShown
       }"
       @click.prevent="handleTriggerClick"
     >

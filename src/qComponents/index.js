@@ -16,6 +16,7 @@ import QColorPicker from './QColorPicker';
 import QContextMenu from './QContextMenu';
 import QDialog from './QDialog';
 import QMessageBox from './QMessageBox';
+import QNotification from './QNotification';
 import QPagination from './QPagination';
 import QPopover from './QPopover';
 import QScrollbar from './QScrollbar';
@@ -67,6 +68,8 @@ const install = Vue => {
   Vue.use(vClickOutside);
 
   // eslint-disable-next-line no-param-reassign
+  Vue.prototype.$notify = QNotification;
+  // eslint-disable-next-line no-param-reassign
   Vue.prototype.$dialog = QDialog.bind(Vue);
   // eslint-disable-next-line no-param-reassign
   Vue.prototype.$message = QMessageBox.bind(Vue);
@@ -102,6 +105,7 @@ export default {
   QInput,
   QInputNumber,
   QMessageBox,
+  QNotification,
   QPagination,
   QPopover,
   QScrollbar,
