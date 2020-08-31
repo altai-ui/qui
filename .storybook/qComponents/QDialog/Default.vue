@@ -24,7 +24,7 @@ export default {
     async handleOpenCompBtnClick() {
       const { answer, instance } = this.$dialog({
         title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.',
-        component: () => import('../../materials/FormTest')
+        component: () => import('../../materials/DialogFormTest')
       });
 
       this.dialogInstance = instance;
