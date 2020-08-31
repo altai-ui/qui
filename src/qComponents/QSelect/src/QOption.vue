@@ -91,16 +91,17 @@ export default {
     },
     value(val, oldVal) {
       const { remote, valueKey } = this.select;
-      if (
-        !this.created &&
-        !remote &&
-        valueKey &&
-        typeof val === 'object' &&
-        typeof oldVal === 'object' &&
-        val[valueKey] === oldVal[valueKey]
-      )
-        return;
-      this.dispatch('QSelect', 'setSelected');
+      if (!this.created && !remote) {
+        if (
+          valueKey &&
+          typeof val === 'object' &&
+          typeof oldVal === 'object' &&
+          val[valueKey] === oldVal[valueKey]
+        )
+          return;
+
+        this.dispatch('QSelect', 'setSelected');
+      }
     }
   },
 

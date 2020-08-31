@@ -64,8 +64,8 @@
       background-color: var(--dropdown-item-background-color-selected);
     }
 
-    &_hover,
-    &:hover {
+    &_hover:not(.q-select-dropdown__item_disabled),
+    &:hover:not(.q-select-dropdown__item_disabled) {
       color: var(--dropdown-item-color-hover);
       background-color: var(--dropdown-item-background-color-hover);
     }

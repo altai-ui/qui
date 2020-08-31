@@ -613,28 +613,32 @@ export default {
     },
 
     getOption(value) {
-      let option = this.cachedOptions.find(
-        cachedOption => cachedOption.value === value
-      );
+      let option;
 
-      if (isPlainObject(this.value)) {
-        if (isEmpty(this.value)) {
+      if (isPlainObject(value)) {
+        if (isEmpty(value)) {
           return {
             value: '',
             currentLabel: ''
           };
         }
-        const valueByValuekey = this.value[this.valueKey];
-        option = this.cachedOptions.find(
-          cachedOption => cachedOption.value[this.valueKey] === valueByValuekey
-        );
+        const valueByValuekey = value[this.valueKey];
+        option = this.cachedOptions
+          .reverse()
+          .find(
+            cachedOption =>
+              cachedOption.value[this.valueKey] === valueByValuekey
+          );
+      } else {
+        option = this.cachedOptions
+          .reverse()
+          .find(cachedOption => cachedOption.value === value);
       }
 
       if (option) return option;
-      const label = value ?? '';
       const newOption = {
         value,
-        currentLabel: label
+        currentLabel: value ?? ''
       };
       if (this.multiple) {
         newOption.hitState = false;
