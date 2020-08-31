@@ -7,7 +7,7 @@
   >
     <button
       type="button"
-      class="q-pagination__btn q-pagination__btn_icon q-icon-triangle-left"
+      class="q-pagination__btn q-pagination__btn_icon q-icon-arrow-left"
       :class="{
         'q-pagination__btn_disabled': isPrevBtnDisabled
       }"
@@ -72,7 +72,7 @@
 
     <button
       type="button"
-      class="q-pagination__btn q-pagination__btn_icon q-icon-triangle-right"
+      class="q-pagination__btn q-pagination__btn_icon q-icon-arrow-right"
       :class="{
         'q-pagination__btn_disabled': isNextBtnDisabled
       }"
