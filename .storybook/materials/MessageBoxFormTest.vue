@@ -13,7 +13,6 @@
         <q-input v-model="formModel.name" />
       </el-form-item>
     </div>
-
     <div class="q-message-box__actions">
       <q-button
         :loading="isSending"

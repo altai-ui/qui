@@ -77,7 +77,7 @@ export default {
       try {
         const response = await this.$message({
           title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.',
-          component: () => import('../../materials/FormTest')
+          component: () => import('../../materials/MessageBoxFormTest')
         });
         console.log(response);
       } catch (error) {

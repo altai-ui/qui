@@ -10,25 +10,29 @@
       :style="dialogStyles"
     >
       <div class="q-dialog__container">
-        <div class="q-dialog__title">
-          {{ title }}
-        </div>
+        <q-scrollbar theme="secondary">
+          <div class="q-dialog__inner">
+            <div class="q-dialog__title">
+              {{ title }}
+            </div>
 
-        <q-button
-          class="q-dialog__close"
-          circle
-          theme="secondary"
-          type="icon"
-          icon="q-icon-close"
-          @click="closeBox"
-        />
+            <q-button
+              class="q-dialog__close"
+              circle
+              theme="secondary"
+              type="icon"
+              icon="q-icon-close"
+              @click="closeBox"
+            />
 
-        <div class="q-dialog__content">
-          <dialog-content
-            v-bind="componentProps"
-            @close="closeBox"
-          />
-        </div>
+            <div class="q-dialog__content">
+              <dialog-content
+                v-bind="componentProps"
+                @close="closeBox"
+              />
+            </div>
+          </div>
+        </q-scrollbar>
       </div>
     </div>
   </transition>
