@@ -23,61 +23,66 @@
           @click="handleCloseBtnClick"
         />
 
-        <message-box-content
-          v-if="isComponentUsed"
-          v-bind="componentProps"
-          @close="closeBox"
-        />
-        <template v-else>
-          <div class="q-message-box__content">
-            <slot>
-              <template v-if="message">
-                <div
-                  v-if="!dangerouslyUseHTMLString"
-                  class="q-message-box__message"
-                >
-                  {{ message }}
-                </div>
-                <div
-                  v-else
-                  class="q-message-box__message"
-                  v-html="message"
-                />
-              </template>
-            </slot>
+        <q-scrollbar
+          theme="secondary"
+          visible
+        >
+          <message-box-content
+            v-if="isComponentUsed"
+            v-bind="componentProps"
+            @close="closeBox"
+          />
+          <template v-else>
+            <div class="q-message-box__content">
+              <slot>
+                <template v-if="message">
+                  <div
+                    v-if="!dangerouslyUseHTMLString"
+                    class="q-message-box__message"
+                  >
+                    {{ message }}
+                  </div>
+                  <div
+                    v-else
+                    class="q-message-box__message"
+                    v-html="message"
+                  />
+                </template>
+              </slot>
+
+              <div
+                v-if="submessage"
+                class="q-message-box__submessage"
+              >
+                {{ submessage }}
+              </div>
+            </div>
 
             <div
-              v-if="submessage"
-              class="q-message-box__submessage"
+              v-if="isActionsSectionShown"
+              class="q-message-box__actions"
             >
-              {{ submessage }}
+              <q-button
+                v-if="confirmButtonText"
+                :loading="isConfirmBtnLoading"
+                :disabled="isCancelBtnLoading"
+                @click="handleConfirmBtnClick"
+              >
+                {{ confirmButtonText }}
+              </q-button>
+
+              <q-button
+                v-if="cancelButtonText"
+                theme="secondary"
+                :loading="isCancelBtnLoading"
+                :disabled="isConfirmBtnLoading"
+                @click="handleCancelBtnClick"
+              >
+                {{ cancelButtonText }}
+              </q-button>
             </div>
-          </div>
-
-          <div
-            v-if="isActionsSectionShown"
-            class="q-message-box__actions"
-          >
-            <q-button
-              v-if="confirmButtonText"
-              :loading="isConfirmBtnLoading"
-              :disabled="isCancelBtnLoading"
-              @click="handleConfirmBtnClick"
-            >
-              {{ confirmButtonText }}
-            </q-button>
-
-            <q-button
-              v-if="cancelButtonText"
-              theme="secondary"
-              :loading="isCancelBtnLoading"
-              :disabled="isConfirmBtnLoading"
-              @click="handleCancelBtnClick"
-            >
-              {{ cancelButtonText }}
-            </q-button>
-          </div>
-        </template>
+          </template>
+        </q-scrollbar>
       </div>
     </div>
   </transition>
