@@ -23,10 +23,7 @@
           @click="handleCloseBtnClick"
         />
 
-        <q-scrollbar
-          theme="secondary"
-          visible
-        >
+        <div class="q-message-box__inner">
           <message-box-content
             v-if="isComponentUsed"
             v-bind="componentProps"
@@ -82,7 +79,7 @@
               </q-button>
             </div>
           </template>
-        </q-scrollbar>
+        </div>
       </div>
     </div>
   </transition>
