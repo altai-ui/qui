@@ -32,10 +32,9 @@ export const off = (function() {
   };
 })();
 
-/* istanbul ignore next */
-const resizeHandler = function(entries) {
-  Object(entries).values(entry => {
-    const listeners = entry.target.__resizeListeners__ || [];
+const resizeHandler = entries => {
+  Object.values(entries).forEach(entry => {
+    const listeners = entry.target.__resizeListeners__ ?? [];
     if (listeners.length) {
       listeners.forEach(fn => {
         fn();
@@ -44,8 +43,7 @@ const resizeHandler = function(entries) {
   });
 };
 
-/* istanbul ignore next */
-export const addResizeListener = function(element, fn) {
+export const addResizeListener = (element, fn) => {
   if (!element.__resizeListeners__) {
     // eslint-disable-next-line no-param-reassign
     element.__resizeListeners__ = [];
@@ -56,8 +54,7 @@ export const addResizeListener = function(element, fn) {
   element.__resizeListeners__.push(fn);
 };
 
-/* istanbul ignore next */
-export const removeResizeListener = function(element, fn) {
+export const removeResizeListener = (element, fn) => {
   if (!element || !element.__resizeListeners__) return;
   element.__resizeListeners__.splice(
     element.__resizeListeners__.indexOf(fn),
