@@ -61,6 +61,11 @@
     word-break: break-word;
   }
 
+  &__inner {
+    max-height: 100%;
+    overflow: hidden;
+  }
+
   &__content {
     margin-bottom: 32px;
     padding-right: 32px;
