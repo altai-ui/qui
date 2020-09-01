@@ -77,7 +77,7 @@
       cursor: default;
     }
 
-    &_disabled,
+    &.q-pagination__btn_disabled,
     .q-pagination_disabled & {
       color: var(--pagination-color-disabled);
       background-color: var(--pagination-background-color-disabled);
