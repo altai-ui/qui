@@ -58,8 +58,7 @@ export default {
       sizeWidth: '0',
       sizeHeight: '0',
       moveX: 0,
-      moveY: 0,
-      observer: null
+      moveY: 0
     };
   },
 
@@ -78,20 +77,22 @@ export default {
 
   mounted() {
     if (this.native) return;
-    this.observer = new MutationObserver(this.update);
-    this.observer.observe(this.$refs.resize, {
-      attributes: true,
-      childList: true,
-      subtree: true
-    });
+
     this.$nextTick(this.update);
-    !this.noresize && addResizeListener(this.$refs.resize, this.update);
+
+    if (!this.noresize) {
+      addResizeListener(this.$refs.resize, this.update);
+      addResizeListener(this.$el.offsetParent, this.update);
+    }
   },
 
   beforeDestroy() {
     if (this.native) return;
-    this.observer.disconnect();
-    !this.noresize && removeResizeListener(this.$refs.resize, this.update);
+
+    if (!this.noresize) {
+      removeResizeListener(this.$refs.resize, this.update);
+      removeResizeListener(this.$el.offsetParent, this.update);
+    }
   },
 
   methods: {
