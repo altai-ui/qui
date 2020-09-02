@@ -15,11 +15,15 @@
     background-color: var(--color-tertiary-gray-ultra-light);
   }
 
+  &__view {
+    display: flex;
+  }
+
   &__inner {
     position: relative;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    width: 100%;
     padding: 36px 32px 32px;
   }
 
