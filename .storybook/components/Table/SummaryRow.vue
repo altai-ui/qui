@@ -51,7 +51,7 @@ export default {
       totalData: {
         date: '2016-05-02',
         name: 'summary name',
-        adress: 'summary adress'
+        address: 'summary adress'
       },
       tableData: [
         {
@@ -81,9 +81,6 @@ export default {
   methods: {
     formatter(row) {
       return row.address;
-    },
-    lol(scope) {
-      console.log(scope);
     }
   }
 };
