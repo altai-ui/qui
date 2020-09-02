@@ -153,8 +153,10 @@ import {
   get
 } from 'lodash-es';
 import { createPopper } from '@popperjs/core';
+
 import QSelectDropdown from './QSelectDropdown';
 import QOption from './QOption';
+import { addResizeListener, removeResizeListener } from '../../helpers';
 import Focus from '../../mixins/focus';
 import Emitter from '../../mixins/emitter';
 import QTag from '../../QTag/src/QTag';
@@ -500,6 +502,8 @@ export default {
       this.currentPlaceholder = '';
     }
 
+    addResizeListener(this.$el, this.handleResize);
+
     const reference = this.$refs.reference;
     if (reference?.$el) {
       const input = reference.$el.querySelector('input');
@@ -515,6 +519,11 @@ export default {
       }
     });
     this.setSelected();
+  },
+
+  beforeDestroy() {
+    if (this.$el && this.handleResize)
+      removeResizeListener(this.$el, this.handleResize);
   },
 
   methods: {

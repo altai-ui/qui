@@ -8,22 +8,27 @@
       class="q-message-box"
       :style="{ zIndex }"
     >
-      <div
-        class="q-message-box__shadow"
-        @click="handleShadowClick"
-      />
-
-      <div class="q-message-box__container">
-        <div class="q-message-box__title">
-          {{ title }}
-        </div>
-
-        <button
-          class="q-message-box__close q-icon-close"
-          @click="handleCloseBtnClick"
+      <q-scrollbar
+        theme="secondary"
+        class="q-message-box__scrollbar"
+        view-class="q-message-box__view"
+        visible
+      >
+        <div
+          class="q-message-box__shadow"
+          @click="handleShadowClick"
         />
 
-        <div class="q-message-box__inner">
+        <div class="q-message-box__container">
+          <div class="q-message-box__title">
+            {{ title }}
+          </div>
+
+          <button
+            class="q-message-box__close q-icon-close"
+            @click="handleCloseBtnClick"
+          />
+
           <message-box-content
             v-if="isComponentUsed"
             v-bind="componentProps"
@@ -80,7 +85,7 @@
             </div>
           </template>
         </div>
-      </div>
+      </q-scrollbar>
     </div>
   </transition>
 </template>

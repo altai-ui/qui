@@ -67,7 +67,12 @@ export default {
       return this.$refs.wrap;
     },
     classes() {
-      return ['q-scrollbar', this.visible && 'q-scrollbar_visible'];
+      return [
+        'q-scrollbar',
+        this.visible && 'q-scrollbar_visible',
+        this.sizeWidth !== '' && 'q-scrollbar_has-horizontal-bar',
+        this.sizeHeight !== '' && 'q-scrollbar_has-vertical-bar'
+      ];
     },
 
     wrapClasses() {
@@ -82,7 +87,7 @@ export default {
 
     if (!this.noresize) {
       addResizeListener(this.$refs.resize, this.update);
-      addResizeListener(this.$el.offsetParent, this.update);
+      addResizeListener(this.$el.parentNode, this.update);
     }
   },
 
@@ -91,7 +96,7 @@ export default {
 
     if (!this.noresize) {
       removeResizeListener(this.$refs.resize, this.update);
-      removeResizeListener(this.$el.offsetParent, this.update);
+      removeResizeListener(this.$el.parentNode, this.update);
     }
   },
 
