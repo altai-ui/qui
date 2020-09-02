@@ -10,7 +10,10 @@
       :style="dialogStyles"
     >
       <div class="q-dialog__container">
-        <q-scrollbar theme="secondary">
+        <q-scrollbar
+          theme="secondary"
+          view-class="q-dialog__view"
+        >
           <div class="q-dialog__inner">
             <div class="q-dialog__title">
               {{ title }}
