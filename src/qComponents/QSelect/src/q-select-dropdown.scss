@@ -30,6 +30,7 @@
   z-index: 1001;
   display: none;
   width: 100%;
+  overflow: hidden;
   background-color: var(--dropdown-item-background-color-base);
   border-radius: var(--border-radius-base);
   box-shadow: var(--dropdown-box-shadow-base);

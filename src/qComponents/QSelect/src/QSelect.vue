@@ -569,6 +569,7 @@ export default {
 
     showPopper() {
       this.$refs.dropdown.$el.setAttribute('data-show', '');
+      this.$refs.dropdown.$el.style.zIndex = this.$Q?.zIndex ?? 2000;
       this.createPopper();
     },
 
