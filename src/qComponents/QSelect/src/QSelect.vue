@@ -653,7 +653,7 @@ export default {
       if (option) return option;
       const newOption = {
         value,
-        currentLabel: value ?? ''
+        currentLabel: isObject(value) ? '' : value ?? ''
       };
       if (this.multiple) {
         newOption.hitState = false;
