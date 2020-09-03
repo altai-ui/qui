@@ -246,7 +246,7 @@ export default {
       default: 'value'
     },
     collapseTags: { type: Boolean, default: false },
-    appendToBody: { type: Boolean, default: false }
+    appendToBody: { type: Boolean, default: true }
   },
 
   data() {
@@ -522,8 +522,14 @@ export default {
   },
 
   beforeDestroy() {
-    if (this.$el && this.handleResize)
+    if (this.$el && this.handleResize) {
       removeResizeListener(this.$el, this.handleResize);
+    }
+
+    const dropdown = this.$refs?.dropdown?.$el;
+    if (dropdown?.parentNode === document.body) {
+      document.body.removeChild(dropdown);
+    }
   },
 
   methods: {

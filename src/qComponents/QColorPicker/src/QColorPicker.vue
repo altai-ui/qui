@@ -200,7 +200,7 @@ export default {
   },
 
   beforeDestroy() {
-    const { dropdown } = this.$refs;
+    const dropdown = this.$refs?.dropdown?.$el;
     if (dropdown?.parentNode === document.body) {
       document.body.removeChild(dropdown);
     }
