@@ -1,8 +1,10 @@
 .q-col {
   position: relative;
+  flex: 1 0 0;
   width: 100%;
-  padding-right: var(--layout-gap);
-  padding-left: var(--layout-gap);
+  max-width: 100%;
+  padding-right: calc(var(--layout-gutter) / 2);
+  padding-left: calc(var(--layout-gutter) / 2);
 
   &_size_auto {
     flex: 0 0 auto;

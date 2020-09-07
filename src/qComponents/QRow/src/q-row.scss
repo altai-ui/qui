@@ -17,8 +17,8 @@ $align-v: (
 .q-row {
   display: flex;
   flex-wrap: wrap;
-  margin-right: calc(var(--layout-gap) * -1);
-  margin-left: calc(var(--layout-gap) * -1);
+  margin-right: calc(var(--layout-gutter) / -2);
+  margin-left: calc(var(--layout-gutter) / -2);
 
   @each $key, $value in $align-h {
     &_align-h_#{$key} {
