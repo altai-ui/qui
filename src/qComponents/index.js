@@ -1,5 +1,7 @@
 import vClickOutside from 'v-click-outside';
 
+import { version } from '../../package.json';
+
 import QButton from './QButton';
 import QBreadcrumbs from './QBreadcrumbs';
 import { QCheckbox, QCheckboxGroup } from './QCheckbox';
@@ -81,11 +83,6 @@ const install = Vue => {
   components.forEach(component => {
     Vue.component(component.name, component);
   });
-
-  //   Vue.use(InfiniteScroll);
-  //   Vue.use(Loading.directive);
-
-  //   Vue.prototype.$loading = Loading.service;
 };
 
 /* istanbul ignore if */
@@ -94,10 +91,11 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  version: '0.0.1',
-  //   locale: locale.use,
-  install,
+  version,
+  install
+};
 
+export {
   QBreadcrumbs,
   QButton,
   QCascader,
