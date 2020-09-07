@@ -44,7 +44,9 @@ export default {
     classes() {
       return {
         [`q-col_size_${this.cols}`]: Boolean(this.cols),
-        [`q-col_offset_${this.offset}`]: Number.isInteger(Number(this.offset))
+        [`q-col_offset_${this.offset}`]: Number.isInteger(
+          Number(this.offset ?? 'hide')
+        )
       };
     }
   }
