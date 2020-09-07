@@ -37,7 +37,7 @@
     width: 0;
     height: 0;
     background-color: var(--color-primary-blue);
-    border-radius: 4px;
+    border-radius: var(--border-radius-base);
     cursor: pointer;
     transition: 0.3s background-color;
 
@@ -60,7 +60,7 @@
     right: 4px;
     bottom: 4px;
     z-index: 1;
-    border-radius: 4px;
+    border-radius: var(--border-radius-base);
     opacity: 0;
     transition: opacity 120ms ease-out;
 
