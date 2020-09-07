@@ -3,6 +3,7 @@ import vClickOutside from 'v-click-outside';
 import QButton from './QButton';
 import QBreadcrumbs from './QBreadcrumbs';
 import { QCheckbox, QCheckboxGroup } from './QCheckbox';
+import QCol from './QCol';
 import { QSelect, QOption } from './QSelect';
 import { QRadio, QRadioGroup } from './QRadio';
 import { QCascader, QCascaderPanel } from './QCascader';
@@ -19,6 +20,7 @@ import QMessageBox from './QMessageBox';
 import QNotification from './QNotification';
 import QPagination from './QPagination';
 import QPopover from './QPopover';
+import QRow from './QRow';
 import QScrollbar from './QScrollbar';
 import { QTabs, QTabPane } from './QTabs';
 import QDrawer from './QDrawer';
@@ -32,6 +34,8 @@ const components = [
   QCheckboxGroup,
   QRadio,
   QRadioGroup,
+  QRow,
+  QCol,
   QCollapse,
   QCollapseItem,
   QColorPicker,
@@ -94,26 +98,33 @@ export default {
   //   locale: locale.use,
   install,
 
-  QButton,
   QBreadcrumbs,
+  QButton,
+  QCascader,
+  QCascaderPanel,
   QCheckbox,
   QCheckboxGroup,
+  QCol,
   QCollapse,
   QCollapseItem,
+  QColorPicker,
   QContextMenu,
   QDialog,
+  QDrawer,
   QInput,
   QInputNumber,
   QMessageBox,
   QNotification,
   QPagination,
   QPopover,
+  QRadio,
+  QRadioGroup,
+  QRow,
   QScrollbar,
   QSelect,
   QOption,
-  QTabPane,
-  QTextarea,
   QTabs,
+  QTabPane,
   QTag,
-  QDrawer
+  QTextarea
 };

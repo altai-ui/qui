@@ -61,7 +61,8 @@ export default {
       default: true
     },
     value: {
-      required: true,
+      type: [Number, String],
+      default: null,
       validator: value => {
         if (!Number.isNaN(Number(value)) || value === null) return true;
 

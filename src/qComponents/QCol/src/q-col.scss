@@ -1,0 +1,25 @@
+.q-col {
+  position: relative;
+  width: 100%;
+  padding-right: var(--layout-gap);
+  padding-left: var(--layout-gap);
+
+  &_size_auto {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+  }
+
+  @for $i from 1 through 12 {
+    &_size_#{$i} {
+      flex: 0 0 percentage($i / 12);
+      max-width: percentage($i / 12);
+    }
+  }
+
+  @for $i from 0 through 11 {
+    &_offset_#{$i} {
+      margin-left: percentage($i / 12);
+    }
+  }
+}

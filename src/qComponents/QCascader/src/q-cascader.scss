@@ -100,7 +100,7 @@
   &__suggestion-panel {
     height: auto;
     max-height: 304px;
-    border-radius: 4px;
+    border-radius: var(--border-radius-base);
     box-shadow: var(--box-shadow-primary);
   }
 
@@ -159,7 +159,7 @@
     height: auto;
     max-height: 304px;
     background-color: var(--color-tertiary-gray-light);
-    border-radius: 4px;
+    border-radius: var(--border-radius-base);
     box-shadow: var(--box-shadow-primary);
 
     &_no-right-borders {
