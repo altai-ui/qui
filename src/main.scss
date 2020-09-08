@@ -32,9 +32,17 @@ svg {
 
 button {
   cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 a {
   color: var(--color-primary-blue);
   text-decoration: none;
+
+  &:focus {
+    outline: none;
+  }
 }
