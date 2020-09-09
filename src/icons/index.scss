@@ -32,34 +32,6 @@ $--base-path: '.' !default;
   font-family: 'qicon' !important;
 }
 
-.q-icon-info-stroke::before {
-  content: '\e94a';
-}
-
-.q-icon-withdraw-fill::before {
-  content: '\e94b';
-}
-
-.q-icon-change-list::before {
-  content: '\e948';
-}
-
-.q-icon-wallet-stroke::before {
-  content: '\e949';
-}
-
-.q-icon-archive-arrow-down::before {
-  content: '\e93e';
-}
-
-.q-icon-finish-fill::before {
-  content: '\e93f';
-}
-
-.q-icon-play::before {
-  content: '\e947';
-}
-
 .q-icon-bell::before {
   content: '\e905';
 }
@@ -334,4 +306,68 @@ $--base-path: '.' !default;
 
 .q-icon-pencil-square-stroke::before {
   content: '\e946';
+}
+
+.q-icon-play::before {
+  content: '\e947';
+}
+
+.q-icon-finish-fill::before {
+  content: '\e93f';
+}
+
+.q-icon-archive-arrow-down::before {
+  content: '\e93e';
+}
+
+.q-icon-wallet-stroke::before {
+  content: '\e949';
+}
+
+.q-icon-change-list::before {
+  content: '\e948';
+}
+
+.q-icon-withdraw-fill::before {
+  content: '\e94b';
+}
+
+.q-icon-info-stroke::before {
+  content: '\e94a';
+}
+
+.q-icon-trash-bin-stroke::before {
+  content: '\e94c';
+}
+
+.q-icon-star::before {
+  content: '\e94d';
+}
+
+.q-icon-save::before {
+  content: '\e94e';
+}
+
+.q-icon-percent::before {
+  content: '\e94f';
+}
+
+.q-icon-filter::before {
+  content: '\e950';
+}
+
+.q-icon-drag-vertical-fill::before {
+  content: '\e951';
+}
+
+.q-icon-diagram-round-stroke::before {
+  content: '\e952';
+}
+
+.q-icon-attach-fill::before {
+  content: '\e953';
+}
+
+.q-icon-account-check-fill::before {
+  content: '\e954';
 }

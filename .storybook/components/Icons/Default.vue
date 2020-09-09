@@ -30,13 +30,6 @@ export default {
   data() {
     return {
       iconsList: [
-        ['q-icon-info-stroke', '\\e94a'],
-        ['q-icon-withdraw-fill', '\\e94b'],
-        ['q-icon-change-list', '\\e948'],
-        ['q-icon-wallet-stroke', '\\e949'],
-        ['q-icon-archive-arrow-down', '\\e93e'],
-        ['q-icon-finish-fill', '\\e93f'],
-        ['q-icon-play', '\\e947'],
         ['q-icon-bell', '\\e905'],
         ['q-icon-bell-ring', '\\e906'],
         ['q-icon-triangle-down', '\\e922'],
@@ -105,7 +98,23 @@ export default {
         ['q-icon-menu-2-fill', '\\e943'],
         ['q-icon-eye-fill', '\\e944'],
         ['q-icon-cog-stroke', '\\e945'],
-        ['q-icon-pencil-square-stroke', '\\e946']
+        ['q-icon-pencil-square-stroke', '\\e946'],
+        ['q-icon-play', '\\e947'],
+        ['q-icon-finish-fill', '\\e93f'],
+        ['q-icon-archive-arrow-down', '\\e93e'],
+        ['q-icon-wallet-stroke', '\\e949'],
+        ['q-icon-change-list', '\\e948'],
+        ['q-icon-withdraw-fill', '\\e94b'],
+        ['q-icon-info-stroke', '\\e94a'],
+        ['q-icon-trash-bin-stroke', '\\e94c'],
+        ['q-icon-star', '\\e94d'],
+        ['q-icon-save', '\\e94e'],
+        ['q-icon-percent', '\\e94f'],
+        ['q-icon-filter', '\\e950'],
+        ['q-icon-drag-vertical-fill', '\\e951'],
+        ['q-icon-diagram-round-stroke', '\\e952'],
+        ['q-icon-attach-fill', '\\e953'],
+        ['q-icon-account-check-fill', '\\e954']
       ]
     };
   },
