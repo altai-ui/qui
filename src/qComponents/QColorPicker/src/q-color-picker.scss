@@ -122,6 +122,7 @@
     &__icon {
       position: relative;
       z-index: 1;
+      line-height: 40px;
       color: var(--color-primary-black);
       transition: transform 0.25s ease, color 0.25s ease;
 
