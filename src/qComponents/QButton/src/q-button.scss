@@ -122,13 +122,18 @@
   }
 
   &_disabled {
+    --box-shadow: 1px 1px 3px rgba(var(--color-rgb-blue), 0.4),
+      -1px -1px 3px rgba(var(--color-rgb-white), 0.25);
+
     color: rgba(var(--color-rgb-gray), 0.64);
     background-color: var(--color-tertiary-gray);
     background-image: none;
+    box-shadow: var(--box-shadow);
     cursor: not-allowed;
 
+    &:hover,
     &:active {
-      box-shadow: var(--box-shadow-primary);
+      box-shadow: var(--box-shadow);
     }
 
     &.q-button_theme_secondary {
@@ -139,15 +144,13 @@
     }
 
     &.q-button_theme_link {
+      --box-shadow: none;
+
       background-color: transparent;
 
       &:hover {
         color: rgba(var(--color-rgb-gray), 0.64);
         background-color: transparent;
-      }
-
-      &:active {
-        box-shadow: none;
       }
     }
   }
