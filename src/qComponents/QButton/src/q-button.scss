@@ -171,6 +171,7 @@
       top: calc(50% - var(--icon-size) / 2);
       left: calc(50% - var(--icon-size) / 2);
       font-size: var(--icon-size);
+      transform-origin: calc(var(--icon-size) / 2);
       animation: rotating 2s linear infinite;
     }
 
