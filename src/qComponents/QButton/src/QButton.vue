@@ -9,7 +9,7 @@
   >
     <span
       v-if="loading"
-      class="q-icon-loading"
+      class="q-icon-reverse"
     />
     <span
       v-if="icon && !loading"

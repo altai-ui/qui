@@ -6,13 +6,21 @@
         icon="q-icon-pic"
         type="icon"
       />
+
       <q-button
         theme="secondary"
         type="icon"
       >
-        <i class="q-icon-cloud-upload" />
+        <span class="q-icon-cloud-upload" />
       </q-button>
+
+      <q-button
+        theme="link"
+        type="icon"
+        icon="q-icon-cloud-upload"
+      />
     </div>
+
     <div class="block">
       <span class="demonstration">add prop <b>circle</b></span>
       <q-button
@@ -20,12 +28,14 @@
         icon="q-icon-question-mark"
         type="icon"
       />
+
       <q-button
         circle
         theme="secondary"
         icon="q-icon-question-mark"
         type="icon"
       />
+
       <q-button
         circle
         disabled
@@ -34,6 +44,7 @@
         type="icon"
       />
     </div>
+
     <div class="block">
       <span
         class="demonstration"
@@ -44,18 +55,28 @@
           type="icon"
           size="small"
         />
+
         <q-button
           theme="secondary"
           type="icon"
           size="small"
           icon="q-icon-cloud-upload"
         />
+
+        <q-button
+          theme="link"
+          type="icon"
+          size="small"
+          icon="q-icon-cloud-upload"
+        />
+
         <q-button
           circle
           icon="q-icon-question-mark"
           type="icon"
           size="small"
         />
+
         <q-button
           circle
           size="small"
@@ -63,11 +84,20 @@
           icon="q-icon-question-mark"
           type="icon"
         />
+
         <q-button
           circle
           disabled
           size="small"
           theme="secondary"
+          icon="q-icon-question-mark"
+          type="icon"
+        />
+
+        <q-button
+          disabled
+          size="small"
+          theme="link"
           icon="q-icon-question-mark"
           type="icon"
         />

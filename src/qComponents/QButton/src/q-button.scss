@@ -6,6 +6,7 @@
   font-weight: var(--font-weight-bold);
   font-size: 12px;
   line-height: var(--line-height-button);
+  vertical-align: middle;
   text-align: center;
   color: var(--color-tertiary-white);
   text-transform: uppercase;
@@ -94,6 +95,26 @@
         box-shadow: var(--box-shadow-pressed);
       }
     }
+
+    &_link {
+      padding: 0;
+      color: var(--color-primary-blue);
+      text-transform: initial;
+      background-color: transparent;
+      background-image: none;
+      box-shadow: none;
+
+      &:hover {
+        color: var(--color-primary-black);
+        background-color: transparent;
+        box-shadow: none;
+      }
+
+      &:active {
+        outline: none;
+        box-shadow: none;
+      }
+    }
   }
 
   &_full-width {
@@ -116,11 +137,23 @@
         background-color: var(--color-tertiary-gray);
       }
     }
+
+    &.q-button_theme_link {
+      background-color: transparent;
+
+      &:hover {
+        color: rgba(var(--color-rgb-gray), 0.64);
+        background-color: transparent;
+      }
+
+      &:active {
+        box-shadow: none;
+      }
+    }
   }
 
   &_loading {
     position: relative;
-    padding: 12px 40px;
     pointer-events: none;
 
     .q-button__inner {
@@ -128,16 +161,19 @@
       visibility: hidden;
     }
 
-    .q-icon-loading {
-      position: absolute;
-      top: calc(50% - 15px);
-      left: calc(50% - 14px);
-      animation: rotating 2s linear infinite;
+    .q-icon-reverse {
+      --icon-size: 30px;
 
-      &::before {
-        content: '\e91b';
-        font-size: 30px;
-        font-family: 'qicon';
+      position: absolute;
+      top: calc(50% - var(--icon-size) / 2);
+      left: calc(50% - var(--icon-size) / 2);
+      font-size: var(--icon-size);
+      animation: rotating 2s linear infinite;
+    }
+
+    &.q-button_size_small {
+      .q-icon-reverse {
+        --icon-size: 16px;
       }
     }
 
