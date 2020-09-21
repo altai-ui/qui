@@ -26,6 +26,7 @@ import QRow from './QRow';
 import QScrollbar from './QScrollbar';
 import { QTabs, QTabPane } from './QTabs';
 import QDrawer from './QDrawer';
+import QUpload from './QUpload';
 
 const components = [
   QButton,
@@ -54,7 +55,8 @@ const components = [
   QTabs,
   QTabPane,
   QTag,
-  QDrawer
+  QDrawer,
+  QUpload
 ];
 
 let zIndexCounter = 2000;
@@ -124,5 +126,6 @@ export {
   QTabs,
   QTabPane,
   QTag,
-  QTextarea
+  QTextarea,
+  QUpload
 };
