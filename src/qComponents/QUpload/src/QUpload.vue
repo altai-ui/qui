@@ -93,6 +93,10 @@ export default {
       type: Boolean,
       default: true
     },
+    validateEvent: {
+      type: Boolean,
+      default: true
+    },
     textUploadFile: {
       type: String,
       default: 'загрузить файл'
