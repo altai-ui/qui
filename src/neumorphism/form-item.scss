@@ -38,9 +38,7 @@
 
   &.is-error {
     .el-input__inner,
-    .el-textarea__inner,
-    .q-input__inner,
-    .q-textarea__inner {
+    .q-input__inner {
       &,
       &:focus {
         padding-left: 15px;
