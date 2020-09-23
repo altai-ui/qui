@@ -65,14 +65,12 @@
 
   &_size {
     &_small {
-      width: 24px;
-      height: 24px;
-      padding: 6px;
-      line-height: 1;
-
       &.q-button_type_icon {
+        width: 24px;
+        height: 24px;
         padding: 0;
         font-size: 16px;
+        line-height: 1;
       }
     }
   }

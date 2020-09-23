@@ -1,0 +1,120 @@
+import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs/blocks';
+
+import '../../src/qComponents/QButton/src/q-button.scss';
+import QButton from '../../src/qComponents/QButton/src/QButton.vue';
+
+<Meta
+  title="Components/QButton"
+  component={QButton}
+  argTypes={{
+    type: {
+      control: { type: 'select', options: ['default', 'icon'] }
+    },
+    theme: {
+      control: { type: 'select', options: ['primary', 'secondary', 'link'] }
+    },
+    size: {
+      control: { type: 'select', options: ['small', 'medium'] }
+    }
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { QButton },
+  template: `
+    <q-button
+      :type="type"
+      :icon="icon"
+      :size="size"
+      :theme="theme"
+      :loading="loading"
+      :disabled="disabled"
+      :circle="circle"
+      :fullWidth="fullWidth"
+    >{{label}}</q-button>
+  `
+});
+
+# QButton
+
+<Canvas>
+  <Story
+    name="Type Default"
+    args={{
+      label: 'A Button with default theme'
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="Type Default Secondary"
+    args={{
+      label: 'A Button with secondary theme',
+      theme: 'secondary'
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="Type Default Link"
+    args={{
+      label: 'A Button with link theme',
+      theme: 'link'
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Icons
+
+<Canvas>
+  <Story
+    name="Type Icon Default"
+    args={{
+      label: '',
+      type: 'icon',
+      icon: 'q-icon-bell'
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="Type Icon Secondary"
+    args={{
+      label: '',
+      type: 'icon',
+      icon: 'q-icon-bell',
+      theme: 'secondary'
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="Type Icon Link"
+    args={{
+      label: '',
+      type: 'icon',
+      icon: 'q-icon-bell',
+      theme: 'link'
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Playground
+
+<Canvas>
+  <Story
+    name="Playground"
+    args={{
+      label: 'Click me'
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Playground" />

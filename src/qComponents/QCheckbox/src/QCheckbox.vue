@@ -1,11 +1,10 @@
 <template>
   <label
-    :id="id"
     class="q-checkbox"
-    :class="[
-      { 'q-checkbox_disabled': isDisabled },
-      { 'q-checkbox_checked': isChecked }
-    ]"
+    :class="{
+      'q-checkbox_disabled': isDisabled,
+      'q-checkbox_checked': isChecked
+    }"
   >
     <span
       class="q-checkbox__input"
@@ -85,7 +84,6 @@ export default {
     disabled: { type: Boolean, default: false },
     checked: { type: Boolean, default: false },
     name: { type: String, default: '' },
-    id: { type: String, default: '' },
     controls: { type: String, default: '' }
   },
 
@@ -187,20 +185,22 @@ export default {
     addToStore() {
       if (Array.isArray(this.model) && this.model.includes(this.label)) {
         this.model.push(this.label);
-      } else {
-        this.model = false;
+        return;
       }
+
+      this.model = false;
     },
 
     handleChange(event) {
       if (this.isLimitExceeded) return;
       const value = event.target.checked;
       this.$emit('change', value, event);
-      this.$nextTick(() => {
-        if (this.isGroup) {
+
+      if (this.isGroup) {
+        this.$nextTick(() => {
           this.dispatch('QCheckboxGroup', 'change', [this.checkboxGroup.value]);
-        }
-      });
+        });
+      }
     }
   }
 };

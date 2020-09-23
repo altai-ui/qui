@@ -108,7 +108,7 @@
       background-color: var(--checkbox-background-color-disabled);
       cursor: not-allowed;
 
-      &::after {
+      &-icon {
         color: var(--checkbox-mark-color-disabled);
         cursor: not-allowed;
       }

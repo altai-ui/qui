@@ -46,7 +46,7 @@ export default {
     theme: {
       type: String,
       default: 'primary',
-      validator: value => ['primary', 'secondary'].includes(value)
+      validator: value => ['primary', 'secondary', 'link'].includes(value)
     },
     size: {
       type: String,

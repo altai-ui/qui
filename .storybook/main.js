@@ -1,17 +1,10 @@
-const path = require('path');
-
 module.exports = {
-  stories: ['./stories/index.stories.js'],
+  stories: ['../stories/**/**/*.stories.@(ts|js|mdx)'],
+  logLevel: 'debug',
   addons: [
-    {
-      name: '@storybook/addon-docs',
-      options: {
-        vueDocgenOptions: {
-          alias: {
-            '@': path.resolve(__dirname, '../')
-          }
-        }
-      }
-    }
+    '@storybook/addon-docs',
+    '@storybook/addon-controls',
+    '@storybook/addon-storysource',
+    '@storybook/preset-scss'
   ]
 };

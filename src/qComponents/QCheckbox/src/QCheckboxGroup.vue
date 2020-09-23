@@ -30,8 +30,8 @@ export default {
 
   props: {
     value: {
-      type: [Object, Array, Boolean],
-      default: () => ({})
+      type: Array,
+      default: () => []
     },
     disabled: { type: Boolean, default: false },
     min: { type: Number, default: 0 },
