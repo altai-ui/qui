@@ -1,10 +1,10 @@
-$--base-path: '.' !default;
+$--base-path: '..' !default;
 
 @font-face {
   font-style: normal;
   font-weight: 400;
   font-family: 'qicon';
-  src: url('#{$--base-path}/icons/qicon.woff?29042020') format('woff');
+  src: url('#{$--base-path}/icons/qicon.woff?10092020') format('woff');
   font-display: block;
 }
 

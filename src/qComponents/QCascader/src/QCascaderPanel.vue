@@ -12,7 +12,7 @@
 
 <script>
 import { isEqual, isEmpty } from 'lodash-es';
-import scrollIntoView from '../../scroll-into-view';
+import scrollIntoView from './scroll-into-view';
 import Store from './store';
 import QCascaderMenu from './QCascaderMenu';
 
