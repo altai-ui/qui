@@ -178,7 +178,9 @@ export default {
     handleUploadClick() {
       if (this.disabled || this.isFileLoading) return;
 
-      this.$refs.fileInput.click();
+      const { fileInput } = this.$refs;
+      fileInput.value = null;
+      fileInput.click();
     },
 
     async processFile({ dataTransfer, target }) {
@@ -206,6 +208,7 @@ export default {
     },
 
     handleRemoveFileBtnClick() {
+      this.$refs.fileInput.value = null;
       this.$emit('change', null);
     },
 
