@@ -7,6 +7,7 @@
 <script>
 export default {
   name: 'QTabs',
+  componentName: 'QTabs',
 
   model: {
     prop: 'value',
@@ -36,10 +37,10 @@ export default {
 
   watch: {
     value: {
+      immediate: true,
       handler(name) {
         this.updateValue(name);
-      },
-      immediate: true
+      }
     }
   },
 

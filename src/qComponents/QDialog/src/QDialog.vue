@@ -44,6 +44,7 @@
 <script>
 export default {
   name: 'QDialog',
+  componentName: 'QDialog',
 
   props: {
     zIndex: {

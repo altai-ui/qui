@@ -9,6 +9,7 @@ import { uniqueId } from 'lodash-es';
 
 export default {
   name: 'QCollapse',
+  componentName: 'QCollapse',
 
   model: {
     prop: 'value',

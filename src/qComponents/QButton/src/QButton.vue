@@ -27,13 +27,11 @@
 <script>
 export default {
   name: 'QButton',
+  componentName: 'QButton',
 
   inject: {
     qForm: {
-      default: ''
-    },
-    qFormItem: {
-      default: ''
+      default: null
     }
   },
 
@@ -94,7 +92,7 @@ export default {
         .map(([key, value]) => `q-button_${key}_${value}`);
 
       classes.push({
-        'q-button_disabled': this.disabled,
+        'q-button_disabled': this.disabled || (this.qForm?.disabled ?? false),
         'q-button_loading': this.loading,
         'q-button_circle': this.circle,
         'q-button_full-width': this.fullWidth

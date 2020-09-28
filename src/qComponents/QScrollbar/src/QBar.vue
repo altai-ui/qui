@@ -19,6 +19,7 @@ import { on, off } from '../../helpers';
 
 export default {
   name: 'QBar',
+  componentName: 'QBar',
 
   props: {
     type: {
@@ -43,12 +44,14 @@ export default {
         this.$parent.theme === 'secondary' && 'q-scrollbar__bar_secondary'
       ];
     },
+
     thumbClasses() {
       return [
         'q-scrollbar__thumb',
         this.$parent.theme === 'secondary' && 'q-scrollbar__thumb_secondary'
       ];
     },
+
     bar() {
       return BAR_MAP[this.type];
     },

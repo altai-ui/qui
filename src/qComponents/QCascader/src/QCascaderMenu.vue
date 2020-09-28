@@ -29,6 +29,8 @@ import CascaderNode from './QCascaderNode.vue';
 
 export default {
   name: 'QCascaderMenu',
+  componentName: 'QCascaderMenu',
+
   components: {
     CascaderNode
   },

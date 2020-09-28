@@ -58,6 +58,7 @@ const TRIGGERS = ['click', 'hover'];
 
 export default {
   name: 'QPopover',
+  componentName: 'QPopover',
 
   props: {
     title: {

@@ -23,9 +23,9 @@ import Emitter from '../../mixins/emitter';
 
 export default {
   name: 'QOption',
-  mixins: [Emitter],
-
   componentName: 'QOption',
+
+  mixins: [Emitter],
 
   inject: ['select'],
 
@@ -89,6 +89,7 @@ export default {
       if (!this.created && !this.select.remote)
         this.dispatch('QSelect', 'setSelected');
     },
+
     value(val, oldVal) {
       const { remote, valueKey } = this.select;
       if (!this.created && !remote) {

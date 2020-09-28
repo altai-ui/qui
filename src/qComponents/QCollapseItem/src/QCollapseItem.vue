@@ -36,6 +36,7 @@ import QCollapseTransition from '../../helpers/collapse-transition';
 
 export default {
   name: 'QCollapseItem',
+  componentName: 'QCollapseItem',
 
   components: { QCollapseTransition },
 

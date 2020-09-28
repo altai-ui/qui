@@ -164,14 +164,16 @@ import QInput from '../../QInput/src/QInput';
 
 export default {
   name: 'QSelect',
+  componentName: 'QSelect',
+
   components: {
     QInput,
     QSelectDropdown,
     QOption,
     QTag
   },
+
   mixins: [Emitter, Focus('reference')],
-  componentName: 'QSelect',
 
   inject: {
     elForm: {
@@ -181,10 +183,10 @@ export default {
       default: ''
     },
     qForm: {
-      default: ''
+      default: null
     },
     qFormItem: {
-      default: ''
+      default: null
     }
   },
 
@@ -358,8 +360,8 @@ export default {
     selectDisabled() {
       return (
         this.disabled ||
-        Boolean(this.elForm?.disabled) ||
-        Boolean(this.qForm?.disabled)
+        (this.qForm?.disabled ?? false) ||
+        Boolean(this.elForm?.disabled)
       );
     }
   },
@@ -394,8 +396,8 @@ export default {
         this.inputLength = 20;
       }
       if (!isEqual(val, oldVal)) {
-        this.dispatch('QFormItem', 'q.form.change', val);
         this.dispatch('ElFormItem', 'el.form.change', val);
+        this.qFormItem?.validateField('change');
       }
     },
 

@@ -40,7 +40,8 @@
 
 <script>
 export default {
-  name: 'QMessageBox',
+  name: 'QNotification',
+  componentName: 'QNotification',
 
   props: {
     message: {

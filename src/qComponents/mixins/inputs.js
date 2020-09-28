@@ -9,10 +9,10 @@ export default {
       default: ''
     },
     qForm: {
-      default: ''
+      default: null
     },
     qFormItem: {
-      default: ''
+      default: null
     }
   },
 
@@ -57,8 +57,8 @@ export default {
     inputDisabled() {
       return (
         this.disabled ||
-        Boolean(this.elForm?.disabled) ||
-        Boolean(this.qForm?.disabled)
+        (this.qForm?.disabled ?? false) ||
+        Boolean(this.elForm?.disabled)
       );
     },
 
@@ -119,7 +119,7 @@ export default {
       this.$emit('blur', event);
       if (this.validateEvent) {
         this.dispatch('ElFormItem', 'el.form.blur', [this.value]);
-        this.dispatch('QFormItem', 'q.form.blur', [this.value]);
+        this.qFormItem?.validateField('blur');
       }
     },
 

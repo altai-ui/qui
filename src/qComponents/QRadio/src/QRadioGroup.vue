@@ -21,7 +21,6 @@ const keyCode = {
 
 export default {
   name: 'QRadioGroup',
-
   componentName: 'QRadioGroup',
 
   mixins: [Emitter],
@@ -30,9 +29,8 @@ export default {
     elFormItem: {
       default: ''
     },
-
     qFormItem: {
-      default: ''
+      default: null
     }
   },
 
@@ -55,7 +53,7 @@ export default {
   watch: {
     value() {
       this.dispatch('ElFormItem', 'el.form.change', [this.value]);
-      this.dispatch('QFormItem', 'q.form.change', [this.value]);
+      this.qFormItem?.validateField('change');
     }
   },
 

@@ -87,6 +87,7 @@ import { range } from 'lodash-es';
 
 export default {
   name: 'QPagination',
+  componentName: 'QPagination',
 
   props: {
     pageCount: { type: Number, default: null },

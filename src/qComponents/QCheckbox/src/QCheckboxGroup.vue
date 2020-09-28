@@ -14,17 +14,16 @@ import Emitter from '../../mixins/emitter';
 
 export default {
   name: 'QCheckboxGroup',
-
   componentName: 'QCheckboxGroup',
 
   mixins: [Emitter],
 
   inject: {
-    qFormItem: {
-      default: ''
-    },
     elFormItem: {
       default: ''
+    },
+    qFormItem: {
+      default: null
     }
   },
 
@@ -46,8 +45,8 @@ export default {
 
   watch: {
     value(value) {
-      this.dispatch('QFormItem', 'q.form.change', [value]);
       this.dispatch('ElFormItem', 'el.form.change', [value]);
+      this.qFormItem?.validateField('change');
     }
   }
 };

@@ -36,7 +36,6 @@ import calcTextareaHeight from './calcTextareaHeight';
 
 export default {
   name: 'QTextarea',
-
   componentName: 'QTextarea',
 
   mixins: [emitter, inputs],
@@ -87,9 +86,10 @@ export default {
   watch: {
     value(val) {
       this.$nextTick(this.resizeTextarea);
-      if (this.validateEvent) {
-        this.dispatch('ElFormItem', 'el.form.change', [val]);
-      }
+
+      if (!this.validateEvent) return;
+      this.dispatch('ElFormItem', 'el.form.change', [val]);
+      this.qFormItem?.validateField('change');
     }
   },
 

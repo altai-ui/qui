@@ -61,6 +61,7 @@ import QColorHueSlider from './QColorHueSlider';
 
 export default {
   name: 'PickerDropdown',
+  componentName: 'PickerDropdown',
 
   components: {
     QButton,

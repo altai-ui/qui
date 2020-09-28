@@ -40,7 +40,6 @@ import { createPopper } from '@popperjs/core';
 
 export default {
   name: 'QContextMenu',
-
   componentName: 'QContextMenu',
 
   props: {

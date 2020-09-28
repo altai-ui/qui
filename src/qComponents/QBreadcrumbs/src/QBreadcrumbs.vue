@@ -33,6 +33,7 @@
 <script>
 export default {
   name: 'QBreadcrumbs',
+  componentName: 'QBreadcrumbs',
 
   props: {
     last: {

@@ -85,6 +85,7 @@ const DEFAULT_INPUT_HEIGHT = 40;
 
 export default {
   name: 'QCascader',
+  componentName: 'QCascader',
 
   components: {
     QCascaderPanel
@@ -93,17 +94,17 @@ export default {
   mixins: [Emitter],
 
   inject: {
-    qForm: {
-      default: ''
-    },
-    qFormItem: {
-      default: ''
-    },
     elForm: {
       default: ''
     },
     elFormItem: {
       default: ''
+    },
+    qForm: {
+      default: null
+    },
+    qFormItem: {
+      default: null
     }
   },
 
@@ -154,8 +155,8 @@ export default {
     isDisabled() {
       return (
         this.disabled ||
-        Boolean(this.elForm?.disabled) ||
-        Boolean(this.qForm?.disabled)
+        (this.qForm?.disabled ?? false) ||
+        Boolean(this.elForm?.disabled)
       );
     },
     clearBtnVisible() {
@@ -195,7 +196,7 @@ export default {
         this.$emit('input', val);
         this.$emit('change', val);
         this.dispatch('ElFormItem', 'el.form.change', [val]);
-        this.dispatch('QFormItem', 'q.form.change', [val]);
+        this.qFormItem?.validateField('change');
       }
     },
     options: {

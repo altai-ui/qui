@@ -54,23 +54,22 @@ import Emitter from '../../mixins/emitter';
 
 export default {
   name: 'QCheckbox',
-
   componentName: 'QCheckbox',
 
   mixins: [Emitter],
 
   inject: {
-    qForm: {
-      default: ''
-    },
-    qFormItem: {
-      default: ''
-    },
     elForm: {
       default: ''
     },
     elFormItem: {
       default: ''
+    },
+    qForm: {
+      default: null
+    },
+    qFormItem: {
+      default: null
     }
   },
 
@@ -143,19 +142,19 @@ export default {
       return this.isGroup
         ? this.checkboxGroup.disabled ||
             this.disabled ||
+            (this.qForm?.disabled ?? false) ||
             Boolean(this.elForm?.disabled) ||
-            Boolean(this.qForm?.disabled) ||
             this.isLimitDisabled
         : this.disabled ||
-            Boolean(this.elForm?.disabled) ||
-            Boolean(this.qForm?.disabled);
+            (this.qForm?.disabled ?? false) ||
+            Boolean(this.elForm?.disabled);
     }
   },
 
   watch: {
     value(value) {
-      this.dispatch('QFormItem', 'q.form.change', value);
       this.dispatch('ElFormItem', 'el.form.change', value);
+      this.qFormItem?.validateField('change');
     }
   },
 

@@ -33,7 +33,7 @@
       <div class="q-upload-file__name">{{ preparedFileName }}</div>
 
       <button
-        v-if="clearable && !disabled"
+        v-if="clearable && !isDisabled"
         type="button"
         class="q-icon-close q-upload-file__remove"
         @click="handleRemoveFileBtnClick"
@@ -49,6 +49,7 @@ const MAX_VISIBLE_FILE_NAME_LENGTH = 23;
 
 export default {
   name: 'QUpload',
+  componentName: 'QUpload',
 
   mixins: [emitter],
 
@@ -58,17 +59,11 @@ export default {
   },
 
   inject: {
-    elForm: {
-      default: ''
-    },
-    elFormItem: {
-      default: ''
-    },
     qForm: {
-      default: ''
+      default: null
     },
     qFormItem: {
-      default: ''
+      default: null
     }
   },
 
@@ -124,11 +119,15 @@ export default {
   },
 
   computed: {
+    isDisabled() {
+      return this.disabled || (this.qForm?.disabled ?? false);
+    },
+
     classes() {
       return {
         'q-upload-drag_is-filled': this.value,
         'q-upload-drag_is-dragover': this.isDragover,
-        'q-upload-drag_is-disabled': this.disabled,
+        'q-upload-drag_is-disabled': this.isDisabled,
         'q-upload-drag_is-loading': this.isFileLoading
       };
     },
@@ -136,7 +135,7 @@ export default {
     uploadDragIcon() {
       if (this.isFileLoading) return 'q-icon-reverse';
 
-      return this.disabled ? 'q-icon-lock' : 'q-icon-cloud-upload';
+      return this.isDisabled ? 'q-icon-lock' : 'q-icon-cloud-upload';
     },
 
     uploadDragText() {
@@ -170,13 +169,13 @@ export default {
     value(value) {
       if (!this.validateEvent) return;
       this.dispatch('ElFormItem', 'el.form.change', value);
-      this.dispatch('QFormItem', 'q.form.change', value);
+      this.qFormItem?.validateField('change');
     }
   },
 
   methods: {
     handleUploadClick() {
-      if (this.disabled || this.isFileLoading) return;
+      if (this.isDisabled || this.isFileLoading) return;
 
       const { fileInput } = this.$refs;
       fileInput.value = null;
@@ -184,7 +183,7 @@ export default {
     },
 
     async processFile({ dataTransfer, target }) {
-      if (this.disabled) return;
+      if (this.isDisabled) return;
       if (this.isDragover) this.isDragover = false;
 
       const sourceFile = (dataTransfer ?? target)?.files?.[0];
@@ -213,7 +212,7 @@ export default {
     },
 
     handleDragover() {
-      if (!this.disabled) this.isDragover = true;
+      if (!this.isDisabled) this.isDragover = true;
     }
   }
 };

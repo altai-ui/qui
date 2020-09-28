@@ -9,6 +9,8 @@ import QCol from './QCol';
 import { QSelect, QOption } from './QSelect';
 import { QRadio, QRadioGroup } from './QRadio';
 import { QCascader, QCascaderPanel } from './QCascader';
+import QDrawer from './QDrawer';
+import { QForm, QFormItem } from './QForm';
 import QInput from './QInput';
 import QInputNumber from './QInputNumber';
 import QTextarea from './QTextarea';
@@ -25,7 +27,6 @@ import QPopover from './QPopover';
 import QRow from './QRow';
 import QScrollbar from './QScrollbar';
 import { QTabs, QTabPane } from './QTabs';
-import QDrawer from './QDrawer';
 import QUpload from './QUpload';
 
 const components = [
@@ -43,6 +44,8 @@ const components = [
   QCollapseItem,
   QColorPicker,
   QContextMenu,
+  QForm,
+  QFormItem,
   QInput,
   QInputNumber,
   QMessageBox,
@@ -56,6 +59,8 @@ const components = [
   QTabPane,
   QTag,
   QDrawer,
+  QForm,
+  QFormItem,
   QUpload
 ];
 
@@ -111,6 +116,8 @@ export {
   QContextMenu,
   QDialog,
   QDrawer,
+  QForm,
+  QFormItem,
   QInput,
   QInputNumber,
   QMessageBox,
