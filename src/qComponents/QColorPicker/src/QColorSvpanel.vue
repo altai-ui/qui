@@ -15,6 +15,7 @@ import draggable from './draggable';
 
 export default {
   name: 'QColorSvpanel',
+  componentName: 'QColorSvpanel',
 
   props: {
     hue: {

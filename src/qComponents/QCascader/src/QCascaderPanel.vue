@@ -28,6 +28,7 @@ const DefaultProps = {
 
 export default {
   name: 'QCascaderPanel',
+  componentName: 'QCascaderPanel',
 
   components: {
     QCascaderMenu

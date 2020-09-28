@@ -41,6 +41,7 @@ import Emitter from '../../mixins/emitter';
 
 export default {
   name: 'QRadio',
+  componentName: 'QRadio',
 
   mixins: [Emitter],
 
@@ -48,14 +49,14 @@ export default {
     elForm: {
       default: ''
     },
-    qForm: {
-      default: ''
-    },
     elFormItem: {
       default: ''
     },
+    qForm: {
+      default: null
+    },
     qFormItem: {
-      default: ''
+      default: null
     }
   },
 
@@ -63,8 +64,6 @@ export default {
     prop: 'checked',
     event: 'change'
   },
-
-  componentName: 'QRadio',
 
   props: {
     label: { type: [String], default: '' },
@@ -96,8 +95,8 @@ export default {
       return (
         (this.isGroup && this.radioGroup.disabled) ||
         this.disabled ||
-        Boolean(this.elForm?.disabled) ||
-        Boolean(this.qForm?.disabled)
+        (this.qForm?.disabled ?? false) ||
+        Boolean(this.elForm?.disabled)
       );
     },
 

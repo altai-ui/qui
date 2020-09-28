@@ -6,7 +6,7 @@
     <button
       v-if="controls"
       class="q-input-number__button_decrease q-input-number__button q-icon-minus"
-      :disabled="disabled"
+      :disabled="isDisabled"
       :class="decreaseClass"
       @click.prevent="handleDecreaseClick"
     />
@@ -14,7 +14,7 @@
     <q-input
       :value="currentValue"
       class="q-input-number__input"
-      :disabled="disabled"
+      :disabled="isDisabled"
       @blur="handleBlur"
       @focus="handleFocus"
       @input="handleInput"
@@ -24,7 +24,7 @@
     <button
       v-if="controls"
       class="q-input-number__button_increase q-input-number__button q-icon-plus"
-      :disabled="disabled"
+      :disabled="isDisabled"
       :class="increaseClass"
       @click.prevent="handleIncreaseClick"
     />
@@ -34,6 +34,13 @@
 <script>
 export default {
   name: 'QInputNumber',
+  componentName: 'QInputNumber',
+
+  inject: {
+    qForm: {
+      default: null
+    }
+  },
 
   props: {
     min: {
@@ -79,6 +86,10 @@ export default {
   },
 
   computed: {
+    isDisabled() {
+      return this.disabled || (this.qForm?.disabled ?? false);
+    },
+
     withControlsClass() {
       return { 'q-input-number_with-controls': this.controls };
     },

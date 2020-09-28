@@ -55,6 +55,7 @@ import PickerDropdown from './QPickerDropdown';
 
 export default {
   name: 'QColorPicker',
+  componentName: 'QColorPicker',
 
   components: {
     PickerDropdown
@@ -75,10 +76,10 @@ export default {
       default: ''
     },
     qForm: {
-      default: ''
+      default: null
     },
     qFormItem: {
-      default: ''
+      default: null
     }
   },
 
@@ -150,8 +151,8 @@ export default {
     isDisabled() {
       return (
         this.disabled ||
-        Boolean(this.elForm?.disabled) ||
-        Boolean(this.qForm?.disabled)
+        (this.qForm?.disabled ?? false) ||
+        Boolean(this.elForm?.disabled)
       );
     },
 
@@ -228,7 +229,7 @@ export default {
 
       if (this.value !== null) {
         this.dispatch('ElFormItem', 'el.form.change', null);
-        this.dispatch('QFormItem', 'q.form.change', null);
+        this.qFormItem?.validateField('change');
       }
 
       this.isPickerShown = false;
@@ -239,7 +240,7 @@ export default {
 
       if (this.value !== value) {
         this.dispatch('ElFormItem', 'el.form.change', value);
-        this.dispatch('QFormItem', 'q.form.change', value);
+        this.qFormItem?.validateField('change');
       }
 
       this.isPickerShown = false;

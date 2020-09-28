@@ -18,6 +18,7 @@ import draggable from './draggable';
 
 export default {
   name: 'QColorHueSlider',
+  componentName: 'QColorHueSlider',
 
   props: {
     hue: {

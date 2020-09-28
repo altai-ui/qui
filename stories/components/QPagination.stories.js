@@ -1,5 +1,5 @@
-import '../../src/qComponents/QPagination/src/q-pagination.scss';
 import QPagination from '../../src/qComponents/QPagination';
+import '../../src/qComponents/QPagination/src/q-pagination.scss';
 
 export default {
   title: 'Components/QPagination',

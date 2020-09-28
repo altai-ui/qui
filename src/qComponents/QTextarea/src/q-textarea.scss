@@ -79,7 +79,8 @@
       border-radius: var(--border-radius-base);
     }
 
-    .el-form-item.is-error & {
+    .el-form-item.is-error &,
+    .q-form-item_is-error & {
       padding: 9px 15px;
       border: var(--border-error);
     }

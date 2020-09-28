@@ -26,6 +26,7 @@
 <script>
 export default {
   name: 'QTabPane',
+  componentName: 'QTabPane',
 
   props: {
     name: {

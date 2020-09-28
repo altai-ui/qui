@@ -36,6 +36,7 @@ import QBar from './QBar';
 
 export default {
   name: 'QScrollbar',
+  componentName: 'QScrollbar',
 
   components: { QBar },
 
@@ -66,6 +67,7 @@ export default {
     wrap() {
       return this.$refs.wrap;
     },
+
     classes() {
       return [
         'q-scrollbar',

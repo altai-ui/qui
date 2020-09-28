@@ -11,7 +11,6 @@
 <script type="text/babel">
 export default {
   name: 'QSelectDropdown',
-
   componentName: 'QSelectDropdown',
 
   data() {

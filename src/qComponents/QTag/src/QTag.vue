@@ -15,14 +15,18 @@
 <script>
 export default {
   name: 'QTag',
+  componentName: 'QTag',
+
   props: {
     closable: { type: Boolean, default: false }
   },
+
   methods: {
     handleClose(event) {
       event.stopPropagation();
       this.$emit('close', event);
     },
+
     handleClick(event) {
       this.$emit('click', event);
     }

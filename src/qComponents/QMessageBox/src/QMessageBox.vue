@@ -93,6 +93,7 @@
 <script>
 export default {
   name: 'QMessageBox',
+  componentName: 'QMessageBox',
 
   props: {
     zIndex: {

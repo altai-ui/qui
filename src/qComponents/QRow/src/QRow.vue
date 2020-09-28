@@ -11,6 +11,7 @@
 <script>
 export default {
   name: 'QRow',
+  componentName: 'QRow',
 
   props: {
     /**

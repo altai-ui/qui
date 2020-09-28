@@ -19,6 +19,7 @@ import draggable from './draggable';
 
 export default {
   name: 'QColorAlphaSlider',
+  componentName: 'QColorAlphaSlider',
 
   props: {
     color: {

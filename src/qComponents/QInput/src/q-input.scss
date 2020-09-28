@@ -75,6 +75,14 @@
       background-color: var(--field-background-color-hover);
       box-shadow: var(--field-box-shadow-hover);
     }
+
+    .q-form-item_is-error & {
+      &,
+      &:focus {
+        padding-left: 15px;
+        border: var(--border-error);
+      }
+    }
   }
 
   &_focus {

@@ -39,6 +39,7 @@
 <script>
 export default {
   name: 'QDrawer',
+  componentName: 'QDrawer',
 
   props: {
     width: {

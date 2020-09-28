@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "@popperjs/core": "^2.4.4",
+    "async-validator": "^3.4.0",
     "color": "^3.1.2",
     "element-ui": "^2.13.0",
     "lodash-es": "^4.17.15",

@@ -66,7 +66,6 @@ import inputs from '../../mixins/inputs';
 
 export default {
   name: 'QInput',
-
   componentName: 'QInput',
 
   mixins: [emitter, inputs],
@@ -154,10 +153,9 @@ export default {
 
   watch: {
     value(val) {
-      if (this.validateEvent) {
-        this.dispatch('ElFormItem', 'el.form.change', [val]);
-        this.dispatch('QFormItem', 'q.form.change', [val]);
-      }
+      if (!this.validateEvent) return;
+      this.dispatch('ElFormItem', 'el.form.change', [val]);
+      this.qFormItem?.validateField('change');
     },
     type() {
       this.$nextTick(() => {

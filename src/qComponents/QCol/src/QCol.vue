@@ -11,6 +11,7 @@
 <script>
 export default {
   name: 'QCol',
+  componentName: 'QCol',
 
   props: {
     /**
