@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { concat } from 'lodash-es';
+
 /**
  * Form consists of `input`, `radio`, `select`, `checkbox` and so on.
  * With form, you can collect, verify and submit data.
@@ -83,7 +85,7 @@ export default {
      * @param {?string[]|string} props List of fields props.
      */
     filterFields(props) {
-      const preparedProps = Array.isArray(props) ? props : [props];
+      const preparedProps = concat(props || []);
 
       return preparedProps.length
         ? this.fields.filter(({ prop }) => preparedProps.includes(prop))
