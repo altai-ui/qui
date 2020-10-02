@@ -199,13 +199,17 @@ export default {
         ? propRules
         : [propRules];
 
-      if (!trigger) return preparedPropRules;
+      if (!trigger) {
+        return preparedPropRules.map(({ trigger: _, ...rule }) => rule);
+      }
 
-      return preparedPropRules.filter(rule => {
-        if (!rule?.trigger) return true;
+      return preparedPropRules
+        .filter(rule => {
+          if (!rule?.trigger) return true;
 
-        return [].concat(rule.trigger).includes(trigger);
-      });
+          return [].concat(rule.trigger).includes(trigger);
+        })
+        .map(({ trigger: _, ...rule }) => rule);
     },
 
     /**
