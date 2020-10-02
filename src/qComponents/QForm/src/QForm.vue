@@ -145,7 +145,7 @@ export default {
 
       await Promise.all(
         filteredFields.map(async field => {
-          const { errors, fields } = await field.validateField();
+          const { errors, fields } = (await field.validateField()) ?? {};
           if (!errors) return;
 
           isValid = false;
