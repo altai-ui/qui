@@ -1,4 +1,4 @@
-import { QRadio } from '../../src/qComponents/QRadio';
+import { QRadio } from '../../src/qComponents';
 import '../../src/qComponents/QRadio/src/q-radio.scss';
 
 export default {

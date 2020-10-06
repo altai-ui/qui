@@ -109,6 +109,12 @@
           background-color: rgba(var(--color-rgb-gray), 0.1);
           opacity: 1;
         }
+
+        .q-color-picker-trigger_is-disabled & {
+          &::before {
+            opacity: 0;
+          }
+        }
       }
 
       .q-color-picker-trigger__default:focus & {

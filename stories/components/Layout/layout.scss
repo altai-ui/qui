@@ -1,0 +1,14 @@
+.demo-row {
+  width: 500px;
+  min-height: 50px;
+  background-color: var(--color-tertiary-gray);
+}
+
+.demo-col {
+  background-color: var(--color-tertiary-gray-ultra-darker);
+  border-radius: var(--border-radius-base);
+
+  &:nth-child(odd) {
+    background-color: var(--color-tertiary-gray-ultra-dark);
+  }
+}
