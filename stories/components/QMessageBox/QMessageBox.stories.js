@@ -1,37 +1,15 @@
-<template>
-  <div class="demo">
-    <div class="block">
-      <span class="demonstration">Message Box with text</span>
-      <q-button @click="handleOpenTextBtnClick">
-        Click to open
-      </q-button>
-    </div>
+import Vue from 'vue';
 
-    <div class="block">
-      <span class="demonstration">Message Box with component</span>
-      <q-button @click="handleOpenCompBtnClick">
-        Click to open
-      </q-button>
-    </div>
+import { QMessageBox } from '../../../src/qComponents';
+import QMessageBoxComponent from '../../../src/qComponents/QMessageBox/src/QMessageBox.vue';
+import '../../../src/qComponents/QMessageBox/src/q-message-box.scss';
 
-    <div class="block">
-      <span class="demonstration">Message Box with HTML</span>
-      <q-button @click="handleOpenHtmlBtnClick">
-        Click to open
-      </q-button>
-    </div>
-
-    <div class="block">
-      <span class="demonstration">Message Box with VNode</span>
-      <q-button @click="handleOpenVnodeBtnClick">
-        Click to open
-      </q-button>
-    </div>
-  </div>
-</template>
-
-<script>
 export default {
+  title: 'Components/QMessageBox',
+  component: QMessageBoxComponent
+};
+
+export const QMessageBoxStory = () => ({
   methods: {
     async beforeClose({ action, ctx }) {
       if (action !== 'confirm') return true;
@@ -55,9 +33,9 @@ export default {
       }
     },
 
-    async handleOpenTextBtnClick() {
+    async handleClick() {
       try {
-        const response = await this.$message({
+        const response = await QMessageBox.bind(Vue)({
           title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.',
           message:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula volutpat nulla et egestas. Mauris mollis, lorem vel aliquam gravida.',
@@ -71,23 +49,37 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    },
+    }
+  },
+  template: '<q-button @click="handleClick">Click to open</q-button>'
+});
 
-    async handleOpenCompBtnClick() {
+QMessageBoxStory.storyName = 'Default';
+
+export const QMessageBoxComponentStory = () => ({
+  methods: {
+    async handleClick() {
       try {
-        const response = await this.$message({
+        const response = await QMessageBox.bind(Vue)({
           title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.',
-          component: () => import('../../materials/MessageBoxFormTest')
+          component: () => import('./MessageBoxFormTest')
         });
         console.log(response);
       } catch (error) {
         console.log(error);
       }
-    },
+    }
+  },
+  template: '<q-button @click="handleClick">Click to open</q-button>'
+});
 
-    async handleOpenHtmlBtnClick() {
+QMessageBoxComponentStory.storyName = 'Component';
+
+export const QMessageBoxHTMLStory = () => ({
+  methods: {
+    async handleClick() {
       try {
-        const response = await this.$message({
+        const response = await QMessageBox.bind(Vue)({
           title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.',
           message:
             '<strong>This</strong> is <i>HTML</i> <span style="color:red;">string</span>',
@@ -100,12 +92,19 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    },
+    }
+  },
+  template: '<q-button @click="handleClick">Click to open</q-button>'
+});
 
-    async handleOpenVnodeBtnClick() {
+QMessageBoxHTMLStory.storyName = 'HTML';
+
+export const QMessageBoxVNodeStory = () => ({
+  methods: {
+    async handleClick() {
       try {
         const h = this.$createElement;
-        const response = await this.$message({
+        const response = await QMessageBox.bind(Vue)({
           title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.',
           message: h('p', null, [
             h('span', null, 'Message can be '),
@@ -118,6 +117,8 @@ export default {
         console.log(error);
       }
     }
-  }
-};
-</script>
+  },
+  template: '<q-button @click="handleClick">Click to open</q-button>'
+});
+
+QMessageBoxVNodeStory.storyName = 'VNode';

@@ -1,4 +1,4 @@
-import { QRadio, QRadioGroup } from '../../src/qComponents/QRadio';
+import { QRadio, QRadioGroup } from '../../src/qComponents';
 import '../../src/qComponents/QRadio/src/q-radio.scss';
 import '../../src/qComponents/QRadio/src/q-radio-group.scss';
 

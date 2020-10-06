@@ -1,4 +1,4 @@
-import { QCheckbox } from '../../src/qComponents/QCheckbox';
+import { QCheckbox } from '../../src/qComponents';
 import '../../src/qComponents/QCheckbox/src/q-checkbox.scss';
 
 export default {
