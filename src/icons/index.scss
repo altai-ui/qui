@@ -352,10 +352,6 @@ $--base-path: '..' !default;
   content: '\e94f';
 }
 
-.q-icon-filter::before {
-  content: '\e950';
-}
-
 .q-icon-drag-vertical-fill::before {
   content: '\e951';
 }
@@ -370,4 +366,44 @@ $--base-path: '..' !default;
 
 .q-icon-account-check-fill::before {
   content: '\e954';
+}
+
+.q-icon-calendar-clock::before {
+  content: '\e955';
+}
+
+.q-icon-chain::before {
+  content: '\e956';
+}
+
+.q-icon-clock-stroke::before {
+  content: '\e957';
+}
+
+.q-icon-cog-fill::before {
+  content: '\e958';
+}
+
+.q-icon-earth::before {
+  content: '\e959';
+}
+
+.q-icon-filter-fill::before {
+  content: '\e950';
+}
+
+.q-icon-filter-stroke::before {
+  content: '\e95b';
+}
+
+.q-icon-pencil-list::before {
+  content: '\e95c';
+}
+
+.q-icon-settings-horizontal::before {
+  content: '\e95d';
+}
+
+.q-icon-star-fill::before {
+  content: '\e95e';
 }
