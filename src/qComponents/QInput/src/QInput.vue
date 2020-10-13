@@ -145,8 +145,7 @@ export default {
         this.$slots.suffix ||
         this.suffixIcon ||
         this.isClearButtonShown ||
-        this.showPassword ||
-        this.isSymbolLimitShown
+        this.showPassword
       );
     }
   },

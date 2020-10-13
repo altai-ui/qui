@@ -1,5 +1,4 @@
 import { QRadio } from '../../src/qComponents';
-import '../../src/qComponents/QRadio/src/q-radio.scss';
 
 export default {
   title: 'Components/QRadio/QRadio',
@@ -12,7 +11,6 @@ export default {
 };
 
 export const QRadioStory = (_, { argTypes }) => ({
-  components: { QRadio },
   props: Object.keys(argTypes),
   data() {
     return {

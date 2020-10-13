@@ -1,5 +1,4 @@
 import { QContextMenu } from '../../src/qComponents';
-import '../../src/qComponents/QContextMenu/src/q-context-menu.scss';
 
 export default {
   title: 'Components/QContextMenu',
@@ -12,7 +11,6 @@ export default {
 };
 
 export const QContextMenuStory = (_, { argTypes }) => ({
-  components: { QContextMenu },
   props: Object.keys(argTypes),
   methods: {
     handleAction(action) {

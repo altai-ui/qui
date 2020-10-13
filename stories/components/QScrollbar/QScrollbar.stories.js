@@ -1,5 +1,5 @@
 import { QScrollbar } from '../../../src/qComponents';
-import '../../../src/qComponents/QScrollbar/src/q-scrollbar.scss';
+
 import './q-scrollbar.scss';
 
 export default {
@@ -13,7 +13,6 @@ export default {
 };
 
 export const QScrollbarStory = (_, { argTypes }) => ({
-  components: { QScrollbar },
   props: Object.keys(argTypes),
   template: `
     <q-scrollbar v-bind="$props">

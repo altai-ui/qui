@@ -1,6 +1,5 @@
 import { QNotification } from '../../src/qComponents';
 import QNotificationComponent from '../../src/qComponents/QNotification/src/QNotification.vue';
-import '../../src/qComponents/QNotification/src/q-notification.scss';
 
 export default {
   title: 'Components/QNotification',
@@ -16,7 +15,6 @@ export default {
 };
 
 export const QNotificationStory = (_, { argTypes }) => ({
-  components: { QNotification },
   props: Object.keys(argTypes),
   methods: {
     handleClick() {

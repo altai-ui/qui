@@ -1,5 +1,4 @@
 import { QTag } from '../../src/qComponents';
-import '../../src/qComponents/QTag/src/q-tag.scss';
 
 export default {
   title: 'Components/QTag',
@@ -7,7 +6,6 @@ export default {
 };
 
 export const QTagStory = (_, { argTypes }) => ({
-  components: { QTag },
   props: Object.keys(argTypes),
   data() {
     return {

@@ -1,6 +1,4 @@
 import { QRadio, QRadioGroup } from '../../src/qComponents';
-import '../../src/qComponents/QRadio/src/q-radio.scss';
-import '../../src/qComponents/QRadio/src/q-radio-group.scss';
 
 export default {
   title: 'Components/QRadio/QRadioGroup',
@@ -15,7 +13,6 @@ export default {
 };
 
 export const QRadioGroupStory = (_, { argTypes }) => ({
-  components: { QRadio, QRadioGroup },
   props: Object.keys(argTypes),
   data() {
     return { value: 3 };

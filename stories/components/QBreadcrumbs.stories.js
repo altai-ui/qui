@@ -1,7 +1,6 @@
 import Vue from 'vue';
 
 import { QBreadcrumbs } from '../../src/qComponents';
-import '../../src/qComponents/QBreadcrumbs/src/q-breadcrumbs.scss';
 
 export default {
   title: 'Components/QBreadcrumbs',
@@ -59,7 +58,6 @@ Object.defineProperty(Vue.prototype, '$route', {
 });
 
 export const QBreadcrumbsStory = (_, { argTypes }) => ({
-  components: { QBreadcrumbs },
   props: Object.keys(argTypes),
   template: `
     <q-breadcrumbs v-bind="$props" />
@@ -69,7 +67,6 @@ export const QBreadcrumbsStory = (_, { argTypes }) => ({
 QBreadcrumbsStory.storyName = 'Default';
 
 export const QBreadcrumbsRouteStory = (_, { argTypes }) => ({
-  components: { QBreadcrumbs },
   props: Object.keys(argTypes),
   template: `
     <q-breadcrumbs v-bind="$props" />

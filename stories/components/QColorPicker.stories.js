@@ -1,5 +1,4 @@
 import { QColorPicker } from '../../src/qComponents';
-import '../../src/qComponents/QColorPicker/src/q-color-picker.scss';
 
 import PLACEMENTS from '../../src/qComponents/constants/popperPlacements';
 
@@ -18,7 +17,6 @@ export default {
 };
 
 export const QColorPickerStory = (_, { argTypes }) => ({
-  components: { QColorPicker },
   props: Object.keys(argTypes),
   data() {
     return {

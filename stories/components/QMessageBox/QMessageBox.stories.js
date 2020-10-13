@@ -2,7 +2,6 @@ import Vue from 'vue';
 
 import { QMessageBox } from '../../../src/qComponents';
 import QMessageBoxComponent from '../../../src/qComponents/QMessageBox/src/QMessageBox.vue';
-import '../../../src/qComponents/QMessageBox/src/q-message-box.scss';
 
 export default {
   title: 'Components/QMessageBox',
