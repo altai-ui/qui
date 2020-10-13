@@ -181,6 +181,9 @@
   }
 
   &__count {
+    position: absolute;
+    top: -24px;
+    right: 0;
     margin-bottom: 2px;
     font-size: 10px;
     text-align: right;

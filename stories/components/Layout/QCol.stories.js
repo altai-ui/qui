@@ -1,7 +1,5 @@
 import { QRow, QCol } from '../../../src/qComponents';
 import './layout.scss';
-import '../../../src/qComponents/QRow/src/q-row.scss';
-import '../../../src/qComponents/QCol/src/q-col.scss';
 
 export default {
   title: 'Components/Layout/QCol',
@@ -24,7 +22,6 @@ export default {
 };
 
 export const QColStory = (_, { argTypes }) => ({
-  components: { QRow, QCol },
   props: Object.keys(argTypes),
   template: `
     <q-row

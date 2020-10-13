@@ -1,5 +1,4 @@
 import { QCollapse, QCollapseItem } from '../../src/qComponents';
-import '../../src/qComponents/QCollapseItem/src/q-collapse-item.scss';
 
 export default {
   title: 'Components/QCollapse',
@@ -11,7 +10,6 @@ export default {
 };
 
 export const QCollapseStory = (_, { argTypes }) => ({
-  components: { QCollapse },
   props: Object.keys(argTypes),
   data() {
     return {

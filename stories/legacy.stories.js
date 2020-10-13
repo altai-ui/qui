@@ -7,14 +7,11 @@ import ElementUI from 'element-ui';
 import lang from 'element-ui/lib/locale/lang/ru-RU';
 import locale from 'element-ui/lib/locale';
 
-import QComponents from '../src/qComponents';
-
 import './legacy.scss';
-import '../src/all.scss';
+import '../src/neumorphism/index.scss';
 
 locale.use(lang);
 Vue.use(ElementUI);
-Vue.use(QComponents);
 
 // Element UI stories
 const requireComponent = require.context(
@@ -29,26 +26,4 @@ requireComponent.keys().forEach(fileName => {
     extractedPath[2],
     () => requireComponent(fileName).default
   );
-});
-
-// QComponents stories
-const qStoryComponents = require.context(
-  '../.storybook/qComponents',
-  true,
-  /\.vue$/
-);
-const qComponent = require.context('../src/qComponents', true, /\.vue$/);
-
-qStoryComponents.keys().forEach(fileName => {
-  const extractedPath = fileName.match(/\/(.+)\/([\w-]+?(?=\.))/);
-  const storyComponent = qStoryComponents(fileName).default;
-  const component = qComponent(
-    `./${extractedPath[1]}/src/${extractedPath[1]}.vue`
-  ).default;
-  storiesOf(`Legacy/QComponents/${extractedPath[1]}`, module)
-    .addParameters({
-      title: extractedPath[1],
-      component
-    })
-    .add(extractedPath[2], () => storyComponent);
 });

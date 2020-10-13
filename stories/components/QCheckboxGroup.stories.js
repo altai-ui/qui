@@ -1,6 +1,4 @@
 import { QCheckbox, QCheckboxGroup } from '../../src/qComponents';
-import '../../src/qComponents/QCheckbox/src/q-checkbox.scss';
-import '../../src/qComponents/QCheckbox/src/q-checkbox-group.scss';
 
 export default {
   title: 'Components/QCheckbox/QCheckboxGroup',
@@ -15,7 +13,6 @@ export default {
 };
 
 export const QCheckboxGroupStory = (_, { argTypes }) => ({
-  components: { QCheckbox, QCheckboxGroup },
   props: Object.keys(argTypes),
   data() {
     return {

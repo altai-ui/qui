@@ -1,5 +1,4 @@
 import { QPagination } from '../../src/qComponents';
-import '../../src/qComponents/QPagination/src/q-pagination.scss';
 
 export default {
   title: 'Components/QPagination',
@@ -7,7 +6,6 @@ export default {
 };
 
 export const QPaginationStory = (_, { argTypes }) => ({
-  components: { QPagination },
   props: Object.keys(argTypes),
   template: `
     <q-pagination

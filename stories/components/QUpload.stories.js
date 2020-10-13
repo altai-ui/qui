@@ -1,5 +1,4 @@
 import { QUpload } from '../../src/qComponents';
-import '../../src/qComponents/QUpload/src/q-upload.scss';
 
 export default {
   title: 'Components/QUpload',
@@ -10,7 +9,6 @@ export default {
 };
 
 export const QUploadStory = (_, { argTypes }) => ({
-  components: { QUpload },
   props: Object.keys(argTypes),
   data() {
     return {

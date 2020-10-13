@@ -1,5 +1,4 @@
-import { QForm, QFormItem, QInput, QTextarea } from '../../src/qComponents';
-import '../../src/qComponents/QForm/src/q-form-item.scss';
+import { QForm, QFormItem } from '../../src/qComponents';
 
 export default {
   title: 'Components/QForm',
@@ -12,7 +11,6 @@ export default {
 };
 
 export const QFormStory = (_, { argTypes }) => ({
-  components: { QForm, QFormItem, QInput, QTextarea },
   props: Object.keys(argTypes).filter(arg => arg !== 'model'),
   data() {
     return {
