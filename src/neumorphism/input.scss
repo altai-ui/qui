@@ -76,7 +76,6 @@
     -webkit-appearance: none;
 
     /** disable default clear on IE */
-    &::-ms-reveal,
     &::-ms-clear {
       display: none;
       width: 0;
