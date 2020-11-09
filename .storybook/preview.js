@@ -12,6 +12,7 @@ Vue.use(QComponents);
 
 addParameters({
   layout: 'centered',
+  controls: { expanded: true },
   docs: {
     inlineStories: true
   }

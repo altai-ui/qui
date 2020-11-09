@@ -27,6 +27,7 @@ import QPopover from './QPopover';
 import QRow from './QRow';
 import QScrollbar from './QScrollbar';
 import { QTabs, QTabPane } from './QTabs';
+import QTable from './QTable';
 import QUpload from './QUpload';
 
 const components = [
@@ -59,6 +60,7 @@ const components = [
   QTabPane,
   QTag,
   QDrawer,
+  QTable,
   QForm,
   QFormItem,
   QUpload
@@ -131,6 +133,7 @@ export {
   QSelect,
   QOption,
   QTabs,
+  QTable,
   QTabPane,
   QTag,
   QTextarea,
