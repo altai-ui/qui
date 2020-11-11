@@ -17,7 +17,10 @@
           :class="icon"
           :style="popoverIconStyles"
         />
-        <div class="q-popover__inner">
+        <q-scrollbar
+          wrap-class="q-popover__inner"
+          view-class="scrollbar__list"
+        >
           <div
             v-if="title"
             class="q-popover__title"
@@ -30,7 +33,7 @@
           >
             <slot />
           </div>
-        </div>
+        </q-scrollbar>
       </div>
     </transition>
 
