@@ -143,7 +143,7 @@
   </div>
 </template>
 
-<script type="text/babel">
+<script>
 import {
   isObject,
   isPlainObject,

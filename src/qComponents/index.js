@@ -27,10 +27,14 @@ import QPopover from './QPopover';
 import QRow from './QRow';
 import QScrollbar from './QScrollbar';
 import { QTabs, QTabPane } from './QTabs';
+import QDatePicker from './QDatePicker';
+import QTimePicker from './QTimePicker';
 import QTable from './QTable';
 import QUpload from './QUpload';
 
 const components = [
+  QDatePicker,
+  QTimePicker,
   QButton,
   QBreadcrumbs,
   QCascader,
@@ -136,6 +140,8 @@ export {
   QTable,
   QTabPane,
   QTag,
+  QDatePicker,
+  QTimePicker,
   QTextarea,
   QUpload
 };

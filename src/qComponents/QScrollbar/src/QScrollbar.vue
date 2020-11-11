@@ -17,12 +17,14 @@
     </div>
     <q-bar
       v-show="sizeWidth !== ''"
+      ref="xbar"
       type="horizontal"
       :move="moveX"
       :size="sizeWidth"
     />
     <q-bar
       v-show="sizeHeight !== ''"
+      ref="ybar"
       type="vertical"
       :move="moveY"
       :size="sizeHeight"
@@ -34,6 +36,8 @@
 import { addResizeListener, removeResizeListener } from '../../helpers';
 import QBar from './QBar';
 
+const OFFSET = -10;
+
 export default {
   name: 'QScrollbar',
   componentName: 'QScrollbar',
@@ -41,6 +45,10 @@ export default {
   components: { QBar },
 
   props: {
+    scrollTo: {
+      type: HTMLElement,
+      default: null
+    },
     native: { type: Boolean, default: false },
     visible: { type: Boolean, default: false },
     theme: {
@@ -79,6 +87,20 @@ export default {
 
     wrapClasses() {
       return [this.wrapClass, { 'q-scrollbar__wrap_hidden-default': true }];
+    }
+  },
+
+  watch: {
+    scrollTo(element) {
+      if (element) {
+        this.$refs.ybar.scrollToPx(element.offsetTop + OFFSET);
+      }
+    },
+    visible(value) {
+      if (value) {
+        const offset = this.scrollTo?.offsetTop ?? 0 + OFFSET;
+        this.$refs.ybar.scrollToPx(offset);
+      }
     }
   },
 

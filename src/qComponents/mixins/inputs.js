@@ -153,7 +153,7 @@ export default {
     handleInput(event) {
       // should not emit input during composition
       if (this.isComposing) return;
-      this.$emit('input', event.target.value);
+      this.$emit('input', event.target.value, event);
       // ensure native input value is controlled
       this.$nextTick(this.setNativeInputValue);
     },
