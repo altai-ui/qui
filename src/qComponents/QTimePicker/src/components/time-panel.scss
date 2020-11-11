@@ -1,0 +1,117 @@
+.time-panel {
+  position: relative;
+  z-index: 1;
+  display: none;
+  width: 124px;
+  height: 256px;
+  padding: 5px 0;
+  font-size: 10px;
+  background: var(--color-tertiary-gray-light);
+  border-radius: var(--border-radius-base);
+  box-shadow: var(--box-shadow-secondary);
+
+  &[data-show] {
+    display: block;
+  }
+
+  &_no-right-borders {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &_no-left-borders {
+    margin-left: 1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  &__sign {
+    height: 19px;
+    font-weight: 500;
+    text-align: center;
+
+    &::after {
+      content: '';
+      position: relative;
+      top: -4px;
+      z-index: 1;
+      display: block;
+      height: 6px;
+      background: linear-gradient(to bottom, #f0f0f3, transparent);
+    }
+  }
+
+  &__common {
+    padding: 10px 0 11px;
+    font-weight: 400;
+    line-height: 10px;
+    text-align: center;
+    color: var(--color-primary-black);
+  }
+
+  &__pickers {
+    display: flex;
+    justify-content: center;
+    height: 201px;
+  }
+
+  &__scrollbar {
+    width: 35px;
+    height: 201px;
+  }
+
+  .cell {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    width: 20px;
+    height: 20px;
+    margin: 12px auto;
+    padding: 0;
+    font-weight: var(--font-weight-base);
+    line-height: 20px;
+    color: var(--color-primary-blue);
+    background-color: var(--color-tertiary-gray-light);
+    border: none;
+    border-radius: var(--border-radius-base);
+    box-shadow: 36px 2px 45px #fff, 4px 4px 8px rgba(var(--color-rgb-blue), 0.4),
+      1px 1px 3px rgba(var(--color-rgb-blue), 0.4),
+      -1px -1px 3px rgba(var(--color-rgb-white), 0.25);
+    cursor: pointer;
+
+    &:first-child {
+      margin-top: 10px;
+    }
+
+    &:last-child {
+      margin-bottom: 5px;
+    }
+
+    &:hover {
+      &:not(.cell_current) {
+        color: var(--color-primary-black);
+        background-color: var(--color-tertiary-gray);
+      }
+    }
+
+    &[disabled] {
+      color: rgba(var(--color-primary-black), 0.64);
+      background-color: var(--color-tertiary-gray);
+      cursor: not-allowed;
+      opacity: 1;
+
+      &:hover {
+        color: rgba(var(--color-primary-black), 0.64);
+      }
+    }
+
+    &_current {
+      color: #fff;
+      background-color: var(--color-primary-blue);
+
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+}
