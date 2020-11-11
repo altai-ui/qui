@@ -17,6 +17,7 @@
         <button
           :class="getCellClasses(cell)"
           :disabled="cell.disabled"
+          type="button"
           @click="handleMonthTableClick(cell)"
         >
           {{ getMonthName(cell.text) }}

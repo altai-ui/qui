@@ -29,6 +29,7 @@
         >
           <button
             :class="getCellClasses(cell)"
+            type="button"
             @click="handleClick(cell)"
           >
             {{ cell.text }}
