@@ -21,25 +21,27 @@
       :style="() => getCellStyle(column.key, columnIndex)"
       class="q-table__cell"
     >
-      <div
-        v-if="canRowExpand(columnIndex)"
-        class="q-table__expand-arrow"
-        :class="openedTreeClass"
-        @click="handleExpandClick"
-      >
-        <i class="el-icon-arrow-right" />
+      <div class="q-table__cell-wrapper">
+        <div
+          v-if="canRowExpand(columnIndex)"
+          class="q-table__expand-arrow"
+          :class="openedTreeClass"
+          @click="handleExpandClick"
+        >
+          <i class="el-icon-arrow-right" />
+        </div>
+
+        <slot
+          :row-data="updateRow(row, columnIndex, column.key)"
+          name="row"
+        />
+
+        <slot
+          v-if="checkLoader(columnIndex)"
+          :row-data="row"
+          name="loader"
+        />
       </div>
-
-      <slot
-        :row-data="updateRow(row, columnIndex, column.key)"
-        name="row"
-      />
-
-      <slot
-        v-if="checkLoader(columnIndex)"
-        :row-data="row"
-        name="loader"
-      />
     </td>
   </tr>
 </template>
@@ -121,6 +123,7 @@ export default {
       set(isChecked) {
         this.$emit('check', {
           isChecked,
+          row: this.row,
           rowIndex: this.rowIndex
         });
       }
@@ -130,6 +133,7 @@ export default {
 
       if (this.customRowClass) {
         const newClass = this.customRowClass({
+          row: this.row,
           rowIndex: this.rowIndex
         });
 
@@ -159,6 +163,7 @@ export default {
       return (
         this.customRowStyle &&
         this.customRowStyle({
+          row: this.row,
           rowIndex: this.rowIndex
         })
       );
