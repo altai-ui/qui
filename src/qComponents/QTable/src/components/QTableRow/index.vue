@@ -12,6 +12,14 @@
       }"
       :style="firstTdStyle"
     >
+      <div
+        v-if="canRowExpand(0)"
+        class="q-table__expand-arrow"
+        :class="openedTreeClass"
+        @click="handleExpandClick"
+      >
+        <span class="q-icon-triangle-right" />
+      </div>
       <q-checkbox v-model="isChecked" />
     </td>
     <td
@@ -23,12 +31,12 @@
     >
       <div class="q-table__cell-wrapper">
         <div
-          v-if="canRowExpand(columnIndex)"
+          v-if="!selectable && canRowExpand(columnIndex)"
           class="q-table__expand-arrow"
           :class="openedTreeClass"
           @click="handleExpandClick"
         >
-          <i class="el-icon-arrow-right" />
+          <span class="q-icon-triangle-right" />
         </div>
 
         <slot
@@ -62,6 +70,10 @@ export default {
     columns: {
       type: Array,
       required: true
+    },
+    childrenKey: {
+      type: String,
+      default: 'children'
     },
     fixedColumn: {
       type: String,
@@ -179,7 +191,11 @@ export default {
       return this.row[this.pagesInExpand] && !columnIndex;
     },
     canRowExpand(columnIndex) {
-      return this.expandable && columnIndex === 0 && this.row.childrenCount;
+      return (
+        this.expandable &&
+        columnIndex === 0 &&
+        Boolean(this.row[this.childrenKey]?.length)
+      );
     },
     handleExpandClick() {
       this.$emit('expand-click', this.row);
@@ -196,7 +212,7 @@ export default {
         .paddingLeft.replace(/\D/g, '');
 
       this.firstTdStyle = {
-        paddingLeft: `${Number(paddingLeft) + this.indentSize}px`
+        paddingLeft: `${Number(paddingLeft) + this.indent}px`
       };
     },
     getCellStyle(key, columnIndex) {
