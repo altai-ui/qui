@@ -67,10 +67,10 @@
   &__wrapper {
     position: relative;
     height: 100%;
+    padding-right: 3px;
 
     &_scrollable {
       .q-table__table {
-        padding-right: 3px;
         padding-bottom: 3px;
       }
     }
@@ -152,7 +152,7 @@
 
   &__header-cell {
     position: relative;
-    padding: 16px 24px;
+    padding: 12px 24px;
     overflow: hidden;
     font-weight: var(--font-weight-bold);
     line-height: var(--line-height-base);
@@ -228,10 +228,6 @@
       padding-left: 16px;
     }
 
-    // .q-table__selectable &:first-child {
-    //   padding-left: 24px;
-    // }
-
     &.q-table__cell_fixed {
       background-color: var(--color-tertiary-gray-light);
     }
@@ -267,12 +263,18 @@
   }
 
   &__cell {
-    padding: 20px 24px;
+    padding: 12px 24px;
     overflow: hidden;
     font-weight: var(--font-weight-base);
     line-height: 20px;
     background-color: var(--color-tertiary-gray-light);
     box-shadow: var(--custom-box-shadow);
+
+    &-wrapper {
+      display: flex;
+      align-items: center;
+      min-height: 40px;
+    }
 
     &:first-child {
       padding-left: 16px;

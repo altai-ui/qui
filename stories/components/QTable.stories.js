@@ -150,6 +150,9 @@ export const QTableStory = (_, { argTypes }) => ({
       const cols = this.columns;
       cols.splice(newPositionIndex, 0, cols.splice(oldPositionIndex, 1)[0]);
     },
+    changeSort(sort) {
+      console.log('sort', sort);
+    },
     handleAction(a, key) {
       if (a === 'action1') {
         const cols = [...this.columns];
@@ -172,6 +175,7 @@ export const QTableStory = (_, { argTypes }) => ({
       ref="table"
       :columns="columns"
       @change-order="changeColumnsOrder"
+      @change-sort="changeSort"
       v-bind="$props"
     >
       <template #customHeader="{ column }">
