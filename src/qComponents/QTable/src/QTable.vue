@@ -509,14 +509,13 @@ export default {
             $treeIndex: index
           };
 
-          if (updatedRow[this.childrenKey]) {
-            updatedRow[this.childrenKey] = updatedRow[this.childrenKey].map(
-              child => ({
-                ...child,
-                $parentRow: row,
-                indent: row.indent + this.indentSize || this.indentSize,
-                $treeIndex: row.$treeIndex
-              })
+          const childs = updatedRow[this.childrenKey];
+
+          if (childs) {
+            updatedRow[this.childrenKey] = this.updateChildrenRows(
+              childs,
+              row,
+              updatedRow
             );
           }
 
@@ -562,6 +561,29 @@ export default {
   },
 
   methods: {
+    updateChildrenRows(childs, row, updatedRow) {
+      return childs.map(child => {
+        const updatedChildRow = {
+          ...child,
+          $parentRow: row,
+          indent: updatedRow.indent + this.indentSize || this.indentSize,
+          $treeIndex: updatedRow.$treeIndex
+        };
+
+        const rowChilds = updatedChildRow[this.childrenKey];
+
+        if (rowChilds) {
+          updatedChildRow[this.childrenKey] = this.updateChildrenRows(
+            rowChilds,
+            child,
+            updatedChildRow
+          );
+        }
+
+        return updatedChildRow;
+      });
+    },
+
     handleHeaderClick({ key, sortable }) {
       if (this.draggable || !sortable) return;
       this.setSort(key);

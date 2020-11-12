@@ -56,6 +56,9 @@ const defaultArgs = {
     right2: '2',
     right3: '3'
   },
+  changeSort(sort) {
+    console.log('sort', sort);
+  },
   rowClick: console.log,
   customRowClass: ({ rowIndex }) => {
     if (rowIndex === 0) {

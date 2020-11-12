@@ -13,6 +13,12 @@
   --custom-box-shadow: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
     2px 1px 3px rgba(var(--color-rgb-blue), 0.4);
 
+  &__expand-arrow {
+    display: inline-block;
+    font-size: 23px;
+    vertical-align: middle;
+  }
+
   &__drag-elements {
     display: inline-block;
     width: auto;
