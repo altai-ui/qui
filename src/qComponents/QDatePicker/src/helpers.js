@@ -1,10 +1,19 @@
-import { format, isDate } from 'date-fns';
+import { format, isDate, parseISO } from 'date-fns';
 import ruLocale from 'date-fns/locale/ru';
 
 const formatLocalDate = (value, dateFnsFormat) => {
-  return format(value, dateFnsFormat ?? 'dd MMM yyyy', {
-    locale: ruLocale
-  });
+  let parsedValue = value;
+  if (!isDate(parsedValue)) {
+    parsedValue = parseISO(parsedValue);
+  }
+
+  if (isDate(parsedValue)) {
+    return format(parsedValue, dateFnsFormat ?? 'dd MMM yyyy', {
+      locale: ruLocale
+    });
+  }
+
+  return parsedValue;
 };
 
 const setTimeToDate = (date, type, value) => {

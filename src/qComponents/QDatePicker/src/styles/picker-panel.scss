@@ -27,6 +27,7 @@
   &__body,
   &__body-wrapper {
     display: flex;
+    flex-shrink: 0;
     height: 100%;
     background: var(--color-tertiary-gray-light);
     border-radius: 4px;
@@ -77,9 +78,9 @@
 
   &__content {
     position: relative;
+    flex-shrink: 0;
     box-sizing: border-box;
-    width: 100%;
-    max-width: 220px;
+    width: 220px;
     background: var(--color-tertiary-gray-light);
     border-radius: 4px;
     box-shadow: var(--box-shadow-pressed);

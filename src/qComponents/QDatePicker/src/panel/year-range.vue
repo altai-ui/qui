@@ -157,7 +157,7 @@ export default {
       this.maxDate = null;
       this.leftDate = new Date();
       this.rightDate = addYears(new Date(), YEARS_IN_DECADE);
-      this.$emit('pick', []);
+      this.$emit('pick', null);
     }
   }
 };

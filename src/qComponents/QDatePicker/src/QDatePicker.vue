@@ -70,7 +70,7 @@
       :shortcuts="shortcuts"
       :disabled-values="disabledValues"
       :first-day-of-week="firstDayOfWeek"
-      :value="value"
+      :value="transformedValue"
       :show-time="timepicker"
       @pick="handlePickClick"
     >
@@ -87,12 +87,14 @@
 import { createPopper } from '@popperjs/core';
 import { isEqual, isString } from 'lodash-es';
 import {
+  formatISO,
   isDate,
   isValid,
   parse,
   startOfMonth,
   startOfWeek,
-  startOfYear
+  startOfYear,
+  parseISO
 } from 'date-fns';
 import { formatLocalDate } from './helpers';
 import Emitter from '../../mixins/emitter';
@@ -111,6 +113,25 @@ const validator = function(val) {
     isString(val) ||
     (Array.isArray(val) && val.length === 2 && val.every(isString))
   );
+};
+
+const dateValidator = function(val) {
+  return (
+    null ||
+    isDate(val) ||
+    isDate(parseISO(val)) ||
+    (Array.isArray(val) &&
+      val.length === 2 &&
+      (val.every(isDate) || val.every(isDate(parseISO))))
+  );
+};
+
+const convertDate = value => {
+  if (value && !isDate(value)) {
+    return parseISO(value);
+  }
+
+  return value;
 };
 
 export default {
@@ -152,9 +173,13 @@ export default {
      */
     format: { type: String, default: 'dd MMMM yyyy' },
     /**
-     * returned value, any format from date-fns https://date-fns.org/v2.16.1/docs/format
+     * two options of returned value: 'date' - type Date format, 'iso' - ISO string format
      */
-    valueFormat: { type: String, default: '' },
+    outputFormat: {
+      type: String,
+      default: 'date',
+      validator: val => ['date', 'iso'].includes(val)
+    },
     placeholder: { type: String, default: '' },
     /**
      * only for ranged types
@@ -198,11 +223,12 @@ export default {
       default: true
     },
     /**
-     * type Date or array for ranges
+     * type Date, type String (ISO), array for ranges
      */
     value: {
       type: [String, Array, Date],
-      default: ''
+      default: '',
+      validator: dateValidator
     },
     /**
      * separator in the middle of the range
@@ -244,7 +270,22 @@ export default {
     };
   },
 
+  provide() {
+    return {
+      picker: this
+    };
+  },
+
   computed: {
+    transformedValue() {
+      if (Array.isArray(this.value) && this.value.length) {
+        return [convertDate(this.value[0]), convertDate(this.value[1])];
+      }
+
+      if (isString(this.value)) return convertDate(this.value);
+
+      return this.value;
+    },
     rangeClasses() {
       return {
         'q-date-editor': true,
@@ -253,6 +294,7 @@ export default {
       };
     },
     iconClass() {
+      if (this.disabled) return 'q-icon-lock';
       const calendarIcon = this.timepicker
         ? 'q-icon-calendar-clock'
         : 'q-icon-calendar';
@@ -282,22 +324,25 @@ export default {
     },
 
     isValueEmpty() {
-      if (Array.isArray(this.value)) {
-        return !this.value.length;
+      if (Array.isArray(this.transformedValue)) {
+        return !this.transformedValue.length;
       }
 
-      return !this.value;
+      return !this.transformedValue;
     },
 
     displayValue() {
       let formattedValue = '';
 
-      if (Array.isArray(this.value)) {
-        formattedValue = this.value.map(dateFromArray =>
+      if (Array.isArray(this.transformedValue)) {
+        formattedValue = this.transformedValue.map(dateFromArray =>
           formatLocalDate(dateFromArray, this.format)
         );
-      } else if (isDate(this.value) && isValid(this.value)) {
-        formattedValue = formatLocalDate(this.value, this.format);
+      } else if (
+        isDate(this.transformedValue) &&
+        isValid(this.transformedValue)
+      ) {
+        formattedValue = formatLocalDate(this.transformedValue, this.format);
       }
 
       if (Array.isArray(this.userInput)) {
@@ -328,7 +373,7 @@ export default {
         this.createPopper();
       } else {
         this.destroyPopper();
-        this.emitChange(this.value);
+        this.emitChange(this.transformedValue);
         this.userInput = null;
         if (this.validateEvent) {
           this.qFormItem?.validateField('blur');
@@ -378,6 +423,8 @@ export default {
           }
         ]
       });
+
+      panel.style.zIndex = this.$Q?.zIndex ?? 2000;
     },
 
     destroyPopper() {
@@ -395,13 +442,12 @@ export default {
       }
     },
 
-    formatToValue(date) {
-      const isFormattable =
-        isDate(date) || (Array.isArray(date) && date.every(isDate));
-      if (this.valueFormat && isFormattable) {
-        return formatLocalDate(date, this.valueFormat);
+    formatToISO(date) {
+      if (Array.isArray(date)) {
+        return [formatISO(date[0]), formatISO(date[1])];
       }
-      return date;
+
+      return formatISO(date);
     },
 
     handleMouseEnter() {
@@ -467,9 +513,13 @@ export default {
     handleFocus() {
       this.pickerVisible = true;
       this.$emit('focus', this);
-      if (!isDate(this.value) || Array.isArray(this.value)) return;
+      if (
+        !isDate(this.transformedValue) ||
+        Array.isArray(this.transformedValue)
+      )
+        return;
       const format = this.timepicker ? 'dd.MM.yyyy, HH:mm:ss' : 'dd.MM.yy';
-      this.userInput = formatLocalDate(this.value, format);
+      this.userInput = formatLocalDate(this.transformedValue, format);
     },
 
     handleKeydown(event) {
@@ -519,8 +569,12 @@ export default {
     },
 
     emitInput(val) {
-      const formatted = this.formatToValue(val);
-      if (!isEqual(this.value, formatted)) {
+      let formatted = val;
+      if (this.outputFormat === 'iso' && val) {
+        formatted = this.formatToISO(val);
+      }
+
+      if (!isEqual(this.transformedValue, formatted)) {
         this.$emit('input', formatted);
       }
     }
