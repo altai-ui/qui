@@ -14,13 +14,14 @@
       width: 40px;
       height: 40px;
       margin: 0 auto;
+      font-weight: 500;
       line-height: 40px;
       color: var(--color-primary-blue);
       border: none;
       border-radius: var(--border-radius-base);
       box-shadow: var(--box-shadow-secondary);
 
-      &:hover:not(.cell_in-range):not(.cell_current) {
+      &:hover:not([disabled]):hover:not(.cell_in-range):not(.cell_current) {
         color: var(--color-primary-black);
         background-color: var(--color-tertiary-gray);
       }
@@ -47,7 +48,7 @@
         }
       }
 
-      &_disabled {
+      &[disabled] {
         color: var(--color-tertiary-gray-ultra-dark);
         background-color: var(--color-tertiary-gray-lighter);
         cursor: not-allowed;

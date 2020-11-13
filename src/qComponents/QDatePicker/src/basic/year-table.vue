@@ -16,7 +16,11 @@
         @mousemove="event => handleMouseMove(event, cell)"
         @click="event => handleYearTableClick(event, cell)"
       >
-        <button :class="getCellClasses(cell)">
+        <button
+          :class="getCellClasses(cell)"
+          :disabled="cell.disabled"
+          type="button"
+        >
           {{ cell.year.getFullYear() }}
         </button>
       </td>
@@ -30,13 +34,38 @@ import {
   addYears,
   isDate,
   startOfMonth,
-  startOfDecade
+  startOfDecade,
+  isBefore,
+  isAfter
 } from 'date-fns';
+
+const checkDisabled = (year, disabledValues) => {
+  if (!disabledValues) return false;
+  const disabled = [];
+  if (Array.isArray(disabledValues.ranges)) {
+    disabledValues.ranges.forEach(range => {
+      disabled.push(
+        (isSameYear(year, range.start) || isBefore(range.start, year)) &&
+          (isAfter(range.end, year) || isSameYear(range.end, year))
+      );
+    });
+  }
+
+  if (disabledValues.to) {
+    disabled.push(isBefore(year, disabledValues.to));
+  }
+
+  if (disabledValues.from) {
+    disabled.push(isAfter(year, disabledValues.from));
+  }
+
+  return disabled.some(Boolean);
+};
 
 export default {
   props: {
-    disabledDate: {
-      type: Function,
+    disabledValues: {
+      type: Object,
       default: null
     },
     value: { type: [Date, String], default: null },
@@ -91,9 +120,9 @@ export default {
             Math.min(minDate, maxDate),
             Math.max(minDate, maxDate)
           ];
-
           newRow.push({
             year: startYear,
+            disabled: checkDisabled(startYear, this.disabledValues),
             inRange:
               minDate &&
               startYear.getTime() >= minDate &&

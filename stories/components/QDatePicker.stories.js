@@ -20,6 +20,12 @@ export default {
         ]
       }
     },
+    outputFormat: {
+      control: {
+        type: 'select',
+        options: ['date', 'iso']
+      }
+    },
     shortcuts: {
       control: {
         type: 'select',
@@ -84,48 +90,53 @@ export const Default = (_, { argTypes }) => ({
   ),
   data() {
     return {
-      value: '',
+      value: null,
       format: 'dd MMMM yyyy'
     };
+  },
+  methods: {
+    handleRangePickClick(val) {
+      console.log('handleRangePickClick', val);
+    }
   },
   watch: {
     type(value) {
       switch (value) {
         case 'datetime':
           this.format = 'dd MMM yy, HH:mm:ss';
-          this.value = '';
+          this.value = null;
           break;
         case 'daterange':
           this.format = 'dd MMM yyyy';
-          this.value = [];
+          this.value = null;
           break;
         case 'datetimerange':
           this.format = 'dd MMM yy, HH:mm:ss';
-          this.value = [];
+          this.value = null;
           break;
         case 'week':
           this.format = 'wo';
-          this.value = '';
+          this.value = null;
           break;
         case 'month':
           this.format = 'LLLL yyyy';
-          this.value = '';
+          this.value = null;
           break;
         case 'monthrange':
           this.format = 'LLLL yyyy';
-          this.value = [];
+          this.value = null;
           break;
         case 'year':
           this.format = 'yyyy';
-          this.value = '';
+          this.value = null;
           break;
         case 'yearrange':
           this.format = 'yyyy';
-          this.value = [];
+          this.value = null;
           break;
         default:
           this.format = 'dd MMMM yyyy';
-          this.value = '';
+          this.value = null;
           break;
       }
     }
@@ -138,7 +149,7 @@ export const Default = (_, { argTypes }) => ({
         :placeholder="placeholder"
         :type="type"
         :format="format"
-        :value-format="valueFormat"
+        :output-format="outputFormat"
         :name="name"
         :disabled="disabled"
         :disabled-values="disabledValues"
@@ -148,6 +159,7 @@ export const Default = (_, { argTypes }) => ({
         :first-day-of-week="firstDayOfWeek"
         :range-separator="rangeSeparator"
         :validate-event="validateEvent"
+        @rangepick="handleRangePickClick"
       />`
 });
 

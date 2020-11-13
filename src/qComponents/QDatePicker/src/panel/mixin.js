@@ -15,6 +15,11 @@ import { isTimeValueValid } from '../../../helpers/dateHelpers';
 const formatter = new Intl.DateTimeFormat('ru', { month: 'short' });
 
 export default {
+  inject: {
+    picker: {
+      default: null
+    }
+  },
   computed: {
     btnDisabled() {
       return !(
@@ -149,6 +154,9 @@ export default {
         this.maxDate.setMinutes(Number(minutes));
         this.maxDate.setSeconds(Number(seconds));
       }
+
+      // emit QDatepicker intermediate value
+      this.picker?.$emit('rangepick', val);
 
       if (!close) return;
       if (this.isValidValue([this.minDate, this.maxDate])) {

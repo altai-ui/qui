@@ -59,6 +59,7 @@
             :year="leftYear"
             :range-state="rangeState"
             :disabled-values="disabledValues"
+            :first-day-of-week="firstDayOfWeek"
             @changerange="handleChangeRange"
             @pick="handleRangePick"
           />
@@ -181,6 +182,7 @@ export default {
       default: false
     }
   },
+
   data() {
     return {
       minDate: '',
@@ -195,19 +197,29 @@ export default {
   },
 
   computed: {
+    transformedValue() {
+      if (Array.isArray(this.value)) {
+        return this.value;
+      }
+
+      return [];
+    },
     disabledRightTimeValues() {
       const values = { ...this.disabledValues.time };
-      if (isSameDay(this.value[0], this.value[1]) && this.parsedLeftTime) {
+      if (
+        isSameDay(this.transformedValue[0], this.transformedValue[1]) &&
+        this.parsedLeftTime
+      ) {
         values.to = Object.values(this.parsedLeftTime).join(':');
       }
       return values;
     },
 
     isLeftTimeDisabled() {
-      return !this.value[0];
+      return !this.transformedValue[0];
     },
     parsedLeftTime() {
-      const value = this.value[0];
+      const value = this.transformedValue[0];
       if (isDate(value)) {
         return {
           hours: addZero(value.getHours()),
@@ -216,11 +228,11 @@ export default {
         };
       }
 
-      return value ?? null;
+      return value;
     },
 
     parsedRightTime() {
-      const value = this.value[1];
+      const value = this.transformedValue[1] ?? null;
       if (isDate(value)) {
         return {
           hours: addZero(value.getHours()),
@@ -272,25 +284,14 @@ export default {
   },
 
   watch: {
-    value: {
-      handler(value) {
-        if (Array.isArray(value)) {
-          return value;
-        }
-
-        return [];
-      },
-      immediate: true
-    },
-
     visible() {
-      if (this.value.length) {
-        if (isDate(this.value[0])) {
-          this.leftDate = this.value[0];
+      if (this.transformedValue.length) {
+        if (isDate(this.transformedValue[0])) {
+          this.leftDate = this.transformedValue[0];
         }
 
-        if (isDate(this.value[1])) {
-          this.rightDate = this.value[1];
+        if (isDate(this.transformedValue[1])) {
+          this.rightDate = this.transformedValue[1];
         }
       }
 
@@ -302,8 +303,12 @@ export default {
 
   methods: {
     handleLeftTimeChange({ value, type }) {
-      let rightTime = this.value[1] || new Date();
-      const newDate = setTimeToDate(this.value[0] || new Date(), type, value);
+      let rightTime = this.transformedValue[1] || new Date();
+      const newDate = setTimeToDate(
+        this.transformedValue[0] || new Date(),
+        type,
+        value
+      );
 
       if (newDate.getTime() > rightTime.getTime()) {
         rightTime = newDate;
@@ -313,8 +318,12 @@ export default {
     },
 
     handleRightTimeChange({ value, type }) {
-      const leftTime = this.value[0] || new Date();
-      const newDate = setTimeToDate(this.value[1] || new Date(), type, value);
+      const leftTime = this.transformedValue[0] || new Date();
+      const newDate = setTimeToDate(
+        this.transformedValue[1] || new Date(),
+        type,
+        value
+      );
 
       this.$emit('pick', [leftTime, newDate], { hidePicker: false });
     },
@@ -324,7 +333,7 @@ export default {
       this.maxDate = null;
       this.leftDate = new Date();
       this.rightDate = addMonths(new Date(), 1);
-      this.$emit('pick', []);
+      this.$emit('pick', null);
     },
 
     handleLeftPrevMonthClick() {

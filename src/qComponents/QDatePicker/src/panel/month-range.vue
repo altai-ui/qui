@@ -139,7 +139,7 @@ export default {
       this.maxDate = null;
       this.leftDate = new Date();
       this.rightDate = addYears(new Date(), 1);
-      this.$emit('pick', []);
+      this.$emit('pick', null);
     }
   }
 };

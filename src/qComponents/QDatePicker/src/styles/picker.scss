@@ -3,7 +3,7 @@
   display: inline-block;
   text-align: left;
 
-  .q-icon-close {
+  .q-input__icon.q-icon-close {
     color: var(--color-primary-blue);
     cursor: pointer;
 
@@ -58,7 +58,7 @@
   box-shadow: var(--box-shadow-primary);
   cursor: pointer;
 
-  &:hover {
+  &:hover:not(.q-range-editor_disabled) {
     background-color: var(--color-tertiary-gray);
     box-shadow: var(--box-shadow-hover);
   }
@@ -70,13 +70,13 @@
   }
 
   &_disabled {
-    color: rgba(var(--color-rgb-gray), 0.64);
     background-color: var(--color-tertiary-gray);
+    box-shadow: var(--box-shadow-pressed);
     cursor: not-allowed;
 
     .q-range-separator,
     .q-range-input {
-      color: rgba(var(--color-rgb-gray), 0.32);
+      color: var(--field-color-disabled);
       cursor: not-allowed;
     }
   }
