@@ -110,7 +110,8 @@ export const QTableStory = (_, { argTypes }) => ({
         {
           key: 'left1',
           value: 'Left 1',
-          type: 'left'
+          type: 'left',
+          formatter: val => `formatted_${val}`
         },
         {
           key: 'left2',
@@ -152,9 +153,6 @@ export const QTableStory = (_, { argTypes }) => ({
     changeColumnsOrder({ oldPositionIndex, newPositionIndex }) {
       const cols = this.columns;
       cols.splice(newPositionIndex, 0, cols.splice(oldPositionIndex, 1)[0]);
-    },
-    changeSort(sort) {
-      console.log('sort', sort);
     },
     handleAction(a, key) {
       if (a === 'action1') {
