@@ -484,7 +484,7 @@ export default {
           const colByKey = this.columns.find(col => col.key === key);
 
           rows[index][key] = colByKey?.formatter
-            ? colByKey.formatter(value, colByKey)
+            ? colByKey.formatter(value, row, colByKey)
             : value;
         });
 
