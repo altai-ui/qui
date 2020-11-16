@@ -71,7 +71,6 @@
                   :key="index"
                   :style="fixedWidth(column)"
                   :class="getCellClass(column)"
-                  :width="getColumnWidth(column)"
                   class="q-table__header-cell"
                   @click="handleHeaderClick(column)"
                 >
@@ -478,12 +477,21 @@ export default {
     },
 
     computedRows() {
-      const rows = this.treeRows.length ? this.treeRows : this.rows;
+      const rows = this.treeRows.length ? [...this.treeRows] : [...this.rows];
 
-      return rows.map((row, index) => ({
-        ...row,
-        $treeIndex: index
-      }));
+      rows.forEach((row, index) => {
+        Object.entries(row).forEach(([key, value]) => {
+          const colByKey = this.columns.find(col => col.key === key);
+
+          rows[index][key] = colByKey?.formatter
+            ? colByKey.formatter(value, colByKey)
+            : value;
+        });
+
+        rows[index].$treeIndex = index;
+      });
+
+      return rows;
     }
   },
 
@@ -771,10 +779,6 @@ export default {
       }
 
       return sortableClass;
-    },
-
-    getColumnWidth(column) {
-      return column.width ?? '';
     },
 
     fixedWidth(column) {

@@ -26,10 +26,13 @@
       v-for="(column, columnIndex) in columns"
       :key="column.key"
       :class="getFixedColumnClass(column.key)"
-      :style="() => getCellStyle(column.key, columnIndex)"
+      :style="getCellStyle(column.key, columnIndex, column.width)"
       class="q-table__cell"
     >
-      <div class="q-table__cell-wrapper">
+      <div
+        class="q-table__cell-wrapper"
+        :style="getCellWrapperStyle(column)"
+      >
         <div
           v-if="!selectable && canRowExpand(columnIndex)"
           class="q-table__expand-arrow"
@@ -201,7 +204,7 @@ export default {
       this.$emit('expand-click', this.row);
     },
     getFirstTdStyle() {
-      if (!this.selectable) return;
+      if (!this.selectable || !this.row[this.childrenKey]?.length) return;
 
       const elm = this.$el?.querySelector('td:first-child');
 
@@ -215,10 +218,22 @@ export default {
         paddingLeft: `${Number(paddingLeft) + this.indent}px`
       };
     },
+    getCellWrapperStyle({ width, minWidth, maxWidth }) {
+      return {
+        width: width ? `${width}px` : '',
+        minWidth: minWidth ? `${minWidth}px` : '',
+        maxWidth: maxWidth ? `${maxWidth}px` : ''
+      };
+    },
     getCellStyle(key, columnIndex) {
-      let style = {};
+      const style = {};
 
-      if (columnIndex === 0 && !this.selectable && this.$el) {
+      if (
+        columnIndex === 0 &&
+        !this.selectable &&
+        this.$el &&
+        this.row[this.childrenKey]?.length
+      ) {
         const elm = this.$el.querySelector('td:first-child');
 
         if (elm) {
@@ -226,9 +241,7 @@ export default {
             .getComputedStyle(elm)
             .paddingLeft.replace(/\D/g, '');
 
-          style = {
-            paddingLeft: `${Number(paddingLeft) + this.indentSize}px`
-          };
+          style.paddingLeft = `${Number(paddingLeft) + this.indentSize}px`;
         }
       }
 
