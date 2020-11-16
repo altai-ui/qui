@@ -39,7 +39,6 @@ export default {
       }
 
       this.userInput = array.join('');
-      console.log(this.userInput);
     }
   }
 };
