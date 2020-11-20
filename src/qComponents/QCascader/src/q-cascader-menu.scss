@@ -7,6 +7,7 @@
   &__wrap {
     overflow: hidden;
     color: var(--color-primary-blue);
+    background-color: var(--color-tertiary-gray-light);
     border-radius: var(--border-radius-base);
     box-shadow: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
       -1px 1px 3px rgba(var(--color-rgb-blue), 0.4),
