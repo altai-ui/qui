@@ -1,21 +1,25 @@
 <template>
   <div
     ref="reference"
-    v-click-outside="() => toggleDropDownVisible(false)"
+    v-click-outside="hidePopper"
     :class="['q-cascader', { 'q-cascader_disabled': isDisabled }]"
-    @click="toggleDropDownVisible(!dropDownVisible)"
   >
     <q-input
       ref="input"
       v-model="model"
       readonly
-      :placeholder="placeholder"
+      :placeholder="checkedNodes.length ? '' : placeholder"
       :disabled="isDisabled"
       :validate-event="false"
-      :class="{ 'q-input_focus': dropDownVisible }"
+      :class="{
+        'q-input_focus': Boolean(popper),
+        'q-input_hover': areTagsHovered
+      }"
       @focus="handleFocus"
       @blur="handleBlur"
-      @input="handleInput"
+      @mouseenter.native="handleMouseEnter"
+      @mouseleave.native="showClose = false"
+      @click="togglePopper"
     >
       <template slot="suffix">
         <span
@@ -30,51 +34,73 @@
           :class="[
             'q-input__icon',
             'q-icon-triangle-down',
-            dropDownVisible && 'q-icon-triangle-down_reverse'
+            Boolean(popper) && 'q-icon-triangle-down_reverse'
           ]"
-          @click="toggleDropDownVisible(dropDownVisible)"
         />
       </template>
     </q-input>
 
     <div
-      v-if="props.multiple"
+      v-if="multiple"
       class="q-cascader__tags"
+      @click="togglePopper"
+      @mouseenter="handleTagsHover"
+      @mouseleave="handleTagsLeave"
     >
-      <q-tag
-        v-for="(tag, index) in presentTags"
-        :key="tag.key"
-        :closable="tag.closable"
-        @close="deleteTag(index)"
-      >
-        <span class="q-cascader__tag-text">{{ tag.text }}</span>
-      </q-tag>
+      <template v-if="collapseTags">
+        <q-tag
+          v-for="(tag, index) in checkedNodes.slice(0, 1)"
+          :key="index"
+          closable
+          @close="deleteTag(tag)"
+        >
+          <span
+            v-if="allLevelsShown"
+            class="q-cascader__tag-text"
+          >{{
+            tag.fullPathLabel
+          }}</span>
+          <span
+            v-else
+            class="q-cascader__tag-text"
+          >{{ tag.label }}</span>
+        </q-tag>
+        <q-tag v-if="checkedNodes.length > 1">
+          <span
+            class="q-cascader__tag-text"
+          >+{{ checkedNodes.length - 1 }}</span>
+        </q-tag>
+      </template>
+      <template v-else>
+        <q-tag
+          v-for="(tag, index) in checkedNodes"
+          :key="index"
+          closable
+          @close="deleteTag(tag)"
+        >
+          <span
+            v-if="allLevelsShown"
+            class="q-cascader__tag-text"
+          >{{
+            tag.fullPathLabel
+          }}</span>
+          <span
+            v-else
+            class="q-cascader__tag-text"
+          >{{ tag.label }}</span>
+        </q-tag>
+      </template>
     </div>
 
-    <transition
-      name="q-zoom-in-top"
-      @after-leave="handleDropdownLeave"
-    >
-      <div
-        v-show="dropDownVisible"
-        ref="popper"
-        class="q-cascader__dropdown"
-      >
-        <q-cascader-panel
-          ref="panel"
-          v-model="checkedValue"
-          :options="options"
-          :props="props"
-          @expand-change="handleExpandChange"
-          @close="toggleDropDownVisible(false)"
-        />
-      </div>
-    </transition>
+    <q-cascader-panel
+      ref="panel"
+      v-model="checkedValues"
+      :options="options"
+    />
   </div>
 </template>
 
 <script>
-import { isEqual, isEmpty } from 'lodash-es';
 import { createPopper } from '@popperjs/core';
 import Emitter from '../../mixins/emitter';
 import { addResizeListener, removeResizeListener } from '../../helpers';
@@ -82,6 +108,46 @@ import { addResizeListener, removeResizeListener } from '../../helpers';
 import QCascaderPanel from './QCascaderPanel';
 
 const DEFAULT_INPUT_HEIGHT = 40;
+
+const findFullPath = (branches, find) => {
+  let level = null;
+  for (let i = 0; i < branches.length; i += 1) {
+    if (branches[i].value === find) {
+      level = [branches[i].label];
+      break;
+    }
+    if (branches[i].children) {
+      const nextLevel = findFullPath(branches[i].children, find);
+      if (nextLevel !== null) {
+        level = [branches[i].label, nextLevel].flat(Infinity);
+      }
+    }
+  }
+
+  return level;
+};
+
+const getCheckedNodes = (options, checkedValues, separator) => {
+  return options.reduce((acc, firstLevelOption) => {
+    const getChecked = option => {
+      if (checkedValues.includes(option.value)) {
+        const transformedOption = {
+          ...option,
+          fullPathLabel: findFullPath(options, option.value).join(separator)
+        };
+
+        acc.push(transformedOption);
+      }
+
+      if (option.children) {
+        option.children.forEach(getChecked);
+      }
+    };
+
+    getChecked(firstLevelOption);
+    return acc;
+  }, []);
+};
 
 export default {
   name: 'QCascader',
@@ -94,12 +160,6 @@ export default {
   mixins: [Emitter],
 
   inject: {
-    elForm: {
-      default: ''
-    },
-    elFormItem: {
-      default: ''
-    },
     qForm: {
       default: null
     },
@@ -109,64 +169,107 @@ export default {
   },
 
   props: {
-    value: { type: [Object, Array], default: () => ({}) },
+    /**
+     * Array for multiple value, String for single
+     */
+    value: { type: [String, Array], default: null },
+    /**
+     * array of objects with required fields, example: 
+     * ```{
+      value: 'guide',
+      label: 'Guide',
+      children: [{ ... }]
+      }```
+     */
     options: { type: Array, default: null },
-    props: { type: Object, default: () => ({}) },
+    /**
+     * as native placeholder
+     */
     placeholder: {
       type: String,
       default: 'Выберите'
     },
-    disabled: Boolean,
-    clearable: Boolean,
+    /**
+     * whether QCascader is disabled
+     */
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    /**
+     * whether QCascader is clearable
+     */
+    clearable: {
+      type: Boolean,
+      default: true
+    },
+    /**
+     * pick several values
+     */
+    multiple: {
+      type: Boolean,
+      default: false
+    },
+    /**
+     * check each value as independent
+     */
+    checkStrictly: {
+      type: Boolean,
+      default: false
+    },
+    /**
+     * separator in tags
+     */
     separator: {
       type: String,
       default: ' / '
     },
-    showAllLevels: {
+    /**
+     * whether all path to value in tags is shown
+     */
+    allLevelsShown: {
       type: Boolean,
       default: true
     },
-    collapseTags: Boolean
+    /**
+     * hide tags in counter
+     */
+    collapseTags: { type: Boolean, default: true }
+  },
+
+  provide() {
+    return {
+      cascader: this
+    };
   },
 
   data() {
     return {
-      dropDownVisible: false,
-      checkedValue: this.value ?? null,
+      checkedValues: [],
       inputValue: null,
       presentText: null,
-      presentTags: [],
       checkedNodes: [],
       inputInitialHeight: 0,
-      pressDeleteCount: 0,
-      popper: null
+      popper: null,
+      showClose: false,
+      areTagsHovered: false
     };
   },
 
   computed: {
     model: {
       get() {
-        return this.props.multiple ? this.presentText : this.inputValue;
+        return this.presentText;
       },
       set(value) {
         this.inputValue = value;
       }
     },
     isDisabled() {
-      return (
-        this.disabled ||
-        (this.qForm?.disabled ?? false) ||
-        Boolean(this.elForm?.disabled)
-      );
+      return this.disabled || (this.qForm?.disabled ?? false);
     },
     clearBtnVisible() {
-      if (!this.clearable || this.isDisabled) {
-        return false;
-      }
-
-      return this.props.multiple
-        ? Boolean(this.checkedNodes.filter(node => !node.isDisabled).length)
-        : Boolean(this.presentText);
+      return this.value && this.showClose;
     },
     panel() {
       return this.$refs.panel;
@@ -174,66 +277,51 @@ export default {
   },
 
   watch: {
-    disabled() {
-      this.computePresentContent();
-    },
-    value(val) {
-      if (!isEqual(val, this.checkedValue)) {
-        this.checkedValue = val;
-        this.computePresentContent();
-      }
-    },
-    checkedValue(val) {
-      const { value, dropDownVisible } = this;
-      const { multiple } = this.props;
-      if (!isEqual(val, value)) {
-        this.computePresentContent();
-        // hide dropdown when single mode
-        if (!multiple && dropDownVisible) {
-          this.toggleDropDownVisible(false);
+    value: {
+      immediate: true,
+      handler(value) {
+        if (Array.isArray(value) || (this.multiple && value === null)) {
+          this.checkedValues = value;
+        } else {
+          this.inputValue = value;
         }
-
-        this.$emit('input', val);
-        this.$emit('change', val);
-        this.dispatch('ElFormItem', 'el.form.change', [val]);
-        this.qFormItem?.validateField('change');
       }
     },
-    options: {
-      handler() {
-        this.$nextTick(this.computePresentContent);
-      },
-      deep: true
+
+    checkedValues(val) {
+      this.calcTags(val);
     },
-    presentText(val) {
-      this.inputValue = val;
+
+    inputValue: {
+      immediate: true,
+      handler(val) {
+        if (val) {
+          const fullPath = findFullPath(this.options, val);
+          if (this.allLevelsShown) {
+            this.presentText = fullPath.join(this.separator);
+          } else {
+            this.presentText = fullPath[fullPath.length - 1];
+          }
+        } else {
+          this.presentText = null;
+          if (this.$refs.panel) {
+            this.$refs.panel.activePath = [];
+            this.$refs.panel.menus = [this.options];
+          }
+        }
+      }
     },
-    presentTags(val, oldVal) {
-      if (this.props.multiple && (val.length || oldVal.length)) {
+
+    checkedNodes() {
+      if (this.multiple) {
         this.$nextTick(this.updateStyle);
       }
     }
   },
 
   mounted() {
-    this.popper = createPopper(this.$refs.input?.$el, this.$refs.panel?.$el, {
-      placement: 'bottom-start',
-      modifiers: [
-        {
-          name: 'offset',
-          options: {
-            offset: [0, 8]
-          }
-        }
-      ]
-    });
-
     const { input } = this.$refs;
     this.inputInitialHeight = input?.$el?.offsetHeight ?? DEFAULT_INPUT_HEIGHT;
-
-    if (!isEmpty(this.value)) {
-      this.computePresentContent();
-    }
 
     addResizeListener(this.$el, this.updateStyle);
   },
@@ -243,141 +331,112 @@ export default {
   },
 
   methods: {
-    toggleDropDownVisible(visible) {
-      if (this.isDisabled) return;
+    handleTagsHover() {
+      this.areTagsHovered = true;
+      this.showClose = true;
+    },
 
-      const { dropDownVisible } = this;
-      const { input } = this.$refs;
-      if (visible === dropDownVisible) return;
-      this.dropDownVisible = visible;
-      if (visible) {
-        this.$nextTick(() => {
-          this.popper.update();
-          this.panel.scrollIntoView();
-        });
+    handleTagsLeave() {
+      this.areTagsHovered = false;
+      this.showClose = false;
+    },
+
+    handleMouseEnter() {
+      if (this.disabled) return;
+      if (this.clearable && this.value) {
+        this.showClose = true;
       }
-      input.$refs.input.setAttribute('aria-expanded', visible);
-      this.$emit('visible-change', visible);
     },
-    handleDropdownLeave() {
-      this.inputValue = this.presentText;
+
+    deleteTag({ value }) {
+      const result = new Set(this.checkedValues);
+      result.delete(value);
+      const payload = Array.from(result);
+      this.emit(payload.length ? payload : null);
     },
+
+    emit(val) {
+      this.$emit('change', val);
+      this.qFormItem?.validateField('change');
+    },
+
+    handleClear() {
+      this.emit(null);
+      this.showClose = false;
+    },
+
+    calcTags(checkedValues) {
+      if (!checkedValues) {
+        this.checkedNodes = [];
+        return;
+      }
+
+      this.checkedNodes = getCheckedNodes(
+        this.options,
+        this.checkedValues,
+        this.separator
+      );
+    },
+
+    togglePopper() {
+      if (this.popper) {
+        this.hidePopper();
+      } else {
+        this.showPopper();
+      }
+    },
+
+    showPopper() {
+      if (this.isDisabled) return;
+      this.$refs.panel?.$el.setAttribute('data-show', '');
+      this.popper = createPopper(this.$refs.reference, this.$refs.panel?.$el, {
+        placement: 'bottom-start',
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: [0, 8]
+            }
+          }
+        ]
+      });
+
+      this.$refs.panel.$el.style.zIndex = this.$Q?.zIndex ?? 2000;
+    },
+
+    hidePopper() {
+      if (this.popper) {
+        this.$refs.panel?.$el.removeAttribute('data-show');
+        this.popper.destroy();
+        this.popper = null;
+      }
+    },
+
     handleFocus(e) {
       this.$emit('focus', e);
     },
+
     handleBlur(e) {
       this.$emit('blur', e);
     },
-    handleInput() {
-      !this.dropDownVisible && this.toggleDropDownVisible(true);
-    },
-    handleClear() {
-      this.presentText = '';
-      this.panel.clearCheckedNodes();
-    },
-    handleExpandChange(value) {
-      this.$nextTick(this.popper.update);
-      this.$emit('expand-change', value);
-    },
-    computePresentContent() {
-      // nextTick is required, because checked nodes may not change right now
-      this.$nextTick(() => {
-        if (this.props.multiple) {
-          this.computePresentTags();
-          this.presentText = this.presentTags.length ? ' ' : null;
-        } else {
-          this.computePresentText();
-        }
-      });
-    },
-    computePresentText() {
-      const { checkedValue } = this;
-      if (!isEmpty(checkedValue)) {
-        const node = this.panel.getNodeByValue(checkedValue);
-        if (node?.isLeaf) {
-          this.presentText = node.getText(this.showAllLevels, this.separator);
-          return;
-        }
-      }
-      this.presentText = null;
-    },
-    computePresentTags() {
-      const { isDisabled, showAllLevels, separator, collapseTags } = this;
-      const checkedNodes = this.panel.getCheckedNodes(true);
-      const tags = [];
 
-      const genTag = node => ({
-        node,
-        key: node.uid,
-        text: node.getText(showAllLevels, separator),
-        closable: !isDisabled && !node.isDisabled
-      });
-
-      if (checkedNodes.length) {
-        const [first, ...rest] = checkedNodes;
-        const restCount = rest.length;
-        tags.push(genTag(first));
-
-        if (restCount) {
-          if (collapseTags) {
-            tags.push({
-              key: -1,
-              text: `+ ${restCount}`,
-              closable: false
-            });
-          } else {
-            rest.forEach(node => tags.push(genTag(node)));
-          }
-        }
-      }
-
-      this.checkedNodes = checkedNodes;
-      this.presentTags = tags;
-    },
-    handleDelete() {
-      const { inputValue, pressDeleteCount, presentTags } = this;
-      const lastIndex = presentTags.length - 1;
-      const lastTag = presentTags[lastIndex];
-      this.pressDeleteCount = inputValue ? 0 : pressDeleteCount + 1;
-
-      if (!lastTag) return;
-      if (!this.pressDeleteCount) return;
-
-      if (lastTag.hitState) {
-        this.deleteTag(lastIndex);
-      } else {
-        lastTag.hitState = true;
-      }
-    },
-    deleteTag(index) {
-      const { checkedValue } = this;
-      const val = checkedValue[index];
-      this.checkedValue = checkedValue.filter((n, i) => i !== index);
-      this.$emit('remove-tag', val);
-    },
     updateStyle() {
       const { $el, inputInitialHeight } = this;
       if (!$el) return;
 
-      const { suggestionPanel } = this.$refs;
       const inputInner = $el.querySelector('.q-input__inner');
 
       if (!inputInner) return;
 
       const tags = $el.querySelector('.q-cascader__tags');
 
-      if (suggestionPanel?.$el) {
-        const suggestionList = suggestionPanel?.$el.querySelector(
-          '.q-cascader__suggestion-list'
-        );
-        suggestionList.style.minWidth = `${inputInner.offsetWidth}px`;
-      }
-
       if (tags) {
         const { offsetHeight } = tags;
         const height = `${Math.max(offsetHeight + 6, inputInitialHeight)}px`;
         inputInner.style.height = height;
       }
+
+      this.popper && this.popper.update();
     }
   }
 };
