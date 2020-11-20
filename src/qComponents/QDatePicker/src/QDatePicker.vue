@@ -514,7 +514,8 @@ export default {
     handleClose(e) {
       if (!this.pickerVisible) return;
       if (this.appendToBody) {
-        const isClickToPanel = e.path.find(
+        const path = e.path || (e.composedPath && e.composedPath());
+        const isClickToPanel = path.find(
           element => element === this.$refs.panel.$el
         );
         if (!isClickToPanel) {
