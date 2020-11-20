@@ -3,6 +3,7 @@
     :class="classes"
     @mouseenter="hovering = true"
     @mouseleave="hovering = false"
+    @click="$emit('click')"
   >
     <div
       v-if="isSymbolLimitShown"

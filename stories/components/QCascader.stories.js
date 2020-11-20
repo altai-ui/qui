@@ -10,24 +10,34 @@ export default {
 };
 
 export const QCascaderStory = (_, { argTypes }) => ({
-  props: Object.keys(argTypes).filter(arg => arg !== 'value'),
+  props: Object.keys(argTypes).filter(arg => !['value'].includes(arg)),
   data() {
     return { value: null };
+  },
+  methods: {
+    handleValueChange(value) {
+      this.value = value;
+    }
   },
   template: `
     <q-cascader
       v-model="value"
-      v-bind="$props"
+      @change="handleValueChange"
+      :check-strictly="checkStrictly"
+      :options="options"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :clearable="clearable"
+      :multiple="multiple"
+      :separator="separator"
+      :all-levels-shown="allLevelsShown"
+      :collapse-tags="collapseTags"
     />
   `
 });
 
 QCascaderStory.storyName = 'Default';
 QCascaderStory.args = {
-  props: {
-    multiple: true,
-    noDataText: 'Custom No data'
-  },
   options: [
     {
       value: 'guide',
@@ -39,7 +49,13 @@ QCascaderStory.args = {
           children: [
             {
               value: 'consistency',
-              label: 'Consistency'
+              label: 'Consistency',
+              children: [
+                {
+                  value: 'four level',
+                  label: 'Four level'
+                }
+              ]
             },
             {
               value: 'feedback',
@@ -60,6 +76,10 @@ QCascaderStory.args = {
               label: 'Top Navigation'
             }
           ]
+        },
+        {
+          value: 'alone',
+          label: 'Alone'
         }
       ]
     },
