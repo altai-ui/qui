@@ -23,6 +23,10 @@ const argtypes = {
 
 const defaultArgs = {
   separatorKeys: ['left', 'right'],
+  defaultSort: {
+    key: 'right1',
+    direction: 'descending'
+  },
   rows: [
     {
       left1: '1',

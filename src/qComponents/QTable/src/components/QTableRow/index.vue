@@ -42,22 +42,42 @@
           <span class="q-icon-triangle-right" />
         </div>
 
-        <slot
-          :row-data="updateRow(row, columnIndex, column.key)"
-          name="row"
-        />
+        <div
+          v-if="column.customCellClass"
+          :class="column.customCellClass"
+        >
+          <slot
+            :row-data="updateRow(row, columnIndex, column.key, column)"
+            name="row"
+          />
 
-        <slot
-          v-if="checkLoader(columnIndex)"
-          :row-data="row"
-          name="loader"
-        />
+          <slot
+            v-if="checkLoader(columnIndex)"
+            :row-data="row"
+            name="loader"
+          />
+        </div>
+
+        <template v-else>
+          <slot
+            :row-data="updateRow(row, columnIndex, column.key, column)"
+            name="row"
+          />
+
+          <slot
+            v-if="checkLoader(columnIndex)"
+            :row-data="row"
+            name="loader"
+          />
+        </template>
       </div>
     </td>
   </tr>
 </template>
 
 <script>
+import { get } from 'lodash-es';
+
 export default {
   name: 'QTableRow',
 
@@ -258,15 +278,11 @@ export default {
         ? 'q-table__cell_fixed'
         : '';
     },
-    updateRow(row, index, key) {
-      let value = null;
+    updateRow(row, index, key, column) {
+      let value = row.value ?? get(row, key);
 
-      if (row[key] === 0 || Boolean(row[key])) {
-        value = row[key];
-      }
-
-      if (row.value) {
-        value = row.value;
+      if (column.formatter) {
+        value = column.formatter(value, row, column);
       }
 
       return {
@@ -275,7 +291,7 @@ export default {
         $index: index,
         value,
         indent: this.indent,
-        column: this.columns.find(column => key === column.key)
+        column
       };
     }
   }
