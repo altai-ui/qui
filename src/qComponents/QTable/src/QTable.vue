@@ -181,10 +181,10 @@
                   <slot
                     v-else-if="column.slots && column.slots.total"
                     :name="column.slots.total"
-                    :column="updateItem(total, index, column.key)"
+                    :total="updateItem(total, index, column.key)"
                   />
 
-                  <template v-else>
+                  <template v-else-if="total[column.key]">
                     {{ total[column.key] }}
                   </template>
                 </td>
@@ -391,6 +391,13 @@ export default {
       type: Boolean,
       default: false
     },
+    defaultSort: {
+      type: Object,
+      default: () => ({
+        key: null,
+        direction: 'ascending'
+      })
+    },
     /**
      * Text for empty table
      */
@@ -412,10 +419,7 @@ export default {
       loaderRow: null,
       wrapperClass: '',
       checkedRows: [],
-      sort: {
-        key: null,
-        direction: 'ascending'
-      }
+      sort: this.defaultSort
     };
   },
 
@@ -477,21 +481,12 @@ export default {
     },
 
     computedRows() {
-      const rows = this.treeRows.length ? [...this.treeRows] : [...this.rows];
+      const rows = this.treeRows.length ? this.treeRows : this.rows;
 
-      rows.forEach((row, index) => {
-        Object.entries(row).forEach(([key, value]) => {
-          const colByKey = this.columns.find(col => col.key === key);
-
-          rows[index][key] = colByKey?.formatter
-            ? colByKey.formatter(value, row, colByKey)
-            : value;
-        });
-
-        rows[index].$treeIndex = index;
-      });
-
-      return rows;
+      return rows.map((row, index) => ({
+        ...row,
+        $treeIndex: index
+      }));
     }
   },
 
@@ -636,7 +631,7 @@ export default {
       if (this.sort.key !== key) {
         this.sort = {
           key,
-          direction: this.sort.direction
+          direction: this.sort.direction ?? 'ascending'
         };
 
         this.$emit('change-sort', this.sort);
