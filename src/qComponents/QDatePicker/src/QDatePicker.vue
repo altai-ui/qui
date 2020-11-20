@@ -257,6 +257,13 @@ export default {
     validateEvent: {
       type: Boolean,
       default: true
+    },
+    /**
+     * whether to append the popper to body
+     */
+    appendToBody: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -398,7 +405,6 @@ export default {
     createPopper() {
       if (this.appendToBody) {
         document.body.appendChild(this.$refs.panel.$el);
-        this.$refs.panel.$el.style.width = `${this.$refs.reference.$el.clientWidth}px`;
       }
 
       const reference =
