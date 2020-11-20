@@ -160,6 +160,7 @@ export const Default = (_, { argTypes }) => ({
         :range-separator="rangeSeparator"
         :validate-event="validateEvent"
         @rangepick="handleRangePickClick"
+        :append-to-body="appendToBody"
       />`
 });
 

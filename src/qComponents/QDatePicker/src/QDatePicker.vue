@@ -511,9 +511,18 @@ export default {
       }
     },
 
-    handleClose() {
+    handleClose(e) {
       if (!this.pickerVisible) return;
-      this.pickerVisible = false;
+      if (this.appendToBody) {
+        const isClickToPanel = e.path.find(
+          element => element === this.$refs.panel.$el
+        );
+        if (!isClickToPanel) {
+          this.pickerVisible = false;
+        }
+      } else {
+        this.pickerVisible = false;
+      }
     },
 
     handleFocus() {
