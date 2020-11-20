@@ -55,8 +55,13 @@ export default {
     };
   },
 
-  mounted() {
-    this.menus = [this.options];
+  watch: {
+    options: {
+      immediate: true,
+      handler() {
+        this.menus = [this.options];
+      }
+    }
   },
 
   methods: {
