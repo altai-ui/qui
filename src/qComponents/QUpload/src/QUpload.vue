@@ -166,10 +166,8 @@ export default {
   },
 
   watch: {
-    value(value) {
-      if (!this.validateEvent) return;
-      this.dispatch('ElFormItem', 'el.form.change', value);
-      this.qFormItem?.validateField('change');
+    value() {
+      if (this.validateEvent) this.qFormItem?.validateField('change');
     }
   },
 

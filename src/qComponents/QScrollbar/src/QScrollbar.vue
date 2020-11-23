@@ -6,14 +6,15 @@
       :class="wrapClasses"
       @scroll="handleScroll"
     >
-      <div
+      <component
+        :is="viewTag"
         ref="resize"
         class="q-scrollbar__view"
         :class="viewClass"
         :style="viewStyle"
       >
         <slot />
-      </div>
+      </component>
     </div>
     <q-bar
       v-show="sizeWidth !== ''"
@@ -57,6 +58,13 @@ export default {
       validator: value => ['primary', 'secondary'].includes(value)
     },
     wrapClass: { type: [Object, String, Array], default: '' },
+    /**
+     * custom element view tag
+     */
+    viewTag: {
+      type: String,
+      default: 'div'
+    },
     viewClass: { type: [Object, String, Array], default: '' },
     viewStyle: { type: Object, default: null },
     noresize: { type: Boolean, default: false }
@@ -125,6 +133,9 @@ export default {
   },
 
   methods: {
+    /**
+     * @public
+     */
     handleScroll() {
       const { wrap } = this;
 
@@ -132,6 +143,9 @@ export default {
       this.moveX = (wrap.scrollLeft * 100) / wrap.clientWidth;
     },
 
+    /**
+     * @public
+     */
     update() {
       const { wrap } = this;
       if (!wrap) return;

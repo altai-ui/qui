@@ -69,12 +69,6 @@ export default {
   },
 
   inject: {
-    elForm: {
-      default: ''
-    },
-    elFormItem: {
-      default: ''
-    },
     qForm: {
       default: null
     },
@@ -149,11 +143,7 @@ export default {
 
   computed: {
     isDisabled() {
-      return (
-        this.disabled ||
-        (this.qForm?.disabled ?? false) ||
-        Boolean(this.elForm?.disabled)
-      );
+      return this.disabled || (this.qForm?.disabled ?? false);
     },
 
     isColorDark() {
@@ -228,7 +218,6 @@ export default {
       this.$emit('change', null);
 
       if (this.value !== null) {
-        this.dispatch('ElFormItem', 'el.form.change', null);
         this.qFormItem?.validateField('change');
       }
 
@@ -239,7 +228,6 @@ export default {
       this.$emit('change', value);
 
       if (this.value !== value) {
-        this.dispatch('ElFormItem', 'el.form.change', value);
         this.qFormItem?.validateField('change');
       }
 

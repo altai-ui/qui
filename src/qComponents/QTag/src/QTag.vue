@@ -1,15 +1,19 @@
 <template>
-  <span
+  <div
     class="q-tag"
-    @click="handleClick"
+    :class="{
+      'q-tag_closable': closable
+    }"
   >
-    <slot />
-    <span
+    <div class="q-tag__text">
+      <slot />
+    </div>
+    <div
       v-if="closable"
       class="q-tag__close q-icon-close"
-      @click="handleClose"
+      @click.stop="handleClose"
     />
-  </span>
+  </div>
 </template>
 
 <script>
@@ -18,17 +22,15 @@ export default {
   componentName: 'QTag',
 
   props: {
-    closable: { type: Boolean, default: false }
+    closable: {
+      type: Boolean,
+      default: false
+    }
   },
 
   methods: {
     handleClose(event) {
-      event.stopPropagation();
       this.$emit('close', event);
-    },
-
-    handleClick(event) {
-      this.$emit('click', event);
     }
   }
 };

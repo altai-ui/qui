@@ -174,7 +174,7 @@ export default {
      */
     value: { type: [String, Array], default: null },
     /**
-     * array of objects with required fields, example: 
+     * array of objects with required fields, example:
      * ```{
       value: 'guide',
       label: 'Guide',

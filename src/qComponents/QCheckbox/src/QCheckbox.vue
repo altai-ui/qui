@@ -1,5 +1,6 @@
 <template>
-  <label
+  <component
+    :is="rootTag"
     class="q-checkbox"
     :class="{
       'q-checkbox_disabled': isDisabled,
@@ -45,7 +46,7 @@
     >
       <slot>{{ label }}</slot>
     </span>
-  </label>
+  </component>
 </template>
 
 <script>
@@ -59,12 +60,6 @@ export default {
   mixins: [Emitter],
 
   inject: {
-    elForm: {
-      default: ''
-    },
-    elFormItem: {
-      default: ''
-    },
     qForm: {
       default: null
     },
@@ -83,7 +78,8 @@ export default {
     disabled: { type: Boolean, default: false },
     checked: { type: Boolean, default: false },
     name: { type: String, default: '' },
-    controls: { type: String, default: '' }
+    controls: { type: String, default: '' },
+    rootTag: { type: String, default: 'label' }
   },
 
   data() {
@@ -143,17 +139,13 @@ export default {
         ? this.checkboxGroup.disabled ||
             this.disabled ||
             (this.qForm?.disabled ?? false) ||
-            Boolean(this.elForm?.disabled) ||
             this.isLimitDisabled
-        : this.disabled ||
-            (this.qForm?.disabled ?? false) ||
-            Boolean(this.elForm?.disabled);
+        : this.disabled || (this.qForm?.disabled ?? false);
     }
   },
 
   watch: {
-    value(value) {
-      this.dispatch('ElFormItem', 'el.form.change', value);
+    value() {
       this.qFormItem?.validateField('change');
     }
   },

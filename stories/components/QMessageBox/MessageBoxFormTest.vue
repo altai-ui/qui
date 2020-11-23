@@ -1,17 +1,17 @@
 <template>
-  <el-form
+  <q-form
     ref="form"
     :model="formModel"
     :rules="rules"
   >
     <div class="q-message-box__content">
-      <el-form-item
+      <q-form-item
         prop="name"
         label="Name"
         required
       >
         <q-input v-model="formModel.name" />
-      </el-form-item>
+      </q-form-item>
     </div>
     <div class="q-message-box__actions">
       <q-button
@@ -28,7 +28,7 @@
         Cancel
       </q-button>
     </div>
-  </el-form>
+  </q-form>
 </template>
 
 <script>
