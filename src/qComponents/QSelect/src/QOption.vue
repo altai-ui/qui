@@ -1,40 +1,51 @@
 <template>
   <div
-    v-show="visible"
-    class="q-select-dropdown__item"
+    v-show="isVisible"
+    class="q-option"
     :class="{
-      'q-select-dropdown__item_selected': itemSelected,
-      'q-select-dropdown__item_disabled':
-        disabled || groupDisabled || limitReached,
-      'q-select-dropdown__item_hover': hover
+      'q-option_selected': isSelected,
+      'q-option_disabled': isDisabled,
+      'q-option_with-checkbox': qSelect.multiple
     }"
-    @mouseenter="hoverItem"
-    @click.stop="selectOptionClick"
+    @mouseenter="handleMouseEnter"
+    @click.stop="handleOptionClick"
   >
+    <q-checkbox
+      v-if="qSelect.multiple"
+      root-tag="div"
+      :value="isSelected"
+      :disabled="isDisabled"
+    />
+
     <slot>
-      {{ currentLabel }}
+      <div class="q-option__label">{{ preparedLabel }}</div>
     </slot>
+
+    <span
+      v-if="isDisabled"
+      class="q-icon-lock q-option__lock"
+    />
   </div>
 </template>
 
 <script>
-import { isEqual, get, escapeRegExp } from 'lodash-es';
-import Emitter from '../../mixins/emitter';
+import { isObject, isEqual, get } from 'lodash-es';
 
 export default {
   name: 'QOption',
   componentName: 'QOption',
 
-  mixins: [Emitter],
-
-  inject: ['select'],
+  inject: ['qSelect'],
 
   props: {
     value: {
       type: [Object, String, Number],
       required: true
     },
-    label: { type: [String, Number], default: '' },
+    label: {
+      type: [String, Number],
+      default: ''
+    },
     created: {
       type: Boolean,
       default: false
@@ -45,124 +56,107 @@ export default {
     }
   },
 
-  data() {
-    return {
-      index: -1,
-      groupDisabled: false,
-      visible: true,
-      hitState: false,
-      hover: false
-    };
-  },
-
   computed: {
-    isObject() {
-      return typeof this.value === 'object';
+    key() {
+      return isObject(this.value)
+        ? get(this.value, this.qSelect.valueKey)
+        : this.value;
     },
 
-    currentLabel() {
-      return this.label ?? (this.isObject ? '' : this.value);
+    preparedLabel() {
+      return String(this.label ?? this.key);
     },
 
-    itemSelected() {
-      if (!this.select.multiple) {
-        return isEqual(this.value, this.select.value);
+    isVisible() {
+      const { remote, query } = this.qSelect;
+      if (remote || !query) return true;
+
+      return (
+        this.preparedLabel.toLowerCase().includes(query.toLowerCase()) ||
+        this.created
+      );
+    },
+
+    isSelected() {
+      const { value, multiple, valueKey } = this.qSelect;
+      if (!value) return false;
+
+      const { key } = this;
+
+      if (!multiple) {
+        if (!isObject(this.value)) return value === key;
+
+        return isEqual(get(value, valueKey), key);
       }
 
-      return this.contains(this.select.value, this.value);
+      const prepareValue = val => (isObject(val) ? get(val, valueKey) : val);
+      return value.some(val => prepareValue(val) === key);
     },
 
-    limitReached() {
-      if (this.select.multiple) {
-        return (
-          !this.itemSelected &&
-          (this.select.value || []).length >= this.select.multipleLimit &&
-          this.select.multipleLimit > 0
-        );
-      }
-      return false;
+    isLimitReached() {
+      if (!this.qSelect.multiple) return false;
+
+      const { multipleLimit, value } = this.qSelect;
+
+      return (
+        !this.isSelected &&
+        Array.isArray(value) &&
+        multipleLimit > 0 &&
+        value.length >= multipleLimit
+      );
+    },
+
+    isDisabled() {
+      return this.disabled || this.isLimitReached;
     }
   },
 
   watch: {
-    currentLabel() {
-      if (!this.created && !this.select.remote)
-        this.dispatch('QSelect', 'setSelected');
+    preparedLabel() {
+      if (!this.created && !this.qSelect.remote) this.qSelect.setSelected();
     },
 
     value(val, oldVal) {
-      const { remote, valueKey } = this.select;
+      const { remote } = this.qSelect;
+
       if (!this.created && !remote) {
+        const { valueKey } = this.qSelect;
+
         if (
           valueKey &&
-          typeof val === 'object' &&
-          typeof oldVal === 'object' &&
-          val[valueKey] === oldVal[valueKey]
+          isObject(val) &&
+          isObject(oldVal) &&
+          get(val, valueKey) === get(oldVal, valueKey)
         )
           return;
 
-        this.dispatch('QSelect', 'setSelected');
+        this.qSelect.setSelected();
       }
     }
   },
 
   created() {
-    this.select.options.push(this);
-    this.select.cachedOptions.push(this);
-    this.select.optionsCount += 1;
-    this.select.filteredOptionsCount += 1;
-
-    this.$on('queryChange', this.queryChange);
-    this.$on('handleGroupDisabled', this.handleGroupDisabled);
+    this.qSelect.options.push(this);
   },
 
   beforeDestroy() {
-    const { selected, multiple } = this.select;
-    const selectedOptions = multiple ? selected : [selected];
-    const index = this.select.cachedOptions.indexOf(this);
-    const selectedIndex = selectedOptions.indexOf(this);
-
-    // if option is not selected, remove it from cache
-    if (index > -1 && selectedIndex < 0) {
-      this.select.cachedOptions.splice(index, 1);
+    const currentOptionIndex = this.qSelect.options.indexOf(this);
+    if (currentOptionIndex > -1) {
+      this.qSelect.options.splice(currentOptionIndex, 1);
     }
-    this.select.onOptionDestroy(this.select.options.indexOf(this));
   },
 
   methods: {
-    contains(arr = [], target) {
-      if (!this.isObject) {
-        return arr?.indexOf(target) > -1;
-      }
-      const valueKey = this.select.valueKey;
-      return arr?.some(item => {
-        return get(item, valueKey) === get(target, valueKey);
-      });
+    handleMouseEnter() {
+      if (this.disabled) return;
+
+      this.qSelect.hoverIndex = this.qSelect.options.indexOf(this);
     },
 
-    handleGroupDisabled(val) {
-      this.groupDisabled = val;
-    },
+    handleOptionClick() {
+      if (this.disabled) return;
 
-    hoverItem() {
-      if (!this.disabled && !this.groupDisabled) {
-        this.select.hoverIndex = this.select.options.indexOf(this);
-      }
-    },
-
-    selectOptionClick() {
-      if (!this.disabled && !this.groupDisabled) {
-        this.dispatch('QSelect', 'handleOptionClick', [this, true]);
-      }
-    },
-
-    queryChange(query) {
-      this.visible =
-        new RegExp(escapeRegExp(query), 'i').test(this.currentLabel) ||
-        this.created;
-      if (!this.visible) {
-        this.select.filteredOptionsCount -= 1;
-      }
+      this.qSelect.toggleOptionSelection(this);
     }
   }
 };

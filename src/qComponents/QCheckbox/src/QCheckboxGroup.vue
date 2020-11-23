@@ -19,9 +19,6 @@ export default {
   mixins: [Emitter],
 
   inject: {
-    elFormItem: {
-      default: ''
-    },
     qFormItem: {
       default: null
     }
@@ -44,8 +41,7 @@ export default {
   },
 
   watch: {
-    value(value) {
-      this.dispatch('ElFormItem', 'el.form.change', [value]);
+    value() {
       this.qFormItem?.validateField('change');
     }
   }

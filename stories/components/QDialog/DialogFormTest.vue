@@ -1,16 +1,16 @@
 <template>
-  <el-form
+  <q-form
     ref="form"
     :model="formModel"
     :rules="rules"
   >
-    <el-form-item
+    <q-form-item
       prop="name"
       label="Name"
       required
     >
       <q-input v-model="formModel.name" />
-    </el-form-item>
+    </q-form-item>
 
     <q-button
       :loading="isSending"
@@ -25,7 +25,7 @@
     >
       Cancel
     </q-button>
-  </el-form>
+  </q-form>
 </template>
 
 <script>

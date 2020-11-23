@@ -61,6 +61,7 @@
     </span>
   </div>
 </template>
+
 <script>
 import emitter from '../../mixins/emitter';
 import inputs from '../../mixins/inputs';
@@ -142,21 +143,20 @@ export default {
     },
 
     isSuffixVisible() {
-      return (
+      return Boolean(
         this.$slots.suffix ||
-        this.suffixIcon ||
-        this.isClearButtonShown ||
-        this.showPassword
+          this.suffixIcon ||
+          this.isClearButtonShown ||
+          this.showPassword
       );
     }
   },
 
   watch: {
-    value(val) {
-      if (!this.validateEvent) return;
-      this.dispatch('ElFormItem', 'el.form.change', [val]);
-      this.qFormItem?.validateField('change');
+    value() {
+      if (this.validateEvent) this.qFormItem?.validateField('change');
     },
+
     type() {
       this.$nextTick(() => {
         this.setNativeInputValue();
@@ -173,10 +173,11 @@ export default {
       this.passwordVisible = !this.passwordVisible;
       this.focus();
     },
-    handleClearClick() {
+
+    handleClearClick(event) {
       this.$emit('input', '');
       this.$emit('change', '');
-      this.$emit('clear');
+      this.$emit('clear', event);
     }
   }
 };

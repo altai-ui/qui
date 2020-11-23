@@ -84,12 +84,10 @@ export default {
   },
 
   watch: {
-    value(val) {
+    value() {
       this.$nextTick(this.resizeTextarea);
 
-      if (!this.validateEvent) return;
-      this.dispatch('ElFormItem', 'el.form.change', [val]);
-      this.qFormItem?.validateField('change');
+      if (this.validateEvent) this.qFormItem?.validateField('change');
     }
   },
 

@@ -59,7 +59,7 @@
     position: absolute;
     top: 50%;
     right: 30px;
-    left: 0;
+    left: 8px;
     display: flex;
     flex-wrap: wrap;
     box-sizing: border-box;
@@ -68,8 +68,6 @@
     transform: translateY(-50%);
 
     .q-tag {
-      display: inline-flex;
-      align-items: center;
       max-width: calc(100% - 15px);
       margin: 2px 0 2px 8px;
       line-height: var(--line-height-base);

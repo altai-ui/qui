@@ -1,58 +1,23 @@
+@import './q-select-tags';
 @import './q-select-dropdown';
-@import '../../QTag/src/q-tag';
+@import './q-option';
 
 .q-select {
-  --field-color-base: var(--color-primary-black);
-  --field-color-placeholder: rgba(var(--color-rgb-gray), 0.32);
-  --field-color-disabled: rgba(var(--color-rgb-gray), 0.64);
-
   position: relative;
-  display: inline-block;
+  display: inline-flex;
   width: 100%;
-
-  &__tags > span {
-    display: contents;
-  }
+  min-height: 40px;
+  vertical-align: middle;
 
   &__input {
-    height: 28px;
-    margin-left: 8px;
-    padding: 0;
-    font-weight: var(--font-weight-base);
-    font-size: var(--font-size-base);
-    line-height: var(--line-height-base);
-    color: var(--field-color-base);
-    background-color: transparent;
-    border: none;
-    outline: none;
-    appearance: none;
-  }
-
-  &__tags {
     position: absolute;
-    top: 50%;
-    left: 8px;
-    z-index: 1;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    width: calc(100% - 48px) !important;
-    white-space: normal;
-    transform: translateY(-50%);
-    pointer-events: none;
-  }
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 
-  &__tags-text {
-    display: block;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
-  &__caret.q-icon-::before {
-    content: '\e91d';
-    font-size: 24px;
-    line-height: 40px;
-    font-family: 'qicon';
+    .q-input__inner {
+      height: 100%;
+    }
   }
 }

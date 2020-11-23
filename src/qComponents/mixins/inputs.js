@@ -2,12 +2,6 @@ export default {
   inheritAttrs: false,
 
   inject: {
-    elForm: {
-      default: ''
-    },
-    elFormItem: {
-      default: ''
-    },
     qForm: {
       default: null
     },
@@ -55,11 +49,7 @@ export default {
 
   computed: {
     inputDisabled() {
-      return (
-        this.disabled ||
-        (this.qForm?.disabled ?? false) ||
-        Boolean(this.elForm?.disabled)
-      );
+      return this.disabled || (this.qForm?.disabled ?? false);
     },
 
     nativeInputValue() {
@@ -67,12 +57,12 @@ export default {
     },
 
     isClearButtonShown() {
-      return (
+      return Boolean(
         this.clearable &&
-        !this.inputDisabled &&
-        !this.readonly &&
-        this.nativeInputValue &&
-        (this.focused || this.hovering)
+          !this.inputDisabled &&
+          !this.readonly &&
+          this.nativeInputValue &&
+          (this.focused || this.hovering)
       );
     },
 
@@ -117,10 +107,7 @@ export default {
     handleBlur(event) {
       this.focused = false;
       this.$emit('blur', event);
-      if (this.validateEvent) {
-        this.dispatch('ElFormItem', 'el.form.blur', [this.value]);
-        this.qFormItem?.validateField('blur');
-      }
+      if (this.validateEvent) this.qFormItem?.validateField('blur');
     },
 
     select() {
@@ -129,8 +116,7 @@ export default {
 
     setNativeInputValue() {
       const input = this.componentRef;
-      if (!input) return;
-      if (input.value === this.nativeInputValue) return;
+      if (!input || input.value === this.nativeInputValue) return;
       input.value = this.nativeInputValue;
     },
 

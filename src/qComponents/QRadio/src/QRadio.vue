@@ -46,12 +46,6 @@ export default {
   mixins: [Emitter],
 
   inject: {
-    elForm: {
-      default: ''
-    },
-    elFormItem: {
-      default: ''
-    },
     qForm: {
       default: null
     },
@@ -95,8 +89,7 @@ export default {
       return (
         (this.isGroup && this.radioGroup.disabled) ||
         this.disabled ||
-        (this.qForm?.disabled ?? false) ||
-        Boolean(this.elForm?.disabled)
+        (this.qForm?.disabled ?? false)
       );
     },
 
