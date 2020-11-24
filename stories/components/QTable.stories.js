@@ -63,7 +63,6 @@ const defaultArgs = {
   changeSort(sort) {
     console.log('sort', sort);
   },
-  rowClick: console.log,
   customRowClass: ({ rowIndex }) => {
     if (rowIndex === 0) {
       return 'green-row';
@@ -154,6 +153,9 @@ export const QTableStory = (_, { argTypes }) => ({
     };
   },
   methods: {
+    handleRowClick(row) {
+      console.log(row);
+    },
     changeColumnsOrder({ oldPositionIndex, newPositionIndex }) {
       const cols = this.columns;
       cols.splice(newPositionIndex, 0, cols.splice(oldPositionIndex, 1)[0]);
@@ -181,6 +183,7 @@ export const QTableStory = (_, { argTypes }) => ({
       :columns="columns"
       @change-order="changeColumnsOrder"
       @change-sort="changeSort"
+      @row-click="handleRowClick"
       v-bind="$props"
     >
       <template #customHeader="{ column }">

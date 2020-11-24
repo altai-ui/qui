@@ -209,7 +209,7 @@
                   :custom-row-style="customRowStyle"
                   :checked-rows="checkedRows"
                   :selectable="selectable"
-                  :row-click="rowClick"
+                  :row-click="$listeners['row-click'] && handleRowClick"
                   @expand-click="handleExpandClick"
                   @check="handleRowCheck"
                 >
@@ -367,13 +367,6 @@ export default {
      * Get row as argument, must return style `String`
      */
     customRowStyle: {
-      type: Function,
-      default: null
-    },
-    /**
-     * Throw clicked row as argument
-     */
-    rowClick: {
       type: Function,
       default: null
     },
@@ -600,6 +593,10 @@ export default {
       const currentCol = this.columns.find(({ key }) => key === columnKey);
 
       return currentCol?.slots?.row ?? null;
+    },
+
+    handleRowClick(row) {
+      this.$emit('row-click', row);
     },
 
     handleRowCheck({ isChecked, rowIndex }) {
