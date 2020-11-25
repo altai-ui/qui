@@ -51,30 +51,51 @@ export default {
       default: 'medium',
       validator: value => ['small', 'medium'].includes(value)
     },
+    /**
+     * any q-icon
+     */
     icon: {
       type: String,
       default: ''
     },
+    /**
+     * as native button type
+     */
     nativeType: {
       type: String,
       default: 'button'
     },
+    /**
+     * whether to show loader inside button
+     */
     loading: {
       type: Boolean,
       default: false
     },
+    /**
+     * whether the button is disabled
+     */
     disabled: {
       type: Boolean,
       default: false
     },
+    /**
+     * as native button autofocus
+     */
     autofocus: {
       type: Boolean,
       default: false
     },
+    /**
+     * change button's shape to circle (use with type icon)
+     */
     circle: {
       type: Boolean,
       default: false
     },
+    /**
+     * sets button width to 100%
+     */
     fullWidth: {
       type: Boolean,
       default: false

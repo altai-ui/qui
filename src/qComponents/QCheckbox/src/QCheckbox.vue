@@ -69,16 +69,33 @@ export default {
   },
 
   props: {
+    /**
+     * Array for group, Boolean for single
+     */
     value: {
-      type: [Object, Array, Boolean],
-      default: () => ({})
+      type: [Array, Boolean],
+      default: null
     },
+    /**
+     * Checkbox label
+     */
     label: { type: String, default: '' },
+    /**
+     * wheteher Checkbox is indeterminate
+     */
     indeterminate: { type: Boolean, default: false },
+    /**
+     * wheteher Checkbox is disabled
+     */
     disabled: { type: Boolean, default: false },
+    /**
+     * wheteher Checkbox is checked
+     */
     checked: { type: Boolean, default: false },
+    /**
+     * as native name
+     */
     name: { type: String, default: '' },
-    controls: { type: String, default: '' },
     rootTag: { type: String, default: 'label' }
   },
 
@@ -155,10 +172,6 @@ export default {
   },
 
   mounted() {
-    if (this.indeterminate) {
-      this.$el.setAttribute('aria-controls', this.controls);
-    }
-
     let parent = this.$parent;
     while (parent) {
       if (parent.$options.componentName !== 'QCheckboxGroup') {
