@@ -2,7 +2,10 @@
   "name": "@qvant/qui",
   "version": "1.0.0",
   "description": "Qui Neumorphism design system",
-  "repository": "http://gitlab.mt-tech.ru/city/neumorphism-design-system.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Qvant-lab/qui.git"
+  },
   "author": "Qvant",
   "scripts": {
     "storybook": "start-storybook -s ./public -p 6006",
@@ -11,7 +14,7 @@
     "prettier": "prettier --write '**/*.{js,vue,scss,json,yml}'",
     "eslint": "eslint --fix --no-ignore .storybook/**/**/*.{vue,js}"
   },
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@popperjs/core": "^2.4.4",
     "async-validator": "^3.4.0",
@@ -55,5 +58,15 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  }
+  },
+  "main": "index.js",
+  "keywords": [
+    "design-system",
+    "components",
+    "library",
+    "ui",
+    "vue",
+    "sass",
+    "neumorphism"
+  ]
 }
