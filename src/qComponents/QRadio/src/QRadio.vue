@@ -60,10 +60,22 @@ export default {
   },
 
   props: {
-    label: { type: [String], default: '' },
+    /**
+     * the value of Radio label
+     */
+    label: { type: String, default: '' },
+    /**
+     * binding value
+     */
     value: { type: [String, Number, Boolean], default: '' },
     checked: { type: [String, Number, Boolean], default: false },
+    /**
+     * whether Radio is disabled
+     */
     disabled: { type: Boolean, default: false },
+    /**
+     * as native name
+     */
     name: { type: String, default: undefined }
   },
 
@@ -115,6 +127,9 @@ export default {
 
   methods: {
     handleChange() {
+      /**
+       * triggers when the value changes
+       */
       this.$emit('change', this.value);
 
       if (this.isGroup) {

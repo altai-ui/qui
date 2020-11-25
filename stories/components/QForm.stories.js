@@ -24,6 +24,10 @@ export const QFormStory = (_, { argTypes }) => ({
     async handleSubmitClick() {
       const { isValid, invalidFields } = await this.$refs.form.validate();
       console.log('QForm | validate', isValid, invalidFields);
+      if (isValid) {
+        // eslint-disable-next-line no-alert
+        alert('Success');
+      }
     },
 
     handleResetClick() {

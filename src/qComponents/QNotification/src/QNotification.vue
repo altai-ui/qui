@@ -44,28 +44,46 @@ export default {
   componentName: 'QNotification',
 
   props: {
+    /**
+     * description text
+     */
     message: {
       type: String,
       default: ''
     },
+    /**
+     * notification type
+     */
     type: {
       type: String,
       default: null,
       validator: value =>
         ['success', 'warning', 'info', 'error'].includes(value)
     },
+    /**
+     * whether message is treated as HTML string
+     */
     dangerouslyUseHTMLString: {
       type: Boolean,
       default: false
     },
+    /**
+     * icon class
+     */
     icon: {
       type: String,
       default: null
     },
+    /**
+     * duration before close
+     */
     duration: {
       type: Number,
       default: 4500
     },
+    /**
+     * callback function when closed
+     */
     onClose: {
       type: Function,
       default: null

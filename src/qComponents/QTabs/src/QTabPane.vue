@@ -29,22 +29,37 @@ export default {
   componentName: 'QTabPane',
 
   props: {
+    /**
+     * name of pane
+     */
     name: {
       type: String,
       required: true
     },
+    /**
+     * title of pane
+     */
     title: {
       type: String,
       required: true
     },
+    /**
+     * whether pane is disabled
+     */
     disabled: {
       type: Boolean,
       default: false
     },
+    /**
+     * description of pane
+     */
     description: {
       type: String,
       default: ''
     },
+    /**
+     * width of Tab pane
+     */
     width: {
       type: [String, Number],
       default: ''

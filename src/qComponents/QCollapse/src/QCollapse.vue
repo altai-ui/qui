@@ -17,6 +17,9 @@ export default {
   },
 
   props: {
+    /**
+     * shrink all panels, except the last selected
+     */
     accordion: {
       type: Boolean,
       default: false

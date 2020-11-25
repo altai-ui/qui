@@ -38,7 +38,13 @@ export default {
 
   props: {
     value: { type: [String, Number, Boolean], default: '' },
+    /**
+     * whether Radio is disabled
+     */
     disabled: { type: Boolean, default: false },
+    /**
+     * custom element tag
+     */
     tag: { type: String, default: 'div' },
     direction: {
       type: String,

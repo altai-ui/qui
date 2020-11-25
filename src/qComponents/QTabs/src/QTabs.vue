@@ -15,6 +15,9 @@ export default {
   },
 
   props: {
+    /**
+     * width of Tab panes
+     */
     tabWidth: {
       type: [String, Number],
       default: ''
@@ -23,6 +26,9 @@ export default {
       type: String,
       default: ''
     },
+    /**
+     * whether Tab is disabled
+     */
     disabled: {
       type: Boolean,
       default: false
@@ -46,6 +52,9 @@ export default {
 
   methods: {
     updateValue(name) {
+      /**
+       * triggers when the tab changes
+       */
       this.$emit('change', name);
       this.currentName = name;
     }

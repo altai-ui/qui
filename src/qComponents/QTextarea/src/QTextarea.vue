@@ -41,12 +41,18 @@ export default {
   mixins: [emitter, inputs],
 
   props: {
+    /**
+     * control the resizability
+     */
     resize: {
       type: String,
       default: 'vertical',
       validator: value =>
         ['vertical', 'horizontal', 'both', 'none'].includes(value)
     },
+    /**
+     * whether textarea has an adaptive height. Can accept an object, e.g. { minRows: 2, maxRows: 6 }
+     */
     autosize: {
       type: [Boolean, Object],
       default: false

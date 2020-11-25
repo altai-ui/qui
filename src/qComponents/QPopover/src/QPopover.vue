@@ -64,56 +64,95 @@ export default {
   componentName: 'QPopover',
 
   props: {
+    /**
+     * Popover content title
+     */
     title: {
       type: String,
       default: ''
     },
+    /**
+     * custom element tag
+     */
     tagName: {
       type: String,
       default: 'span'
     },
+    /**
+     * opening event trigger
+     */
     trigger: {
       type: String,
       default: 'click',
       validator: value => TRIGGERS.includes(value)
     },
+    /**
+     * see: https://popper.js.org/docs/v2/constructors/#options
+     */
     placement: {
       type: String,
       default: 'top-start',
       validator: value => PLACEMENTS.includes(value)
     },
+    /**
+     * icon class name
+     */
     icon: {
       type: String,
       default: ''
     },
+    /**
+     * content icon color
+     */
     iconColor: {
       type: String,
       default: 'var(--gradient-secondary)'
     },
+    /**
+     * custom transition's animation
+     */
     transition: {
       type: String,
       default: 'fade-in-linear'
     },
+    /**
+     * delay before appearing, in milliseconds
+     */
     openDelay: {
       type: Number,
       default: 10
     },
+    /**
+     * delay before disappearing, in milliseconds
+     */
     closeDelay: {
       type: Number,
       default: 10
     },
+    /**
+     * popover min-width
+     */
     minWidth: {
       type: [String, Number],
       default: ''
     },
+    /**
+     * popover max-width
+     */
     maxWidth: {
       type: [String, Number],
       default: ''
     },
+    /**
+     * see: https://popper.js.org/docs/v2/constructors/#options
+     */
     popperOptions: {
       type: Object,
       default: () => ({})
     },
+    /**
+     * whether to append the popover to body
+     */
     appendToBody: {
       type: Boolean,
       default: true
