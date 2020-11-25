@@ -1,11 +1,5 @@
 # design-system
 
-> inherited by:
-
-- City
-- Publisher (SSP)
-- DSP
-
 ## run sandbox (run here)
 
 ```bash
@@ -17,26 +11,6 @@ npm run storybook
 
 ```bash
 yarn add @qvant/design-system
-```
-
-if you get the error "integrity check failure", run it:
-
-```bash
-yarn --update-checksums
-```
-
-Create .yarnrc or .npmrc in your project's root:
-
-.yarnrc
-
-```text
-"@qvant:registry" "http://nexus.mt.ru:8081/repository/qvant/"
-```
-
-.npmrc
-
-```text
-@qvant:registry=http://nexus.mt.ru:8081/repository/qvant/
 ```
 
 ## Import into Scss
