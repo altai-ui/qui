@@ -90,11 +90,29 @@ export default {
   componentName: 'QPagination',
 
   props: {
+    /**
+     * total page count
+     */
     pageCount: { type: Number, default: null },
+    /**
+     * total item count
+     */
     total: { type: Number, default: null },
+    /**
+     * item count of each page
+     */
     pageSize: { type: Number, default: null },
+    /**
+     * current page number
+     */
     currentPage: { type: Number, default: null },
+    /**
+     * whether Pagination is disabled
+     */
     disabled: { type: Boolean, default: false },
+    /**
+     * number of visible page's buttons
+     */
     pagerCount: {
       type: Number,
       default: 7,
@@ -157,19 +175,27 @@ export default {
       let newPage = this.currentPage - 1;
       if (newPage > this.preparedPageCount) newPage = this.preparedPageCount;
 
+      /**
+       * triggers when the prev button is clicked
+       */
       this.$emit('prev-click', newPage);
+      /**
+       * triggers when the current page changes
+       */
       this.$emit('current-change', newPage);
     },
 
     handlePageBtnClick(newPage) {
       if (this.currentPage === newPage) return;
-
       this.$emit('current-change', newPage);
     },
 
     handleNextBtnClick() {
       const newPage = this.currentPage + 1;
 
+      /**
+       * triggers when the next button is clicked
+       */
       this.$emit('next-click', newPage);
       this.$emit('current-change', newPage);
     },

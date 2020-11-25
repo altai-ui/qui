@@ -4,9 +4,19 @@ export default {
   title: 'Components/QTextarea',
   component: QTextarea,
   argTypes: {
-    placeholder: { control: { type: 'text' } },
-    maxlength: { control: { type: 'number' } },
-    value: { control: { type: 'none' } },
+    placeholder: {
+      control: { type: 'text' }
+    },
+    maxlength: {
+      control: {
+        type: 'number'
+      }
+    },
+    value: {
+      control: {
+        type: 'none'
+      }
+    },
     resize: {
       control: {
         type: 'select',
@@ -16,14 +26,22 @@ export default {
   }
 };
 
-export const QTextareaStory = (_, { argTypes }) => ({
+export const Default = (_, { argTypes }) => ({
   props: Object.keys(argTypes),
   data() {
     return {
       input: ''
     };
   },
-  template: '<q-textarea v-bind="$props" v-model="input" />'
+  template: `
+    <q-textarea
+      v-model="input"
+      :disabled="disabled"
+      :resize="resize"
+      :autosize="autosize"
+      :placeholder="placeholder"
+    />
+  `
 });
 
-QTextareaStory.storyName = 'Default';
+Default.storyName = 'Default';

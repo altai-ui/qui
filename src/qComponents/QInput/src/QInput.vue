@@ -73,6 +73,9 @@ export default {
   mixins: [emitter, inputs],
 
   props: {
+    /**
+     * as native input type
+     */
     type: {
       type: String,
       default: 'text',
@@ -87,15 +90,34 @@ export default {
           'url'
         ].includes(value)
     },
+
+    /**
+     * as native input autocomplete
+     */
     autocomplete: {
       type: String,
       default: 'off'
     },
-    suffixIcon: { type: String, default: '' },
+
+    /**
+     * suffix icon class
+     */
+    suffixIcon: {
+      type: String,
+      default: ''
+    },
+
+    /**
+     * whether to show clear button
+     */
     clearable: {
       type: Boolean,
       default: false
     },
+
+    /**
+     * whether to show password
+     */
     showPassword: {
       type: Boolean,
       default: false

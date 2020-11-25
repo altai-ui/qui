@@ -1,28 +1,36 @@
 import { QPopover } from '../../src/qComponents';
-
+import { iconsList } from '../core/icons.stories.mdx';
 import PLACEMENTS from '../../src/qComponents/constants/popperPlacements';
 
 export default {
   title: 'Components/QPopover',
   component: QPopover,
   argTypes: {
-    placement: {
-      control: { type: 'select', options: PLACEMENTS }
-    },
     trigger: {
-      control: { type: 'inline-radio', options: ['click', 'hover'] }
+      control: {
+        type: 'inline-radio',
+        options: ['click', 'hover']
+      }
     },
-    minWidth: { control: { type: 'number' } },
-    maxWidth: { control: { type: 'number' } }
+    placement: {
+      control: {
+        type: 'select',
+        options: PLACEMENTS
+      }
+    },
+    icon: {
+      control: {
+        type: 'select',
+        options: iconsList
+      }
+    }
   }
 };
 
-export const QPopoverStory = (_, { argTypes }) => ({
+export const Default = (_, { argTypes }) => ({
   props: Object.keys(argTypes),
   template: `
-    <q-popover
-      v-bind="$props"
-    >
+    <q-popover v-bind="$props">
       <q-button
         slot="reference"
         circle
@@ -37,8 +45,8 @@ export const QPopoverStory = (_, { argTypes }) => ({
   `
 });
 
-QPopoverStory.storyName = 'Default';
-QPopoverStory.args = {
+Default.storyName = 'Default';
+Default.args = {
   title: 'What is Lorem Ipsum?',
   icon: 'q-icon-question'
 };

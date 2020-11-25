@@ -22,6 +22,9 @@ export default {
   componentName: 'QTag',
 
   props: {
+    /**
+     * whether Tag can be removed
+     */
     closable: {
       type: Boolean,
       default: false

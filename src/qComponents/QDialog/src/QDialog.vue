@@ -47,18 +47,30 @@ export default {
   componentName: 'QDialog',
 
   props: {
+    /**
+     * wrapper's z-index
+     */
     zIndex: {
       type: Number,
       default: null
     },
+    /**
+     * wrapper's margin-top
+     */
     offsetTop: {
       type: Number,
       default: null
     },
+    /**
+     * Dialog's title
+     */
     title: {
       type: String,
       default: ''
     },
+    /**
+     * triggers when the Dialog closes
+     */
     beforeClose: {
       type: Function,
       default: null

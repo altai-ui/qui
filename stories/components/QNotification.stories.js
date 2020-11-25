@@ -1,5 +1,6 @@
 import { QNotification } from '../../src/qComponents';
 import QNotificationComponent from '../../src/qComponents/QNotification/src/QNotification.vue';
+import { iconsList } from '../core/icons.stories.mdx';
 
 export default {
   title: 'Components/QNotification',
@@ -9,6 +10,12 @@ export default {
       control: {
         type: 'select',
         options: [null, 'success', 'warning', 'info', 'error']
+      }
+    },
+    icon: {
+      control: {
+        type: 'select',
+        options: iconsList
       }
     }
   }

@@ -43,26 +43,47 @@ export default {
   },
 
   props: {
+    /**
+     * the minimum allowed value
+     */
     min: {
       type: Number,
       default: Number.MIN_SAFE_INTEGER
     },
+
+    /**
+     * the maximum allowed value
+     */
     max: {
       type: Number,
       default: Number.MAX_SAFE_INTEGER
     },
+
+    /**
+     * incremental step
+     */
     step: {
       type: Number,
       default: 1
     },
+
+    /**
+     * precision of input value
+     */
     precision: {
       type: Number,
       default: 0
     },
+    /**
+     * whether the component is disabled
+     */
     disabled: {
       type: Boolean,
       default: false
     },
+    /**
+     * whether to enable the control buttons
+     */
     controls: {
       type: Boolean,
       default: true

@@ -46,26 +46,44 @@ export default {
       type: [String, Number],
       default: ''
     },
+    /**
+     * Drawer's title
+     */
     title: {
       type: String,
       default: ''
     },
+    /**
+     * whether Drawer is visible
+     */
     visible: {
       type: Boolean,
       default: false
     },
+    /**
+     * whether the component will be deleted from layout
+     */
     destroyOnClose: {
       type: Boolean,
       default: false
     },
+    /**
+     * closes Drawer by click on shadow layer
+     */
     wrapperClosable: {
       type: Boolean,
       default: true
     },
+    /**
+     * callback before close
+     */
     beforeClose: {
       type: Function,
       default: null
     },
+    /**
+     * Drawer's position
+     */
     position: {
       type: String,
       default: 'right',
@@ -73,10 +91,16 @@ export default {
         return ['left', 'right'].includes(dir);
       }
     },
+    /**
+     * Extra class names for Drawer's wrapper
+     */
     customClass: {
       type: String,
       default: ''
     },
+    /**
+     * whether to append the popper to body
+     */
     appendToBody: {
       type: Boolean,
       default: true

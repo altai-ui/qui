@@ -2,15 +2,25 @@ import { QInputNumber } from '../../src/qComponents';
 
 export default {
   title: 'Components/QInputNumber',
-  component: QInputNumber
+  component: QInputNumber,
+  argTypes: {
+    value: {
+      control: {
+        type: 'none'
+      }
+    }
+  }
 };
 
-export const QInputNumberStory = (_, { argTypes }) => ({
+export const Default = (_, { argTypes }) => ({
   props: Object.keys(argTypes),
-  template: '<q-input-number v-bind="$props" />'
+  data() {
+    return {
+      value: ''
+    };
+  },
+  template: '<q-input-number v-bind="$props" v-model="value" />'
 });
 
-QInputNumberStory.storyName = 'Default';
-QInputNumberStory.args = {
-  value: 32
-};
+Default.storyName = 'Default';
+Default.args = { value: 17 };
