@@ -4,10 +4,7 @@ import { QBreadcrumbs } from '../../src/qComponents';
 
 export default {
   title: 'Components/QBreadcrumbs',
-  component: QBreadcrumbs,
-  argTypes: {
-    customRoutes: { control: { type: 'none' } }
-  }
+  component: QBreadcrumbs
 };
 
 Vue.component('router-link', {

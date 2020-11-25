@@ -36,14 +36,23 @@ export default {
   componentName: 'QBreadcrumbs',
 
   props: {
+    /**
+     * custom last crumb
+     */
     last: {
       type: String,
       default: null
     },
+    /**
+     * custom postfix after last crumb
+     */
     postfix: {
       type: String,
       default: null
     },
+    /**
+     * Array of Objects, object must contain required fields: `path` - uses as route path, `name` - route name, `meta` - must contain `breadcrumb` - visible title
+     */
     customRoutes: {
       type: Array,
       default: null
