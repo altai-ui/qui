@@ -1,16 +1,47 @@
-# design-system
+# Qui 🥷
+A Vue.js UI Toolkit for Web.
 
-## run sandbox (run here)
+What is it?
+- 30+ Vue components
+- icons pack
+- colors & grid
+- neumorphism styles
+- storybook sandbox
+
+## Install
 
 ```bash
-yarn storybook
-npm run storybook
+npm install @qvant/qui -S
+yarn add @qvant/qui
 ```
 
-## install to project (run from project)
+## Quick setup
 
-```bash
-yarn add @qvant/qui
+```js
+import Vue from 'vue';
+import {
+  QButton,
+  QCheckbox
+  ...
+} from '@qvant/qui/src/qComponents';
+
+Vue.use(QButton);
+Vue.use(QCheckbox);
+...
+
+// some components are required dynamic z-index, let's define it
+let zIndex = 2000;
+Vue.prototype.$Q = {};
+
+// if you want use modals inside your components as property of 'this'
+Vue.prototype.$message = QMessageBox.bind(Vue);
+Vue.prototype.$dialog = QDialog.bind(Vue);
+Vue.prototype.$notify = options =>
+  QNotification({
+    duration: 3000, // - ms
+    ...options
+  });
+
 ```
 
 ## Import into Scss
@@ -59,7 +90,7 @@ import all styles
 @import '~@qvant/qui/src/qComponents/QUpload/src/q-upload.scss';
 ```
 
-### Fonts
+## fonts
 
 need to set the path for files with statics
 
@@ -70,3 +101,23 @@ $--base-path: '~@qvant/qui/src';
 @import '~@qvant/qui/src/icons/index.scss';
 @import '~@qvant/qui/src/qStyles/transition.scss';
 ```
+
+## Run storybook
+
+```bash
+yarn storybook
+npm run storybook
+```
+
+## Browser Support
+Modern browsers are recomended
+- safari: >11
+- chrome: >=61
+- firefox: >=58
+- opera: >=62
+- edge: >=16
+- yandex: >=18
+- ie: ? (we don't know :) and will not support it)
+
+## LICENSE
+MIT
