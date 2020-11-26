@@ -26,4 +26,4 @@ jobs:
 
       - run: yarn --frozen-lockfile
       - run: yarn build-storybook
-      - run: yarn deploy-storybook -- --ci --host-token-env-variable=GITHUB_TOKEN
+      - run: yarn deploy-storybook --ci
