@@ -1,14 +1,24 @@
 # Qui 🥷
+
 A Vue.js UI Toolkit for Web.
 
 [Storybook](https://qvant-lab.github.io/qui/)
 
 What is it?
+
 - 30+ Vue components
 - icons pack
 - colors & grid
 - neumorphism styles
 - storybook sandbox
+
+![Alt text](/.readme-assets/colors.jpg?raw=true)
+![Alt text](/.readme-assets/buttons.jpg?raw=true)
+![Alt text](/.readme-assets/inputs.gif?raw=true)
+![Alt text](/.readme-assets/icons.gif?raw=true)
+![Alt text](/.readme-assets/tables.jpg?raw=true)
+![Alt text](/.readme-assets/datepicker.jpg?raw=true)
+![Alt text](/.readme-assets/other.jpg?raw=true)
 
 ## Install
 
@@ -112,7 +122,9 @@ npm run storybook
 ```
 
 ## Browser Support
+
 Modern browsers are recomended
+
 - safari: >11
 - chrome: >=61
 - firefox: >=58
@@ -122,4 +134,5 @@ Modern browsers are recomended
 - ie: ? (we don't know :) and will not support it)
 
 ## LICENSE
+
 MIT
