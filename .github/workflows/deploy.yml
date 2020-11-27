@@ -26,4 +26,6 @@ jobs:
 
       - run: yarn --frozen-lockfile
       - run: yarn build-storybook
-      - run: yarn deploy-storybook --ci
+      - run: yarn deploy-storybook -- --ci
+        env:
+          GH_TOKEN: Qvant-lab:${{ secrets.GITHUB_TOKEN }}
