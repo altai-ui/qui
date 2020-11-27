@@ -2,7 +2,7 @@
 
 A Vue.js UI Toolkit for Web.
 
-[Storybook](https://qvant-lab.github.io/qui/)
+[Docs](https://qvant-lab.github.io/qui/)
 
 What is it?
 
@@ -12,13 +12,16 @@ What is it?
 - neumorphism styles
 - storybook sandbox
 
-![Alt text](/.readme-assets/colors.jpg?raw=true)
+Some examples below:
+
 ![Alt text](/.readme-assets/buttons.jpg?raw=true)
 ![Alt text](/.readme-assets/inputs.gif?raw=true)
 ![Alt text](/.readme-assets/icons.gif?raw=true)
 ![Alt text](/.readme-assets/tables.jpg?raw=true)
 ![Alt text](/.readme-assets/datepicker.jpg?raw=true)
 ![Alt text](/.readme-assets/other.jpg?raw=true)
+
+...find more in [Docs](https://qvant-lab.github.io/qui/)
 
 ## Install
 
