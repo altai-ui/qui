@@ -1,6 +1,8 @@
 # Qui 🥷
 A Vue.js UI Toolkit for Web.
 
+[Storybook](https://qvant-lab.github.io/qui/)
+
 What is it?
 - 30+ Vue components
 - icons pack
