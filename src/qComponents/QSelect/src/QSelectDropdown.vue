@@ -14,7 +14,7 @@
       <div
         v-if="selectAllShown && isVisibleOptionExist && multiple"
         class="q-option q-option_with-checkbox q-option_all"
-        @click="handleSelectAllClick"
+        @click.stop="handleSelectAllClick"
       >
         <q-checkbox
           root-tag="div"
