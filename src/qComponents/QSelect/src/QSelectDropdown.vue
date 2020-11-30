@@ -14,7 +14,7 @@
       <div
         v-if="selectAllShown && isVisibleOptionExist && multiple"
         class="q-option q-option_with-checkbox q-option_all"
-        @click="handleSelectAllClick"
+        @click="e => handleSelectAllClick(e)"
       >
         <q-checkbox
           root-tag="div"
@@ -134,7 +134,9 @@ export default {
   },
 
   methods: {
-    handleSelectAllClick() {
+    handleSelectAllClick(e) {
+      // Stopping bubbling (v-click-outside reacts)
+      e.stopPropagation();
       if (this.areAllSelected) {
         const keysToRemove = this.options
           .filter(({ isVisible, disabled }) => !disabled && isVisible)

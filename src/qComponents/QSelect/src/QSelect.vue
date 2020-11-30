@@ -341,6 +341,9 @@ export default {
   },
 
   watch: {
+    options() {
+      this.setSelected();
+    },
     value(val, oldVal) {
       this.setSelected();
 

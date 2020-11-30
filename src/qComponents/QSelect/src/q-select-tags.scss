@@ -20,8 +20,8 @@
     &.q-select-tags_collapse-tags {
       flex-wrap: nowrap;
 
-      .q-tag:first-child {
-        min-width: 30%;
+      .q-tag {
+        flex-shrink: 0;
       }
     }
   }
