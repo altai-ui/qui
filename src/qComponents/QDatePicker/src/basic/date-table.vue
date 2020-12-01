@@ -51,7 +51,8 @@ import {
   isWithinInterval,
   startOfWeek,
   endOfWeek,
-  isToday
+  isToday,
+  isDate
 } from 'date-fns';
 import { DAYS_OF_WEEK } from '../../../helpers/dateHelpers';
 
@@ -69,11 +70,11 @@ const checkDisabled = ({ date }, disabledValues) => {
     });
   }
 
-  if (disabledValues.to) {
+  if (isDate(disabledValues.to) && disabledValues.to) {
     disabled.push(isBefore(date, disabledValues.to));
   }
 
-  if (disabledValues.from) {
+  if (isDate(disabledValues.from) && disabledValues.from) {
     disabled.push(isAfter(date, disabledValues.from));
   }
 

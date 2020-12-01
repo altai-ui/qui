@@ -1493,6 +1493,14 @@
     core-js "^3.0.1"
     global "^4.3.2"
 
+"@storybook/client-logger@6.1.9":
+  version "6.1.9"
+  resolved "https://registry.yarnpkg.com/@storybook/client-logger/-/client-logger-6.1.9.tgz#1d61a64000d4691780d75e19b78fd44adfdb5d9c"
+  integrity sha512-i7Q2ky9+Jwv+wmnlOGxmDOEdmaTIB69OQnnZNWGKufOwoIMjn6QO0VifARyA9W++nNSijjJ5th84tLJALaoCTA==
+  dependencies:
+    core-js "^3.0.1"
+    global "^4.3.2"
+
 "@storybook/components@6.1.6":
   version "6.1.6"
   resolved "https://registry.yarnpkg.com/@storybook/components/-/components-6.1.6.tgz#a87086603fadbe4a6ebad8fe7ff8cee2284f5c3c"
@@ -1720,6 +1728,24 @@
     "@emotion/is-prop-valid" "^0.8.6"
     "@emotion/styled" "^10.0.23"
     "@storybook/client-logger" "6.1.6"
+    core-js "^3.0.1"
+    deep-object-diff "^1.1.0"
+    emotion-theming "^10.0.19"
+    global "^4.3.2"
+    memoizerific "^1.11.3"
+    polished "^3.4.4"
+    resolve-from "^5.0.0"
+    ts-dedent "^2.0.0"
+
+"@storybook/theming@^6.1.9":
+  version "6.1.9"
+  resolved "https://registry.yarnpkg.com/@storybook/theming/-/theming-6.1.9.tgz#8c584aa623f3d6e33b1e3b3de2ec1f41bdc5d9ab"
+  integrity sha512-orzMQkyEhAQEi0E9iwmUkzh5yPHoYGBz17t2aydDeT6oGKii6if8Mq2oPVycfVKZ84QO7GFAS9q1nVCRcuD8oA==
+  dependencies:
+    "@emotion/core" "^10.1.1"
+    "@emotion/is-prop-valid" "^0.8.6"
+    "@emotion/styled" "^10.0.23"
+    "@storybook/client-logger" "6.1.9"
     core-js "^3.0.1"
     deep-object-diff "^1.1.0"
     emotion-theming "^10.0.19"
@@ -3050,6 +3076,11 @@ babel-walk@3.0.0-canary-5:
   integrity sha512-GAwkz0AihzY5bkwIY5QDR+LvsRQgB/B+1foMPvi0FZPMl5fjD7ICiznUiBdLYMH1QYe6vqu4gWYytZOccLouFw==
   dependencies:
     "@babel/types" "^7.9.6"
+
+badges@^4.24.0:
+  version "4.24.0"
+  resolved "https://registry.yarnpkg.com/badges/-/badges-4.24.0.tgz#4f8f34271d2ead515d15808a9ceaccdcbc936a20"
+  integrity sha512-4D9NU9TYBkce87afB+FTOdf4O5pAnrg7hYVqY37OQT/qAFclfi6LQ2kW3hIJQxS2p7I9uw//N2SDaH121QOuGg==
 
 bail@^1.0.0:
   version "1.0.5"

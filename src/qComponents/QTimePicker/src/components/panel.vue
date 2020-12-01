@@ -64,6 +64,7 @@
 
 <script>
 import { isString } from 'lodash-es';
+import { isDate, format } from 'date-fns';
 import { addZero, isTimeValueValid } from '../../../helpers/dateHelpers';
 
 const calcValuesWithGap = gap => {
@@ -176,14 +177,21 @@ export default {
     getDisabled({ type, value }) {
       if (this.disabled) return true;
       let disabled = false;
-      const to = this.disabledValues?.to;
-      const from = this.disabledValues?.from;
+      let to = this.disabledValues?.to;
+      if (isDate(to)) {
+        to = format(to, 'HH:mm:ss');
+      }
+
+      let from = this.disabledValues?.from;
+      if (isDate(from)) {
+        from = format(from, 'HH:mm:ss');
+      }
 
       if (to || from) {
         const [toHours, toMinutes, toSeconds] =
           isString(to) && isTimeValueValid(to) ? to.split(':') : [];
         const [fromHours, fromMinutes, fromSeconds] =
-          isString(to) && isTimeValueValid(from) ? from.split(':') : [];
+          isString(from) && isTimeValueValid(from) ? from.split(':') : [];
         switch (type) {
           default:
             disabled = false;
