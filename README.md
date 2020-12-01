@@ -1,6 +1,7 @@
 ![Alt text](/.readme-assets/qui-logo.svg?raw=true)
 
 <!--BADGES--><span class="badge-shields"><a href="https://qvant-lab.github.io/qui" title="storybook"><img src="https://img.shields.io/badge/storybook-yes-green.svg" alt="storybook" /></a></span>
+
 <span class="badge-shields"><img src="https://img.shields.io/badge/responsive-yes-green.svg" /></span>
 <span class="badge-npmversion"><a href="https://npmjs.org/package/@qvant/qui" title="View this project on NPM"><img src="https://img.shields.io/npm/v/@qvant/qui.svg" alt="NPM version" /></a></span>
 <span class="badge-npmdownloads"><a href="https://npmjs.org/package/@qvant/qui" title="View this project on NPM"><img src="https://img.shields.io/npm/dm/@qvant/qui.svg" alt="NPM downloads" /></a></span>
@@ -15,11 +16,11 @@ A Vue.js Design System for Web.
 
 What is it?
 
-- 30+ Vue components
-- icons pack
-- colors & grid
-- neumorphism styles
-- storybook sandbox
+- 🔩 30+ Vue components
+- 📦 icons pack
+- 🏳️‍🌈 colors & grid
+- 🥷 neumorphism styles
+- 📚 storybook sandbox
 
 Some examples below:
 
@@ -125,6 +126,11 @@ $--base-path: '~@qvant/qui/src';
 @import '~@qvant/qui/src/icons/index.scss';
 @import '~@qvant/qui/src/qStyles/transition.scss';
 ```
+
+## Supported languages
+
+- Russian ✅
+- English ⏳ (...coming soon)
 
 ## Run storybook
 
