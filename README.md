@@ -1,6 +1,8 @@
 # Qui 🥷
 
-A Vue.js UI Toolkit for Web.
+<!-- BADGES -->
+<!-- TITLE -->
+<!-- DESCRIPTION -->
 
 [Docs](https://qvant-lab.github.io/qui/)
 
@@ -136,6 +138,4 @@ Modern browsers are recomended
 - yandex: >=18
 - ie: ? (we don't know :) and will not support it)
 
-## LICENSE
-
-MIT
+<!-- LICENSE -->

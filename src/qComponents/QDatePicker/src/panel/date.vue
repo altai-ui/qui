@@ -101,6 +101,7 @@
         <time-panel
           class="time-panel_no-left-borders"
           :value="parsedTime"
+          :disabled-values="disabledValues"
           @change="handleTimeChange"
         />
       </div>

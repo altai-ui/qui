@@ -1,18 +1,20 @@
 {
+  "title": "Qui 🥷",
   "name": "@qvant/qui",
   "version": "1.0.2",
-  "description": "Qui Neumorphism design system",
+  "description": "A Vue.js Design system for Web.",
   "repository": {
     "type": "git",
     "url": "https://github.com/Qvant-lab/qui.git"
   },
-  "author": "Qvant",
+  "author": "Tim Bochkarev",
   "scripts": {
     "storybook": "start-storybook -s ./public -p 6006",
     "build-storybook": "build-storybook -c .storybook -o .out",
     "stylelint:fix": "stylelint --fix '**/*.{scss,vue}'",
     "prettier": "prettier --write '**/*.{js,vue,scss,json,yml}'",
     "eslint": "eslint --fix --no-ignore .storybook/**/**/*.{vue,js}",
+    "compile": "projectz compile",
     "deploy-storybook": "storybook-to-ghpages"
   },
   "license": "MIT",
@@ -33,6 +35,7 @@
     "@storybook/addon-storysource": "^6.0.21",
     "@storybook/preset-scss": "^1.0.2",
     "@storybook/storybook-deployer": "^2.8.7",
+    "@storybook/theming": "^6.1.9",
     "@storybook/vue": "^6.0.21",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.1.0",
@@ -47,6 +50,7 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.1.7",
     "node-sass": "^4.13.0",
+    "projectz": "^2.18.0",
     "sass-loader": "^10.0.2",
     "style-loader": "^1.2.1",
     "stylelint": "^13.7.1",
@@ -73,5 +77,25 @@
   "bugs": {
     "url": "https://github.com/Qvant-lab/qui/issues"
   },
-  "homepage": "https://github.com/Qvant-lab/qui#readme"
+  "homepage": "https://github.com/Qvant-lab/qui#readme",
+  "demo": "https://qvant-lab.github.io/qui/",
+  "maintainers": [
+    "Tim Bochkarev (darknelmail.com@mail.ru) (https://twitter.com/timbochkarev)"
+  ],
+  "contributors": [
+    "Viktor Zheleztsov (https://github.com/ViZhe)",
+    "Maksim Novikov (https://github.com/Esvalirion)",
+    "Shamil Alisultanov (https://github.com/shamilfrontend)"
+  ],
+  "badges": {
+    "list": [
+      "npmversion",
+      "npmdownloads",
+      "daviddm",
+      "daviddmdev",
+      "nodeico",
+      "githubstar",
+      "githubfollow"
+    ]
+  }
 }
