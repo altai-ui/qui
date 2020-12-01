@@ -1,3 +1,5 @@
+// edit `list` & run `node scripts/badges.js` for creating new badges
+
 const { renderBadges } = require('badges');
 const fs = require('fs');
 

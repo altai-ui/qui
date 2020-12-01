@@ -5,7 +5,6 @@
     "stylelint --fix",
     "prettier --parser vue --write",
     "eslint --fix --no-ignore",
-    "node scripts/badges.js",
     "git add"
   ],
   "{*.json,.*rc}": ["prettier --parser json --write", "git add"],
