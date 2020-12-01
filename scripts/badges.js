@@ -65,8 +65,7 @@ fs.readFile('README.md', 'utf8', function(err, data) {
     `<!--BADGES-->${badges}<!--/BADGES-->`
   );
 
-  return fs.writeFile('README.md', result, 'utf8', function(error) {
+  fs.writeFile('README.md', result, 'utf8', function(error) {
     if (error) return console.log(error);
-    return 'Badges are placed!';
   });
 });

@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/Qvant-lab/qui.git"
   },
-  "author": "Tim Bochkarev",
+  "author": "Qvant Frontend team",
   "scripts": {
     "storybook": "start-storybook -s ./public -p 6006",
     "build-storybook": "build-storybook -c .storybook -o .out",
