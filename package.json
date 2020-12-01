@@ -14,7 +14,7 @@
     "stylelint:fix": "stylelint --fix '**/*.{scss,vue}'",
     "prettier": "prettier --write '**/*.{js,vue,scss,json,yml}'",
     "eslint": "eslint --fix --no-ignore .storybook/**/**/*.{vue,js}",
-    "compile": "projectz compile",
+    "create-badges": "node scripts/badges.js",
     "deploy-storybook": "storybook-to-ghpages"
   },
   "license": "MIT",
@@ -40,6 +40,7 @@
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.1.0",
     "babel-preset-vue": "^2.0.2",
+    "badges": "^4.24.0",
     "css-loader": "^4.3.0",
     "eslint": "^7.9.0",
     "eslint-config-airbnb-base": "^14.1.0",
@@ -50,7 +51,6 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.1.7",
     "node-sass": "^4.13.0",
-    "projectz": "^2.18.0",
     "sass-loader": "^10.0.2",
     "style-loader": "^1.2.1",
     "stylelint": "^13.7.1",
@@ -86,16 +86,5 @@
     "Viktor Zheleztsov (https://github.com/ViZhe)",
     "Maksim Novikov (https://github.com/Esvalirion)",
     "Shamil Alisultanov (https://github.com/shamilfrontend)"
-  ],
-  "badges": {
-    "list": [
-      "npmversion",
-      "npmdownloads",
-      "daviddm",
-      "daviddmdev",
-      "nodeico",
-      "githubstar",
-      "githubfollow"
-    ]
-  }
+  ]
 }
