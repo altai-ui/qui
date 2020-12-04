@@ -268,7 +268,7 @@ export default {
     calcPlaceholder() {
       return this.checkedNodes.length
         ? ''
-        : this.placeholder || this.$t('QCascader.placeholder');
+        : this.placeholder ?? this.$t('QCascader.placeholder');
     },
     isDisabled() {
       return this.disabled || (this.qForm?.disabled ?? false);

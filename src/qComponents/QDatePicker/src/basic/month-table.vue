@@ -153,7 +153,6 @@ export default {
 
   methods: {
     getMonthName(monthIndex) {
-      console.log(this.$Q.locale);
       return formatLocalDate(
         new Date(this.year, monthIndex, 1),
         'MMM',

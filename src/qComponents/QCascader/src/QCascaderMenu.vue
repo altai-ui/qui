@@ -105,7 +105,7 @@ export default {
     },
 
     noDataText() {
-      return this.panel?.noDataText || this.$t('QCascader.noDataText');
+      return this.panel?.noDataText ?? this.$t('QCascader.noDataText');
     }
   },
 
