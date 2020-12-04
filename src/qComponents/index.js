@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 /* eslint-disable no-param-reassign */
 import { merge } from 'lodash-es';
 import vClickOutside from 'v-click-outside';
@@ -6,36 +7,6 @@ import { version } from '../../package.json';
 import messages from './constants/localizationConfig';
 
 const kebabCase = require('lodash/kebabCase');
-
-// import QButton from './QButton';
-// import QBreadcrumbs from './QBreadcrumbs';
-// import { QCheckbox, QCheckboxGroup } from './QCheckbox';
-// import QCol from './QCol';
-// import { QSelect, QOption } from './QSelect';
-// import { QRadio, QRadioGroup } from './QRadio';
-// import { QCascader, QCascaderPanel } from './QCascader';
-// import QDrawer from './QDrawer';
-// import { QForm, QFormItem } from './QForm';
-// import QInput from './QInput';
-// import QInputNumber from './QInputNumber';
-// import QTextarea from './QTextarea';
-// import QTag from './QTag';
-// import QCollapse from './QCollapse';
-// import QCollapseItem from './QCollapseItem';
-// import QColorPicker from './QColorPicker';
-// import QContextMenu from './QContextMenu';
-// import QDialog from './QDialog';
-// import QMessageBox from './QMessageBox';
-// import QNotification from './QNotification';
-// import QPagination from './QPagination';
-// import QPopover from './QPopover';
-// import QRow from './QRow';
-// import QScrollbar from './QScrollbar';
-// import { QTabs, QTabPane } from './QTabs';
-// import QDatePicker from './QDatePicker';
-// import QTimePicker from './QTimePicker';
-// import QTable from './QTable';
-// import QUpload from './QUpload';
 
 const allComponents = [
   'QButton',
@@ -120,6 +91,7 @@ const install = (
   if (qComponents) {
     validComponents.forEach(component => {
       try {
+        // eslint-disable-next-line import/no-dynamic-require
         require(`../qComponents/${component}/src/${kebabCase(component)}.scss`);
       } catch (err) {
         console.warn(err);

@@ -41,16 +41,48 @@ yarn add @qvant/qui
 ## Quick setup
 
 ```js
-import Vue from 'vue';
-import {
-  QButton,
-  QCheckbox
-  ...
-} from '@qvant/qui/src/qComponents';
 
+import Vue from 'vue';
+import Qui from '@qvant/qui/src/qComponents';
+
+
+// Setup all components
+Vue.use(Qui)
+// that's it!
+
+// ...or Configure setup
+Vue.use(Qui, {
+  components: ['QButton', 'QCheckbox', 'QSelect'], // only several components will be imported
+  localization: {
+    locale: 'en', // Russuan language by default, you can set `en` for English
+    customI18nMessages: {
+      en: { // rewrite default texts, see the source: src/qComponents/constants/localizationConfig.js
+        QDatepicker: {
+          placeholder: 'Pick your birthday!'
+        }
+      }
+    }
+  styles: {
+    importStyles: {
+      // auto import styles (works if `css: { requireModuleExtension: true }` in vue.config.js
+      fonts: true,
+      icons: true,
+      main: true,
+      qComponents: true // only components from field 'components' above will be imported
+    }
+  }
+})
+
+```
+
+## Not quick setup
+
+...also you can handle import as you want
+
+```js
+// import the component you want
+import QButton from '@qvant/qui/src/qComponents/QButton';
 Vue.use(QButton);
-Vue.use(QCheckbox);
-...
 
 // some components are required dynamic z-index, let's define it
 let zIndex = 2000;
@@ -64,38 +96,43 @@ Vue.prototype.$notify = options =>
     duration: 3000, // - ms
     ...options
   });
-
 ```
-
-## Import into Scss
-
-main styles
 
 ```scss
+// set some html tags styles
 @import '~@qvant/qui/src/main.scss';
+
+// notice that you must use `fonts` and `icons` styles for some of components:
+$--base-path: '~@qvant/qui/src';
+@import '~@qvant/qui/src/fonts/index.scss';
+@import '~@qvant/qui/src/icons/index.scss';
+@import '~@qvant/qui/src/qStyles/transition.scss';
 ```
 
-import all styles
+import all styles:
 
 ```scss
 @import '~@qvant/qui/src/qStyles/main.scss';
 ```
 
-...or components separately
+...or components separately:
 
 ```scss
 @import '~@qvant/qui/src/qComponents/QBreadcrumbs/src/q-breadcrumbs.scss';
 @import '~@qvant/qui/src/qComponents/QButton/src/q-button.scss';
 @import '~@qvant/qui/src/qComponents/QCascader/src/q-cascader.scss';
 @import '~@qvant/qui/src/qComponents/QCheckbox/src/q-checkbox.scss';
+@import '~@qvant/qui/src/qComponents/QCheckboxGroup/src/q-checkbox-group.scss';
 @import '~@qvant/qui/src/qComponents/QCol/src/q-col.scss';
+@import '~@qvant/qui/src/qComponents/QCollapse/src/q-collapse.scss';
 @import '~@qvant/qui/src/qComponents/QCollapseItem/src/q-collapse-item.scss';
 @import '~@qvant/qui/src/qComponents/QColorPicker/src/q-color-picker.scss';
 @import '~@qvant/qui/src/qComponents/QContextMenu/src/q-context-menu.scss';
 @import '~@qvant/qui/src/qComponents/QDatePicker/src/q-date-picker.scss';
 @import '~@qvant/qui/src/qComponents/QDialog/src/q-dialog.scss';
 @import '~@qvant/qui/src/qComponents/QDrawer/src/q-drawer.scss';
-@import '~@qvant/qui/src/qComponents/QForm/src/q-form-item.scss';
+@import '~@qvant/qui/src/qComponents/QForm/src/q-form.scss';
+@import '~@qvant/qui/src/qComponents/QFormItem/src/q-form-item.scss';
 @import '~@qvant/qui/src/qComponents/QInput/src/q-input.scss';
 @import '~@qvant/qui/src/qComponents/QInputNumber/src/q-input-number.scss';
 @import '~@qvant/qui/src/qComponents/QMessageBox/src/q-message-box.scss';
@@ -103,12 +140,13 @@ import all styles
 @import '~@qvant/qui/src/qComponents/QPagination/src/q-pagination.scss';
 @import '~@qvant/qui/src/qComponents/QPopover/src/q-popover.scss';
 @import '~@qvant/qui/src/qComponents/QRadio/src/q-radio.scss';
-@import '~@qvant/qui/src/qComponents/QRadio/src/q-radio-group.scss';
+@import '~@qvant/qui/src/qComponents/QRadioGroup/src/q-radio-group.scss';
 @import '~@qvant/qui/src/qComponents/QRow/src/q-row.scss';
 @import '~@qvant/qui/src/qComponents/QScrollbar/src/q-scrollbar.scss';
 @import '~@qvant/qui/src/qComponents/QSelect/src/q-select.scss';
+@import '~@qvant/qui/src/qComponents/QOption/src/q-option.scss';
 @import '~@qvant/qui/src/qComponents/QTabs/src/q-tabs.scss';
-@import '~@qvant/qui/src/qComponents/QTabs/src/q-tab-pane.scss';
+@import '~@qvant/qui/src/qComponents/QTabPane/src/q-tab-pane.scss';
 @import '~@qvant/qui/src/qComponents/QTextarea/src/q-textarea.scss';
 @import '~@qvant/qui/src/qComponents/QUpload/src/q-upload.scss';
 ```
@@ -117,18 +155,10 @@ import all styles
 
 need to set the path for files with statics
 
-```scss
-$--base-path: '~@qvant/qui/src';
-@import '~@qvant/qui/src/main.scss';
-@import '~@qvant/qui/src/fonts/index.scss';
-@import '~@qvant/qui/src/icons/index.scss';
-@import '~@qvant/qui/src/qStyles/transition.scss';
-```
-
 ## Supported languages
 
 - Russian ✅
-- English ⏳ (...coming soon)
+- English ✅
 
 ## Run storybook
 
