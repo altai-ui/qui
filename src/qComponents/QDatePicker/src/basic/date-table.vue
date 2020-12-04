@@ -54,7 +54,9 @@ import {
   isToday,
   isDate
 } from 'date-fns';
-import { DAYS_OF_WEEK } from '../../../helpers/dateHelpers';
+import { ru, enGB as en } from 'date-fns/locale';
+
+const locales = { ru, en };
 
 const checkDisabled = ({ date }, disabledValues) => {
   if (!disabledValues) return false;
@@ -140,6 +142,10 @@ export default {
     },
 
     days() {
+      const DAYS_OF_WEEK = [...Array(7).keys()].map(i => {
+        return locales[this.$Q.locale].localize.day(i, { width: 'short' });
+      });
+
       const day = this.firstDayOfWeek;
       return [...DAYS_OF_WEEK, ...DAYS_OF_WEEK].slice(day, day + 7);
     },

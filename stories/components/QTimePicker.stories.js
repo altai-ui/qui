@@ -1,4 +1,4 @@
-import { QTimePicker } from '../../src/qComponents';
+import QTimePicker from '../../src/qComponents/QTimePicker';
 
 export default {
   title: 'Components/QTimePicker',

@@ -1,4 +1,5 @@
-import { QSelect, QOption } from '../../src/qComponents';
+import QSelect from '../../src/qComponents/QSelect';
+import QOption from '../../src/qComponents/QOption';
 
 export default {
   title: 'Components/QSelect',

@@ -1,4 +1,4 @@
-import { QContextMenu } from '../../src/qComponents';
+import QContextMenu from '../../src/qComponents/QContextMenu';
 
 export default {
   title: 'Components/QContextMenu',

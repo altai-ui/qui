@@ -36,7 +36,7 @@ export default {
      */
     noDataText: {
       type: String,
-      default: 'Нет данных'
+      default: null
     }
   },
 

@@ -1,4 +1,4 @@
-import { QUpload } from '../../src/qComponents';
+import QUpload from '../../src/qComponents/QUpload';
 
 export default {
   title: 'Components/QUpload',

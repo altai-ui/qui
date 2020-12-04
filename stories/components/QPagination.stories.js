@@ -1,4 +1,4 @@
-import { QPagination } from '../../src/qComponents';
+import QPagination from '../../src/qComponents/QPagination';
 
 export default {
   title: 'Components/QPagination',

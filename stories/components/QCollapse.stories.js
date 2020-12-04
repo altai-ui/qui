@@ -1,4 +1,5 @@
-import { QCollapse, QCollapseItem } from '../../src/qComponents';
+import QCollapse from '../../src/qComponents/QCollapse';
+import QCollapseItem from '../../src/qComponents/QCollapseItem';
 
 export default {
   title: 'Components/QCollapse',

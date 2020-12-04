@@ -1,9 +1,4 @@
 import { isDate } from 'date-fns';
-import { ru } from 'date-fns/locale';
-
-const DAYS_OF_WEEK = [...Array(7).keys()].map(i =>
-  ru.localize.day(i, { width: 'short' })
-);
 
 const addZero = value => {
   return String(value).padStart(2, '0');
@@ -32,4 +27,4 @@ const isTimeValueValid = value => {
   return isValid;
 };
 
-export { addZero, isTimeValueValid, DAYS_OF_WEEK };
+export { addZero, isTimeValueValid };

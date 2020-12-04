@@ -242,7 +242,9 @@
         class="q-table__empty"
       >
         <div class="q-table__empty-image" />
-        <div class="q-table__empty-text">{{ emptyText }}</div>
+        <div class="q-table__empty-text">
+          {{ emptyText || $t('QTable.noData') }}
+        </div>
       </div>
     </div>
   </div>
@@ -396,7 +398,7 @@ export default {
      */
     emptyText: {
       type: String,
-      default: 'Нет данных'
+      default: null
     }
   },
 

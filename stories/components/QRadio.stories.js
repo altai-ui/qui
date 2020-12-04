@@ -1,4 +1,4 @@
-import { QRadio } from '../../src/qComponents';
+import QRadio from '../../src/qComponents/QRadio';
 
 export default {
   title: 'Components/QRadio/QRadio',

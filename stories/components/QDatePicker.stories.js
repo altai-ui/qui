@@ -1,5 +1,5 @@
 import { addMonths, subMonths } from 'date-fns';
-import { QDatePicker } from '../../src/qComponents';
+import QDatePicker from '../../src/qComponents/QDatePicker';
 
 export default {
   title: 'Components/QDatePicker',

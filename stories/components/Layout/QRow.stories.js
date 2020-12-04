@@ -1,4 +1,5 @@
-import { QRow, QCol } from '../../../src/qComponents';
+import QCol from '../../../src/qComponents/QCol';
+import QRow from '../../../src/qComponents/QRow';
 import './layout.scss';
 
 export default {

@@ -94,15 +94,15 @@ export default {
     },
     textUploadFile: {
       type: String,
-      default: 'загрузить файл'
+      default: null
     },
     textReplaceFile: {
       type: String,
-      default: 'заменить файл'
+      default: null
     },
     textLoadingFile: {
       type: String,
-      default: 'загрузка'
+      default: null
     },
     onSelectFile: {
       type: Function,
@@ -139,9 +139,12 @@ export default {
     },
 
     uploadDragText() {
-      if (this.isFileLoading) return this.textLoadingFile;
+      if (this.isFileLoading)
+        return this.textLoadingFile ?? this.$t('QUpload.loading');
 
-      return this.value ? this.textReplaceFile : this.textUploadFile;
+      return this.value
+        ? this.textReplaceFile ?? this.$t('QUpload.replaceFile')
+        : this.textUploadFile ?? this.$t('QUpload.uploadFile');
     },
 
     fileName() {

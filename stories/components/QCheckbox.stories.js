@@ -1,4 +1,4 @@
-import { QCheckbox } from '../../src/qComponents';
+import QCheckbox from '../../src/qComponents/QCheckbox';
 
 export default {
   title: 'Components/QCheckbox/QCheckbox',

@@ -1,4 +1,5 @@
-import { QForm, QFormItem } from '../../src/qComponents';
+import QForm from '../../src/qComponents/QForm';
+import QFormItem from '../../src/qComponents/QFormItem';
 
 export default {
   title: 'Components/QForm',

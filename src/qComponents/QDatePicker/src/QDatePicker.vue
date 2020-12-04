@@ -7,7 +7,7 @@
       :readonly="!editable"
       :disabled="pickerDisabled"
       :name="name"
-      :placeholder="placeholder"
+      :placeholder="placeholder || $t('QDatePicker.placeholder')"
       :value="displayValue"
       @focus="handleFocus"
       @keydown.native="handleKeydown"
@@ -35,7 +35,7 @@
       <input
         autocomplete="off"
         class="q-range-input"
-        :placeholder="startPlaceholder"
+        :placeholder="startPlaceholder || $t('QDatePicker.startPlaceholder')"
         :value="displayValue && displayValue[0]"
         :disabled="pickerDisabled"
         :name="name && name[0]"
@@ -47,7 +47,7 @@
       </slot>
       <input
         autocomplete="off"
-        :placeholder="endPlaceholder"
+        :placeholder="endPlaceholder || $t('QDatePicker.endPlaceholder')"
         :value="displayValue && displayValue[1]"
         :disabled="pickerDisabled"
         :name="name && name[1]"
@@ -180,15 +180,18 @@ export default {
       default: 'date',
       validator: val => ['date', 'iso'].includes(val)
     },
-    placeholder: { type: String, default: '' },
+    placeholder: { type: String, default: null },
     /**
      * only for ranged types
      */
-    startPlaceholder: { type: String, default: 'Дата начала' },
+    startPlaceholder: {
+      type: String,
+      default: null
+    },
     /**
      * only for ranged types
      */
-    endPlaceholder: { type: String, default: 'Дата окончания' },
+    endPlaceholder: { type: String, default: null },
     /**
      * start with monday by default
      */
@@ -343,13 +346,17 @@ export default {
 
       if (Array.isArray(this.transformedValue)) {
         formattedValue = this.transformedValue.map(dateFromArray =>
-          formatLocalDate(dateFromArray, this.format)
+          formatLocalDate(dateFromArray, this.format, this.$Q.locale)
         );
       } else if (
         isDate(this.transformedValue) &&
         isValid(this.transformedValue)
       ) {
-        formattedValue = formatLocalDate(this.transformedValue, this.format);
+        formattedValue = formatLocalDate(
+          this.transformedValue,
+          this.format,
+          this.$Q.locale
+        );
       }
 
       if (Array.isArray(this.userInput)) {
@@ -535,7 +542,11 @@ export default {
       )
         return;
       const format = this.timepicker ? 'dd.MM.yyyy, HH:mm:ss' : 'dd.MM.yy';
-      this.userInput = formatLocalDate(this.transformedValue, format);
+      this.userInput = formatLocalDate(
+        this.transformedValue,
+        format,
+        this.$Q.locale
+      );
     },
 
     handleKeydown(event) {

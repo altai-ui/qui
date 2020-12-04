@@ -153,7 +153,12 @@ export default {
 
   methods: {
     getMonthName(monthIndex) {
-      return formatLocalDate(new Date(this.year, monthIndex, 1), 'MMM');
+      console.log(this.$Q.locale);
+      return formatLocalDate(
+        new Date(this.year, monthIndex, 1),
+        'MMM',
+        this.$Q.locale
+      );
     },
 
     getCellClasses(cell) {

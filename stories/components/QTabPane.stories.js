@@ -1,4 +1,5 @@
-import { QTabs, QTabPane } from '../../src/qComponents';
+import QTabPane from '../../src/qComponents/QTabPane';
+import QTabs from '../../src/qComponents/QTabs';
 
 export default {
   title: 'Components/QTabs/QTabPane',
