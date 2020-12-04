@@ -1,8 +1,11 @@
 /* eslint-disable no-param-reassign */
+import { merge } from 'lodash-es';
 import vClickOutside from 'v-click-outside';
 import VueI18n from 'vue-i18n';
 import { version } from '../../package.json';
 import messages from './constants/localizationConfig';
+
+const kebabCase = require('lodash/kebabCase');
 
 // import QButton from './QButton';
 // import QBreadcrumbs from './QBreadcrumbs';
@@ -21,9 +24,9 @@ import messages from './constants/localizationConfig';
 // import QCollapseItem from './QCollapseItem';
 // import QColorPicker from './QColorPicker';
 // import QContextMenu from './QContextMenu';
-import QDialog from './QDialog';
-import QMessageBox from './QMessageBox';
-import QNotification from './QNotification';
+// import QDialog from './QDialog';
+// import QMessageBox from './QMessageBox';
+// import QNotification from './QNotification';
 // import QPagination from './QPagination';
 // import QPopover from './QPopover';
 // import QRow from './QRow';
@@ -68,12 +71,63 @@ const allComponents = [
   'QTable',
   'QForm',
   'QFormItem',
-  'QUpload'
+  'QUpload',
+  // modals
+  'QNotification',
+  'QDialog',
+  'QMessageBox'
 ];
 
 let zIndexCounter = 2000;
+const install = (
+  Vue,
+  {
+    components = allComponents,
+    localization: { locale = 'ru', customI18nMessages = {} } = {},
+    styles: {
+      // theme = 'neumorphism', - it will be used in future
+      importStyles: {
+        fonts = true,
+        icons = true,
+        main = true,
+        qComponents = true
+      } = {}
+    } = {}
+  } = {}
+) => {
+  const validComponents = components.filter(component => {
+    if (!allComponents.includes(component)) {
+      console.error(`Qui does not contain component ${component}`);
+      return false;
+    }
 
-const install = (Vue, { components = allComponents, locale = 'ru' } = {}) => {
+    return component;
+  });
+
+  // import styles
+  if (fonts) {
+    require('../fonts/index.scss');
+  }
+
+  if (icons) {
+    require('../icons/index.scss');
+  }
+
+  if (main) {
+    require('../main.scss');
+  }
+
+  if (qComponents) {
+    validComponents.forEach(component => {
+      try {
+        require(`../qComponents/${component}/src/${kebabCase(component)}.scss`);
+      } catch (err) {
+        console.warn(err);
+      }
+    });
+  }
+
+  // define plugins
   Object.defineProperties(Vue.prototype, {
     $Q: {
       value: {
@@ -94,16 +148,14 @@ const install = (Vue, { components = allComponents, locale = 'ru' } = {}) => {
 
   const i18n = new VueI18n({
     locale,
-    messages // set locale messages
+    messages: merge(messages, customI18nMessages)
   });
 
   // eslint-disable-next-line no-underscore-dangle
   Vue.prototype._i18n = i18n;
-  Vue.prototype.$notify = QNotification;
-  Vue.prototype.$dialog = QDialog.bind(Vue);
-  Vue.prototype.$message = QMessageBox.bind(Vue);
 
-  components.forEach(component => {
+  // import components
+  validComponents.forEach(component => {
     Vue.component(component, () => import(`./${component}`));
   });
 };

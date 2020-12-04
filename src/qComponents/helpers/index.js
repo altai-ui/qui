@@ -44,6 +44,7 @@ const resizeHandler = entries => {
 };
 
 export const addResizeListener = (element, fn) => {
+  if (!element) return;
   if (!element.__resizeListeners__) {
     // eslint-disable-next-line no-param-reassign
     element.__resizeListeners__ = [];
