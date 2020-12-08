@@ -201,6 +201,54 @@ $--base-path: '..' !default;
 .q-icon-graph-gisto::before {
   content: '\e911';
 }
+
+.q-icon-eye::before {
+  content: '\e92d';
+}
+
+.q-icon-eye-close::before {
+  content: '\e933';
+}
+
+.q-icon-search::before {
+  content: '\e91d';
+}
+
+.q-icon-trash-bin::before {
+  content: '\e921';
+}
+
+.q-icon-envelope-edit::before {
+  content: '\e90f';
+}
+
+.q-icon-cloud-upload::before {
+  content: '\e90c';
+}
+
+.q-icon-diagram-round::before {
+  content: '\e90d';
+}
+
+.q-icon-wallet::before {
+  content: '\e925';
+}
+
+.q-icon-lock-fill::before {
+  content: '\e930';
+}
+
+.q-icon-target::before {
+  content: '\e934';
+}
+
+.q-icon-database-arrow-down::before {
+  content: '\e931';
+}
+
+.q-icon-dots-3-horizontal::before {
+  content: '\e90e';
+}
 //
 
 .q-icon-account-check-fill::before {
@@ -239,10 +287,6 @@ $--base-path: '..' !default;
   content: '\e957';
 }
 
-.q-icon-cloud-upload::before {
-  content: '\e90c';
-}
-
 .q-icon-cog-fill::before {
   content: '\e958';
 }
@@ -259,20 +303,8 @@ $--base-path: '..' !default;
   content: '\e938';
 }
 
-.q-icon-database-arrow-down::before {
-  content: '\e931';
-}
-
 .q-icon-diagram-round-stroke::before {
   content: '\e952';
-}
-
-.q-icon-diagram-round::before {
-  content: '\e90d';
-}
-
-.q-icon-dots-3-horizontal::before {
-  content: '\e90e';
 }
 
 .q-icon-drag-linear::before {
@@ -287,20 +319,8 @@ $--base-path: '..' !default;
   content: '\e959';
 }
 
-.q-icon-envelope-edit::before {
-  content: '\e90f';
-}
-
-.q-icon-eye-close::before {
-  content: '\e933';
-}
-
 .q-icon-eye-fill::before {
   content: '\e944';
-}
-
-.q-icon-eye::before {
-  content: '\e92d';
 }
 
 .q-icon-filter-fill::before {
@@ -321,10 +341,6 @@ $--base-path: '..' !default;
 
 .q-icon-key::before {
   content: '\e964';
-}
-
-.q-icon-lock-fill::before {
-  content: '\e930';
 }
 
 .q-icon-lock::before {
@@ -375,10 +391,6 @@ $--base-path: '..' !default;
   content: '\e94e';
 }
 
-.q-icon-search::before {
-  content: '\e91d';
-}
-
 .q-icon-settings-horizontal::before {
   content: '\e95d';
 }
@@ -391,24 +403,12 @@ $--base-path: '..' !default;
   content: '\e94d';
 }
 
-.q-icon-target::before {
-  content: '\e934';
-}
-
 .q-icon-trash-bin-stroke::before {
   content: '\e94c';
 }
 
-.q-icon-trash-bin::before {
-  content: '\e921';
-}
-
 .q-icon-wallet-stroke::before {
   content: '\e949';
-}
-
-.q-icon-wallet::before {
-  content: '\e925';
 }
 
 .q-icon-wifi::before {
