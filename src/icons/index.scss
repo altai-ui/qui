@@ -301,22 +301,69 @@ $--base-path: '..' !default;
 .q-icon-cog-stroke::before {
   content: '\e945';
 }
-//
 
-.q-icon-account-check-fill::before {
-  content: '\e954';
+.q-icon-pencil-square-stroke::before {
+  content: '\e946';
 }
 
-.q-icon-account-group-web::before {
-  content: '\e95a';
+.q-icon-play::before {
+  content: '\e947';
+}
+
+.q-icon-finish-fill::before {
+  content: '\e93f';
 }
 
 .q-icon-archive-arrow-down::before {
   content: '\e93e';
 }
 
+.q-icon-wallet-stroke::before {
+  content: '\e949';
+}
+
+.q-icon-change-list::before {
+  content: '\e948';
+}
+
+.q-icon-withdraw-fill::before {
+  content: '\e94b';
+}
+
+.q-icon-info-stroke::before {
+  content: '\e94a';
+}
+
+.q-icon-trash-bin-stroke::before {
+  content: '\e94c';
+}
+
+.q-icon-star::before {
+  content: '\e94d';
+}
+
+.q-icon-save::before {
+  content: '\e94e';
+}
+
+.q-icon-percent::before {
+  content: '\e94f';
+}
+
+.q-icon-drag-vertical-fill::before {
+  content: '\e951';
+}
+
+.q-icon-diagram-round-stroke::before {
+  content: '\e952';
+}
+
 .q-icon-attach-fill::before {
   content: '\e953';
+}
+
+.q-icon-account-check-fill::before {
+  content: '\e954';
 }
 
 .q-icon-calendar-clock::before {
@@ -327,28 +374,12 @@ $--base-path: '..' !default;
   content: '\e956';
 }
 
-.q-icon-change-list::before {
-  content: '\e948';
-}
-
 .q-icon-clock-stroke::before {
   content: '\e957';
 }
 
 .q-icon-cog-fill::before {
   content: '\e958';
-}
-
-.q-icon-diagram-round-stroke::before {
-  content: '\e952';
-}
-
-.q-icon-drag-linear::before {
-  content: '\e95f';
-}
-
-.q-icon-drag-vertical-fill::before {
-  content: '\e951';
 }
 
 .q-icon-earth::before {
@@ -363,60 +394,29 @@ $--base-path: '..' !default;
   content: '\e95b';
 }
 
-.q-icon-finish-fill::before {
-  content: '\e93f';
+.q-icon-pencil-list::before {
+  content: '\e95c';
 }
 
-.q-icon-info-stroke::before {
-  content: '\e94a';
+.q-icon-settings-horizontal::before {
+  content: '\e95d';
+}
+//
+
+.q-icon-account-group-web::before {
+  content: '\e95a';
+}
+
+.q-icon-drag-linear::before {
+  content: '\e95f';
 }
 
 .q-icon-key::before {
   content: '\e964';
 }
 
-.q-icon-pencil-list::before {
-  content: '\e95c';
-}
-
-.q-icon-pencil-square-stroke::before {
-  content: '\e946';
-}
-
-.q-icon-percent::before {
-  content: '\e94f';
-}
-
-.q-icon-play::before {
-  content: '\e947';
-}
-
-.q-icon-save::before {
-  content: '\e94e';
-}
-
-.q-icon-settings-horizontal::before {
-  content: '\e95d';
-}
-
 .q-icon-star-fill::before {
   content: '\e95e';
-}
-
-.q-icon-star::before {
-  content: '\e94d';
-}
-
-.q-icon-trash-bin-stroke::before {
-  content: '\e94c';
-}
-
-.q-icon-wallet-stroke::before {
-  content: '\e949';
-}
-
-.q-icon-withdraw-fill::before {
-  content: '\e94b';
 }
 
 .q-icon-y-1::before {
