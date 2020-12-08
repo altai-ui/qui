@@ -401,7 +401,10 @@ $--base-path: '..' !default;
 .q-icon-settings-horizontal::before {
   content: '\e95d';
 }
-//
+
+.q-icon-star-fill::before {
+  content: '\e95e';
+}
 
 .q-icon-account-group-web::before {
   content: '\e95a';
@@ -409,14 +412,6 @@ $--base-path: '..' !default;
 
 .q-icon-drag-linear::before {
   content: '\e95f';
-}
-
-.q-icon-key::before {
-  content: '\e964';
-}
-
-.q-icon-star-fill::before {
-  content: '\e95e';
 }
 
 .q-icon-y-1::before {
@@ -433,4 +428,8 @@ $--base-path: '..' !default;
 
 .q-icon-y-4::before {
   content: '\e963';
+}
+
+.q-icon-key::before {
+  content: '\e964';
 }
