@@ -249,6 +249,58 @@ $--base-path: '..' !default;
 .q-icon-dots-3-horizontal::before {
   content: '\e90e';
 }
+
+.q-icon-wifi::before {
+  content: '\e926';
+}
+
+.q-icon-logout::before {
+  content: '\e913';
+}
+
+.q-icon-lock::before {
+  content: '\e912';
+}
+
+.q-icon-comment::before {
+  content: '\e935';
+}
+
+.q-icon-credit-card::before {
+  content: '\e938';
+}
+
+.q-icon-login::before {
+  content: '\e940';
+}
+
+.q-icon-piggy-bank-fill::before {
+  content: '\e941';
+}
+
+.q-icon-rubles::before {
+  content: '\e91c';
+}
+
+.q-icon-multiply-fill::before {
+  content: '\e942';
+}
+
+.q-icon-account-group::before {
+  content: '\e901';
+}
+
+.q-icon-menu-2-fill::before {
+  content: '\e943';
+}
+
+.q-icon-eye-fill::before {
+  content: '\e944';
+}
+
+.q-icon-cog-stroke::before {
+  content: '\e945';
+}
 //
 
 .q-icon-account-check-fill::before {
@@ -257,10 +309,6 @@ $--base-path: '..' !default;
 
 .q-icon-account-group-web::before {
   content: '\e95a';
-}
-
-.q-icon-account-group::before {
-  content: '\e901';
 }
 
 .q-icon-archive-arrow-down::before {
@@ -291,18 +339,6 @@ $--base-path: '..' !default;
   content: '\e958';
 }
 
-.q-icon-cog-stroke::before {
-  content: '\e945';
-}
-
-.q-icon-comment::before {
-  content: '\e935';
-}
-
-.q-icon-credit-card::before {
-  content: '\e938';
-}
-
 .q-icon-diagram-round-stroke::before {
   content: '\e952';
 }
@@ -317,10 +353,6 @@ $--base-path: '..' !default;
 
 .q-icon-earth::before {
   content: '\e959';
-}
-
-.q-icon-eye-fill::before {
-  content: '\e944';
 }
 
 .q-icon-filter-fill::before {
@@ -343,26 +375,6 @@ $--base-path: '..' !default;
   content: '\e964';
 }
 
-.q-icon-lock::before {
-  content: '\e912';
-}
-
-.q-icon-login::before {
-  content: '\e940';
-}
-
-.q-icon-logout::before {
-  content: '\e913';
-}
-
-.q-icon-menu-2-fill::before {
-  content: '\e943';
-}
-
-.q-icon-multiply-fill::before {
-  content: '\e942';
-}
-
 .q-icon-pencil-list::before {
   content: '\e95c';
 }
@@ -375,16 +387,8 @@ $--base-path: '..' !default;
   content: '\e94f';
 }
 
-.q-icon-piggy-bank-fill::before {
-  content: '\e941';
-}
-
 .q-icon-play::before {
   content: '\e947';
-}
-
-.q-icon-rubles::before {
-  content: '\e91c';
 }
 
 .q-icon-save::before {
@@ -409,10 +413,6 @@ $--base-path: '..' !default;
 
 .q-icon-wallet-stroke::before {
   content: '\e949';
-}
-
-.q-icon-wifi::before {
-  content: '\e926';
 }
 
 .q-icon-withdraw-fill::before {
