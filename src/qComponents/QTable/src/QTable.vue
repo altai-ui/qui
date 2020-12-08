@@ -270,7 +270,7 @@ export default {
   props: {
     isLoading: {
       type: Boolean,
-      defaul: false
+      default: false
     },
     /**
      * Array of objects, each object must contain `key` and `value`.
@@ -529,6 +529,14 @@ export default {
 
       this.$emit('rows-check', rows);
     }
+  },
+
+  updated() {
+    if (this.isLoading || !this.isLoadingAnimationComplete) return;
+
+    this.loaderWrapperHeight = this.$refs.QTable
+      ? this.$refs.QTable.clientHeight + shadowDropOffset
+      : 0;
   },
 
   mounted() {
