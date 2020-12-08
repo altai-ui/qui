@@ -178,13 +178,6 @@ new Vue({
 - Russian ✅
 - English ✅
 
-## Run storybook
-
-```bash
-yarn storybook
-npm run storybook
-````
-
 ## Browser Support
 
 Modern browsers are recomended
@@ -196,6 +189,15 @@ Modern browsers are recomended
 - edge: >=16
 - yandex: >=18
 - ie: ? (we don't know :) and will not support it)
+
+## Development
+
+Clone repository and run storybook
+
+```bash
+yarn storybook
+npm run storybook
+````
 
 ## LICENSE
 
