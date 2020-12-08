@@ -587,7 +587,7 @@ export default {
     },
 
     emitChange(val) {
-      if (val) {
+      if (val !== this.value) {
         this.$emit('change', val);
         if (this.validateEvent) {
           this.qFormItem?.validateField('change');

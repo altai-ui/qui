@@ -1,104 +1,109 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable global-require */
 /* eslint-disable no-param-reassign */
-import { merge } from 'lodash-es';
+import { kebabCase } from 'lodash-es';
 import vClickOutside from 'v-click-outside';
-import VueI18n from 'vue-i18n';
 import { version } from '../../package.json';
-import messages from './constants/localizationConfig';
+import { installI18n } from './constants/locales';
 
-const kebabCase = require('lodash/kebabCase');
+import QButton from './QButton';
+import QBreadcrumbs from './QBreadcrumbs';
+import QCascader from './QCascader';
+import QDatePicker from './QDatePicker';
+import QTimePicker from './QTimePicker';
+import QCheckbox from './QCheckbox';
+import QCheckboxGroup from './QCheckboxGroup';
+import QRadio from './QRadio';
+import QRadioGroup from './QRadioGroup';
+import QRow from './QRow';
+import QCol from './QCol';
+import QCollapse from './QCollapse';
+import QCollapseItem from './QCollapseItem';
+import QColorPicker from './QColorPicker';
+import QContextMenu from './QContextMenu';
+import QForm from './QForm';
+import QFormItem from './QFormItem';
+import QInput from './QInput';
+import QInputNumber from './QInputNumber';
+import QPagination from './QPagination';
+import QPopover from './QPopover';
+import QScrollbar from './QScrollbar';
+import QSelect from './QSelect';
+import QOption from './QOption';
+import QTextarea from './QTextarea';
+import QTabs from './QTabs';
+import QTabPane from './QTabPane';
+import QTag from './QTag';
+import QDrawer from './QDrawer';
+import QTable from './QTable';
+import QUpload from './QUpload';
+// modals
+import QNotification from './QNotification';
+import QDialog from './QDialog';
+import QMessageBox from './QMessageBox';
 
-const allComponents = [
-  'QButton',
-  'QBreadcrumbs',
-  'QCascader',
-  'QDatePicker',
-  'QTimePicker',
-  'QCheckbox',
-  'QCheckboxGroup',
-  'QRadio',
-  'QRadioGroup',
-  'QRow',
-  'QCol',
-  'QCollapse',
-  'QCollapseItem',
-  'QColorPicker',
-  'QContextMenu',
-  'QForm',
-  'QFormItem',
-  'QInput',
-  'QInputNumber',
-  'QMessageBox',
-  'QPagination',
-  'QPopover',
-  'QScrollbar',
-  'QSelect',
-  'QOption',
-  'QTextarea',
-  'QTabs',
-  'QTabPane',
-  'QTag',
-  'QDrawer',
-  'QTable',
-  'QForm',
-  'QFormItem',
-  'QUpload',
-  // modals
-  'QNotification',
-  'QDialog',
-  'QMessageBox'
-];
+const Components = {
+  QBreadcrumbs,
+  QButton,
+  QCascader,
+  QCheckbox,
+  QCheckboxGroup,
+  QCol,
+  QCollapse,
+  QCollapseItem,
+  QColorPicker,
+  QContextMenu,
+  QDatePicker,
+  QDialog,
+  QDrawer,
+  QForm,
+  QFormItem,
+  QInput,
+  QInputNumber,
+  QMessageBox,
+  QNotification,
+  QOption,
+  QPagination,
+  QPopover,
+  QRadio,
+  QRadioGroup,
+  QRow,
+  QScrollbar,
+  QSelect,
+  QTabPane,
+  QTable,
+  QTabs,
+  QTag,
+  QTextarea,
+  QTimePicker,
+  QUpload
+};
 
-let zIndexCounter = 2000;
+const allComponents = Object.keys(Components);
+
+// import styles
+require('../fonts/index.scss');
+require('../icons/index.scss');
+require('../main.scss');
+
+allComponents.forEach(component => {
+  const kebabCaseComponent = kebabCase(component);
+  try {
+    // eslint-disable-next-line import/no-dynamic-require
+    require(`../qComponents/${component}/src/${kebabCaseComponent}.scss`);
+  } catch (err) {
+    console.warn(err);
+  }
+});
+
+// install
 const install = (
   Vue,
   {
-    components = allComponents,
     localization: { locale = 'ru', customI18nMessages = {} } = {},
-    styles: {
-      // theme = 'neumorphism', - it will be used in future
-      importStyles: {
-        fonts = true,
-        icons = true,
-        main = true,
-        qComponents = true
-      } = {}
-    } = {}
+    zIndexCounter = 2000
   } = {}
 ) => {
-  const validComponents = components.filter(component => {
-    if (!allComponents.includes(component)) {
-      console.error(`Qui does not contain component ${component}`);
-      return false;
-    }
-
-    return component;
-  });
-
-  // import styles
-  if (fonts) {
-    require('../fonts/index.scss');
-  }
-
-  if (icons) {
-    require('../icons/index.scss');
-  }
-
-  if (main) {
-    require('../main.scss');
-  }
-
-  if (qComponents) {
-    validComponents.forEach(component => {
-      try {
-        // eslint-disable-next-line import/no-dynamic-require
-        require(`../qComponents/${component}/src/${kebabCase(component)}.scss`);
-      } catch (err) {
-        console.warn(err);
-      }
-    });
-  }
-
   // define plugins
   Object.defineProperties(Vue.prototype, {
     $Q: {
@@ -115,31 +120,65 @@ const install = (
     }
   });
 
-  Vue.use(VueI18n);
   Vue.use(vClickOutside);
+  installI18n({ locale, customI18nMessages });
 
-  const i18n = new VueI18n({
-    locale,
-    messages: merge(messages, customI18nMessages)
-  });
-
-  // eslint-disable-next-line no-underscore-dangle
-  Vue.prototype._i18n = i18n;
-
-  // import components
-  validComponents.forEach(component => {
-    Vue.component(component, () => import(`./${component}`));
+  allComponents.forEach(name => {
+    Vue.component(name, Components[name]);
   });
 };
 
-/* istanbul ignore if */
-if (typeof window !== 'undefined' && window.Vue) {
-  install(window.Vue);
-}
-
-export default {
+const Qui = {
   version,
   install
 };
 
-export { allComponents };
+// Auto-install when vue is found (eg. in browser via <script> tag)
+let GlobalVue = null;
+if (typeof window !== 'undefined') {
+  GlobalVue = window.Vue;
+} else if (typeof global !== 'undefined') {
+  GlobalVue = global.Vue;
+}
+
+if (GlobalVue) {
+  GlobalVue.use(Qui);
+}
+
+export default Qui;
+export {
+  QBreadcrumbs,
+  QButton,
+  QCascader,
+  QCheckbox,
+  QCheckboxGroup,
+  QCol,
+  QCollapse,
+  QCollapseItem,
+  QColorPicker,
+  QContextMenu,
+  QDatePicker,
+  QDialog,
+  QDrawer,
+  QForm,
+  QFormItem,
+  QInput,
+  QInputNumber,
+  QMessageBox,
+  QNotification,
+  QOption,
+  QPagination,
+  QPopover,
+  QRadio,
+  QRadioGroup,
+  QRow,
+  QScrollbar,
+  QSelect,
+  QTabPane,
+  QTable,
+  QTabs,
+  QTag,
+  QTextarea,
+  QTimePicker,
+  QUpload
+};
