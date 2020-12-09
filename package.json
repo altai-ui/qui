@@ -1,23 +1,22 @@
 {
-  "title": "Qui 🥷",
   "name": "@qvant/qui",
-  "version": "1.0.3",
+  "version": "1.0.4",
+  "private": false,
   "description": "A Vue.js Design system for Web.",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Qvant-lab/qui.git"
+  "author": {
+    "name": "Qvant Frontend team"
   },
-  "author": "Qvant Frontend team",
   "scripts": {
-    "storybook": "start-storybook -s ./public -p 6006",
+    "build": "npx vue-cli-service build --target lib --name qui --entry ./src/qComponents/index.js",
     "build-storybook": "build-storybook -c .storybook -o .out",
-    "stylelint:fix": "stylelint --fix '**/*.{scss,vue}'",
-    "prettier": "prettier --write '**/*.{js,vue,scss,json,yml}'",
-    "eslint": "eslint --fix --no-ignore .storybook/**/**/*.{vue,js}",
     "create-badges": "node scripts/badges.js",
-    "deploy-storybook": "storybook-to-ghpages"
+    "deploy-storybook": "storybook-to-ghpages",
+    "eslint": "eslint --fix --no-ignore .storybook/**/**/*.{vue,js}",
+    "prettier": "prettier --write '**/*.{js,vue,scss,json,yml}'",
+    "storybook": "start-storybook -s ./public -p 6006",
+    "stylelint:fix": "stylelint --fix '**/*.{scss,vue}'"
   },
-  "license": "MIT",
+  "main": "./dist/qui.common.js",
   "dependencies": {
     "@popperjs/core": "^2.4.4",
     "async-validator": "^3.4.0",
@@ -26,7 +25,8 @@
     "lodash-es": "^4.17.15",
     "resize-observer-polyfill": "^1.5.0",
     "v-click-outside": "^3.1.2",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-i18n": "^8.22.2"
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",
@@ -37,7 +37,11 @@
     "@storybook/storybook-deployer": "^2.8.7",
     "@storybook/theming": "^6.1.9",
     "@storybook/vue": "^6.0.21",
-    "babel-eslint": "^10.0.3",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "babel-preset-vue": "^2.0.2",
     "badges": "^4.24.0",
@@ -59,12 +63,31 @@
     "vue-loader": "^15.9.3",
     "vue-template-compiler": "^2.6.11"
   },
+  "_id": "@qvant/qui@1.0.4",
+  "bugs": {
+    "url": "https://github.com/Qvant-lab/qui/issues"
+  },
+  "contributors": [
+    {
+      "name": "Viktor Zheleztsov",
+      "url": "https://github.com/ViZhe"
+    },
+    {
+      "name": "Maksim Novikov",
+      "url": "https://github.com/Esvalirion"
+    },
+    {
+      "name": "Shamil Alisultanov",
+      "url": "https://github.com/shamilfrontend"
+    }
+  ],
+  "demo": "https://qvant-lab.github.io/qui/",
+  "homepage": "https://github.com/Qvant-lab/qui#readme",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
   },
-  "main": "index.js",
   "keywords": [
     "design-system",
     "components",
@@ -74,17 +97,15 @@
     "sass",
     "neumorphism"
   ],
-  "bugs": {
-    "url": "https://github.com/Qvant-lab/qui/issues"
-  },
-  "homepage": "https://github.com/Qvant-lab/qui#readme",
-  "demo": "https://qvant-lab.github.io/qui/",
+  "license": "MIT",
   "maintainers": [
-    "Tim Bochkarev (darknelmail.com@mail.ru) (https://twitter.com/timbochkarev)"
+    {
+      "name": "Tim Bochkarev",
+      "url": "https://github.com/Tim152"
+    }
   ],
-  "contributors": [
-    "Viktor Zheleztsov (https://github.com/ViZhe)",
-    "Maksim Novikov (https://github.com/Esvalirion)",
-    "Shamil Alisultanov (https://github.com/shamilfrontend)"
-  ]
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Qvant-lab/qui.git"
+  }
 }

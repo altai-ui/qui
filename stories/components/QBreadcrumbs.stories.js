@@ -1,6 +1,6 @@
 import Vue from 'vue';
 
-import { QBreadcrumbs } from '../../src/qComponents';
+import QBreadcrumbs from '../../src/qComponents/QBreadcrumbs';
 
 export default {
   title: 'Components/QBreadcrumbs',

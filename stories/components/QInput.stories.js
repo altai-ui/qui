@@ -1,4 +1,4 @@
-import { QInput } from '../../src/qComponents';
+import QInput from '../../src/qComponents/QInput';
 
 import { iconsList } from '../core/icons.stories.mdx';
 
@@ -50,7 +50,7 @@ export default {
 };
 
 export const QInputStory = (_, { argTypes }) => ({
-  props: Object.keys(argTypes),
+  props: Object.keys(argTypes).filter(arg => arg !== 'value'),
 
   data() {
     return {

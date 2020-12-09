@@ -1,4 +1,4 @@
-import { QTable } from '../../src/qComponents';
+import QTable from '../../src/qComponents/QTable';
 
 const argtypes = {
   total: {

@@ -8,7 +8,7 @@
       ref="input"
       v-model="model"
       readonly
-      :placeholder="checkedNodes.length ? '' : placeholder"
+      :placeholder="calcPlaceholder"
       :disabled="isDisabled"
       :validate-event="false"
       :class="{
@@ -187,7 +187,7 @@ export default {
      */
     placeholder: {
       type: String,
-      default: 'Выберите'
+      default: null
     },
     /**
      * whether QCascader is disabled
@@ -264,6 +264,11 @@ export default {
       set(value) {
         this.inputValue = value;
       }
+    },
+    calcPlaceholder() {
+      return this.checkedNodes.length
+        ? ''
+        : this.placeholder ?? this.$t('QCascader.placeholder');
     },
     isDisabled() {
       return this.disabled || (this.qForm?.disabled ?? false);

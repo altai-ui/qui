@@ -64,11 +64,11 @@
       :value="value"
       :value-key="valueKey"
       :select-all-shown="selectAllShown"
-      :select-all-text="selectAllText"
+      :select-all-text="selectAllText || $t('QSelect.selectAll')"
       :show-empty-content="showEmptyContent"
       :empty-text="emptyText"
       :is-can-load-more-shown="isCanLoadMoreShown"
-      :load-more-text="loadMoreText"
+      :load-more-text="loadMoreText || $t('QSelect.more')"
       :query="query"
       :is-new-option-shown="isNewOptionShown"
       @select-all="emitValueUpdate"
@@ -171,28 +171,28 @@ export default {
      */
     loadingText: {
       type: String,
-      default: 'Загрузка...'
+      default: null
     },
     /**
      * text that is shown when `canLoadMore` is true
      */
     loadMoreText: {
       type: String,
-      default: 'Показаны не все результаты, уточните поиск'
+      default: null
     },
     /**
      * text of no match state
      */
     noMatchText: {
       type: String,
-      default: 'Нет совпадений'
+      default: null
     },
     /**
      * text of no data state
      */
     noDataText: {
       type: String,
-      default: 'Нет данных'
+      default: null
     },
     /**
      * whether multiple-select is activated
@@ -219,7 +219,7 @@ export default {
     /**
      * text of select all button
      */
-    selectAllText: { type: String, default: 'Выбрать всё' },
+    selectAllText: { type: String, default: null },
     /**
      * unique identity key name for value, required when value is an object
      */
@@ -306,7 +306,8 @@ export default {
     },
 
     emptyText() {
-      if (this.loading) return this.loadingText;
+      const loadingText = this.loadingText ?? this.$t('QSelect.loading');
+      if (this.loading) return loadingText;
 
       if (
         this.filterable &&
@@ -314,10 +315,11 @@ export default {
         this.options.length > 0 &&
         this.visibleOptionsCount === 0
       ) {
-        return this.noMatchText;
+        return this.noMatchText ?? this.$t('QSelect.noMatch');
       }
 
-      if (this.options.length === 0) return this.noDataText;
+      if (this.options.length === 0)
+        return this.noDataText ?? this.$t('QSelect.noData');
 
       return '';
     },

@@ -398,8 +398,6 @@
       background-color: var(--color-tertiary-gray-ultra-light);
       border-radius: 50%;
 
-      $--base-path: '..' !default;
-
       &::before {
         content: '';
         display: block;
@@ -407,7 +405,7 @@
         height: 160px;
         margin-top: -6px;
         margin-left: -6px;
-        background-image: url('#{$--base-path}/assets/empty-table-v2.svg');
+        background-image: url('../../../assets/empty-table-v2.svg');
         background-size: 100%;
       }
     }

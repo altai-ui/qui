@@ -8,7 +8,7 @@
       v-if="isSymbolLimitShown"
       class="q-textarea__count"
     >
-      Количество знаков: {{ textLength }}/{{ upperLimit }}
+      {{ $t('QTextarea.charNumber') }}: {{ textLength }}/{{ upperLimit }}
     </div>
     <textarea
       ref="textarea"

@@ -29,8 +29,6 @@ Some examples below:
 ![Alt text](/.readme-assets/datepicker.jpg?raw=true)
 ![Alt text](/.readme-assets/other.jpg?raw=true)
 
-...find more in [Docs](https://qvant-lab.github.io/qui/)
-
 ## Install
 
 ```bash
@@ -38,25 +36,100 @@ npm install @qvant/qui -S
 yarn add @qvant/qui
 ```
 
+You can import Qui entirely, or just import what you need. Let's start with fully import.
+
 ## Quick setup
+
+In main.js:
 
 ```js
 import Vue from 'vue';
-import {
-  QButton,
-  QCheckbox
-  ...
-} from '@qvant/qui/src/qComponents';
+import Qui from '@qvant/qui';
+import '@qvant/qui/dist/qui.css';
 
+// Setup all components
+Vue.use(Qui);
+// that's it!
+// all components will be imported with styles
+
+// ...or configure setup
+Vue.use(Qui, {
+  localization: {
+    locale: 'en', // Russuan language by default, you can set `en` for English
+    customI18nMessages: {
+      en: {
+        // rewrite default texts, see the source: src/qComponents/constants/localizationConfig.js
+        QDatepicker: {
+          placeholder: 'Pick your birthday!'
+        }
+      }
+    }
+  }
+});
+```
+
+Now you have implemented Vue and Qui to your project, and it's time to write your code.
+Please refer to each component's [Stories](https://qvant-lab.github.io/qui/) to learn how to use them.
+
+## Not quick setup
+
+If you have a module bundler (e.g webpack), you can import components separately and take care about your bundle size
+
+In main.js:
+
+```js
+// import the main plugin from another place (it ensures Qui will be installed without any components, but instance will set required properties and directives)
+import Qui from '@qvant/qui/src/qComponents/onDemand';
+
+// import the component you want
+import QButton from '@qvant/qui/src/qComponents/QButton';
+// ...or in async way
+Vue.component('q-button', () =>
+  import(/* webpackChunkName: "qui" */ '@qvant/qui/src/qComponents/QButton')
+);
+
+// init
+Vue.use(Qui);
 Vue.use(QButton);
-Vue.use(QCheckbox);
-...
+```
 
-// some components are required dynamic z-index, let's define it
-let zIndex = 2000;
-Vue.prototype.$Q = {};
+In main.scss:
 
-// if you want use modals inside your components as property of 'this'
+```scss
+// need to set the path for files with statics
+$--base-path: '~@qvant/qui/src';
+// set main styles
+@import '~@qvant/qui/src/main.scss';
+// notice that you must use `fonts` and `icons` styles for some of components:
+@import '~@qvant/qui/src/fonts/index.scss';
+@import '~@qvant/qui/src/icons/index.scss';
+```
+
+import all styles:
+
+```scss
+@import '~@qvant/qui/src/components.scss';
+```
+
+...or components separately:
+
+```scss
+@import '~@qvant/qui/src/qComponents/QBreadcrumbs/src/q-breadcrumbs.scss';
+@import '~@qvant/qui/src/qComponents/QButton/src/q-button.scss';
+// ...etc
+```
+
+## Optional
+
+- if you want use modals inside your components as property of 'this':
+
+```js
+import { QMessageBox, QDialog, QNotification } from '@qvant/qui';
+// or import separately
+import QMessageBox from '@qvant/qui/src/qComponents/QMessageBox';
+import QDialog from '@qvant/qui/src/qComponents/QDialog';
+import QNotification from '@qvant/qui/src/qComponents/QNotification';
+
 Vue.prototype.$message = QMessageBox.bind(Vue);
 Vue.prototype.$dialog = QDialog.bind(Vue);
 Vue.prototype.$notify = options =>
@@ -64,78 +137,46 @@ Vue.prototype.$notify = options =>
     duration: 3000, // - ms
     ...options
   });
-
 ```
 
-## Import into Scss
+- if you use VueI18n, you need to merge messages:
 
-main styles
+````js
+import VueI18n from 'vue-i18n';
+import { en, ru } from '@qvant/qui/src/qComponents/constants/locales';
 
-```scss
-@import '~@qvant/qui/src/main.scss';
-```
+Vue.use(VueI18n);
 
-import all styles
+const messages = {
+  en: {
+    message: {
+      hello: 'hello world'
+    },
+    ...en
+  },
+  ru: {
+    message: {
+      hello: 'привет, мир'
+    },
+    ...ru
+  }
+};
 
-```scss
-@import '~@qvant/qui/src/qStyles/main.scss';
-```
+const i18n = new VueI18n({
+  locale: 'en',
+  messages
+});
 
-...or components separately
+new Vue({
+  i18n
+}).$mount('#your-app');
 
-```scss
-@import '~@qvant/qui/src/qComponents/QBreadcrumbs/src/q-breadcrumbs.scss';
-@import '~@qvant/qui/src/qComponents/QButton/src/q-button.scss';
-@import '~@qvant/qui/src/qComponents/QCascader/src/q-cascader.scss';
-@import '~@qvant/qui/src/qComponents/QCheckbox/src/q-checkbox.scss';
-@import '~@qvant/qui/src/qComponents/QCol/src/q-col.scss';
-@import '~@qvant/qui/src/qComponents/QCollapseItem/src/q-collapse-item.scss';
-@import '~@qvant/qui/src/qComponents/QColorPicker/src/q-color-picker.scss';
-@import '~@qvant/qui/src/qComponents/QContextMenu/src/q-context-menu.scss';
-@import '~@qvant/qui/src/qComponents/QDatePicker/src/q-date-picker.scss';
-@import '~@qvant/qui/src/qComponents/QDialog/src/q-dialog.scss';
-@import '~@qvant/qui/src/qComponents/QDrawer/src/q-drawer.scss';
-@import '~@qvant/qui/src/qComponents/QForm/src/q-form-item.scss';
-@import '~@qvant/qui/src/qComponents/QInput/src/q-input.scss';
-@import '~@qvant/qui/src/qComponents/QInputNumber/src/q-input-number.scss';
-@import '~@qvant/qui/src/qComponents/QMessageBox/src/q-message-box.scss';
-@import '~@qvant/qui/src/qComponents/QNotification/src/q-notification.scss';
-@import '~@qvant/qui/src/qComponents/QPagination/src/q-pagination.scss';
-@import '~@qvant/qui/src/qComponents/QPopover/src/q-popover.scss';
-@import '~@qvant/qui/src/qComponents/QRadio/src/q-radio.scss';
-@import '~@qvant/qui/src/qComponents/QRadio/src/q-radio-group.scss';
-@import '~@qvant/qui/src/qComponents/QRow/src/q-row.scss';
-@import '~@qvant/qui/src/qComponents/QScrollbar/src/q-scrollbar.scss';
-@import '~@qvant/qui/src/qComponents/QSelect/src/q-select.scss';
-@import '~@qvant/qui/src/qComponents/QTabs/src/q-tabs.scss';
-@import '~@qvant/qui/src/qComponents/QTabs/src/q-tab-pane.scss';
-@import '~@qvant/qui/src/qComponents/QTextarea/src/q-textarea.scss';
-@import '~@qvant/qui/src/qComponents/QUpload/src/q-upload.scss';
-```
 
-## fonts
-
-need to set the path for files with statics
-
-```scss
-$--base-path: '~@qvant/qui/src';
-@import '~@qvant/qui/src/main.scss';
-@import '~@qvant/qui/src/fonts/index.scss';
-@import '~@qvant/qui/src/icons/index.scss';
-@import '~@qvant/qui/src/qStyles/transition.scss';
-```
 
 ## Supported languages
 
 - Russian ✅
-- English ⏳ (...coming soon)
-
-## Run storybook
-
-```bash
-yarn storybook
-npm run storybook
-```
+- English ✅
 
 ## Browser Support
 
@@ -148,6 +189,15 @@ Modern browsers are recomended
 - edge: >=16
 - yandex: >=18
 - ie: ? (we don't know :) and will not support it)
+
+## Development
+
+Clone repository and run storybook
+
+```bash
+yarn storybook
+npm run storybook
+````
 
 ## LICENSE
 

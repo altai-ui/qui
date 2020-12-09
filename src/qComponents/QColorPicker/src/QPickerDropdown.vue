@@ -40,11 +40,11 @@
           class="q-picker-dropdown__btn-clear"
           @click="handleClearBtnClick"
         >
-          {{ clearBtnText }}
+          {{ $t('QColorPicker.clear') }}
         </button>
 
         <q-button @click="handleConfirmBtnClick">
-          {{ confirmBtnText }}
+          {{ $t('QColorPicker.confirm') }}
         </q-button>
       </div>
     </div>
@@ -78,14 +78,6 @@ export default {
     isClearBtnShown: {
       type: Boolean,
       default: false
-    },
-    clearBtnText: {
-      type: String,
-      default: 'Очистить'
-    },
-    confirmBtnText: {
-      type: String,
-      default: 'Применить'
     },
     color: {
       type: String,

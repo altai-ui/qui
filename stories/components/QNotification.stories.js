@@ -1,4 +1,4 @@
-import { QNotification } from '../../src/qComponents';
+import QNotification from '../../src/qComponents/QNotification';
 import QNotificationComponent from '../../src/qComponents/QNotification/src/QNotification.vue';
 import { iconsList } from '../core/icons.stories.mdx';
 

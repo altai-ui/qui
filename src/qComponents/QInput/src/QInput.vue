@@ -10,7 +10,7 @@
       class="q-input__count"
     >
       <span class="q-input__count-inner">
-        Количество знаков: {{ textLength }}/{{ upperLimit }}
+        {{ $t('QInput.charNumber') }}: {{ textLength }}/{{ upperLimit }}
       </span>
     </div>
     <input

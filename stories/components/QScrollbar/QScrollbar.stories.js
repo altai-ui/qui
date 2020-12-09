@@ -1,4 +1,4 @@
-import { QScrollbar } from '../../../src/qComponents';
+import QScrollbar from '../../../src/qComponents/QScrollbar';
 
 import './q-scrollbar.scss';
 

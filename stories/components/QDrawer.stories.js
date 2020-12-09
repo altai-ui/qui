@@ -1,4 +1,4 @@
-import { QDrawer } from '../../src/qComponents';
+import QDrawer from '../../src/qComponents/QDrawer';
 
 export default {
   title: 'Components/QDrawer',
