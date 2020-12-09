@@ -8,7 +8,12 @@ import en from './en';
 
 const installI18n = ({ locale, customI18nMessages }) => {
   const isI18nExist = Boolean(Vue.prototype._i18n);
-  if (isI18nExist) return;
+  if (isI18nExist) {
+    console.warn(
+      `Error: Qui can't setup VueI18n, it has detected in the app, please merge i18n messages, see the docs`
+    );
+    return;
+  }
   Vue.use(VueI18n);
   const i18n = new VueI18n({
     locale,
