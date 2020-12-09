@@ -79,7 +79,7 @@ In main.js:
 
 ```js
 // import the main plugin from another place (it ensures Qui will be installed without any components, but instance will set required properties and directives)
-import Qui from '@qvant/qui/src/qComponents/onDemand';
+import Qui from '@qvant/qui/src/onDemand';
 
 // import the component you want
 import QButton from '@qvant/qui/src/qComponents/QButton';
