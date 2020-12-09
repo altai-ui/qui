@@ -170,7 +170,7 @@ const i18n = new VueI18n({
 new Vue({
   i18n
 }).$mount('#your-app');
-
+```
 
 
 ## Supported languages
