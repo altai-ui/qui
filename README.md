@@ -141,7 +141,7 @@ Vue.prototype.$notify = options =>
 
 - if you use VueI18n, you need to merge messages:
 
-````js
+```js
 import VueI18n from 'vue-i18n';
 import { en, ru } from '@qvant/qui/src/qComponents/constants/locales';
 
@@ -172,7 +172,6 @@ new Vue({
 }).$mount('#your-app');
 ```
 
-
 ## Supported languages
 
 - Russian ✅
@@ -197,7 +196,7 @@ Clone repository and run storybook
 ```bash
 yarn storybook
 npm run storybook
-````
+```
 
 ## LICENSE
 
