@@ -69,7 +69,7 @@
       :type="type"
       :shortcuts="shortcuts"
       :disabled-values="disabledValues"
-      :first-day-of-week="firstDayOfWeek"
+      :first-day-of-week="calcFirstDayOfWeek"
       :value="transformedValue"
       :show-time="timepicker"
       @pick="handlePickClick"
@@ -196,9 +196,9 @@ export default {
      * start with monday by default
      */
     firstDayOfWeek: {
-      default: 1,
+      default: null,
       type: Number,
-      validator: val => val >= 0 && val <= 6
+      validator: val => val === null || (val >= 0 && val <= 6)
     },
     /**
      * as native name for input
@@ -287,6 +287,11 @@ export default {
   },
 
   computed: {
+    calcFirstDayOfWeek() {
+      if (!Number.isNaN(Number(this.firstDayOfWeek)))
+        return this.firstDayOfWeek;
+      return this.$Q.locale === 'ru' ? 1 : 0;
+    },
     transformedValue() {
       if (Array.isArray(this.value) && this.value.length) {
         return [convertDate(this.value[0]), convertDate(this.value[1])];

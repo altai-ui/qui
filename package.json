@@ -7,7 +7,6 @@
     "name": "Qvant Frontend team"
   },
   "scripts": {
-    "serve": "npx vue-cli-service serve",
     "build": "npx vue-cli-service build --target lib --name qui --entry ./src/qComponents/index.js",
     "build-storybook": "build-storybook -c .storybook -o .out",
     "create-badges": "node scripts/badges.js",
@@ -64,7 +63,7 @@
     "vue-loader": "^15.9.3",
     "vue-template-compiler": "^2.6.11"
   },
-  "_id": "@qvant/qui@1.0.3",
+  "_id": "@qvant/qui@1.0.4",
   "bugs": {
     "url": "https://github.com/Qvant-lab/qui/issues"
   },

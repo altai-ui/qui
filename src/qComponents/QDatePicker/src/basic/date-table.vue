@@ -87,8 +87,7 @@ export default {
   props: {
     firstDayOfWeek: {
       default: 1,
-      type: Number,
-      validator: val => val >= 1 && val <= 7
+      type: Number
     },
 
     disabledValues: {
