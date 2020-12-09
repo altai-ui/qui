@@ -25,7 +25,7 @@ export const QNotificationStory = (_, { argTypes }) => ({
   props: Object.keys(argTypes),
   methods: {
     handleClick() {
-      this.$notify({
+      QNotification({
         message: this.message,
         type: this.type,
         dangerouslyUseHTMLString: this.dangerouslyUseHTMLString,
