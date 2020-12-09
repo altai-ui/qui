@@ -52,20 +52,43 @@ Vue.use(Qui);
 // that's it!
 // all components will be imported with styles
 
+// the modals has shortcuts in your components:
+this.$notify({ ... }) // calls QNotification
+this.$message({ ... }) // calls QMessageBox
+this.$dialog({ ... }) // calls QDialog
+
 // ...or configure setup
 Vue.use(Qui, {
   localization: {
-    locale: 'en', // Russuan language by default, you can set `en` for English
+    locale: 'en', // Russian language by default, you can set `en` for English
     customI18nMessages: {
+      // rewrite default texts, see the source: src/qComponents/constants/locales
       en: {
-        // rewrite default texts, see the source: src/qComponents/constants/localizationConfig.js
         QDatepicker: {
           placeholder: 'Pick your birthday!'
         }
       }
-    }
+    },
+    prefix: 'yo' // you can change component's prefix, e.g. must be used <yo-input /> instead of <q-input />
   }
 });
+```
+
+in YourComponent.vue: (Example)
+
+```vue
+<template>
+  <q-input v-model="value" />
+</template>
+<script>
+export default {
+  data() {
+    return {
+      value: ''
+    };
+  }
+};
+</script>
 ```
 
 Now you have implemented Vue and Qui to your project, and it's time to write your code.
