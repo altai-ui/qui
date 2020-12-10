@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable global-require */
 /* eslint-disable no-param-reassign */
-import { kebabCase } from 'lodash-es';
+import { kebabCase, isString } from 'lodash-es';
 import vClickOutside from 'v-click-outside';
 import { version } from '../../package.json';
 import { installI18n } from './constants/locales';
@@ -80,6 +80,9 @@ const Components = {
 };
 
 const allComponents = Object.keys(Components);
+const allComponentsExceptModals = allComponents.filter(
+  name => !['QNotification', 'QMessageBox', 'QDialog'].includes(name)
+);
 
 // import styles
 require('../fonts/index.scss');
@@ -101,7 +104,8 @@ const install = (
   Vue,
   {
     localization: { locale = 'ru', customI18nMessages = {} } = {},
-    zIndexCounter = 2000
+    zIndexCounter = 2000,
+    prefix = ''
   } = {}
 ) => {
   // define plugins
@@ -123,8 +127,33 @@ const install = (
   Vue.use(vClickOutside);
   installI18n({ locale, customI18nMessages });
 
-  allComponents.forEach(name => {
-    Vue.component(name, Components[name]);
+  // setup modals
+  if (!Vue.prototype.$notify) {
+    Vue.prototype.$notify = options =>
+      QNotification({
+        duration: 3000, // - ms
+        ...options
+      });
+  } else if (process.env.NODE_ENV !== 'production') {
+    console.warn(`$notify hasn't been registered, it has existed before`);
+  }
+
+  if (!Vue.prototype.$message) {
+    Vue.prototype.$message = QMessageBox.bind(Vue);
+  } else if (process.env.NODE_ENV !== 'production') {
+    console.warn(`$message hasn't been registered, it has existed before`);
+  }
+
+  if (!Vue.prototype.$dialog) {
+    Vue.prototype.$dialog = QDialog.bind(Vue);
+  } else if (process.env.NODE_ENV !== 'production') {
+    console.warn(`$dialog hasn't been registered, it has existed before`);
+  }
+
+  allComponentsExceptModals.forEach(name => {
+    const newName =
+      prefix && isString(prefix) ? name.replace(/^Q/, prefix) : name;
+    Vue.component(newName, Components[name]);
   });
 };
 

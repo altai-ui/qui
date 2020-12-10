@@ -49,23 +49,74 @@ import '@qvant/qui/dist/qui.css';
 
 // Setup all components
 Vue.use(Qui);
-// that's it!
-// all components will be imported with styles
+// that's it! All components will be imported with styles
+```
 
-// ...or configure setup
+in YourComponent.vue: (Example)
+
+```vue
+<template>
+  <q-input v-model="value" />
+</template>
+<script>
+export default {
+  data() {
+    return {
+      value: ''
+    };
+  },
+  mounted() {
+    // the modals has shortcuts in your components:
+    this.$notify({ ... }) // calls QNotification
+    this.$message({ ... }) // calls QMessageBox
+    this.$dialog({ ... }) // calls QDialog
+  }
+};
+</script>
+```
+
+...or configure quick setup
+
+In main.js:
+
+```js
+import Vue from 'vue';
+import Qui from '@qvant/qui';
+import '@qvant/qui/dist/qui.css';
+
 Vue.use(Qui, {
   localization: {
-    locale: 'en', // Russuan language by default, you can set `en` for English
+    locale: 'en', // Russian language by default, you can set `en` for English
     customI18nMessages: {
+      // rewrite default texts, see the source: src/qComponents/constants/locales
       en: {
-        // rewrite default texts, see the source: src/qComponents/constants/localizationConfig.js
         QDatepicker: {
           placeholder: 'Pick your birthday!'
         }
       }
-    }
+    },
+    zIndexCounter: 3000, // zIndexCounter is being used by some components, (e.g QPopover, QSelect, QDialog ...etc), 2000 by default
+    prefix: 'yo' // you can change component's prefix, e.g. must be used <yo-input /> instead of <q-input />
   }
 });
+```
+
+in YourComponent.vue: (Example)
+
+```vue
+<template>
+  <!-- placeholder is changed on 'Pick your birthday!' -->
+  <yo-datepicker v-model="value" type="date" />
+</template>
+<script>
+export default {
+  data() {
+    return {
+      value: null
+    };
+  }
+};
+</script>
 ```
 
 Now you have implemented Vue and Qui to your project, and it's time to write your code.
