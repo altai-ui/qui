@@ -49,29 +49,7 @@ import '@qvant/qui/dist/qui.css';
 
 // Setup all components
 Vue.use(Qui);
-// that's it!
-// all components will be imported with styles
-
-// the modals has shortcuts in your components:
-this.$notify({ ... }) // calls QNotification
-this.$message({ ... }) // calls QMessageBox
-this.$dialog({ ... }) // calls QDialog
-
-// ...or configure setup
-Vue.use(Qui, {
-  localization: {
-    locale: 'en', // Russian language by default, you can set `en` for English
-    customI18nMessages: {
-      // rewrite default texts, see the source: src/qComponents/constants/locales
-      en: {
-        QDatepicker: {
-          placeholder: 'Pick your birthday!'
-        }
-      }
-    },
-    prefix: 'yo' // you can change component's prefix, e.g. must be used <yo-input /> instead of <q-input />
-  }
-});
+// that's it! All components will be imported with styles
 ```
 
 in YourComponent.vue: (Example)
@@ -85,6 +63,56 @@ export default {
   data() {
     return {
       value: ''
+    };
+  },
+  mounted() {
+    // the modals has shortcuts in your components:
+    this.$notify({ ... }) // calls QNotification
+    this.$message({ ... }) // calls QMessageBox
+    this.$dialog({ ... }) // calls QDialog
+  }
+};
+</script>
+```
+
+...or configure quick setup
+
+In main.js:
+
+```js
+import Vue from 'vue';
+import Qui from '@qvant/qui';
+import '@qvant/qui/dist/qui.css';
+
+Vue.use(Qui, {
+  localization: {
+    locale: 'en', // Russian language by default, you can set `en` for English
+    customI18nMessages: {
+      // rewrite default texts, see the source: src/qComponents/constants/locales
+      en: {
+        QDatepicker: {
+          placeholder: 'Pick your birthday!'
+        }
+      }
+    },
+    zIndexCounter: 3000, // zIndexCounter is being used by some components, (e.g QPopover, QSelect, QDialog ...etc), 2000 by default
+    prefix: 'yo' // you can change component's prefix, e.g. must be used <yo-input /> instead of <q-input />
+  }
+});
+```
+
+in YourComponent.vue: (Example)
+
+```vue
+<template>
+  <!-- placeholder is changed on 'Pick your birthday!' -->
+  <yo-datepicker v-model="value" type="date" />
+</template>
+<script>
+export default {
+  data() {
+    return {
+      value: null
     };
   }
 };

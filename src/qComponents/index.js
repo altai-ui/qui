@@ -134,19 +134,25 @@ const install = (
         duration: 3000, // - ms
         ...options
       });
+  } else if (process.env.NODE_ENV !== 'production') {
+    console.warn(`$notify hasn't been registered, it has existed before`);
   }
 
   if (!Vue.prototype.$message) {
     Vue.prototype.$message = QMessageBox.bind(Vue);
+  } else if (process.env.NODE_ENV !== 'production') {
+    console.warn(`$message hasn't been registered, it has existed before`);
   }
 
   if (!Vue.prototype.$dialog) {
     Vue.prototype.$dialog = QDialog.bind(Vue);
+  } else if (process.env.NODE_ENV !== 'production') {
+    console.warn(`$dialog hasn't been registered, it has existed before`);
   }
 
   allComponentsExceptModals.forEach(name => {
     const newName =
-      prefix && isString(prefix) ? name.replace('Q', prefix) : name;
+      prefix && isString(prefix) ? name.replace(/^Q/, prefix) : name;
     Vue.component(newName, Components[name]);
   });
 };
