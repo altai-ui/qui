@@ -8,8 +8,7 @@
 
 # A Vue.js Design System for Web.
 
-> Responsive, user-friendly and lightweight library helping us build great products for our customers
-> This library for Vue 2.x, Qui for Vue 3 in our roadmap
+> Responsive, user-friendly and lightweight library helping us build great products for our customers. This library for Vue 2.x, Qui for Vue 3 in our roadmap
 
 [Docs](https://qvant-lab.github.io/qui/)
 
