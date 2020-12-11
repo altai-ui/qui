@@ -88,6 +88,7 @@
 
   &__loading-wrapper {
     height: 100%;
+    min-height: 192px;
     overflow: hidden;
   }
 
@@ -98,9 +99,9 @@
     z-index: 10;
     display: flex;
     justify-content: center;
-    align-items: center;
     width: 100%;
     height: 100%;
+    padding-top: 64px;
     background-color: var(--color-tertiary-gray-light);
     opacity: 0;
     transition: height 0.2s, background-color 0.5s, opacity 0.2s 0.4s;
@@ -161,6 +162,7 @@
     overflow: hidden;
     font-weight: var(--font-weight-bold);
     line-height: var(--line-height-base);
+    vertical-align: top;
     color: var(--color-primary-black);
     white-space: nowrap;
 
