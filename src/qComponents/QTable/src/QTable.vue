@@ -17,7 +17,7 @@
       :style="loadingWrapperClass"
     >
       <q-scrollbar
-        v-if="rows.length || initialLoading"
+        v-if="rows.length"
         wrap-class="q-table__scroll-wrapper"
         theme="secondary"
       >
@@ -414,8 +414,7 @@ export default {
       loaderRow: null,
       wrapperClass: '',
       checkedRows: [],
-      sort: this.defaultSort,
-      initialLoading: true
+      sort: this.defaultSort
     };
   },
 
@@ -517,8 +516,6 @@ export default {
               updatedRow
             );
           }
-
-          if (this.initialLoading) this.initialLoading = false;
 
           return updatedRow;
         });
