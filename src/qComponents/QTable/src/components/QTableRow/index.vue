@@ -245,8 +245,12 @@ export default {
         maxWidth: maxWidth ? `${maxWidth}px` : ''
       };
     },
-    getCellStyle(key, columnIndex) {
+    getCellStyle(key, columnIndex, width) {
       const style = {};
+
+      if (width) {
+        style.width = `${width}px`;
+      }
 
       if (
         columnIndex === 0 &&

@@ -3,7 +3,7 @@
     <div
       v-if="isLeftShadowShown"
       class="q-table__column-shadow q-table__column-shadow_left"
-      :style="fixedWidth({ key: 'shadow' })"
+      :style="getCellWidth({ key: 'shadow' })"
     />
 
     <div
@@ -69,7 +69,7 @@
                 <th
                   v-for="(column, index) in columns"
                   :key="index"
-                  :style="fixedWidth(column)"
+                  :style="getCellWidth(column)"
                   :class="getCellClass(column)"
                   class="q-table__header-cell"
                   @click="handleHeaderClick(column)"
@@ -168,7 +168,7 @@
                 <td
                   v-for="(column, index) in columns"
                   :key="index"
-                  :style="fixedWidth(column)"
+                  :style="getCellWidth(column)"
                   :class="getCellClass(column)"
                   class="q-table__cell q-table__total-cell"
                 >
@@ -786,8 +786,12 @@ export default {
       return sortableClass;
     },
 
-    fixedWidth(column) {
+    getCellWidth(column) {
       const style = {};
+
+      if (column.width) {
+        style.width = `${column.width}px`;
+      }
 
       if (column.minWidth) {
         style.minWidth = `${column.minWidth}px`;
