@@ -25,28 +25,28 @@ Object.defineProperty(Vue.prototype, '$route', {
           path: 'path-a',
           name: 'ROUTE_A',
           meta: {
-            breadcrumb: 'Роут A'
+            breadcrumb: this.$t('QBreadcrumbsStories.routeA')
           }
         },
         {
           path: 'path-b',
           name: 'ROUTE_B',
           meta: {
-            breadcrumb: 'Очень длинный роут B'
+            breadcrumb: this.$t('QBreadcrumbsStories.routeB')
           }
         },
         {
           path: 'path-c',
           name: 'ROUTE_C',
           meta: {
-            breadcrumb: 'Роут C'
+            breadcrumb: this.$t('QBreadcrumbsStories.routeC')
           }
         },
         {
           path: 'path-d',
           name: 'ROUTE_D',
           meta: {
-            breadcrumb: 'Роут D'
+            breadcrumb: this.$t('QBreadcrumbsStories.routeD')
           }
         }
       ]
