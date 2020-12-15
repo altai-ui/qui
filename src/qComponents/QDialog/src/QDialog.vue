@@ -75,6 +75,9 @@ export default {
       type: Function,
       default: null
     },
+    /**
+     * pass props to child component
+     */
     componentProps: {
       type: Object,
       default: () => ({})

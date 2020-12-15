@@ -13,7 +13,7 @@ export default {
 };
 
 export const Default = (_, { argTypes }) => ({
-  props: Object.keys(argTypes),
+  props: Object.keys(argTypes).filter(val => val !== 'value'),
   data() {
     return {
       value: ''

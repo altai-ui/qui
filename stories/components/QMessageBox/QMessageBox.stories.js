@@ -8,7 +8,8 @@ export default {
   component: QMessageBoxComponent
 };
 
-export const QMessageBoxStory = () => ({
+export const QMessageBoxStory = (_, { argTypes }) => ({
+  props: Object.keys(argTypes).filter(val => val !== 'beforeClose'),
   methods: {
     async beforeClose({ action, ctx }) {
       if (action !== 'confirm') return true;
@@ -35,13 +36,7 @@ export const QMessageBoxStory = () => ({
     async handleClick() {
       try {
         const response = await QMessageBox.bind(Vue)({
-          title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.',
-          message:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula volutpat nulla et egestas. Mauris mollis, lorem vel aliquam gravida.',
-          submessage:
-            'Sed sit amet nibh consequat, pellentesque arcu ut, congue lorem.',
-          confirmButtonText: 'Fusce blandit',
-          cancelButtonText: 'Integer non',
+          ...this.$props,
           beforeClose: this.beforeClose
         });
         console.log(response);
@@ -54,13 +49,22 @@ export const QMessageBoxStory = () => ({
 });
 
 QMessageBoxStory.storyName = 'Default';
+QMessageBoxStory.args = {
+  title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.',
+  message:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula volutpat nulla et egestas. Mauris mollis, lorem vel aliquam gravida.',
+  submessage:
+    'Sed sit amet nibh consequat, pellentesque arcu ut, congue lorem.',
+  confirmButtonText: 'Fusce blandit',
+  cancelButtonText: 'Integer non'
+};
 
-export const QMessageBoxComponentStory = () => ({
+export const QMessageBoxComponentStory = (_, { argTypes }) => ({
+  props: Object.keys(argTypes),
   methods: {
     async handleClick() {
       try {
         const response = await QMessageBox.bind(Vue)({
-          title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.',
           component: () => import('./MessageBoxFormTest')
         });
         console.log(response);
@@ -73,19 +77,17 @@ export const QMessageBoxComponentStory = () => ({
 });
 
 QMessageBoxComponentStory.storyName = 'Component';
+QMessageBoxComponentStory.args = {
+  title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.'
+};
 
-export const QMessageBoxHTMLStory = () => ({
+export const QMessageBoxHTMLStory = (_, { argTypes }) => ({
+  props: Object.keys(argTypes),
   methods: {
     async handleClick() {
       try {
         const response = await QMessageBox.bind(Vue)({
-          title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.',
-          message:
-            '<strong>This</strong> is <i>HTML</i> <span style="color:red;">string</span>',
-          dangerouslyUseHTMLString: true,
-          submessage:
-            'Sed sit amet nibh consequat, pellentesque arcu ut, congue lorem.',
-          confirmButtonText: 'Fusce blandit'
+          ...this.$props
         });
         console.log(response);
       } catch (error) {
@@ -97,19 +99,28 @@ export const QMessageBoxHTMLStory = () => ({
 });
 
 QMessageBoxHTMLStory.storyName = 'HTML';
+QMessageBoxHTMLStory.args = {
+  title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.',
+  message:
+    '<strong>This</strong> is <i>HTML</i> <span style="color:red;">string</span>',
+  dangerouslyUseHTMLString: true,
+  submessage:
+    'Sed sit amet nibh consequat, pellentesque arcu ut, congue lorem.',
+  confirmButtonText: 'Fusce blandit'
+};
 
-export const QMessageBoxVNodeStory = () => ({
+export const QMessageBoxVNodeStory = (_, { argTypes }) => ({
+  props: Object.keys(argTypes),
   methods: {
     async handleClick() {
       try {
         const h = this.$createElement;
         const response = await QMessageBox.bind(Vue)({
-          title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.',
+          ...this.$props,
           message: h('p', null, [
             h('span', null, 'Message can be '),
             h('i', { style: 'color: teal' }, 'VNode')
-          ]),
-          confirmButtonText: 'Fusce blandit'
+          ])
         });
         console.log(response);
       } catch (error) {
@@ -121,3 +132,7 @@ export const QMessageBoxVNodeStory = () => ({
 });
 
 QMessageBoxVNodeStory.storyName = 'VNode';
+QMessageBoxVNodeStory.agrs = {
+  title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.',
+  confirmButtonText: 'Fusce blandit'
+};

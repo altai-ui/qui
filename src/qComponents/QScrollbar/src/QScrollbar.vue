@@ -46,27 +46,47 @@ export default {
   components: { QBar },
 
   props: {
+    /**
+     * passing DOM element will scroll content to it (works dynamically)
+     */
     scrollTo: {
       type: HTMLElement,
       default: null
     },
-    native: { type: Boolean, default: false },
+    /**
+     * whether scrollbar is always visible
+     */
     visible: { type: Boolean, default: false },
+    /**
+     * changes style
+     */
     theme: {
       type: String,
       default: 'primary',
       validator: value => ['primary', 'secondary'].includes(value)
     },
+    /**
+     * custom wrapper content class (it helps you to style content)
+     */
     wrapClass: { type: [Object, String, Array], default: '' },
     /**
-     * custom element view tag
+     * custom inner content tag
      */
     viewTag: {
       type: String,
       default: 'div'
     },
+    /**
+     * custom inner content class
+     */
     viewClass: { type: [Object, String, Array], default: '' },
+    /**
+     * custom inner content class
+     */
     viewStyle: { type: Object, default: null },
+    /**
+     * whether is resizeListener will watch for parent
+     */
     noresize: { type: Boolean, default: false }
   },
 
@@ -113,8 +133,6 @@ export default {
   },
 
   mounted() {
-    if (this.native) return;
-
     this.$nextTick(this.update);
 
     if (!this.noresize) {
@@ -124,8 +142,6 @@ export default {
   },
 
   beforeDestroy() {
-    if (this.native) return;
-
     if (!this.noresize) {
       removeResizeListener(this.$refs.resize, this.update);
       removeResizeListener(this.$el.parentNode, this.update);

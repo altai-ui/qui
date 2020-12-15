@@ -112,6 +112,9 @@ export default {
       type: String,
       default: ''
     },
+    /**
+     * whether message is treated as HTML string
+     */
     dangerouslyUseHTMLString: {
       type: Boolean,
       default: false
@@ -136,6 +139,9 @@ export default {
       type: Function,
       default: null
     },
+    /**
+     * pass props to child component
+     */
     componentProps: {
       type: Object,
       default: () => ({})

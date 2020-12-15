@@ -2,6 +2,12 @@ import { addMonths, subMonths } from 'date-fns';
 import QDatePicker from '../../../src/qComponents/QDatePicker';
 import Default from './Default';
 import DateTime from './DateTime';
+import Month from './Month';
+import Year from './Year';
+import DateRange from './DateRange';
+import DateTimeRange from './DateTimeRange';
+import MonthRange from './MonthRange';
+import YearRange from './YearRange';
 
 export default {
   title: 'Components/QDatePicker',
@@ -93,4 +99,13 @@ export default {
   }
 };
 
-export { Default, DateTime };
+export {
+  Default,
+  DateTime,
+  Month,
+  Year,
+  DateRange,
+  DateTimeRange,
+  MonthRange,
+  YearRange
+};

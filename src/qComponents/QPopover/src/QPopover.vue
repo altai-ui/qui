@@ -117,6 +117,7 @@ export default {
     },
     /**
      * delay before appearing, in milliseconds
+     * (works only when trigger is hover)
      */
     openDelay: {
       type: Number,
@@ -124,6 +125,7 @@ export default {
     },
     /**
      * delay before disappearing, in milliseconds
+     * (works only when trigger is hover)
      */
     closeDelay: {
       type: Number,

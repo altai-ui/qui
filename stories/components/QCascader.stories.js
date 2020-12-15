@@ -91,33 +91,8 @@ export const Default = (_, { argTypes }) => ({
 
 Default.args = args;
 
-export const Multiple = (_, { argTypes }) => ({
-  props: Object.keys(argTypes).filter(
-    arg => !['value', 'multiple'].includes(arg)
-  ),
-  data() {
-    return { value: null };
-  },
-  methods: {
-    handleValueChange(value) {
-      this.value = value;
-    }
-  },
-  template: `
-    <q-cascader
-      v-model="value"
-      @change="handleValueChange"
-      :check-strictly="checkStrictly"
-      :options="options"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :clearable="clearable"
-      :multiple="true"
-      :separator="separator"
-      :all-levels-shown="allLevelsShown"
-      :collapse-tags="collapseTags"
-    />
-  `
-});
-
-Multiple.args = args;
+export const Multiple = Default.bind({});
+Multiple.args = {
+  ...args,
+  multiple: true
+};
