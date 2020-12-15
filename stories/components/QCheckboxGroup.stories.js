@@ -1,19 +1,26 @@
 import QCheckboxGroup from '../../src/qComponents/QCheckboxGroup';
 import QCheckbox from '../../src/qComponents/QCheckbox';
 
+const args = {
+  min: 0,
+  max: 3
+};
+
 export default {
   title: 'Components/QCheckbox/QCheckboxGroup',
   component: QCheckboxGroup,
   subcomponents: { QCheckbox },
   argTypes: {
     value: { control: { type: 'none' } },
+    min: { control: { type: 'none' } },
+    max: { control: { type: 'none' } },
     direction: {
       control: { type: 'inline-radio', options: ['vertical', 'horizontal'] }
     }
   }
 };
 
-export const QCheckboxGroupStory = (_, { argTypes }) => ({
+export const Default = (_, { argTypes }) => ({
   props: Object.keys(argTypes),
   data() {
     return {
@@ -37,19 +44,16 @@ export const QCheckboxGroupStory = (_, { argTypes }) => ({
   `
 });
 
-QCheckboxGroupStory.storyName = 'Default';
-QCheckboxGroupStory.args = {
-  min: 1,
-  max: 2
-};
+Default.args = args;
 
-export const QCheckboxGroupStoryIndeterminate = () => ({
+export const Indeterminate = (_, { argTypes }) => ({
+  props: Object.keys(argTypes),
   components: { QCheckbox, QCheckboxGroup },
   data() {
     return {
       checkAll: false,
-      checkedCities: ['Вариант A', 'Option C'],
-      cities: ['Вариант A', 'Вариант B', 'Option C', 'Option D'],
+      checkedCities: ['Option A', 'Option C'],
+      cities: ['Option A', 'Option B', 'Option C', 'Option D'],
       isIndeterminate: true
     };
   },
@@ -72,14 +76,15 @@ export const QCheckboxGroupStoryIndeterminate = () => ({
         :indeterminate="isIndeterminate"
         style="margin-bottom: 16px"
         @change="handleCheckAllChange"
+        :disabled="disabled"
       >
-        Выбрать все
+        Check all
       </q-checkbox>
 
       <q-checkbox-group
         v-model="checkedCities"
-        direction="horizontal"
         @change="handleCheckedCitiesChange"
+        v-bind="$props"
       >
         <q-checkbox
           v-for="city in cities"
@@ -93,4 +98,4 @@ export const QCheckboxGroupStoryIndeterminate = () => ({
   `
 });
 
-QCheckboxGroupStoryIndeterminate.storyName = 'Indeterminate';
+Indeterminate.args = args;

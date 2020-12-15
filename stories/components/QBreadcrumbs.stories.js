@@ -77,14 +77,14 @@ QBreadcrumbsRouteStory.args = {
       path: 'path-a',
       name: 'ROUTE_A',
       meta: {
-        breadcrumb: 'Роут A'
+        breadcrumb: 'Route A'
       }
     },
     {
       path: 'path-b',
       name: 'ROUTE_b',
       meta: {
-        breadcrumb: 'Роут B'
+        breadcrumb: 'Route B'
       }
     }
   ]

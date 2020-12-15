@@ -52,7 +52,7 @@ const i18n = new VueI18n({
 });
 
 export const decorators = [
-  (Story, { globals }) => ({
+  () => ({
     i18n,
     beforeCreate: function() {
       this.$root._i18n = i18n;
