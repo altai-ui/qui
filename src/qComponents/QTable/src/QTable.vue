@@ -17,7 +17,7 @@
       :style="loadingWrapperClass"
     >
       <q-scrollbar
-        v-if="rows.length"
+        v-if="rows.length || isLoading"
         wrap-class="q-table__scroll-wrapper"
         theme="secondary"
       >
