@@ -14,10 +14,8 @@
     <div
       ref="loaderWrapper"
       class="q-table__loading-wrapper"
-      :style="loadingWrapperClass"
     >
       <q-scrollbar
-        v-if="rows.length || isLoading"
         wrap-class="q-table__scroll-wrapper"
         theme="secondary"
       >
@@ -25,6 +23,7 @@
           ref="tableWrapper"
           class="q-table__wrapper"
           :class="wrapperClass"
+          :style="loadingWrapperClass"
         >
           <div
             v-if="isLoading || !isLoadingAnimationComplete"
@@ -45,6 +44,7 @@
           </template>
 
           <table
+            v-if="rows.length"
             ref="QTable"
             class="q-table__table"
             :class="tableClasses"
@@ -234,18 +234,18 @@
               </template>
             </tbody>
           </table>
+
+          <div
+            v-else
+            class="q-table__empty"
+          >
+            <div class="q-table__empty-image" />
+            <div class="q-table__empty-text">
+              {{ emptyText || $t('QTable.noData') }}
+            </div>
+          </div>
         </div>
       </q-scrollbar>
-
-      <div
-        v-else
-        class="q-table__empty"
-      >
-        <div class="q-table__empty-image" />
-        <div class="q-table__empty-text">
-          {{ emptyText || $t('QTable.noData') }}
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -258,6 +258,7 @@ import withQTableRow from './hocs/withQTableRow';
 
 const RowHoc = withQTableRow(QTableRow);
 const shadowDropOffset = 3;
+const MIN_BLANK_TABLE_HEIGHT = 228;
 
 export default {
   name: 'QTable',
@@ -492,12 +493,12 @@ export default {
       setTimeout(() => {
         this.loaderWrapperHeight = this.$refs.QTable
           ? this.$refs.QTable.clientHeight + shadowDropOffset
-          : 0;
+          : MIN_BLANK_TABLE_HEIGHT;
 
         setTimeout(() => {
           this.isLoadingAnimationComplete = true;
-        }, this.timer * 200);
-      }, 100);
+        }, 200);
+      }, this.timer * 300);
     },
     rows: {
       handler(rows) {
@@ -536,7 +537,7 @@ export default {
 
     this.loaderWrapperHeight = this.$refs.QTable
       ? this.$refs.QTable.clientHeight + shadowDropOffset
-      : 0;
+      : MIN_BLANK_TABLE_HEIGHT;
   },
 
   mounted() {
@@ -547,7 +548,7 @@ export default {
 
     const wrapper = this.$refs?.tableWrapper ?? null;
 
-    if (wrapper) {
+    if (wrapper && this.$refs.QTable) {
       if (wrapper.offsetWidth < this.$refs.QTable.offsetWidth) {
         this.wrapperClass = 'q-table__wrapper_scrollable';
       }
