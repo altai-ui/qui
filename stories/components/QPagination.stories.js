@@ -7,6 +7,11 @@ export default {
 
 export const QPaginationStory = (_, { argTypes }) => ({
   props: Object.keys(argTypes),
+  methods: {
+    handleCurrentChange(val) {
+      this.currentPage = val;
+    }
+  },
   template: `
     <q-pagination
       :pageCount="pageCount"
@@ -15,12 +20,15 @@ export const QPaginationStory = (_, { argTypes }) => ({
       :currentPage="currentPage"
       :disabled="disabled"
       :pagerCount="pagerCount"
+      @current-change="handleCurrentChange"
     />
   `
 });
 
 QPaginationStory.storyName = 'Default';
 QPaginationStory.args = {
-  pageCount: 32,
-  currentPage: 4
+  pageCount: 30,
+  currentPage: 1,
+  total: 300,
+  pageSize: 10
 };

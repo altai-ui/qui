@@ -29,8 +29,19 @@ export default {
 
 export const Default = (_, { argTypes }) => ({
   props: Object.keys(argTypes),
+  data() {
+    return {
+      componentKey: 0
+    };
+  },
+  watch: {
+    trigger() {
+      // trigger is being setting up in mounted, we need to update render
+      this.componentKey += 1;
+    }
+  },
   template: `
-    <q-popover v-bind="$props">
+    <q-popover v-bind="$props" :key="componentKey">>
       <q-button
         slot="reference"
         circle

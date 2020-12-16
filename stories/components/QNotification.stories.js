@@ -41,8 +41,7 @@ export const QNotificationStory = (_, { argTypes }) => ({
   template: `
     <div>
       <q-button @click="handleClick">Click to open</q-button>
-      <br /><br />
-      <q-button @click="handleCloseAllClick">
+      <q-button @click="handleCloseAllClick" theme="secondary">
         close all
       </q-button>
     </div>

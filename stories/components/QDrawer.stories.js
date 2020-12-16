@@ -33,5 +33,6 @@ QNotificationStory.storyName = 'Default';
 QNotificationStory.args = {
   visible: false,
   appendToBody: false,
-  title: 'What is Lorem Ipsum?'
+  title: 'What is Lorem Ipsum?',
+  width: 350
 };

@@ -5,6 +5,7 @@ module.exports = {
     '@storybook/addon-docs',
     '@storybook/addon-controls',
     '@storybook/addon-storysource',
-    '@storybook/preset-scss'
+    '@storybook/preset-scss',
+    '@storybook/addon-toolbars'
   ]
 };

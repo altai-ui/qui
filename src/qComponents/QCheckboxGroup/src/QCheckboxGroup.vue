@@ -29,10 +29,25 @@ export default {
       type: Array,
       default: () => []
     },
+    /**
+     * disable all inner QCheckbox'es
+     */
     disabled: { type: Boolean, default: false },
+    /**
+     * minimum checked values
+     */
     min: { type: Number, default: 0 },
+    /**
+     * maximum checked values
+     */
     max: { type: Number, default: Infinity },
+    /**
+     * root tag
+     */
     tag: { type: String, default: 'div' },
+    /**
+     * vertical renders to column, horizontal to row
+     */
     direction: {
       type: String,
       default: 'vertical',

@@ -12,7 +12,6 @@
         v-for="(cell, index) in row"
         :key="index"
         class="q-year-table__cell-wrapper"
-        type="button"
         @mousemove="event => handleMouseMove(event, cell)"
         @click="event => handleYearTableClick(event, cell)"
       >
