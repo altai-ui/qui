@@ -95,17 +95,17 @@ export const QTableStory = (_, { argTypes }) => ({
       contextMenu: [
         {
           action: 'action1',
-          name: 'Показать относительные значения',
+          name: 'Action One',
           icon: 'q-icon-percent'
         },
         {
           action: 'action2',
-          name: 'Сортировать по убыванию',
+          name: 'Action Two',
           icon: 'q-icon-arrow-down'
         },
         {
           action: 'action3',
-          name: 'Сортировать по возрастанию',
+          name: 'Action Three',
           icon: 'q-icon-arrow-up'
         }
       ],
