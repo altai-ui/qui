@@ -19,16 +19,6 @@ export const parameters = {
 };
 
 export const globalTypes = {
-  theme: {
-    name: 'Theme',
-    description: 'Global theme for components',
-    defaultValue: 'light',
-    toolbar: {
-      icon: 'circlehollow',
-      // array of plain string values or MenuItem shape (see below)
-      items: ['light', 'dark']
-    }
-  },
   locale: {
     name: 'Locale',
     description: 'Internationalization locale',
@@ -52,9 +42,10 @@ const i18n = new VueI18n({
 });
 
 export const decorators = [
-  () => ({
+  (args, { globals }) => ({
     i18n,
     beforeCreate: function() {
+      i18n.locale = locale;
       this.$root._i18n = i18n;
     },
     template: '<story />'
