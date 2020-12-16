@@ -1,6 +1,6 @@
 {
   "name": "@qvant/qui",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "private": false,
   "description": "A Vue.js Design system for Web.",
   "author": {
@@ -64,7 +64,7 @@
     "vue-loader": "^15.9.3",
     "vue-template-compiler": "^2.6.11"
   },
-  "_id": "@qvant/qui@1.0.7",
+  "_id": "@qvant/qui@1.0.8",
   "bugs": {
     "url": "https://github.com/Qvant-lab/qui/issues"
   },

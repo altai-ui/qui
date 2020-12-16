@@ -30,7 +30,7 @@ export default {
       default: () => []
     },
     /**
-     * whether QCheckboxGroup is disabled
+     * disable all inner QCheckbox'es
      */
     disabled: { type: Boolean, default: false },
     /**
