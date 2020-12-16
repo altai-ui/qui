@@ -30,7 +30,7 @@ export default {
       default: () => []
     },
     /**
-     * whether to show loader inside button
+     * whether QCheckboxGroup is disabled
      */
     disabled: { type: Boolean, default: false },
     /**

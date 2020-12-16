@@ -1,5 +1,5 @@
 export default {
-  QBreadcrumbsStories: {
+  qBreadcrumbsStories: {
     routeA: 'Route A',
     routeB: 'Route B',
     routeC: 'Route C',
