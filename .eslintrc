@@ -46,5 +46,12 @@
 
     "no-console": 0,
     "no-debugger": 0
-  }
+  },
+
+  "overrides": [
+    {
+      "files": ["**/*.test.js"],
+      "env": { "jest": true }
+    }
+  ]
 }
