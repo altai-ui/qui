@@ -42,7 +42,7 @@ const i18n = new VueI18n({
 });
 
 export const decorators = [
-  (args, { globals }) => ({
+  (args, { globals: { locale } }) => ({
     i18n,
     beforeCreate: function() {
       i18n.locale = locale;
