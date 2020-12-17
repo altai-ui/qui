@@ -346,6 +346,7 @@ export default {
     options() {
       this.setSelected();
     },
+
     value(val, oldVal) {
       this.setSelected();
 
@@ -472,6 +473,7 @@ export default {
 
     hidePopper() {
       this.isDropdownShown = false;
+      this.query = '';
 
       if (!this.popper) return;
 
@@ -506,7 +508,18 @@ export default {
         const result = [];
         if (Array.isArray(this.value)) {
           this.value.forEach(value => {
-            result.push(this.getOption(value));
+            const option = this.getOption(value);
+
+            if (option) {
+              result.push(option);
+              return;
+            }
+
+            const keyByValueKey = get(value, this.valueKey);
+            const cachedOption = this.selected.find(
+              ({ key }) => key === keyByValueKey
+            );
+            if (cachedOption) result.push(cachedOption);
           });
         }
 
