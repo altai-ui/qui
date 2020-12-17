@@ -454,6 +454,11 @@ export default {
         this.popper.destroy();
         this.popper = null;
       }
+
+      const dropdown = this.$refs?.panel?.$el;
+      if (dropdown?.parentNode === document.body) {
+        document.body.removeChild(dropdown);
+      }
     },
 
     focus() {
