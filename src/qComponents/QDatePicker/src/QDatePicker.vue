@@ -407,6 +407,10 @@ export default {
     }
   },
 
+  beforeDestroy() {
+    this.destroyPopper();
+  },
+
   methods: {
     handlePickClick(val, { hidePicker = true } = {}) {
       this.pickerVisible = !hidePicker;
