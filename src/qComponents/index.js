@@ -108,19 +108,17 @@ const install = (
     prefix = ''
   } = {}
 ) => {
+  Vue.prototype.$Q = {};
   // define plugins
-  Object.defineProperties(Vue.prototype, {
-    $Q: {
-      value: {
-        zIndex: {
-          get() {
-            zIndexCounter += 1;
-
-            return zIndexCounter;
-          }
-        },
-        locale
+  Object.defineProperties(Vue.prototype.$Q, {
+    zIndex: {
+      get() {
+        zIndexCounter += 1;
+        return zIndexCounter;
       }
+    },
+    locale: {
+      value: locale
     }
   });
 
