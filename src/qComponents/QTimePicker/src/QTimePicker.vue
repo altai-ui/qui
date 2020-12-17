@@ -137,6 +137,11 @@ export default {
       return '';
     }
   },
+
+  beforeDestroy() {
+    this.destroyPopper();
+  },
+
   methods: {
     handleMouseEnter() {
       if (this.disabled) return;
