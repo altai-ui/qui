@@ -491,6 +491,7 @@ export default {
       const option = this.options.find(({ key }) => key === keyByValueKey);
 
       if (option) return option;
+      if (!this.allowCreate) return null;
 
       const newOption = {
         value,
@@ -510,7 +511,7 @@ export default {
           this.value.forEach(value => {
             const option = this.getOption(value);
 
-            if (option?.key) {
+            if (option) {
               result.push(option);
               return;
             }
