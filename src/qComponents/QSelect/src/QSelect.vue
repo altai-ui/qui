@@ -491,6 +491,7 @@ export default {
       const option = this.options.find(({ key }) => key === keyByValueKey);
 
       if (option) return option;
+      if (!this.allowCreate) return null;
 
       const newOption = {
         value,
