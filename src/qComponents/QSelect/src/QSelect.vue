@@ -510,7 +510,7 @@ export default {
           this.value.forEach(value => {
             const option = this.getOption(value);
 
-            if (option) {
+            if (option?.key) {
               result.push(option);
               return;
             }
