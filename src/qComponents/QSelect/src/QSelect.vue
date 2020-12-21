@@ -529,14 +529,17 @@ export default {
       }
 
       const option = this.getOption(this.value);
-      if (!option) {
-        this.selectedLabel = '';
-        this.selected = null;
+      if (option) {
+        this.selectedLabel = option.preparedLabel;
+        this.selected = option;
         return;
       }
 
-      this.selectedLabel = option.preparedLabel;
-      this.selected = option;
+      const keyByValueKey = get(this.value, this.valueKey);
+      if (this.selected?.key === keyByValueKey) return;
+
+      this.selectedLabel = '';
+      this.selected = null;
     },
 
     handleFocus(event) {
