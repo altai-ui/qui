@@ -4,6 +4,7 @@
     :class="{
       'q-tag_closable': closable
     }"
+    :title="title"
   >
     <div class="q-tag__text">
       <slot />
@@ -28,6 +29,20 @@ export default {
     closable: {
       type: Boolean,
       default: false
+    },
+    /**
+     * whether title is hidden
+     */
+    isTitleHidden: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  computed: {
+    title() {
+      if (this.isTitleHidden) return '';
+      return this.$slots.default[0]?.text?.trim() ?? '';
     }
   },
 
