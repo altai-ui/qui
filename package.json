@@ -14,7 +14,8 @@
     "eslint": "eslint --fix --no-ignore .storybook/**/**/*.{vue,js}",
     "prettier": "prettier --write '**/*.{js,vue,scss,json,yml}'",
     "storybook": "start-storybook -s ./public -p 6006",
-    "stylelint:fix": "stylelint --fix '**/*.{scss,vue}'"
+    "stylelint:fix": "stylelint --fix '**/*.{scss,vue}'",
+    "test:unit": "jest"
   },
   "main": "./dist/qui.common.js",
   "dependencies": {
@@ -22,6 +23,7 @@
     "async-validator": "^3.4.0",
     "color": "^3.1.2",
     "date-fns": "^2.15.0",
+    "jest-transform-stub": "^2.0.0",
     "lodash-es": "^4.17.15",
     "resize-observer-polyfill": "^1.5.0",
     "v-click-outside": "^3.1.2",
@@ -42,7 +44,9 @@
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/test-utils": "^1.1.1",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.6.3",
     "babel-loader": "^8.1.0",
     "babel-preset-vue": "^2.0.2",
     "badges": "^4.24.0",
@@ -54,6 +58,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^6.0.1",
     "husky": "^4.2.5",
+    "jest": "^26.6.3",
     "lint-staged": "^10.1.7",
     "node-sass": "^4.13.0",
     "sass-loader": "^10.0.2",
@@ -61,6 +66,7 @@
     "stylelint": "^13.7.1",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-order": "^4.0.0",
+    "vue-jest": "^3.0.7",
     "vue-loader": "^15.9.3",
     "vue-template-compiler": "^2.6.11"
   },
