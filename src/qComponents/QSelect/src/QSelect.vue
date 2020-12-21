@@ -531,15 +531,14 @@ export default {
 
       const option = this.getOption(this.value);
       if (option) {
-        this.selectedLabel = option.preparedLabel;
+        if (!this.isDropdownShown) this.selectedLabel = option.preparedLabel;
         this.selected = option;
         return;
       }
 
       const keyByValueKey = this.getKey(this.value);
       if (this.selected?.key === keyByValueKey) return;
-
-      this.selectedLabel = '';
+      if (!this.isDropdownShown) this.selectedLabel = '';
       this.selected = null;
     },
 
