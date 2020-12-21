@@ -31,18 +31,11 @@ export default {
       default: false
     },
     /**
-     * whether title is hidden
+     * QTag's title
      */
-    isTitleHidden: {
-      type: Boolean,
-      default: false
-    }
-  },
-
-  computed: {
-    title() {
-      if (this.isTitleHidden) return '';
-      return this.$slots.default[0]?.text?.trim() ?? '';
+    title: {
+      type: String,
+      default: ''
     }
   },
 
