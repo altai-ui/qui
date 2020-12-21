@@ -3,7 +3,7 @@
     <div
       ref="reference"
       class="q-context-trigger"
-      @click.stop="handleTriggerClick"
+      @click="handleTriggerClick"
     >
       <slot v-if="$slots.default" />
       <button
