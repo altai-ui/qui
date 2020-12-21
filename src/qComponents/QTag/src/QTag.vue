@@ -30,9 +30,6 @@ export default {
       type: Boolean,
       default: false
     },
-    /**
-     * QTag's title
-     */
     title: {
       type: String,
       default: ''
