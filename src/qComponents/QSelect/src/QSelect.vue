@@ -481,13 +481,14 @@ export default {
       this.popper = null;
     },
 
+    getKey(value) {
+      return isPlainObject(value) ? get(value, this.valueKey) : value;
+    },
+
     getOption(value) {
       if (isNil(value)) return null;
 
-      const keyByValueKey = isPlainObject(value)
-        ? get(value, this.valueKey)
-        : value;
-
+      const keyByValueKey = this.getKey(value);
       const option = this.options.find(({ key }) => key === keyByValueKey);
 
       if (option) return option;
@@ -516,7 +517,7 @@ export default {
               return;
             }
 
-            const keyByValueKey = get(value, this.valueKey);
+            const keyByValueKey = this.getKey(value);
             const cachedOption = this.selected.find(
               ({ key }) => key === keyByValueKey
             );
@@ -529,14 +530,16 @@ export default {
       }
 
       const option = this.getOption(this.value);
-      if (!option) {
-        this.selectedLabel = '';
-        this.selected = null;
+      if (option) {
+        if (!this.isDropdownShown) this.selectedLabel = option.preparedLabel;
+        this.selected = option;
         return;
       }
 
-      this.selectedLabel = option.preparedLabel;
-      this.selected = option;
+      const keyByValueKey = this.getKey(this.value);
+      if (this.selected?.key === keyByValueKey) return;
+      if (!this.isDropdownShown) this.selectedLabel = '';
+      this.selected = null;
     },
 
     handleFocus(event) {
