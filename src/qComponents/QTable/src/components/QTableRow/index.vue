@@ -24,6 +24,7 @@
     </td>
     <td
       v-for="(column, columnIndex) in columns"
+      :ref="`td${columnIndex}`"
       :key="column.key"
       :class="getFixedColumnClass(column.key)"
       :style="getCellStyle(column.key, columnIndex, column.width)"
@@ -31,7 +32,7 @@
     >
       <div
         class="q-table__cell-wrapper"
-        :style="getCellWrapperStyle(column)"
+        :style="getCellWrapperStyle(column, columnIndex)"
       >
         <div
           v-if="!selectable && canRowExpand(columnIndex)"
@@ -238,12 +239,16 @@ export default {
         paddingLeft: `${Number(paddingLeft) + this.indent}px`
       };
     },
-    getCellWrapperStyle({ width, minWidth, maxWidth }) {
+    getCellWrapperStyle({ width, minWidth, maxWidth }, columnIndex) {
       return {
         width: width ? `${width}px` : '',
         minWidth: minWidth ? `${minWidth}px` : '',
-        maxWidth: maxWidth ? `${maxWidth}px` : ''
+        maxWidth: maxWidth ? this.getCellMaxWidth(maxWidth, columnIndex) : ''
       };
+    },
+    getCellMaxWidth(maxWidth, columnIndex) {
+      const tdWidth = this.$refs[`td${columnIndex}`]?.[0].offsetWidth ?? 0;
+      return Math.max(tdWidth, maxWidth);
     },
     getCellStyle(key, columnIndex, width) {
       const style = {};
