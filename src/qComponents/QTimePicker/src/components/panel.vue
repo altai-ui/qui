@@ -5,7 +5,7 @@
     </div>
     <div class="time-panel__pickers">
       <div class="time-panel__hours">
-        <div class="time-panel__sign">час</div>
+        <div class="time-panel__sign">{{ $t('QTimePicker.hour') }}</div>
         <div class="time-panel__scrollbar">
           <q-scrollbar :scroll-to="hoursElement">
             <button
@@ -24,7 +24,7 @@
       </div>
       <div class="time-panel__minutes">
         <div class="time-panel__scrollbar">
-          <div class="time-panel__sign">мин</div>
+          <div class="time-panel__sign">{{ $t('QTimePicker.minute') }}</div>
           <q-scrollbar :scroll-to="minutesElement">
             <button
               v-for="minute in minutes"
@@ -42,7 +42,7 @@
       </div>
       <div class="time-panel__seconds">
         <div class="time-panel__scrollbar">
-          <div class="time-panel__sign">сек</div>
+          <div class="time-panel__sign">{{ $t('QTimePicker.second') }}</div>
           <q-scrollbar :scroll-to="secondsElement">
             <button
               v-for="second in seconds"
@@ -99,7 +99,7 @@ export default {
     },
     prefixToTime: {
       type: String,
-      default: ''
+      default: null
     },
     minutesGap: {
       type: [String, Number],

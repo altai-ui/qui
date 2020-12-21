@@ -24,14 +24,14 @@
         <div class="q-picker-panel__header">
           <button
             type="button"
-            aria-label="Предыдущий год"
+            :title="$t('QDatePicker.prevYear')"
             class="q-picker-panel__icon-btn q-icon-double-triangle-left"
             @click="handlePrevYearClick"
           />
           <button
             v-show="currentView === 'date'"
             type="button"
-            aria-label="Предыдущий месяц"
+            :title="$t('QDatePicker.prevMonth')"
             class="q-picker-panel__icon-btn q-icon-triangle-left"
             @click="handlePrevMonthClick"
           />
@@ -56,13 +56,13 @@
           <button
             v-show="currentView === 'date'"
             type="button"
-            aria-label="Следующий месяц"
+            :title="$t('QDatePicker.nextMonth')"
             class="q-picker-panel__icon-btn q-icon-triangle-right"
             @click="handleNextMonthClick"
           />
           <button
             type="button"
-            aria-label="Следующий год"
+            :title="$t('QDatePicker.nextYear')"
             class="q-picker-panel__icon-btn q-icon-double-triangle-right"
             @click="handleNextYearClick"
           />
@@ -190,7 +190,9 @@ export default {
     },
 
     currentMonth() {
-      const formatter = new Intl.DateTimeFormat('ru', { month: 'short' });
+      const formatter = new Intl.DateTimeFormat(this.$Q.locale, {
+        month: 'short'
+      });
       return formatter.format(new Date(this.year, this.month));
     },
 

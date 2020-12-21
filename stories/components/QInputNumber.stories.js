@@ -1,4 +1,4 @@
-import { QInputNumber } from '../../src/qComponents';
+import QInputNumber from '../../src/qComponents/QInputNumber';
 
 export default {
   title: 'Components/QInputNumber',

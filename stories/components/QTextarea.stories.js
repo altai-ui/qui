@@ -1,4 +1,4 @@
-import { QTextarea } from '../../src/qComponents';
+import QTextarea from '../../src/qComponents/QTextarea';
 
 export default {
   title: 'Components/QTextarea',
@@ -27,7 +27,7 @@ export default {
 };
 
 export const Default = (_, { argTypes }) => ({
-  props: Object.keys(argTypes),
+  props: Object.keys(argTypes).filter(arg => arg !== 'input'),
   data() {
     return {
       input: ''

@@ -1,5 +1,5 @@
 import { addMonths, subMonths } from 'date-fns';
-import { QDatePicker } from '../../src/qComponents';
+import QDatePicker from '../../src/qComponents/QDatePicker';
 
 export default {
   title: 'Components/QDatePicker',
@@ -79,6 +79,12 @@ export default {
           'monthrange',
           'yearrange'
         ]
+      }
+    },
+    firstDayOfWeek: {
+      control: {
+        type: 'select',
+        options: [0, 1, 2, 3, 4, 5, 6]
       }
     }
   }

@@ -1,9 +1,8 @@
-import { QCascader, QCascaderPanel } from '../../src/qComponents';
+import QCascader from '../../src/qComponents/QCascader';
 
 export default {
   title: 'Components/QCascader',
   component: QCascader,
-  subcomponents: { QCascaderPanel },
   argTypes: {
     value: { control: { type: 'none' } }
   }

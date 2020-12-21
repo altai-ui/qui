@@ -1,6 +1,6 @@
 import Vue from 'vue';
 
-import { QDialog } from '../../../src/qComponents';
+import QDialog from '../../../src/qComponents/QDialog';
 import QDialogComponent from '../../../src/qComponents/QDialog/src/QDialog.vue';
 
 export default {

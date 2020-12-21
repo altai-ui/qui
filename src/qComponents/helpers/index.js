@@ -1,12 +1,5 @@
-import { format } from 'date-fns';
-import { ru } from 'date-fns/locale';
 /* eslint-disable no-underscore-dangle */
 import ResizeObserver from 'resize-observer-polyfill';
-
-// by providing a default string of 'PP' or any of its variants for `formatStr`
-// it will format dates in whichever way is appropriate to the locale
-export const localFormat = (date, formatStr = 'PP') =>
-  format(date, formatStr, { locale: ru });
 
 export const on = (function() {
   if (document.addEventListener) {
@@ -51,6 +44,7 @@ const resizeHandler = entries => {
 };
 
 export const addResizeListener = (element, fn) => {
+  if (!element) return;
   if (!element.__resizeListeners__) {
     // eslint-disable-next-line no-param-reassign
     element.__resizeListeners__ = [];

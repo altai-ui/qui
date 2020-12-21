@@ -1,4 +1,4 @@
-import { QTag } from '../../src/qComponents';
+import QTag from '../../src/qComponents/QTag';
 
 export default {
   title: 'Components/QTag',

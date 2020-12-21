@@ -1,4 +1,4 @@
-import { QPopover } from '../../src/qComponents';
+import QPopover from '../../src/qComponents/QPopover';
 import { iconsList } from '../core/icons.stories.mdx';
 import PLACEMENTS from '../../src/qComponents/constants/popperPlacements';
 

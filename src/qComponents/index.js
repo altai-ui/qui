@@ -1,125 +1,59 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable global-require */
+/* eslint-disable no-param-reassign */
+import { kebabCase, isString } from 'lodash-es';
 import vClickOutside from 'v-click-outside';
-
 import { version } from '../../package.json';
+import { installI18n } from './constants/locales';
 
 import QButton from './QButton';
 import QBreadcrumbs from './QBreadcrumbs';
-import { QCheckbox, QCheckboxGroup } from './QCheckbox';
+import QCascader from './QCascader';
+import QDatePicker from './QDatePicker';
+import QTimePicker from './QTimePicker';
+import QCheckbox from './QCheckbox';
+import QCheckboxGroup from './QCheckboxGroup';
+import QRadio from './QRadio';
+import QRadioGroup from './QRadioGroup';
+import QRow from './QRow';
 import QCol from './QCol';
-import { QSelect, QOption } from './QSelect';
-import { QRadio, QRadioGroup } from './QRadio';
-import { QCascader, QCascaderPanel } from './QCascader';
-import QDrawer from './QDrawer';
-import { QForm, QFormItem } from './QForm';
-import QInput from './QInput';
-import QInputNumber from './QInputNumber';
-import QTextarea from './QTextarea';
-import QTag from './QTag';
 import QCollapse from './QCollapse';
 import QCollapseItem from './QCollapseItem';
 import QColorPicker from './QColorPicker';
 import QContextMenu from './QContextMenu';
-import QDialog from './QDialog';
-import QMessageBox from './QMessageBox';
-import QNotification from './QNotification';
+import QForm from './QForm';
+import QFormItem from './QFormItem';
+import QInput from './QInput';
+import QInputNumber from './QInputNumber';
 import QPagination from './QPagination';
 import QPopover from './QPopover';
-import QRow from './QRow';
 import QScrollbar from './QScrollbar';
-import { QTabs, QTabPane } from './QTabs';
-import QDatePicker from './QDatePicker';
-import QTimePicker from './QTimePicker';
+import QSelect from './QSelect';
+import QOption from './QOption';
+import QTextarea from './QTextarea';
+import QTabs from './QTabs';
+import QTabPane from './QTabPane';
+import QTag from './QTag';
+import QDrawer from './QDrawer';
 import QTable from './QTable';
 import QUpload from './QUpload';
+// modals
+import QNotification from './QNotification';
+import QDialog from './QDialog';
+import QMessageBox from './QMessageBox';
 
-const components = [
+const Components = {
+  QBreadcrumbs,
+  QButton,
+  QCascader,
+  QCheckbox,
+  QCheckboxGroup,
+  QCol,
+  QCollapse,
+  QCollapseItem,
+  QColorPicker,
+  QContextMenu,
   QDatePicker,
-  QTimePicker,
-  QButton,
-  QBreadcrumbs,
-  QCascader,
-  QCascaderPanel,
-  QCheckbox,
-  QCheckboxGroup,
-  QRadio,
-  QRadioGroup,
-  QRow,
-  QCol,
-  QCollapse,
-  QCollapseItem,
-  QColorPicker,
-  QContextMenu,
-  QForm,
-  QFormItem,
-  QInput,
-  QInputNumber,
-  QMessageBox,
-  QPagination,
-  QPopover,
-  QScrollbar,
-  QSelect,
-  QOption,
-  QTextarea,
-  QTabs,
-  QTabPane,
-  QTag,
-  QDrawer,
-  QTable,
-  QForm,
-  QFormItem,
-  QUpload
-];
-
-let zIndexCounter = 2000;
-
-const install = Vue => {
-  // eslint-disable-next-line no-param-reassign
-  Vue.prototype.$Q = {};
-
-  Object.defineProperty(Vue.prototype.$Q, 'zIndex', {
-    get() {
-      zIndexCounter += 1;
-
-      return zIndexCounter;
-    }
-  });
-
-  Vue.use(vClickOutside);
-
-  // eslint-disable-next-line no-param-reassign
-  Vue.prototype.$notify = QNotification;
-  // eslint-disable-next-line no-param-reassign
-  Vue.prototype.$dialog = QDialog.bind(Vue);
-  // eslint-disable-next-line no-param-reassign
-  Vue.prototype.$message = QMessageBox.bind(Vue);
-
-  components.forEach(component => {
-    Vue.component(component.name, component);
-  });
-};
-
-/* istanbul ignore if */
-if (typeof window !== 'undefined' && window.Vue) {
-  install(window.Vue);
-}
-
-export default {
-  version,
-  install
-};
-
-export {
-  QBreadcrumbs,
-  QButton,
-  QCascader,
-  QCascaderPanel,
-  QCheckbox,
-  QCheckboxGroup,
-  QCol,
-  QCollapse,
-  QCollapseItem,
-  QColorPicker,
-  QContextMenu,
   QDialog,
   QDrawer,
   QForm,
@@ -128,6 +62,7 @@ export {
   QInputNumber,
   QMessageBox,
   QNotification,
+  QOption,
   QPagination,
   QPopover,
   QRadio,
@@ -135,13 +70,144 @@ export {
   QRow,
   QScrollbar,
   QSelect,
-  QOption,
-  QTabs,
-  QTable,
   QTabPane,
+  QTable,
+  QTabs,
   QTag,
-  QDatePicker,
-  QTimePicker,
   QTextarea,
+  QTimePicker,
+  QUpload
+};
+
+const allComponents = Object.keys(Components);
+const allComponentsExceptModals = allComponents.filter(
+  name => !['QNotification', 'QMessageBox', 'QDialog'].includes(name)
+);
+
+// import styles
+require('../fonts/index.scss');
+require('../icons/index.scss');
+require('../main.scss');
+
+allComponents.forEach(component => {
+  const kebabCaseComponent = kebabCase(component);
+  try {
+    // eslint-disable-next-line import/no-dynamic-require
+    require(`../qComponents/${component}/src/${kebabCaseComponent}.scss`);
+  } catch (err) {
+    console.warn(err);
+  }
+});
+
+// install
+const install = (
+  Vue,
+  {
+    localization: { locale = 'ru', customI18nMessages = {} } = {},
+    zIndexCounter = 2000,
+    prefix = ''
+  } = {}
+) => {
+  // define plugins
+  Object.defineProperties(Vue.prototype, {
+    $Q: {
+      value: {
+        zIndex: {
+          get() {
+            zIndexCounter += 1;
+
+            return zIndexCounter;
+          }
+        },
+        locale
+      }
+    }
+  });
+
+  Vue.use(vClickOutside);
+  installI18n({ locale, customI18nMessages });
+
+  // setup modals
+  if (!Vue.prototype.$notify) {
+    Vue.prototype.$notify = options =>
+      QNotification({
+        duration: 3000, // - ms
+        ...options
+      });
+  } else if (process.env.NODE_ENV !== 'production') {
+    console.warn(`$notify hasn't been registered, it has existed before`);
+  }
+
+  if (!Vue.prototype.$message) {
+    Vue.prototype.$message = QMessageBox.bind(Vue);
+  } else if (process.env.NODE_ENV !== 'production') {
+    console.warn(`$message hasn't been registered, it has existed before`);
+  }
+
+  if (!Vue.prototype.$dialog) {
+    Vue.prototype.$dialog = QDialog.bind(Vue);
+  } else if (process.env.NODE_ENV !== 'production') {
+    console.warn(`$dialog hasn't been registered, it has existed before`);
+  }
+
+  allComponentsExceptModals.forEach(name => {
+    const newName =
+      prefix && isString(prefix) ? name.replace(/^Q/, prefix) : name;
+    Vue.component(newName, Components[name]);
+  });
+};
+
+const Qui = {
+  version,
+  install
+};
+
+// Auto-install when vue is found (eg. in browser via <script> tag)
+let GlobalVue = null;
+if (typeof window !== 'undefined') {
+  GlobalVue = window.Vue;
+} else if (typeof global !== 'undefined') {
+  GlobalVue = global.Vue;
+}
+
+if (GlobalVue) {
+  GlobalVue.use(Qui);
+}
+
+export default Qui;
+export {
+  QBreadcrumbs,
+  QButton,
+  QCascader,
+  QCheckbox,
+  QCheckboxGroup,
+  QCol,
+  QCollapse,
+  QCollapseItem,
+  QColorPicker,
+  QContextMenu,
+  QDatePicker,
+  QDialog,
+  QDrawer,
+  QForm,
+  QFormItem,
+  QInput,
+  QInputNumber,
+  QMessageBox,
+  QNotification,
+  QOption,
+  QPagination,
+  QPopover,
+  QRadio,
+  QRadioGroup,
+  QRow,
+  QScrollbar,
+  QSelect,
+  QTabPane,
+  QTable,
+  QTabs,
+  QTag,
+  QTextarea,
+  QTimePicker,
   QUpload
 };

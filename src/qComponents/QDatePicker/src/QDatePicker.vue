@@ -7,7 +7,7 @@
       :readonly="!editable"
       :disabled="pickerDisabled"
       :name="name"
-      :placeholder="placeholder"
+      :placeholder="placeholder || $t('QDatePicker.placeholder')"
       :value="displayValue"
       @focus="handleFocus"
       @keydown.native="handleKeydown"
@@ -35,7 +35,7 @@
       <input
         autocomplete="off"
         class="q-range-input"
-        :placeholder="startPlaceholder"
+        :placeholder="startPlaceholder || $t('QDatePicker.startPlaceholder')"
         :value="displayValue && displayValue[0]"
         :disabled="pickerDisabled"
         :name="name && name[0]"
@@ -47,7 +47,7 @@
       </slot>
       <input
         autocomplete="off"
-        :placeholder="endPlaceholder"
+        :placeholder="endPlaceholder || $t('QDatePicker.endPlaceholder')"
         :value="displayValue && displayValue[1]"
         :disabled="pickerDisabled"
         :name="name && name[1]"
@@ -69,7 +69,7 @@
       :type="type"
       :shortcuts="shortcuts"
       :disabled-values="disabledValues"
-      :first-day-of-week="firstDayOfWeek"
+      :first-day-of-week="calcFirstDayOfWeek"
       :value="transformedValue"
       :show-time="timepicker"
       @pick="handlePickClick"
@@ -180,22 +180,25 @@ export default {
       default: 'date',
       validator: val => ['date', 'iso'].includes(val)
     },
-    placeholder: { type: String, default: '' },
+    placeholder: { type: String, default: null },
     /**
      * only for ranged types
      */
-    startPlaceholder: { type: String, default: 'Дата начала' },
+    startPlaceholder: {
+      type: String,
+      default: null
+    },
     /**
      * only for ranged types
      */
-    endPlaceholder: { type: String, default: 'Дата окончания' },
+    endPlaceholder: { type: String, default: null },
     /**
      * start with monday by default
      */
     firstDayOfWeek: {
-      default: 1,
+      default: null,
       type: Number,
-      validator: val => val >= 0 && val <= 6
+      validator: val => val === null || (val >= 0 && val <= 6)
     },
     /**
      * as native name for input
@@ -284,6 +287,11 @@ export default {
   },
 
   computed: {
+    calcFirstDayOfWeek() {
+      if (!Number.isNaN(Number(this.firstDayOfWeek)))
+        return this.firstDayOfWeek;
+      return this.$Q.locale === 'ru' ? 1 : 0;
+    },
     transformedValue() {
       if (Array.isArray(this.value) && this.value.length) {
         return [convertDate(this.value[0]), convertDate(this.value[1])];
@@ -343,13 +351,17 @@ export default {
 
       if (Array.isArray(this.transformedValue)) {
         formattedValue = this.transformedValue.map(dateFromArray =>
-          formatLocalDate(dateFromArray, this.format)
+          formatLocalDate(dateFromArray, this.format, this.$Q.locale)
         );
       } else if (
         isDate(this.transformedValue) &&
         isValid(this.transformedValue)
       ) {
-        formattedValue = formatLocalDate(this.transformedValue, this.format);
+        formattedValue = formatLocalDate(
+          this.transformedValue,
+          this.format,
+          this.$Q.locale
+        );
       }
 
       if (Array.isArray(this.userInput)) {
@@ -535,7 +547,11 @@ export default {
       )
         return;
       const format = this.timepicker ? 'dd.MM.yyyy, HH:mm:ss' : 'dd.MM.yy';
-      this.userInput = formatLocalDate(this.transformedValue, format);
+      this.userInput = formatLocalDate(
+        this.transformedValue,
+        format,
+        this.$Q.locale
+      );
     },
 
     handleKeydown(event) {
@@ -576,7 +592,7 @@ export default {
     },
 
     emitChange(val) {
-      if (val) {
+      if (val !== this.value) {
         this.$emit('change', val);
         if (this.validateEvent) {
           this.qFormItem?.validateField('change');

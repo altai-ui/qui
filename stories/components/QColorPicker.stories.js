@@ -1,4 +1,4 @@
-import { QColorPicker } from '../../src/qComponents';
+import QColorPicker from '../../src/qComponents/QColorPicker';
 
 import PLACEMENTS from '../../src/qComponents/constants/popperPlacements';
 

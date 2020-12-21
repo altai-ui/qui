@@ -119,7 +119,7 @@
               :value="parsedLeftTime"
               :disabled="isLeftTimeDisabled"
               :disabled-values="disabledValues.time"
-              prefix-to-time="с"
+              :prefix-to-time="$t('QDatePicker.timeFrom')"
               @change="handleLeftTimeChange"
             />
           </div>
@@ -129,7 +129,7 @@
               class="time-panel time-panel_no-left-borders"
               :value="parsedRightTime"
               :disabled-values="disabledRightTimeValues"
-              prefix-to-time="по"
+              :prefix-to-time="$t('QDatePicker.timeTo')"
               @change="handleRightTimeChange"
             />
           </div>
