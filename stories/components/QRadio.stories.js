@@ -29,7 +29,7 @@ export const QRadioStory = (_, { argTypes }) => ({
       <q-radio
         v-model="radio1"
         value="2"
-        label="Вариант B"
+        label="Option B"
       />
       <br /><br />
       <q-radio
@@ -42,14 +42,14 @@ export const QRadioStory = (_, { argTypes }) => ({
         v-model="radio1"
         disabled
         value="4"
-        label="Неактивный вариант"
+        label="Disabled"
       />
       <br /><br />
       <q-radio
         v-model="radio2"
         disabled
         value="1"
-        label="Выбранный и неактивный вариант"
+        label="Checked & disabled"
       />
     </div>
   `

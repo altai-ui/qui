@@ -8,7 +8,8 @@ export default {
   component: QDialogComponent
 };
 
-export const QDialogStory = () => ({
+export const QDialogStory = (_, { argTypes }) => ({
+  props: Object.keys(argTypes),
   data() {
     return { dialogInstance: null };
   },
@@ -18,9 +19,10 @@ export const QDialogStory = () => ({
   },
   methods: {
     async handleClick() {
+      console.log(Object.keys(argTypes));
       const { answer, instance } = QDialog.bind(Vue)({
-        title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.',
-        component: () => import('./DialogFormTest')
+        component: () => import('./DialogFormTest'),
+        ...this.$props
       });
 
       this.dialogInstance = instance;
@@ -33,3 +35,6 @@ export const QDialogStory = () => ({
 });
 
 QDialogStory.storyName = 'Default';
+QDialogStory.args = {
+  title: 'Morbi massa libero, vehicula nec consequat sed, porta a sem.'
+};

@@ -137,6 +137,11 @@ export default {
       return '';
     }
   },
+
+  beforeDestroy() {
+    this.destroyPopper();
+  },
+
   methods: {
     handleMouseEnter() {
       if (this.disabled) return;
@@ -202,6 +207,11 @@ export default {
       if (this.popper) {
         this.popper.destroy();
         this.popper = null;
+      }
+
+      const dropdown = this.$refs?.panel?.$el;
+      if (dropdown?.parentNode === document.body) {
+        document.body.removeChild(dropdown);
       }
     },
 

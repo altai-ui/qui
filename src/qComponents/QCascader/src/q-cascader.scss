@@ -95,7 +95,7 @@
         }
 
         &::before {
-          font-size: 20px;
+          font-size: 16px;
         }
       }
     }
@@ -118,7 +118,6 @@
 
   &[data-show] {
     display: flex;
-    width: 100%;
     border-radius: var(--border-radius-base);
   }
 }

@@ -25,28 +25,28 @@ Object.defineProperty(Vue.prototype, '$route', {
           path: 'path-a',
           name: 'ROUTE_A',
           meta: {
-            breadcrumb: 'Роут A'
+            breadcrumb: this.$t('qBreadcrumbsStories.routeA')
           }
         },
         {
           path: 'path-b',
           name: 'ROUTE_B',
           meta: {
-            breadcrumb: 'Очень длинный роут B'
+            breadcrumb: this.$t('qBreadcrumbsStories.routeB')
           }
         },
         {
           path: 'path-c',
           name: 'ROUTE_C',
           meta: {
-            breadcrumb: 'Роут C'
+            breadcrumb: this.$t('qBreadcrumbsStories.routeC')
           }
         },
         {
           path: 'path-d',
           name: 'ROUTE_D',
           meta: {
-            breadcrumb: 'Роут D'
+            breadcrumb: this.$t('qBreadcrumbsStories.routeD')
           }
         }
       ]
@@ -64,28 +64,30 @@ export const QBreadcrumbsStory = (_, { argTypes }) => ({
 QBreadcrumbsStory.storyName = 'Default';
 
 export const QBreadcrumbsRouteStory = (_, { argTypes }) => ({
-  props: Object.keys(argTypes),
+  props: Object.keys(argTypes).filter(val => val !== 'customRoutes'),
+  data() {
+    return {
+      customRoutes: [
+        {
+          path: 'path-a',
+          name: 'ROUTE_A',
+          meta: {
+            breadcrumb: this.$t('qBreadcrumbsStories.routeA')
+          }
+        },
+        {
+          path: 'path-b',
+          name: 'ROUTE_b',
+          meta: {
+            breadcrumb: this.$t('qBreadcrumbsStories.routeB')
+          }
+        }
+      ]
+    };
+  },
   template: `
-    <q-breadcrumbs v-bind="$props" />
+    <q-breadcrumbs v-bind="$props" :custom-routes="customRoutes" />
   `
 });
 
 QBreadcrumbsRouteStory.storyName = 'Custom route';
-QBreadcrumbsRouteStory.args = {
-  customRoutes: [
-    {
-      path: 'path-a',
-      name: 'ROUTE_A',
-      meta: {
-        breadcrumb: 'Роут A'
-      }
-    },
-    {
-      path: 'path-b',
-      name: 'ROUTE_b',
-      meta: {
-        breadcrumb: 'Роут B'
-      }
-    }
-  ]
-};

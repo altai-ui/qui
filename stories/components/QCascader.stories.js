@@ -1,42 +1,7 @@
+import { multiply } from 'lodash-es';
 import QCascader from '../../src/qComponents/QCascader';
 
-export default {
-  title: 'Components/QCascader',
-  component: QCascader,
-  argTypes: {
-    value: { control: { type: 'none' } }
-  }
-};
-
-export const QCascaderStory = (_, { argTypes }) => ({
-  props: Object.keys(argTypes).filter(arg => !['value'].includes(arg)),
-  data() {
-    return { value: null };
-  },
-  methods: {
-    handleValueChange(value) {
-      this.value = value;
-    }
-  },
-  template: `
-    <q-cascader
-      v-model="value"
-      @change="handleValueChange"
-      :check-strictly="checkStrictly"
-      :options="options"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :clearable="clearable"
-      :multiple="multiple"
-      :separator="separator"
-      :all-levels-shown="allLevelsShown"
-      :collapse-tags="collapseTags"
-    />
-  `
-});
-
-QCascaderStory.storyName = 'Default';
-QCascaderStory.args = {
+const args = {
   options: [
     {
       value: 'guide',
@@ -87,4 +52,47 @@ QCascaderStory.args = {
       label: 'Resource'
     }
   ]
+};
+
+export default {
+  title: 'Components/QCascader',
+  component: QCascader,
+  argTypes: {
+    value: { control: { type: 'none' } }
+  }
+};
+
+export const Default = (_, { argTypes }) => ({
+  props: Object.keys(argTypes).filter(arg => !['value'].includes(arg)),
+  data() {
+    return { value: null };
+  },
+  methods: {
+    handleValueChange(value) {
+      this.value = value;
+    }
+  },
+  template: `
+    <q-cascader
+      v-model="value"
+      @change="handleValueChange"
+      :check-strictly="checkStrictly"
+      :options="options"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :clearable="clearable"
+      :multiple="multiple"
+      :separator="separator"
+      :all-levels-shown="allLevelsShown"
+      :collapse-tags="collapseTags"
+    />
+  `
+});
+
+Default.args = args;
+
+export const Multiple = Default.bind({});
+Multiple.args = {
+  ...args,
+  multiple: true
 };

@@ -66,7 +66,7 @@ export default {
     };
   },
   mounted() {
-    // the modals has shortcuts in your components:
+    // the modals have shortcuts in your components:
     this.$notify({ ... }) // calls QNotification
     this.$message({ ... }) // calls QMessageBox
     this.$dialog({ ... }) // calls QDialog

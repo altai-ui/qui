@@ -407,6 +407,10 @@ export default {
     }
   },
 
+  beforeDestroy() {
+    this.destroyPopper();
+  },
+
   methods: {
     handlePickClick(val, { hidePicker = true } = {}) {
       this.pickerVisible = !hidePicker;
@@ -449,6 +453,11 @@ export default {
       if (this.popper) {
         this.popper.destroy();
         this.popper = null;
+      }
+
+      const dropdown = this.$refs?.panel?.$el;
+      if (dropdown?.parentNode === document.body) {
+        document.body.removeChild(dropdown);
       }
     },
 

@@ -24,19 +24,19 @@ export const QCheckboxStory = (_, { argTypes }) => ({
     <div>
       <q-checkbox v-model="checked1" v-bind="$props" />
       <br /><br />
-      <q-checkbox v-model="checked2" label="Вариант B" />
+      <q-checkbox v-model="checked2" label="Option B" />
       <br /><br />
       <q-checkbox v-model="checked3" label="Option C" />
       <br /><br />
       <q-checkbox
         v-model="checked4"
-        label="Неактивный вариант"
+        label="Disabled"
         disabled
       />
       <br /><br />
       <q-checkbox
         v-model="checked5"
-        label="Выбранный и неактивный вариант"
+        label="Checked & Disabled"
         disabled
       />
     </div>
