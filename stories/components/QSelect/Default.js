@@ -1,29 +1,29 @@
 const options = [
   {
-    value: { id: 'value1' },
+    value: { value: 'value1' },
     label: 'Option 1'
   },
   {
-    value: { id: 'value2' },
+    value: { value: 'value2' },
     label: 'Option 2'
   },
   {
-    value: { id: 'value3' },
+    value: { value: 'value3' },
     label:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
   },
   {
-    value: { id: 'value4' },
+    value: { value: 'value4' },
     label: 'Option 4',
     disabled: true
   },
   {
-    value: { id: 'value5' },
+    value: { value: 'value5' },
     label: 'Sed sit amet nibh consequat, pellentesque arcu ut, congue lorem.',
     disabled: true
   },
   {
-    value: { id: 'value6' },
+    value: { value: 'value6' },
     label: 'Option 6'
   }
 ];

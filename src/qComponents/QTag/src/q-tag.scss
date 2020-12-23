@@ -11,7 +11,6 @@
   padding-left: 8px;
   line-height: 20px;
   color: rgba(var(--color-rgb-gray), 0.64);
-  white-space: nowrap;
   background-color: var(--color-tertiary-gray-darker);
   border-radius: 2px;
 
@@ -24,9 +23,11 @@
   }
 
   &__text {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    word-break: break-word;
   }
 
   &__close {
