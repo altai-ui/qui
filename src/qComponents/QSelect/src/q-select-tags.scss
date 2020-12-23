@@ -16,13 +16,13 @@
         max-width: 65%;
       }
     }
+  }
 
-    &.q-select-tags_collapse-tags {
-      flex-wrap: nowrap;
+  &.q-select-tags_collapse-tags {
+    flex-wrap: nowrap;
 
-      .q-tag {
-        flex-shrink: 0;
-      }
+    .q-tag:last-of-type {
+      flex-shrink: 0;
     }
   }
 
