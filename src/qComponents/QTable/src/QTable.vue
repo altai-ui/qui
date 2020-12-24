@@ -47,7 +47,6 @@
             v-if="rows.length"
             ref="QTable"
             class="q-table__table"
-            :style="{ 'table-layout': fixedLayout && 'fixed' }"
             :class="tableClasses"
             cellspacing="0"
             cellpadding="0"
@@ -201,47 +200,45 @@
                 </td>
               </tr>
 
-              <template>
-                <row-hoc
-                  v-for="(row, rowIndex) in computedRows"
-                  :key="rowIndex"
-                  :row="row"
-                  :row-index="rowIndex"
-                  :columns="columns"
-                  :class="levelClass(row.indent)"
-                  :fixed-column="fixedColumn"
-                  :expandable="expandable"
-                  :indent-size="indentSize"
-                  :indent="row.indent"
-                  :children-key="childrenKey"
-                  :pages-in-expand="pagesInExpand"
-                  :custom-row-class="customRowClass"
-                  :custom-row-style="customRowStyle"
-                  :checked-rows="checkedRows"
-                  :selectable="selectable"
-                  :row-click="$listeners['row-click'] && handleRowClick"
-                  @expand-click="handleExpandClick"
-                  @check="handleRowCheck"
-                >
-                  <template #row="{ rowData }">
-                    <slot
-                      v-if="$scopedSlots.row"
-                      name="row"
-                      :row="rowData"
-                    />
+              <row-hoc
+                v-for="(row, rowIndex) in computedRows"
+                :key="rowIndex"
+                :row="row"
+                :row-index="rowIndex"
+                :columns="columns"
+                :class="levelClass(row.indent)"
+                :fixed-column="fixedColumn"
+                :expandable="expandable"
+                :indent-size="indentSize"
+                :indent="row.indent"
+                :children-key="childrenKey"
+                :pages-in-expand="pagesInExpand"
+                :custom-row-class="customRowClass"
+                :custom-row-style="customRowStyle"
+                :checked-rows="checkedRows"
+                :selectable="selectable"
+                :row-click="$listeners['row-click'] && handleRowClick"
+                @expand-click="handleExpandClick"
+                @check="handleRowCheck"
+              >
+                <template #row="{ rowData }">
+                  <slot
+                    v-if="$scopedSlots.row"
+                    name="row"
+                    :row="rowData"
+                  />
 
-                    <slot
-                      v-else-if="findSlotForRow(rowData.$key)"
-                      :name="findSlotForRow(rowData.$key)"
-                      :row="rowData"
-                    />
+                  <slot
+                    v-else-if="findSlotForRow(rowData.$key)"
+                    :name="findSlotForRow(rowData.$key)"
+                    :row="rowData"
+                  />
 
-                    <template v-else>
-                      {{ rowData.value }}
-                    </template>
+                  <template v-else>
+                    {{ rowData.value }}
                   </template>
-                </row-hoc>
-              </template>
+                </template>
+              </row-hoc>
             </tbody>
           </table>
 
@@ -280,7 +277,7 @@ export default {
 
   props: {
     /**
-     * Whether width of columns automatically fits its container
+     * Whether to spread columns proportionally to the table\'s width
      */
     fixedLayout: {
       type: Boolean,
@@ -299,7 +296,8 @@ export default {
     },
     /**
      * Array of objects, each object must contain `key` and `value`.
-     * Can be extended by `sortable`, `slots` and `type` (if `isSeparated` flag is `true`)
+     * Can be extended by `sortable`, `slots`, `width` (works with `fixedLayout: true`)
+     * and `type` (if `isSeparated` flag is `true`)
      */
     columns: {
       type: Array,
@@ -356,7 +354,7 @@ export default {
      * Width of fixed column. If `fixedLayout: true`, width is equal to `defaultColWidth` prop.
      */
     fixedColumnWidth: {
-      type: Number,
+      type: String,
       default: null
     },
     expandable: {
@@ -461,7 +459,8 @@ export default {
         'q-table__selectable': this.selectable,
         'q-table__separated': this.isSeparated,
         'q-table__grid': this.grid,
-        'q-table__fixed-cols': this.fixedColumn.length
+        'q-table__fixed-cols': this.fixedColumn.length,
+        'q-table__fixed': this.fixedLayout
       };
     },
 
@@ -811,11 +810,11 @@ export default {
     getColWidth(column) {
       if (this.fixedColumn !== column.key && column.key !== 'shadow')
         return {
-          width: column.width ? `${column.width}px` : this.defaultColWidth
+          width: column.width ?? this.defaultColWidth
         };
 
       return {
-        width: `${this.fixedColumnWidth ?? this.defaultColWidth}px`
+        width: this.fixedColumnWidth ?? this.defaultColWidth
       };
     },
 

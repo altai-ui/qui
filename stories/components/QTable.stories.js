@@ -38,7 +38,7 @@ const defaultArgs = {
     },
     {
       left1: '4',
-      left2: '5',
+      left2: '5 very very very very long string',
       left3: '6',
       right1: '4',
       right2: '5',
@@ -130,7 +130,7 @@ export const QTableStory = (_, { argTypes }) => ({
           key: 'right1',
           value: 'Right 1',
           type: 'right',
-          percentable: true,
+          percent: true,
           sortable: true,
           slots: {
             header: 'customHeader',
@@ -140,14 +140,12 @@ export const QTableStory = (_, { argTypes }) => ({
         {
           key: 'right2',
           value: 'Right 2',
-          type: 'right',
-          percentable: true
+          type: 'right'
         },
         {
           key: 'right3',
           value: 'Right 3',
-          type: 'right',
-          percentable: true
+          type: 'right'
         }
       ]
     };
