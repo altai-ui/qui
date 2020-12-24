@@ -3,7 +3,7 @@
     <div
       v-if="isLeftShadowShown"
       class="q-table__column-shadow q-table__column-shadow_left"
-      :style="getCellWidth({ key: 'shadow' })"
+      :style="getColWidth({ key: 'shadow' })"
     />
 
     <div
@@ -47,10 +47,23 @@
             v-if="rows.length"
             ref="QTable"
             class="q-table__table"
+            :style="{ 'table-layout': fixedLayout && 'fixed' }"
             :class="tableClasses"
             cellspacing="0"
             cellpadding="0"
           >
+            <colgroup v-if="fixedLayout">
+              <col
+                v-if="selectable"
+                width="64"
+              />
+              <col
+                v-for="(column, index) in columns"
+                :key="index"
+                :style="getColWidth(column)"
+              />
+            </colgroup>
+
             <thead>
               <tr>
                 <th
@@ -69,7 +82,6 @@
                 <th
                   v-for="(column, index) in columns"
                   :key="index"
-                  :style="getCellWidth(column)"
                   :class="getCellClass(column)"
                   class="q-table__header-cell"
                   @click="handleHeaderClick(column)"
@@ -168,7 +180,6 @@
                 <td
                   v-for="(column, index) in columns"
                   :key="index"
-                  :style="getCellWidth(column)"
                   :class="getCellClass(column)"
                   class="q-table__cell q-table__total-cell"
                 >
@@ -199,7 +210,6 @@
                   :columns="columns"
                   :class="levelClass(row.indent)"
                   :fixed-column="fixedColumn"
-                  :fixed-column-width="fixedColumnWidth"
                   :expandable="expandable"
                   :indent-size="indentSize"
                   :indent="row.indent"
@@ -269,6 +279,20 @@ export default {
   },
 
   props: {
+    /**
+     * Whether width of columns automatically fits its container
+     */
+    fixedLayout: {
+      type: Boolean,
+      default: true
+    },
+    /**
+     * Default columns width, required `fixedLayout: true`
+     */
+    defaultColWidth: {
+      type: String,
+      default: '150px'
+    },
     isLoading: {
       type: Boolean,
       default: false
@@ -329,11 +353,11 @@ export default {
       default: 'children'
     },
     /**
-     * Width of fixed column
+     * Width of fixed column. If `fixedLayout: true`, width is equal to `defaultColWidth` prop.
      */
     fixedColumnWidth: {
       type: Number,
-      default: 200
+      default: null
     },
     expandable: {
       type: Boolean,
@@ -784,25 +808,14 @@ export default {
       return sortableClass;
     },
 
-    getCellWidth(column) {
-      const style = {};
-
-      if (column.width) {
-        style.width = `${column.width}px`;
-      }
-
-      if (column.minWidth) {
-        style.minWidth = `${column.minWidth}px`;
-      }
-      if (column.maxWidth) {
-        style.maxWidth = `${column.maxWidth}px`;
-      }
+    getColWidth(column) {
       if (this.fixedColumn !== column.key && column.key !== 'shadow')
-        return style;
+        return {
+          width: column.width ? `${column.width}px` : this.defaultColWidth
+        };
 
       return {
-        minWidth: `${this.fixedColumnWidth}px`,
-        maxWidth: `${this.fixedColumnWidth}px`
+        width: `${this.fixedColumnWidth ?? this.defaultColWidth}px`
       };
     },
 

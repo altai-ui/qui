@@ -24,54 +24,48 @@
     </td>
     <td
       v-for="(column, columnIndex) in columns"
-      :ref="`td${columnIndex}`"
       :key="column.key"
       :class="getFixedColumnClass(column.key)"
-      :style="getCellStyle(column.key, columnIndex, column.width)"
+      :style="getCellStyle(column.key, columnIndex)"
       class="q-table__cell"
     >
       <div
-        class="q-table__cell-wrapper"
-        :style="getCellWrapperStyle(column, columnIndex)"
+        v-if="!selectable && canRowExpand(columnIndex)"
+        class="q-table__expand-arrow"
+        :class="openedTreeClass"
+        @click="handleExpandClick"
       >
-        <div
-          v-if="!selectable && canRowExpand(columnIndex)"
-          class="q-table__expand-arrow"
-          :class="openedTreeClass"
-          @click="handleExpandClick"
-        >
-          <span class="q-icon-triangle-right" />
-        </div>
-
-        <div
-          v-if="column.customCellClass"
-          :class="column.customCellClass"
-        >
-          <slot
-            :row-data="updateRow(row, columnIndex, column.key, column)"
-            name="row"
-          />
-
-          <slot
-            v-if="checkLoader(columnIndex)"
-            :row-data="row"
-            name="loader"
-          />
-        </div>
-
-        <template v-else>
-          <slot
-            :row-data="updateRow(row, columnIndex, column.key, column)"
-            name="row"
-          />
-
-          <slot
-            v-if="checkLoader(columnIndex)"
-            :row-data="row"
-            name="loader"
-          />
-        </template>
+        <span class="q-icon-triangle-right" />
       </div>
+
+      <div
+        v-if="column.customCellClass"
+        :class="column.customCellClass"
+      >
+        <slot
+          :row-data="updateRow(row, columnIndex, column.key, column)"
+          name="row"
+        />
+
+        <slot
+          v-if="checkLoader(columnIndex)"
+          :row-data="row"
+          name="loader"
+        />
+      </div>
+
+      <template v-else>
+        <slot
+          :row-data="updateRow(row, columnIndex, column.key, column)"
+          name="row"
+        />
+
+        <slot
+          v-if="checkLoader(columnIndex)"
+          :row-data="row"
+          name="loader"
+        />
+      </template>
     </td>
   </tr>
 </template>
@@ -102,10 +96,6 @@ export default {
     fixedColumn: {
       type: String,
       default: ''
-    },
-    fixedColumnWidth: {
-      type: Number,
-      default: 250
     },
     expandable: {
       type: Boolean,
@@ -239,23 +229,8 @@ export default {
         paddingLeft: `${Number(paddingLeft) + this.indent}px`
       };
     },
-    getCellWrapperStyle({ width, minWidth, maxWidth }, columnIndex) {
-      return {
-        width: width ? `${width}px` : '',
-        minWidth: minWidth ? `${minWidth}px` : '',
-        maxWidth: maxWidth ? this.getCellMaxWidth(maxWidth, columnIndex) : ''
-      };
-    },
-    getCellMaxWidth(maxWidth, columnIndex) {
-      const tdWidth = this.$refs[`td${columnIndex}`]?.[0].offsetWidth ?? 0;
-      return Math.max(tdWidth, maxWidth);
-    },
-    getCellStyle(key, columnIndex, width) {
+    getCellStyle(key, columnIndex) {
       const style = {};
-
-      if (width) {
-        style.width = `${width}px`;
-      }
 
       if (
         columnIndex === 0 &&
@@ -274,13 +249,7 @@ export default {
         }
       }
 
-      if (this.fixedColumn !== key && key !== 'shadow') return style;
-
-      return {
-        ...style,
-        minWidth: `${this.fixedColumnWidth}px`,
-        maxWidth: `${this.fixedColumnWidth}px`
-      };
+      return style;
     },
     getFixedColumnClass(key) {
       return this.fixedColumn && this.fixedColumn === key

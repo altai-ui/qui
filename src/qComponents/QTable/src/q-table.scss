@@ -271,18 +271,13 @@
   }
 
   &__cell {
+    height: 64px;
     padding: 12px 24px;
     overflow: hidden;
     font-weight: var(--font-weight-base);
     line-height: 20px;
     background-color: var(--color-tertiary-gray-light);
     box-shadow: var(--custom-box-shadow);
-
-    &-wrapper {
-      display: flex;
-      align-items: center;
-      min-height: 40px;
-    }
 
     &:first-child {
       padding-left: 16px;
