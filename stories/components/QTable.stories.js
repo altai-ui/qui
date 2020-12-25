@@ -92,23 +92,6 @@ export const QTableStory = (_, { argTypes }) => ({
   props: Object.keys(argTypes).filter(arg => arg !== 'columns'),
   data() {
     return {
-      contextMenu: [
-        {
-          action: 'action1',
-          name: 'Action One',
-          icon: 'q-icon-iconClass'
-        },
-        {
-          action: 'action2',
-          name: 'Action Two',
-          icon: 'q-icon-arrow-down'
-        },
-        {
-          action: 'action3',
-          name: 'Action Three',
-          icon: 'q-icon-arrow-up'
-        }
-      ],
       columns: [
         {
           key: 'left1',
@@ -124,13 +107,13 @@ export const QTableStory = (_, { argTypes }) => ({
         {
           key: 'left3',
           value: 'Left 3',
-          type: 'left'
+          type: 'left',
+          sortable: true
         },
         {
           key: 'right1',
           value: 'Right 1',
           type: 'right',
-          iconClass: true,
           sortable: true,
           slots: {
             header: 'customHeader',
@@ -157,22 +140,6 @@ export const QTableStory = (_, { argTypes }) => ({
     changeColumnsOrder({ oldPositionIndex, newPositionIndex }) {
       const cols = this.columns;
       cols.splice(newPositionIndex, 0, cols.splice(oldPositionIndex, 1)[0]);
-    },
-    handleAction(a, key) {
-      if (a === 'action1') {
-        const cols = [...this.columns];
-        const currentCol = cols.find(column => key === column.key);
-        currentCol.iconClass = !currentCol.iconClass;
-        this.columns = cols;
-      }
-
-      if (a === 'action2') {
-        this.$refs.table.setSort(key, 'descending');
-      }
-
-      if (a === 'action3') {
-        this.$refs.table.setSort(key, 'ascending');
-      }
     }
   },
   template: `
@@ -185,21 +152,11 @@ export const QTableStory = (_, { argTypes }) => ({
       v-bind="$props"
     >
       <template #customHeader="{ column }">
-        <template v-if="column.iconClass">
-          <span class="q-icon-iconClass" />
-        </template>
-        <span class="text" style="margin-left:8px">{{ column.value }}</span>
-        <q-context-menu
-          :menu-items="contextMenu"
-          @action="handleAction($event, column.key)"
-        />
+      {{ column.value }} custom
       </template>
 
       <template #customRow="{ row }">
-        {{ row.value }}
-        <span v-if="row.column.iconClass">
-          %
-        </span>
+        {{ row.value }} custom
       </template>
     </q-table>
   `
