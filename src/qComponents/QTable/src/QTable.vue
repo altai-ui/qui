@@ -556,11 +556,17 @@ export default {
   },
 
   updated() {
-    if (this.isLoading || !this.isLoadingAnimationComplete) return;
+    this.changeWrapperHeight();
+  },
 
-    this.loaderWrapperHeight = this.$refs.QTable
-      ? this.$refs.QTable.clientHeight + shadowDropOffset
-      : MIN_BLANK_TABLE_HEIGHT;
+  created() {
+    window.addEventListener('resize', this.changeWrapperHeight, {
+      passive: true
+    });
+  },
+
+  destroyed() {
+    window.removeEventListener('resize', this.changeWrapperHeight);
   },
 
   mounted() {
@@ -591,6 +597,14 @@ export default {
   },
 
   methods: {
+    changeWrapperHeight() {
+      if (this.isLoading || !this.isLoadingAnimationComplete) return;
+
+      this.loaderWrapperHeight = this.$refs.QTable
+        ? this.$refs.QTable.clientHeight + shadowDropOffset
+        : MIN_BLANK_TABLE_HEIGHT;
+    },
+
     updateChildrenRows(childs, row, updatedRow) {
       return childs.map(child => {
         const updatedChildRow = {

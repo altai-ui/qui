@@ -96,7 +96,7 @@ export const QTableStory = (_, { argTypes }) => ({
         {
           action: 'action1',
           name: 'Action One',
-          icon: 'q-icon-percent'
+          icon: 'q-icon-iconClass'
         },
         {
           action: 'action2',
@@ -130,7 +130,7 @@ export const QTableStory = (_, { argTypes }) => ({
           key: 'right1',
           value: 'Right 1',
           type: 'right',
-          percent: true,
+          iconClass: true,
           sortable: true,
           slots: {
             header: 'customHeader',
@@ -162,7 +162,7 @@ export const QTableStory = (_, { argTypes }) => ({
       if (a === 'action1') {
         const cols = [...this.columns];
         const currentCol = cols.find(column => key === column.key);
-        currentCol.percent = !currentCol.percent;
+        currentCol.iconClass = !currentCol.iconClass;
         this.columns = cols;
       }
 
@@ -185,8 +185,8 @@ export const QTableStory = (_, { argTypes }) => ({
       v-bind="$props"
     >
       <template #customHeader="{ column }">
-        <template v-if="column.percent">
-          <span class="q-icon-percent" />
+        <template v-if="column.iconClass">
+          <span class="q-icon-iconClass" />
         </template>
         <span class="text" style="margin-left:8px">{{ column.value }}</span>
         <q-context-menu
@@ -197,7 +197,7 @@ export const QTableStory = (_, { argTypes }) => ({
 
       <template #customRow="{ row }">
         {{ row.value }}
-        <span v-if="row.column.percent">
+        <span v-if="row.column.iconClass">
           %
         </span>
       </template>
