@@ -81,54 +81,15 @@
                 <th
                   v-for="(column, index) in columns"
                   :key="index"
-                  :class="getCellClass(column)"
+                  :class="getCellClasses(column)"
+                  :style="getHeaderCellStyle(column.group)"
                   class="q-table__header-cell"
-                  @click="handleHeaderClick(column)"
                 >
                   <div class="q-table__header-cell-wrapper">
-                    <template v-if="draggable">
-                      <div
-                        class="drop-handler dnd-before"
-                        :class="getHandlerClass(column.type)"
-                        :dndidx="index"
-                      />
-
-                      <drag-elements
-                        :col-index="index"
-                        parent-selector=".q-table__scroll-wrapper"
-                        dummy-selector=".dnd-handler"
-                        separator-selector=".dnd-separator"
-                        target-selector=".q-table__header-cell"
-                        limit-box-selector=".q-table__table"
-                        :drop-zone-selector="`.${getHandlerClass(column.type)}`"
-                        :is-first-blocked="selectable"
-                        @change-order="changeColumnsOrder"
-                      >
-                        <div class="drag-n-drop-icon">
-                          <span
-                            v-if="draggable"
-                            class="q-icon-drag-linear"
-                          />
-                        </div>
-                      </drag-elements>
-
-                      <div
-                        class="drop-handler dnd-after"
-                        :class="getHandlerClass(column.type)"
-                        :dndidx="index + 1"
-                      />
-                    </template>
-
-                    <div class="q-table__header-cell-content">
-                      <span
-                        v-if="column.sortable && draggable"
-                        class="q-table__sort-arrow"
-                        :class="{
-                          'q-icon-arrow-up': sort.direction !== 'descending',
-                          'q-icon-arrow-down': sort.direction === 'descending'
-                        }"
-                      />
-
+                    <div
+                      class="q-table__header-cell-content"
+                      @click="handleHeaderClick(column)"
+                    >
                       <slot
                         v-if="$scopedSlots.header"
                         name="header"
@@ -146,7 +107,7 @@
                       </template>
 
                       <span
-                        v-if="column.sortable && !draggable"
+                        v-if="column.sortable"
                         class="q-table__sort-arrow"
                         :class="{
                           'q-icon-arrow-up': sort.direction !== 'descending',
@@ -154,6 +115,41 @@
                         }"
                       />
                     </div>
+
+                    <template v-if="draggable">
+                      <div
+                        class="drop-handler dnd-before"
+                        :class="getHandlerClass(column.group)"
+                        :dndidx="index"
+                      />
+
+                      <drag-elements
+                        :col-index="index"
+                        parent-selector=".q-table__scroll-wrapper"
+                        dummy-selector=".dnd-handler"
+                        separator-selector=".dnd-separator"
+                        target-selector=".q-table__header-cell"
+                        limit-box-selector=".q-table__table"
+                        :drop-zone-selector="
+                          `.${getHandlerClass(column.group)}`
+                        "
+                        :is-first-blocked="selectable"
+                        @change-order="changeColumnsOrder"
+                      >
+                        <div class="drag-n-drop-icon">
+                          <span
+                            v-if="draggable"
+                            class="q-icon-drag-linear"
+                          />
+                        </div>
+                      </drag-elements>
+
+                      <div
+                        class="drop-handler dnd-after"
+                        :class="getHandlerClass(column.group)"
+                        :dndidx="index + 1"
+                      />
+                    </template>
                   </div>
                 </th>
               </tr>
@@ -179,7 +175,7 @@
                 <td
                   v-for="(column, index) in columns"
                   :key="index"
-                  :class="getCellClass(column)"
+                  :class="getCellClasses(column)"
                   class="q-table__cell q-table__total-cell"
                 >
                   <slot
@@ -288,7 +284,7 @@ export default {
      */
     defaultColWidth: {
       type: String,
-      default: '150px'
+      default: '200px'
     },
     isLoading: {
       type: Boolean,
@@ -318,19 +314,18 @@ export default {
       default: false
     },
     /**
-     * Whether delimit table by types, required `separatorKeys`
+     * Whether delimit table by types, required `group` prop in columns
      */
     isSeparated: {
       type: Boolean,
       default: false
     },
     /**
-     * Column's keys for delimeter, first for left part and second for right part
+     * Object with `key: color` for each of separated groups
      */
-    separatorKeys: {
-      type: Array,
-      default: null,
-      validate: val => val.length === 2
+    groupsColors: {
+      type: Object,
+      default: null
     },
     /**
      * Object, `[column.key]: value` pair, not all are required
@@ -629,12 +624,12 @@ export default {
     },
 
     handleHeaderClick({ key, sortable }) {
-      if (this.draggable || !sortable) return;
+      if (!sortable) return;
       this.setSort(key);
     },
 
-    getHandlerClass(type) {
-      return `${this.isSeparated ? type : 'column'}-handler`;
+    getHandlerClass(group) {
+      return `${this.isSeparated ? group : 'column'}-handler`;
     },
 
     findSlotForRow(columnKey) {
@@ -660,8 +655,6 @@ export default {
     },
 
     setSort(key, direction) {
-      if (!direction && this.draggable) return;
-
       if (direction) {
         this.sort = {
           key,
@@ -787,21 +780,34 @@ export default {
       this.scrolled = target.scrollLeft;
     },
 
-    getCellClass(column = {}) {
-      const sortableClass = this.getSortableClass(column);
-      let separatedClass = '';
+    getHeaderCellStyle(group) {
+      if (!this.isSeparated || !group) return {};
 
-      if (this.isSeparated && this.separatorKeys?.length > 1) {
-        separatedClass =
-          column?.type === this.separatorKeys[0]
-            ? 'q-table__header-cell_left'
-            : 'q-table__header-cell_right';
+      return {
+        borderColor: this.groupsColors?.[group] ?? ''
+      };
+    },
+
+    getCellClasses(column = {}) {
+      const classes = [this.getSortableClass(column)];
+
+      if (this.isSeparated) {
+        if (!column.group)
+          console.warn(
+            `[QTable] Column ${column.key} must have \`group\` prop`
+          );
+        else classes.push(`q-table__header-cell_${column.group}`);
       }
 
-      if (this.fixedColumn.length && this.fixedColumn === column.key)
-        return `q-table__cell_fixed ${sortableClass} ${separatedClass}`;
+      if (column.align) {
+        classes.push(`q-table__header-cell_align-${column.align}`);
+      }
 
-      return `${sortableClass} ${separatedClass}`;
+      if (this.fixedColumn.length && this.fixedColumn === column.key) {
+        classes.push('q-table__cell_fixed');
+      }
+
+      return classes;
     },
 
     getSortableClass(column) {

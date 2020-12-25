@@ -26,7 +26,8 @@
       v-for="(column, columnIndex) in columns"
       :key="column.key"
       :class="getFixedColumnClass(column.key)"
-      :style="getCellStyle(column.key, columnIndex)"
+      :style="getCellStyle(columnIndex)"
+      :align="column.align || 'left'"
       class="q-table__cell"
     >
       <div
@@ -229,7 +230,7 @@ export default {
         paddingLeft: `${Number(paddingLeft) + this.indent}px`
       };
     },
-    getCellStyle(key, columnIndex) {
+    getCellStyle(columnIndex) {
       const style = {};
 
       if (

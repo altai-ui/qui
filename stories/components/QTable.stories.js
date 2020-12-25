@@ -27,6 +27,11 @@ const defaultArgs = {
     key: 'right1',
     direction: 'descending'
   },
+  groupsColors: {
+    group1: '#74aff8',
+    group2: '#de4b7a',
+    group3: '#f2d22b'
+  },
   rows: [
     {
       left1: '1',
@@ -96,24 +101,25 @@ export const QTableStory = (_, { argTypes }) => ({
         {
           key: 'left1',
           value: 'Left 1',
-          type: 'left',
+          group: 'group1',
           formatter: val => `formatted_${val}`
         },
         {
           key: 'left2',
           value: 'Left 2',
-          type: 'left'
+          group: 'group1',
+          align: 'right'
         },
         {
           key: 'left3',
           value: 'Left 3',
-          type: 'left',
+          group: 'group1',
           sortable: true
         },
         {
           key: 'right1',
           value: 'Right 1',
-          type: 'right',
+          group: 'group2',
           sortable: true,
           slots: {
             header: 'customHeader',
@@ -123,12 +129,12 @@ export const QTableStory = (_, { argTypes }) => ({
         {
           key: 'right2',
           value: 'Right 2',
-          type: 'right'
+          group: 'group2'
         },
         {
           key: 'right3',
           value: 'Right 3',
-          type: 'right'
+          group: 'group2'
         }
       ]
     };
@@ -152,7 +158,7 @@ export const QTableStory = (_, { argTypes }) => ({
       v-bind="$props"
     >
       <template #customHeader="{ column }">
-      {{ column.value }} custom
+        {{ column.value }} custom
       </template>
 
       <template #customRow="{ row }">
