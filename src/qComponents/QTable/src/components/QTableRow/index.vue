@@ -8,7 +8,7 @@
       v-if="selectable"
       class="q-table__cell q-table__cell_selectable"
       :class="{
-        'q-table__cell_fixed': stickyColumnKeys.length > 0
+        'q-table__cell_sticky': stickyColumnKey
       }"
       :style="firstTdStyle"
     >
@@ -26,7 +26,7 @@
       v-for="(column, columnIndex) in columns"
       :key="column.key"
       :class="getStickyColumnClass(column.key)"
-      :style="getCellStyle(columnIndex)"
+      :style="getCellStyle(column, columnIndex)"
       :align="column.align || 'left'"
       class="q-table__cell"
     >
@@ -94,9 +94,9 @@ export default {
       type: String,
       default: 'children'
     },
-    stickyColumnKeys: {
-      type: Array,
-      default: () => []
+    stickyColumnKey: {
+      type: String,
+      default: null
     },
     expandable: {
       type: Boolean,
@@ -230,7 +230,7 @@ export default {
         paddingLeft: `${Number(paddingLeft) + this.indent}px`
       };
     },
-    getCellStyle(columnIndex) {
+    getCellStyle(column, columnIndex) {
       const style = {};
 
       if (
@@ -253,7 +253,7 @@ export default {
       return style;
     },
     getStickyColumnClass(key) {
-      return this.stickyColumnKeys.includes(key) ? 'q-table__cell_fixed' : '';
+      return this.stickyColumnKey === key ? 'q-table__cell_sticky' : '';
     },
     updateRow(row, index, key, column) {
       let value = row.value ?? get(row, key);

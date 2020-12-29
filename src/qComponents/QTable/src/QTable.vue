@@ -51,15 +51,12 @@
             cellspacing="0"
             cellpadding="0"
           >
-            <colgroup v-if="fixedLayout">
-              <col
-                v-if="selectable"
-                width="64"
-              />
+            <colgroup v-if="selectable">
+              <col width="64" />
             </colgroup>
-            <template v-for="(group, groupIndex) in columns">
+            <template v-for="(group, groupIndex) in groupsOfColumns">
               <col
-                v-for="(column, index) in group.data"
+                v-for="(column, index) in group.columns"
                 :key="`fixCol${groupIndex}${index}`"
                 :style="getColWidth(column)"
               />
@@ -71,7 +68,7 @@
                   v-if="selectable"
                   class="q-table__header-cell q-table__header-cell__checkbox"
                   :class="{
-                    'q-table__cell_fixed': stickyColumnKeys.length > 0
+                    'q-table__cell_sticky': Boolean(stickyColumnKey)
                   }"
                 >
                   <q-checkbox
@@ -80,9 +77,9 @@
                     :indeterminate="isIndeterminate"
                   />
                 </th>
-                <template v-for="(group, groupIndex) in columns">
+                <template v-for="(group, groupIndex) in groupsOfColumns">
                   <th
-                    v-for="(column, index) in group.data"
+                    v-for="(column, index) in group.columns"
                     :key="`group${groupIndex}${index}`"
                     :class="getCellClasses(column, group)"
                     :style="getHeaderCellStyle(group)"
@@ -122,7 +119,7 @@
                       <template v-if="group.draggable">
                         <div
                           class="drop-handler dnd-before"
-                          :class="getHandlerClass(column.group)"
+                          :class="getHandlerClass(group.key)"
                           :dndidx="index"
                         />
 
@@ -133,11 +130,11 @@
                           separator-selector=".dnd-separator"
                           target-selector=".q-table__header-cell"
                           limit-box-selector=".q-table__table"
-                          :drop-zone-selector="
-                            `.${getHandlerClass(column.group)}`
-                          "
+                          :drop-zone-selector="`.${getHandlerClass(group.key)}`"
                           :is-first-blocked="selectable"
-                          @change-order="changeColumnsOrder"
+                          @change-order="
+                            data => changeColumnsOrder(data, group.key)
+                          "
                         >
                           <div class="drag-n-drop-icon">
                             <span
@@ -149,7 +146,7 @@
 
                         <div
                           class="drop-handler dnd-after"
-                          :class="getHandlerClass(column.group)"
+                          :class="getHandlerClass(group.key)"
                           :dndidx="index + 1"
                         />
                       </template>
@@ -167,7 +164,7 @@
                   :class="{
                     'q-table__total-cell_selectable':
                       totalCheckboxPosition === 'total',
-                    'q-table__cell_fixed': stickyColumnKeys.length > 0
+                    'q-table__cell_sticky': Boolean(stickyColumnKey)
                   }"
                 >
                   <q-checkbox
@@ -176,9 +173,9 @@
                     :indeterminate="isIndeterminate"
                   />
                 </th>
-                <template v-for="(group, groupIndex) in columns">
+                <template v-for="(group, groupIndex) in groupsOfColumns">
                   <td
-                    v-for="(column, index) in group.data"
+                    v-for="(column, index) in group.columns"
                     :key="`col${groupIndex}${index}`"
                     :class="getCellClasses(column, group)"
                     class="q-table__cell q-table__total-cell"
@@ -209,7 +206,7 @@
                 :row-index="rowIndex"
                 :columns="allColumns"
                 :class="levelClass(row.indent)"
-                :sticky-column-keys="stickyColumnKeys"
+                :sticky-column-key="stickyColumnKey"
                 :expandable="expandable"
                 :indent-size="indentSize"
                 :indent="row.indent"
@@ -260,6 +257,7 @@
 </template>
 
 <script>
+import { cloneDeep } from 'lodash-es';
 import QTableRow from './components/QTableRow';
 import DragElements from './components/DragElements';
 
@@ -279,7 +277,7 @@ export default {
 
   props: {
     /**
-     * do not shrink column's width as native table does (change `defaultColWidth` or pass the `width` to column object for managing the width)
+     * do not shrink column's width as native table does (change `defaultColWidth` or pass the `width` to each column object for managing the width)
      */
     fixedLayout: {
       type: Boolean,
@@ -297,14 +295,22 @@ export default {
       default: false
     },
     /**
-     * MAY contain 'color' (hex string), 'draggabble' (boolean)
-     * MUST contsain 'data' - array of objects, each object must contain `key` and `value`.
-     * Can be extended by `sortable`, `slots`, `width` (works with `fixedLayout: true`)
-     * and `type` (if `isSeparated` flag is `true`)
+     * `groupsOfColumns` MUST contain one or more groups of columns,
+     * Each group MUST contain `key` and `columns` - array of objects.
+     * Each group MAY contain:
+     *  `color` (hex string) - column's header color.
+     *  `draggabble` (boolean) - whether to drag and drop columns inside the group.
+     *  `align` (left/right) - content's align.
+     * Each column MUST contain `key` and `value`.
+     * Each column MAY contain `sortable`, `slots`, `width` (works with `fixedLayout: true`)
      */
-    columns: {
+    groupsOfColumns: {
       type: Array,
       required: true
+    },
+    stickyColumnKey: {
+      type: String,
+      default: null
     },
     /**
      * Array of objects, each object must contain `[column.key]: value` pair
@@ -356,7 +362,13 @@ export default {
       default: false
     },
     /**
-     * Get row as argument, must return class `String`
+     * Get row as argument, must return style `String`,
+     * you can also return one:
+     * `green-row`
+     * `red-row`
+     * `grey-row`
+     * `dark-row`
+     * `yellow-row`
      */
     customRowClass: {
       type: Function,
@@ -410,20 +422,23 @@ export default {
 
   computed: {
     allColumns() {
-      return this.columns.reduce((acc, group) => {
-        return acc.concat(group.data);
+      return this.groupsOfColumns.reduce((acc, group) => {
+        const eachGroup = group.columns.map(col => {
+          const newCol = {
+            ...col,
+            align: col.align ?? group.align ?? 'left'
+          };
+
+          return newCol;
+        });
+        return acc.concat(eachGroup);
       }, []);
     },
-    stickyColumnKeys() {
-      return this.allColumns
-        .filter(column => column.fixed)
-        .map(column => column.key);
-    },
     isDraggable() {
-      return this.columns.find(group => group.draggable);
+      return this.groupsOfColumns.find(group => group.draggable);
     },
     isSeparated() {
-      return this.columns.length > 1;
+      return this.groupsOfColumns.length > 1;
     },
     areAllChecked: {
       get() {
@@ -442,7 +457,6 @@ export default {
         'q-table__selectable': this.selectable,
         'q-table__separated': this.isSeparated,
         'q-table__grid': this.grid,
-        'q-table__fixed-cols': this.stickyColumnKeys.length,
         'q-table__fixed': this.fixedLayout
       };
     },
@@ -458,13 +472,11 @@ export default {
     },
 
     isLeftShadowShown() {
-      return this.stickyColumnKeys.length && this.scrolled > 0;
+      return this.stickyColumnKey && this.scrolled > 0;
     },
 
     isRightShadowShown() {
-      return (
-        this.stickyColumnKeys.length && this.tableClass !== 'scrolled-right'
-      );
+      return this.stickyColumnKey && this.tableClass !== 'scrolled-right';
     },
 
     loadingWrapperClass() {
@@ -485,7 +497,6 @@ export default {
     },
 
     computedRows() {
-      console.log(this.treeRows);
       const rows = this.treeRows.length ? this.treeRows : this.rows;
 
       return rows.map((row, index) => ({
@@ -624,9 +635,7 @@ export default {
     },
 
     findSlotForRow(columnKey) {
-      const currentCol = this.columns[0].data?.find(
-        ({ key }) => key === columnKey
-      );
+      const currentCol = this.allColumns.find(({ key }) => key === columnKey);
 
       return currentCol?.slots?.row ?? null;
     },
@@ -777,7 +786,7 @@ export default {
       if (!this.isSeparated || !group) return {};
 
       return {
-        borderColor: group.color ?? ''
+        borderColor: group.color ?? 'transparent'
       };
     },
 
@@ -794,8 +803,8 @@ export default {
         );
       }
 
-      if (this.stickyColumnKeys.includes(column.key)) {
-        classes.push('q-table__cell_fixed');
+      if (this.stickyColumnKey === column.key) {
+        classes.push('q-table__cell_sticky');
       }
 
       return classes;
@@ -843,8 +852,18 @@ export default {
       };
     },
 
-    changeColumnsOrder(positions) {
-      this.$emit('change-order', positions);
+    changeColumnsOrder({ newPositionIndex, oldPositionIndex }, groupKey) {
+      const columns = cloneDeep(this.groupsOfColumns);
+      const group = columns.find(({ key }) => key === groupKey);
+      if (group?.columns) {
+        group.columns.splice(
+          newPositionIndex,
+          0,
+          group.columns.splice(oldPositionIndex, 1)[0]
+        );
+      }
+
+      this.$emit('change-order', columns);
     }
   }
 };
