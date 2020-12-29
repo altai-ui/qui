@@ -22,15 +22,9 @@ const argtypes = {
 };
 
 const defaultArgs = {
-  separatorKeys: ['left', 'right'],
   defaultSort: {
     key: 'right1',
     direction: 'descending'
-  },
-  groupsColors: {
-    group1: '#74aff8',
-    group2: '#de4b7a',
-    group3: '#f2d22b'
   },
   rows: [
     {
@@ -99,42 +93,52 @@ export const QTableStory = (_, { argTypes }) => ({
     return {
       columns: [
         {
-          key: 'left1',
-          value: 'Left 1',
-          group: 'group1',
-          formatter: val => `formatted_${val}`
+          key: 'one',
+          draggable: true,
+          color: 'black',
+          align: 'left',
+          data: [
+            {
+              fixed: true,
+              key: 'left1',
+              value: 'Left 1',
+              formatter: val => `formatted_${val}`
+            },
+            {
+              fixed: true,
+              key: 'left2',
+              value: 'Left 2'
+            },
+            {
+              key: 'left3',
+              value: 'Left 3',
+              sortable: true
+            }
+          ]
         },
         {
-          key: 'left2',
-          value: 'Left 2',
-          group: 'group1',
-          align: 'right'
-        },
-        {
-          key: 'left3',
-          value: 'Left 3',
-          group: 'group1',
-          sortable: true
-        },
-        {
-          key: 'right1',
-          value: 'Right 1',
-          group: 'group2',
-          sortable: true,
-          slots: {
-            header: 'customHeader',
-            row: 'customRow'
-          }
-        },
-        {
-          key: 'right2',
-          value: 'Right 2',
-          group: 'group2'
-        },
-        {
-          key: 'right3',
-          value: 'Right 3',
-          group: 'group2'
+          key: 'two',
+          color: 'blue',
+          draggable: true,
+          data: [
+            {
+              key: 'right1',
+              value: 'Right 1',
+              sortable: true,
+              slots: {
+                header: 'customHeader',
+                row: 'customRow'
+              }
+            },
+            {
+              key: 'right2',
+              value: 'Right 2'
+            },
+            {
+              key: 'right3',
+              value: 'Right 3'
+            }
+          ]
         }
       ]
     };

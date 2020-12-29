@@ -38,7 +38,7 @@
             </div>
           </div>
 
-          <template v-if="draggable">
+          <template v-if="isDraggable">
             <div class="dnd-handler" />
             <div class="dnd-separator" />
           </template>
@@ -56,12 +56,14 @@
                 v-if="selectable"
                 width="64"
               />
+            </colgroup>
+            <template v-for="(group, groupIndex) in columns">
               <col
-                v-for="(column, index) in columns"
-                :key="index"
+                v-for="(column, index) in group.data"
+                :key="`fixCol${groupIndex}${index}`"
                 :style="getColWidth(column)"
               />
-            </colgroup>
+            </template>
 
             <thead>
               <tr>
@@ -69,7 +71,7 @@
                   v-if="selectable"
                   class="q-table__header-cell q-table__header-cell__checkbox"
                   :class="{
-                    'q-table__cell_fixed': fixedColumn.length
+                    'q-table__cell_fixed': stickyColumnKeys.length > 0
                   }"
                 >
                   <q-checkbox
@@ -78,80 +80,82 @@
                     :indeterminate="isIndeterminate"
                   />
                 </th>
-                <th
-                  v-for="(column, index) in columns"
-                  :key="index"
-                  :class="getCellClasses(column)"
-                  :style="getHeaderCellStyle(column.group)"
-                  class="q-table__header-cell"
-                >
-                  <div class="q-table__header-cell-wrapper">
-                    <div
-                      class="q-table__header-cell-content"
-                      @click="handleHeaderClick(column)"
-                    >
-                      <slot
-                        v-if="$scopedSlots.header"
-                        name="header"
-                        :column="updateItem(column, index, column.key)"
-                      />
-
-                      <slot
-                        v-else-if="column.slots && column.slots.header"
-                        :name="column.slots.header"
-                        :column="updateItem(column, index, column.key)"
-                      />
-
-                      <template v-else>
-                        {{ column.value }}
-                      </template>
-
-                      <span
-                        v-if="column.sortable"
-                        class="q-table__sort-arrow"
-                        :class="{
-                          'q-icon-arrow-up': sort.direction !== 'descending',
-                          'q-icon-arrow-down': sort.direction === 'descending'
-                        }"
-                      />
-                    </div>
-
-                    <template v-if="draggable">
+                <template v-for="(group, groupIndex) in columns">
+                  <th
+                    v-for="(column, index) in group.data"
+                    :key="`group${groupIndex}${index}`"
+                    :class="getCellClasses(column, group)"
+                    :style="getHeaderCellStyle(group)"
+                    class="q-table__header-cell"
+                  >
+                    <div class="q-table__header-cell-wrapper">
                       <div
-                        class="drop-handler dnd-before"
-                        :class="getHandlerClass(column.group)"
-                        :dndidx="index"
-                      />
-
-                      <drag-elements
-                        :col-index="index"
-                        parent-selector=".q-table__scroll-wrapper"
-                        dummy-selector=".dnd-handler"
-                        separator-selector=".dnd-separator"
-                        target-selector=".q-table__header-cell"
-                        limit-box-selector=".q-table__table"
-                        :drop-zone-selector="
-                          `.${getHandlerClass(column.group)}`
-                        "
-                        :is-first-blocked="selectable"
-                        @change-order="changeColumnsOrder"
+                        class="q-table__header-cell-content"
+                        @click="handleHeaderClick(column)"
                       >
-                        <div class="drag-n-drop-icon">
-                          <span
-                            v-if="draggable"
-                            class="q-icon-drag-linear"
-                          />
-                        </div>
-                      </drag-elements>
+                        <slot
+                          v-if="$scopedSlots.header"
+                          name="header"
+                          :column="updateItem(column, index, column.key)"
+                        />
 
-                      <div
-                        class="drop-handler dnd-after"
-                        :class="getHandlerClass(column.group)"
-                        :dndidx="index + 1"
-                      />
-                    </template>
-                  </div>
-                </th>
+                        <slot
+                          v-else-if="column.slots && column.slots.header"
+                          :name="column.slots.header"
+                          :column="updateItem(column, index, column.key)"
+                        />
+
+                        <template v-else>
+                          {{ column.value }}
+                        </template>
+
+                        <span
+                          v-if="column.sortable"
+                          class="q-table__sort-arrow"
+                          :class="{
+                            'q-icon-arrow-up': sort.direction !== 'descending',
+                            'q-icon-arrow-down': sort.direction === 'descending'
+                          }"
+                        />
+                      </div>
+
+                      <template v-if="group.draggable">
+                        <div
+                          class="drop-handler dnd-before"
+                          :class="getHandlerClass(column.group)"
+                          :dndidx="index"
+                        />
+
+                        <drag-elements
+                          :col-index="index"
+                          parent-selector=".q-table__scroll-wrapper"
+                          dummy-selector=".dnd-handler"
+                          separator-selector=".dnd-separator"
+                          target-selector=".q-table__header-cell"
+                          limit-box-selector=".q-table__table"
+                          :drop-zone-selector="
+                            `.${getHandlerClass(column.group)}`
+                          "
+                          :is-first-blocked="selectable"
+                          @change-order="changeColumnsOrder"
+                        >
+                          <div class="drag-n-drop-icon">
+                            <span
+                              v-if="group.draggable"
+                              class="q-icon-drag-linear"
+                            />
+                          </div>
+                        </drag-elements>
+
+                        <div
+                          class="drop-handler dnd-after"
+                          :class="getHandlerClass(column.group)"
+                          :dndidx="index + 1"
+                        />
+                      </template>
+                    </div>
+                  </th>
+                </template>
               </tr>
             </thead>
 
@@ -163,7 +167,7 @@
                   :class="{
                     'q-table__total-cell_selectable':
                       totalCheckboxPosition === 'total',
-                    'q-table__cell_fixed': fixedColumn.length
+                    'q-table__cell_fixed': stickyColumnKeys.length > 0
                   }"
                 >
                   <q-checkbox
@@ -172,28 +176,30 @@
                     :indeterminate="isIndeterminate"
                   />
                 </th>
-                <td
-                  v-for="(column, index) in columns"
-                  :key="index"
-                  :class="getCellClasses(column)"
-                  class="q-table__cell q-table__total-cell"
-                >
-                  <slot
-                    v-if="$scopedSlots.total"
-                    name="total"
-                    :total="updateItem(total, index, column.key)"
-                  />
+                <template v-for="(group, groupIndex) in columns">
+                  <td
+                    v-for="(column, index) in group.data"
+                    :key="`col${groupIndex}${index}`"
+                    :class="getCellClasses(column, group)"
+                    class="q-table__cell q-table__total-cell"
+                  >
+                    <slot
+                      v-if="$scopedSlots.total"
+                      name="total"
+                      :total="updateItem(total, index, column.key)"
+                    />
 
-                  <slot
-                    v-else-if="column.slots && column.slots.total"
-                    :name="column.slots.total"
-                    :total="updateItem(total, index, column.key)"
-                  />
+                    <slot
+                      v-else-if="column.slots && column.slots.total"
+                      :name="column.slots.total"
+                      :total="updateItem(total, index, column.key)"
+                    />
 
-                  <template v-else-if="total[column.key]">
-                    {{ total[column.key] }}
-                  </template>
-                </td>
+                    <template v-else-if="total[column.key]">
+                      {{ total[column.key] }}
+                    </template>
+                  </td>
+                </template>
               </tr>
 
               <row-hoc
@@ -201,9 +207,9 @@
                 :key="rowIndex"
                 :row="row"
                 :row-index="rowIndex"
-                :columns="columns"
+                :columns="allColumns"
                 :class="levelClass(row.indent)"
-                :fixed-column="fixedColumn"
+                :sticky-column-keys="stickyColumnKeys"
                 :expandable="expandable"
                 :indent-size="indentSize"
                 :indent="row.indent"
@@ -273,7 +279,7 @@ export default {
 
   props: {
     /**
-     * Whether to spread columns proportionally to the table\'s width
+     * do not shrink column's width as native table does (change `defaultColWidth` or pass the `width` to column object for managing the width)
      */
     fixedLayout: {
       type: Boolean,
@@ -291,7 +297,8 @@ export default {
       default: false
     },
     /**
-     * Array of objects, each object must contain `key` and `value`.
+     * MAY contain 'color' (hex string), 'draggabble' (boolean)
+     * MUST contsain 'data' - array of objects, each object must contain `key` and `value`.
      * Can be extended by `sortable`, `slots`, `width` (works with `fixedLayout: true`)
      * and `type` (if `isSeparated` flag is `true`)
      */
@@ -314,43 +321,15 @@ export default {
       default: false
     },
     /**
-     * Whether delimit table by types, required `group` prop in columns
-     */
-    isSeparated: {
-      type: Boolean,
-      default: false
-    },
-    /**
-     * Object with `key: color` for each of separated groups
-     */
-    groupsColors: {
-      type: Object,
-      default: null
-    },
-    /**
      * Object, `[column.key]: value` pair, not all are required
      */
     total: {
       type: Object,
       default: () => ({})
     },
-    /**
-     * Key of column to fix
-     */
-    fixedColumn: {
-      type: String,
-      default: ''
-    },
     childrenKey: {
       type: String,
       default: 'children'
-    },
-    /**
-     * Width of fixed column. If `fixedLayout: true`, width is equal to `defaultColWidth` prop.
-     */
-    fixedColumnWidth: {
-      type: String,
-      default: null
     },
     expandable: {
       type: Boolean,
@@ -397,13 +376,6 @@ export default {
       type: Boolean,
       default: false
     },
-    /**
-     * Whether to drag columns, on end of a drag throw `{ oldPositionIndex, newPositionIndex }` to `@change-order` handler
-     */
-    draggable: {
-      type: Boolean,
-      default: false
-    },
     defaultSort: {
       type: Object,
       default: () => ({
@@ -437,6 +409,22 @@ export default {
   },
 
   computed: {
+    allColumns() {
+      return this.columns.reduce((acc, group) => {
+        return acc.concat(group.data);
+      }, []);
+    },
+    stickyColumnKeys() {
+      return this.allColumns
+        .filter(column => column.fixed)
+        .map(column => column.key);
+    },
+    isDraggable() {
+      return this.columns.find(group => group.draggable);
+    },
+    isSeparated() {
+      return this.columns.length > 1;
+    },
     areAllChecked: {
       get() {
         return this.checkedRows.length === this.rows.length;
@@ -450,11 +438,11 @@ export default {
 
     tableClasses() {
       return {
-        'q-table__draggable': this.draggable,
+        'q-table__draggable': this.isDraggable,
         'q-table__selectable': this.selectable,
         'q-table__separated': this.isSeparated,
         'q-table__grid': this.grid,
-        'q-table__fixed-cols': this.fixedColumn.length,
+        'q-table__fixed-cols': this.stickyColumnKeys.length,
         'q-table__fixed': this.fixedLayout
       };
     },
@@ -470,11 +458,13 @@ export default {
     },
 
     isLeftShadowShown() {
-      return this.fixedColumn.length && this.scrolled > 0;
+      return this.stickyColumnKeys.length && this.scrolled > 0;
     },
 
     isRightShadowShown() {
-      return this.fixedColumn.length && this.tableClass !== 'scrolled-right';
+      return (
+        this.stickyColumnKeys.length && this.tableClass !== 'scrolled-right'
+      );
     },
 
     loadingWrapperClass() {
@@ -495,6 +485,7 @@ export default {
     },
 
     computedRows() {
+      console.log(this.treeRows);
       const rows = this.treeRows.length ? this.treeRows : this.rows;
 
       return rows.map((row, index) => ({
@@ -633,7 +624,9 @@ export default {
     },
 
     findSlotForRow(columnKey) {
-      const currentCol = this.columns.find(({ key }) => key === columnKey);
+      const currentCol = this.columns[0].data?.find(
+        ({ key }) => key === columnKey
+      );
 
       return currentCol?.slots?.row ?? null;
     },
@@ -784,26 +777,24 @@ export default {
       if (!this.isSeparated || !group) return {};
 
       return {
-        borderColor: this.groupsColors?.[group] ?? ''
+        borderColor: group.color ?? ''
       };
     },
 
-    getCellClasses(column = {}) {
+    getCellClasses(column = {}, group) {
       const classes = [this.getSortableClass(column)];
 
       if (this.isSeparated) {
-        if (!column.group)
-          console.warn(
-            `[QTable] Column ${column.key} must have \`group\` prop`
-          );
-        else classes.push(`q-table__header-cell_${column.group}`);
+        classes.push(`q-table__header-cell_${group.key}`);
       }
 
-      if (column.align) {
-        classes.push(`q-table__header-cell_align-${column.align}`);
+      if (group.align || column.align) {
+        classes.push(
+          `q-table__header-cell_align-${column.align ?? group.align}`
+        );
       }
 
-      if (this.fixedColumn.length && this.fixedColumn === column.key) {
+      if (this.stickyColumnKeys.includes(column.key)) {
         classes.push('q-table__cell_fixed');
       }
 
@@ -828,13 +819,8 @@ export default {
     },
 
     getColWidth(column) {
-      if (this.fixedColumn !== column.key && column.key !== 'shadow')
-        return {
-          width: column.width ?? this.defaultColWidth
-        };
-
       return {
-        width: this.fixedColumnWidth ?? this.defaultColWidth
+        width: column.width ?? this.defaultColWidth
       };
     },
 

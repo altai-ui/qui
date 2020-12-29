@@ -8,7 +8,7 @@
       v-if="selectable"
       class="q-table__cell q-table__cell_selectable"
       :class="{
-        'q-table__cell_fixed': fixedColumn.length
+        'q-table__cell_fixed': stickyColumnKeys.length > 0
       }"
       :style="firstTdStyle"
     >
@@ -25,7 +25,7 @@
     <td
       v-for="(column, columnIndex) in columns"
       :key="column.key"
-      :class="getFixedColumnClass(column.key)"
+      :class="getStickyColumnClass(column.key)"
       :style="getCellStyle(columnIndex)"
       :align="column.align || 'left'"
       class="q-table__cell"
@@ -94,9 +94,9 @@ export default {
       type: String,
       default: 'children'
     },
-    fixedColumn: {
-      type: String,
-      default: ''
+    stickyColumnKeys: {
+      type: Array,
+      default: () => []
     },
     expandable: {
       type: Boolean,
@@ -252,10 +252,8 @@ export default {
 
       return style;
     },
-    getFixedColumnClass(key) {
-      return this.fixedColumn && this.fixedColumn === key
-        ? 'q-table__cell_fixed'
-        : '';
+    getStickyColumnClass(key) {
+      return this.stickyColumnKeys.includes(key) ? 'q-table__cell_fixed' : '';
     },
     updateRow(row, index, key, column) {
       let value = row.value ?? get(row, key);
