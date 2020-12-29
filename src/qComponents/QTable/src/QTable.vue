@@ -224,17 +224,17 @@
                   <slot
                     v-if="$scopedSlots.row"
                     name="row"
-                    :row="rowData"
+                    :row="rowData.data"
                   />
 
                   <slot
                     v-else-if="findSlotForRow(rowData.$key)"
                     :name="findSlotForRow(rowData.$key)"
-                    :row="rowData"
+                    :row="rowData.data"
                   />
 
                   <template v-else>
-                    {{ rowData.value }}
+                    {{ rowData.$value }}
                   </template>
                 </template>
               </row-hoc>
@@ -834,21 +834,21 @@ export default {
     },
 
     updateItem(item, index, key) {
-      let value = null;
+      let $value = null;
 
       if (item[key] === 0 || Boolean(item[key])) {
-        value = item[key];
+        $value = item[key];
       }
 
       if (item.value) {
-        value = item.value;
+        $value = item.value;
       }
 
       return {
         ...item,
         $key: key || null,
         $index: index,
-        value
+        $value
       };
     },
 

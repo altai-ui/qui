@@ -256,19 +256,19 @@ export default {
       return this.stickyColumnKey === key ? 'q-table__cell_sticky' : '';
     },
     updateRow(row, index, key, column) {
-      let value = row.value ?? get(row, key);
+      let $value = get(row, key);
 
       if (column.formatter) {
-        value = column.formatter(value, row, column);
+        $value = column.formatter($value, row, column);
       }
 
       return {
-        ...row,
         $key: key,
         $index: index,
-        value,
-        indent: this.indent,
-        column
+        $value,
+        $indent: this.indent,
+        $column: column,
+        data: row
       };
     }
   }

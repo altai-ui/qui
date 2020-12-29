@@ -18,11 +18,11 @@ export default (_, { argTypes }) => ({
       v-bind="$props"
     >
       <template #customHeader="{ column }">
-        {{ column.value }} custom
+        {{ column.$value }} custom
       </template>
 
       <template #customRow="{ row }">
-        {{ row.value }} custom
+        {{ row.$value }} custom
       </template>
     </q-table>
   `
