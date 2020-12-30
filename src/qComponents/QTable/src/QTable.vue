@@ -51,16 +51,19 @@
             cellspacing="0"
             cellpadding="0"
           >
-            <colgroup v-if="selectable">
-              <col width="64" />
-            </colgroup>
-            <template v-for="(group, groupIndex) in groupsOfColumns">
+            <colgroup>
               <col
-                v-for="(column, index) in group.columns"
-                :key="`fixCol${groupIndex}${index}`"
-                :style="getColWidth(column)"
+                v-if="selectable"
+                style="width: 64px"
               />
-            </template>
+              <template v-for="(group, groupIndex) in groupsOfColumns">
+                <col
+                  v-for="(column, index) in group.columns"
+                  :key="`fixCol${groupIndex}${index}`"
+                  :style="getColWidth(column)"
+                />
+              </template>
+            </colgroup>
 
             <thead>
               <tr>
@@ -786,7 +789,7 @@ export default {
       if (!this.isSeparated || !group) return {};
 
       return {
-        borderColor: group.color ?? 'transparent'
+        borderColor: group.color ?? ''
       };
     },
 
