@@ -21,6 +21,10 @@
     display: inline-block;
     font-size: 23px;
     vertical-align: middle;
+
+    &_opened {
+      transform: rotate(90deg);
+    }
   }
 
   &__drag-elements {

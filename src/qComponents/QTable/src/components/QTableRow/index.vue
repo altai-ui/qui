@@ -44,7 +44,7 @@
         :class="column.customCellClass"
       >
         <slot
-          :row-data="updateRow(row, columnIndex, column.key, column)"
+          :row-data="updateRow(row.data, columnIndex, column.key, column)"
           name="row"
         />
 
@@ -57,7 +57,7 @@
 
       <template v-else>
         <slot
-          :row-data="updateRow(row, columnIndex, column.key, column)"
+          :row-data="updateRow(row.data, columnIndex, column.key, column)"
           name="row"
         />
 
@@ -209,14 +209,14 @@ export default {
       return (
         this.expandable &&
         columnIndex === 0 &&
-        Boolean(this.row[this.childrenKey]?.length)
+        Boolean(this.row.data[this.childrenKey]?.length)
       );
     },
     handleExpandClick() {
       this.$emit('expand-click', this.row);
     },
     getFirstTdStyle() {
-      if (!this.selectable || !this.row[this.childrenKey]?.length) return;
+      if (!this.selectable || !this.row.data[this.childrenKey]?.length) return;
 
       const elm = this.$el?.querySelector('td:first-child');
 
@@ -231,14 +231,11 @@ export default {
       };
     },
     getCellStyle(column, columnIndex) {
+      if (!this.indent) return {};
+
       const style = {};
 
-      if (
-        columnIndex === 0 &&
-        !this.selectable &&
-        this.$el &&
-        this.row[this.childrenKey]?.length
-      ) {
+      if (columnIndex === 0 && !this.selectable && this.$el) {
         const elm = this.$el.querySelector('td:first-child');
 
         if (elm) {
@@ -256,18 +253,18 @@ export default {
       return this.stickyColumnKey === key ? 'q-table__cell_sticky' : '';
     },
     updateRow(row, index, key, column) {
-      let $value = get(row, key);
+      let value = get(row.data || row, key);
 
       if (column.formatter) {
-        $value = column.formatter($value, row, column);
+        value = column.formatter(value, row, column);
       }
 
       return {
-        $key: key,
-        $index: index,
-        $value,
-        $indent: this.indent,
-        $column: column,
+        key,
+        index,
+        value,
+        indent: this.indent,
+        column,
         data: row
       };
     }

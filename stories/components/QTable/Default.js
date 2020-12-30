@@ -21,8 +21,8 @@ export default (_, { argTypes }) => ({
         {{ column.$value }} custom
       </template>
 
-      <template #customRow="{ row }">
-        {{ row.$value }} custom
+      <template #customRow="{ value }">
+        {{ value }} custom
       </template>
     </q-table>
   `

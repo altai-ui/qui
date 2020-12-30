@@ -208,11 +208,11 @@
                 :row="row"
                 :row-index="rowIndex"
                 :columns="allColumns"
-                :class="levelClass(row.indent)"
+                :class="levelClass(row.$indent)"
                 :sticky-column-key="stickyColumnKey"
                 :expandable="expandable"
                 :indent-size="indentSize"
-                :indent="row.indent"
+                :indent="row.$indent"
                 :children-key="childrenKey"
                 :pages-in-expand="pagesInExpand"
                 :custom-row-class="customRowClass"
@@ -227,17 +227,22 @@
                   <slot
                     v-if="$scopedSlots.row"
                     name="row"
-                    :row="rowData.data"
+                    :row="rowData"
                   />
 
                   <slot
-                    v-else-if="findSlotForRow(rowData.$key)"
-                    :name="findSlotForRow(rowData.$key)"
+                    v-else-if="findSlotForRow(rowData.key)"
+                    :name="findSlotForRow(rowData.key)"
                     :row="rowData.data"
+                    :rowKey="rowData.key"
+                    :index="rowData.index"
+                    :value="rowData.value"
+                    :indent="rowData.indent"
+                    :column="rowData.column"
                   />
 
                   <template v-else>
-                    {{ rowData.$value }}
+                    {{ rowData.value }}
                   </template>
                 </template>
               </row-hoc>
@@ -437,12 +442,15 @@ export default {
         return acc.concat(eachGroup);
       }, []);
     },
+
     isDraggable() {
       return this.groupsOfColumns.find(group => group.draggable);
     },
+
     isSeparated() {
       return this.groupsOfColumns.length > 1;
     },
+
     areAllChecked: {
       get() {
         return this.checkedRows.length === this.rows.length;
@@ -527,14 +535,14 @@ export default {
       handler(rows) {
         this.treeRows = rows.map((row, index) => {
           const updatedRow = {
-            ...row,
+            data: row,
             $treeIndex: index
           };
 
-          const childs = updatedRow[this.childrenKey];
+          const childs = updatedRow.data[this.childrenKey];
 
           if (childs) {
-            updatedRow[this.childrenKey] = this.updateChildrenRows(
+            updatedRow.data[this.childrenKey] = this.updateChildrenRows(
               childs,
               row,
               updatedRow
@@ -607,17 +615,20 @@ export default {
 
     updateChildrenRows(childs, row, updatedRow) {
       return childs.map(child => {
+        const childlessRow = { ...row };
+        this.$delete(childlessRow, [this.childrenKey]);
+
         const updatedChildRow = {
-          ...child,
-          $parentRow: row,
-          indent: updatedRow.indent + this.indentSize || this.indentSize,
+          data: child,
+          $parentRow: childlessRow,
+          $indent: updatedRow.$indent + this.indentSize || this.indentSize,
           $treeIndex: updatedRow.$treeIndex
         };
 
-        const rowChilds = updatedChildRow[this.childrenKey];
+        const rowChilds = updatedChildRow.data[this.childrenKey];
 
         if (rowChilds) {
-          updatedChildRow[this.childrenKey] = this.updateChildrenRows(
+          updatedChildRow.data[this.childrenKey] = this.updateChildrenRows(
             rowChilds,
             child,
             updatedChildRow
@@ -704,20 +715,19 @@ export default {
     },
 
     handleExpandClick(row) {
+      const currentRow = this.treeRows[row.$treeIndex];
+
       if (!row.$isTreeOpened) {
-        this.$emit('load-by-expand', row, this.resolve);
+        const updatedRow = {
+          ...currentRow,
+          $isTreeOpened: true
+        };
+
+        this.treeRows.splice(currentRow, 1, updatedRow);
+        return;
       }
 
-      this.treeRows = this.computedRows;
-
-      const parentRow = this.findScopedRow(
-        this.treeRows[row.$treeIndex],
-        this.uniqueKey,
-        row[this.uniqueKey]
-      );
-
-      this.$delete(parentRow, [this.childrenKey]);
-      this.$delete(parentRow, '$isTreeOpened');
+      this.$delete(currentRow, '$isTreeOpened');
     },
 
     findScopedRow(row, key, value) {
@@ -748,13 +758,16 @@ export default {
       let loaderRow = null;
 
       let updatedChilds = newChilds.map(child => {
+        const childlessRow = { ...row };
+        this.$delete(childlessRow, [this.childrenKey]);
+
         if (child[this.pagesInExpand]) {
-          loaderRow = { ...child, $parentRow: row };
+          loaderRow = { ...child, $parentRow: childlessRow };
         }
         return {
           ...child,
-          $parentRow: row,
-          indent: row.indent + this.indentSize || this.indentSize,
+          $parentRow: childlessRow,
+          $indent: row.$indent + this.indentSize || this.indentSize,
           $treeIndex: row.$treeIndex
         };
       });
