@@ -184,7 +184,7 @@ export default {
       return rowClass;
     },
     openedTreeClass() {
-      return this.row.$isTreeOpened ? 'q-table__expand-arrow_opened' : '';
+      return this.row.isTreeOpened ? 'q-table__expand-arrow_opened' : '';
     },
     getRowStyle() {
       return (

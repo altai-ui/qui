@@ -14,7 +14,7 @@ const renderedChilds = ({
       renderContext(component, {
         props: {
           ...props,
-          indent: row.$indent,
+          indent: row.indent,
           row
         },
         on: { ...listeners },
@@ -62,7 +62,7 @@ const withQTableRow = QTableRow => ({
         scopedSlots
       };
 
-      if (row.$isTreeOpened) renderingArray.push(renderedChilds(renderedData));
+      if (row.isTreeOpened) renderingArray.push(renderedChilds(renderedData));
     }
 
     return [renderContext(QTableRow, { ...data }), ...renderingArray];
