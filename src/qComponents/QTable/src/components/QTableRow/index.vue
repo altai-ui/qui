@@ -8,7 +8,7 @@
       v-if="selectable"
       class="q-table__cell q-table__cell_selectable"
       :class="{
-        'q-table__cell_fixed': fixedColumn.length
+        'q-table__cell_sticky': stickyColumnKey
       }"
       :style="firstTdStyle"
     >
@@ -25,52 +25,48 @@
     <td
       v-for="(column, columnIndex) in columns"
       :key="column.key"
-      :class="getFixedColumnClass(column.key)"
-      :style="getCellStyle(column.key, columnIndex, column.width)"
+      :class="getStickyColumnClass(column.key)"
+      :style="getCellStyle(column, columnIndex)"
+      :align="column.align || 'left'"
       class="q-table__cell"
     >
       <div
-        class="q-table__cell-wrapper"
-        :style="getCellWrapperStyle(column)"
+        v-if="!selectable && canRowExpand(columnIndex)"
+        class="q-table__expand-arrow"
+        :class="openedTreeClass"
+        @click="handleExpandClick"
       >
-        <div
-          v-if="!selectable && canRowExpand(columnIndex)"
-          class="q-table__expand-arrow"
-          :class="openedTreeClass"
-          @click="handleExpandClick"
-        >
-          <span class="q-icon-triangle-right" />
-        </div>
-
-        <div
-          v-if="column.customCellClass"
-          :class="column.customCellClass"
-        >
-          <slot
-            :row-data="updateRow(row, columnIndex, column.key, column)"
-            name="row"
-          />
-
-          <slot
-            v-if="checkLoader(columnIndex)"
-            :row-data="row"
-            name="loader"
-          />
-        </div>
-
-        <template v-else>
-          <slot
-            :row-data="updateRow(row, columnIndex, column.key, column)"
-            name="row"
-          />
-
-          <slot
-            v-if="checkLoader(columnIndex)"
-            :row-data="row"
-            name="loader"
-          />
-        </template>
+        <span class="q-icon-triangle-right" />
       </div>
+
+      <div
+        v-if="column.customCellClass"
+        :class="column.customCellClass"
+      >
+        <slot
+          :row-data="updateRow(row.data, columnIndex, column.key, column)"
+          name="row"
+        />
+
+        <slot
+          v-if="checkLoader(columnIndex)"
+          :row-data="row"
+          name="loader"
+        />
+      </div>
+
+      <template v-else>
+        <slot
+          :row-data="updateRow(row.data, columnIndex, column.key, column)"
+          name="row"
+        />
+
+        <slot
+          v-if="checkLoader(columnIndex)"
+          :row-data="row"
+          name="loader"
+        />
+      </template>
     </td>
   </tr>
 </template>
@@ -98,13 +94,9 @@ export default {
       type: String,
       default: 'children'
     },
-    fixedColumn: {
+    stickyColumnKey: {
       type: String,
-      default: ''
-    },
-    fixedColumnWidth: {
-      type: Number,
-      default: 250
+      default: null
     },
     expandable: {
       type: Boolean,
@@ -192,7 +184,7 @@ export default {
       return rowClass;
     },
     openedTreeClass() {
-      return this.row.$isTreeOpened ? 'q-table__expand-arrow_opened' : '';
+      return this.row.isTreeOpened ? 'q-table__expand-arrow_opened' : '';
     },
     getRowStyle() {
       return (
@@ -217,14 +209,14 @@ export default {
       return (
         this.expandable &&
         columnIndex === 0 &&
-        Boolean(this.row[this.childrenKey]?.length)
+        Boolean(this.row.data[this.childrenKey]?.length)
       );
     },
     handleExpandClick() {
       this.$emit('expand-click', this.row);
     },
     getFirstTdStyle() {
-      if (!this.selectable || !this.row[this.childrenKey]?.length) return;
+      if (!this.selectable || !this.row.data[this.childrenKey]?.length) return;
 
       const elm = this.$el?.querySelector('td:first-child');
 
@@ -238,26 +230,12 @@ export default {
         paddingLeft: `${Number(paddingLeft) + this.indent}px`
       };
     },
-    getCellWrapperStyle({ width, minWidth, maxWidth }) {
-      return {
-        width: width ? `${width}px` : '',
-        minWidth: minWidth ? `${minWidth}px` : '',
-        maxWidth: maxWidth ? `${maxWidth}px` : ''
-      };
-    },
-    getCellStyle(key, columnIndex, width) {
+    getCellStyle(column, columnIndex) {
+      if (!this.indent) return {};
+
       const style = {};
 
-      if (width) {
-        style.width = `${width}px`;
-      }
-
-      if (
-        columnIndex === 0 &&
-        !this.selectable &&
-        this.$el &&
-        this.row[this.childrenKey]?.length
-      ) {
+      if (columnIndex === 0 && !this.selectable && this.$el) {
         const elm = this.$el.querySelector('td:first-child');
 
         if (elm) {
@@ -269,33 +247,25 @@ export default {
         }
       }
 
-      if (this.fixedColumn !== key && key !== 'shadow') return style;
-
-      return {
-        ...style,
-        minWidth: `${this.fixedColumnWidth}px`,
-        maxWidth: `${this.fixedColumnWidth}px`
-      };
+      return style;
     },
-    getFixedColumnClass(key) {
-      return this.fixedColumn && this.fixedColumn === key
-        ? 'q-table__cell_fixed'
-        : '';
+    getStickyColumnClass(key) {
+      return this.stickyColumnKey === key ? 'q-table__cell_sticky' : '';
     },
     updateRow(row, index, key, column) {
-      let value = row.value ?? get(row, key);
+      let value = get(row.data || row, key);
 
       if (column.formatter) {
         value = column.formatter(value, row, column);
       }
 
       return {
-        ...row,
-        $key: key,
-        $index: index,
+        key,
+        index,
         value,
         indent: this.indent,
-        column
+        column,
+        data: row
       };
     }
   }

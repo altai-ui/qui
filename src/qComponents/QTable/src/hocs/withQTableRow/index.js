@@ -3,11 +3,11 @@ const renderedChilds = ({
   childrenKey,
   listeners,
   component,
-  childrens,
+  children,
   props,
   scopedSlots
 }) => {
-  return childrens.reduce((acc, row) => {
+  return children.reduce((acc, row) => {
     const renderingArray = [];
 
     renderingArray.push(
@@ -30,7 +30,7 @@ const renderedChilds = ({
         listeners,
         props,
         scopedSlots,
-        childrens: row[childrenKey]
+        children: row.data[childrenKey]
       };
 
       renderingArray.push(renderedChilds(renderedData));
@@ -51,17 +51,18 @@ const withQTableRow = QTableRow => ({
 
     const renderingArray = [];
 
-    if (row[childrenKey]) {
+    if (row.data[childrenKey]) {
       const renderedData = {
         renderContext,
         childrenKey,
         component: QTableRow,
         listeners,
-        childrens: row[childrenKey],
+        children: row.data[childrenKey],
         props,
         scopedSlots
       };
-      renderingArray.push(renderedChilds(renderedData));
+
+      if (row.isTreeOpened) renderingArray.push(renderedChilds(renderedData));
     }
 
     return [renderContext(QTableRow, { ...data }), ...renderingArray];
