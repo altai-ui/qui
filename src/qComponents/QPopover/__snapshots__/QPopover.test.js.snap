@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QPopover data should match snapshot 1`] = `
+Object {
+  "isPopoverShown": false,
+  "popperJS": null,
+  "referenceElement": null,
+  "zIndex": null,
+}
+`;
+
+exports[`QPopover should match snapshot 1`] = `
+<span>
+  <transition-stub
+    name="fade-in-linear"
+  >
+    <div
+      class="q-popover q-popover_without-icon"
+      style="display: none;"
+    >
+      <!---->
+       
+      <q-scrollbar-stub
+        theme="primary"
+        viewclass="scrollbar__list"
+        viewtag="div"
+        wrapclass="q-popover__inner"
+      >
+        <!---->
+         
+        <!---->
+      </q-scrollbar-stub>
+    </div>
+  </transition-stub>
+   
+  <button>
+    Open
+  </button>
+</span>
+`;
