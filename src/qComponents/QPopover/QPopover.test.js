@@ -37,5 +37,39 @@ describe('QPopover', () => {
         expect(instance.vm.isPopoverShown).toBeTruthy();
       });
     });
+
+    describe('destroy', () => {
+      it('should set isPopoverShown to false', () => {
+        const instance = shallowMount(Component, options);
+        instance.setData({
+          isPopoverShown: true
+        });
+        instance.vm.destroy();
+        expect(instance.vm.isPopoverShown).toBeFalsy();
+      });
+
+      it('should call destroy', () => {
+        const instance = shallowMount(Component, options);
+        const spy = jest.fn(() => ({}));
+        instance.setData({
+          popperJS: {
+            destroy: spy
+          }
+        });
+        instance.vm.destroy();
+        expect(spy).toBeCalled();
+      });
+
+      it('should set popperJS to null', () => {
+        const instance = shallowMount(Component, options);
+        instance.setData({
+          popperJS: {
+            destroy: () => {}
+          }
+        });
+        instance.vm.destroy();
+        expect(instance.vm.popperJS).toBeNull();
+      });
+    });
   });
 });
