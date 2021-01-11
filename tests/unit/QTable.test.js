@@ -4,10 +4,14 @@ import { QTable } from '../../src/qComponents';
 describe('QTable.vue', () => {
   const options = {
     propsData: {
-      columns: [
+      groupsOfColumns: [
         {
-          key: 'col1',
-          value: 'Column 1'
+          columns: [
+            {
+              key: 'col1',
+              value: 'Column 1'
+            }
+          ]
         }
       ],
       rows: [
