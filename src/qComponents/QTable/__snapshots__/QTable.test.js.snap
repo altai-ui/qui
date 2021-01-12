@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`QTable.vue QTable should match snapshot 1`] = `
+exports[`QTable QTable should match snapshot 1`] = `
 <div
   class="q-table"
 >
@@ -28,29 +28,36 @@ exports[`QTable.vue QTable should match snapshot 1`] = `
         <table
           cellpadding="0"
           cellspacing="0"
-          class="q-table__table"
+          class="q-table__table q-table__fixed"
         >
+          <colgroup>
+            <!---->
+             
+            <col
+              style="width: 200px;"
+            />
+          </colgroup>
+           
           <thead>
             <tr>
               <!---->
                
               <th
-                class="q-table__header-cell  "
+                class="q-table__header-cell"
               >
                 <div
                   class="q-table__header-cell-wrapper"
                 >
-                  <!---->
-                   
                   <div
                     class="q-table__header-cell-content"
                   >
-                    <!---->
-                     
-                      Column 1
-                     
+                    
+                        Column 1
+                       
                     <!---->
                   </div>
+                   
+                  <!---->
                 </div>
               </th>
             </tr>
@@ -66,10 +73,6 @@ exports[`QTable.vue QTable should match snapshot 1`] = `
               childrenkey="children"
               class=""
               columns="[object Object]"
-              fixed-column=""
-              fixed-column-width="200"
-              fixedcolumn=""
-              fixedcolumnwidth="200"
               indent-size="16"
               indentsize="16"
               row="[object Object]"
