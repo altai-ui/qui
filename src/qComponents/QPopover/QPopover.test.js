@@ -18,7 +18,7 @@ describe('QPopover', () => {
 
   describe('computed', () => {
     describe('popoverClasses', () => {
-      it('should return object {"q-popover_without-icon": true} if icon does not exist', () => {
+      it('should return expected value if icon does not exist', () => {
         const instance = shallowMount(Component, options);
         instance.setProps({
           icon: ''
@@ -29,7 +29,7 @@ describe('QPopover', () => {
         expect(instance.vm.popoverClasses).toEqual(expected);
       });
 
-      it('should return object {"q-popover_without-icon": false} if icon exists', () => {
+      it('should return expected value if icon exists', () => {
         const instance = shallowMount(Component, options);
         instance.setProps({
           icon: 'icon-name'
