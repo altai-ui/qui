@@ -1,4 +1,3 @@
-import { shallowMount } from '@vue/test-utils';
 import Component from './index';
 
 describe('QPopover', () => {
@@ -15,6 +14,28 @@ describe('QPopover', () => {
 
   it('data should match snapshot', () => {
     expect(Component.data()).toMatchSnapshot();
+  });
+
+  describe('computed', () => {
+    describe('popoverClasses', () => {
+      it('should return className "q-popover_without-icon" if icon is exists', () => {
+        const instance = shallowMount(Component, options);
+        instance.setProps({
+          icon: 'q-icon-account'
+        });
+        const expected = 'q-popover_without-icon';
+        expect(instance.vm.popoverClasses).toHaveProperty(expected);
+      });
+
+      it('should return empty object if icon is not exists', () => {
+        const instance = shallowMount(Component, options);
+        instance.setProps({
+          icon: ''
+        });
+        const expected = 'q-popover_without-icon';
+        expect(instance.vm.popoverClasses).toHaveProperty(expected);
+      });
+    });
   });
 
   describe('methods', () => {

@@ -1,7 +1,6 @@
-import { shallowMount } from '@vue/test-utils';
-import { QTable } from '../../src/qComponents';
+import Component from './index';
 
-describe('QTable.vue', () => {
+describe('QTable', () => {
   const options = {
     propsData: {
       groupsOfColumns: [
@@ -23,7 +22,7 @@ describe('QTable.vue', () => {
   };
 
   it('QTable should match snapshot', () => {
-    const { element } = shallowMount(QTable, options);
+    const { element } = shallowMount(Component, options);
 
     expect(element).toMatchSnapshot();
   });

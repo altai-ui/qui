@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`QTable.vue QTable should match snapshot 1`] = `
+exports[`QTable QTable should match snapshot 1`] = `
 <div
   class="q-table"
 >
