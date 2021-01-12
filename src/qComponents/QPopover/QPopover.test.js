@@ -18,22 +18,26 @@ describe('QPopover', () => {
 
   describe('computed', () => {
     describe('popoverClasses', () => {
-      it('should return className "q-popover_without-icon" if icon is exists', () => {
-        const instance = shallowMount(Component, options);
-        instance.setProps({
-          icon: 'q-icon-account'
-        });
-        const expected = 'q-popover_without-icon';
-        expect(instance.vm.popoverClasses).toHaveProperty(expected);
-      });
-
-      it('should return empty object if icon is not exists', () => {
+      it('should return object {"q-popover_without-icon": true} if icon does not exist', () => {
         const instance = shallowMount(Component, options);
         instance.setProps({
           icon: ''
         });
-        const expected = 'q-popover_without-icon';
-        expect(instance.vm.popoverClasses).toHaveProperty(expected);
+        const expected = {
+          'q-popover_without-icon': true
+        };
+        expect(instance.vm.popoverClasses).toEqual(expected);
+      });
+
+      it('should return object {"q-popover_without-icon": false} if icon exists', () => {
+        const instance = shallowMount(Component, options);
+        instance.setProps({
+          icon: 'icon-name'
+        });
+        const expected = {
+          'q-popover_without-icon': false
+        };
+        expect(instance.vm.popoverClasses).toEqual(expected);
       });
     });
   });
@@ -71,7 +75,7 @@ describe('QPopover', () => {
 
       it('should call destroy', () => {
         const instance = shallowMount(Component, options);
-        const spy = jest.fn(() => ({}));
+        const spy = jest.fn(() => {});
         instance.setData({
           popperJS: {
             destroy: spy
