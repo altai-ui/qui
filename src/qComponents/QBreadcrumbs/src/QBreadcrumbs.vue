@@ -3,7 +3,7 @@
     <template v-for="crumb in breadcrumbs">
       <router-link
         :key="crumb.name || crumb.path"
-        :to="routerTo(crumb)"
+        :to="pushTo(crumb)"
         active-class="q-breadcrumbs__crumb_active"
         exact-active-class="q-breadcrumbs__crumb_exact-active"
         class="q-breadcrumbs__crumb"
@@ -20,13 +20,6 @@
     <div class="q-breadcrumbs__crumb q-breadcrumbs__crumb_last">
       {{ lastCrumb }}
     </div>
-
-    <div
-      v-if="postfix"
-      class="q-breadcrumbs__postfix"
-    >
-      {{ postfix }}
-    </div>
   </div>
 </template>
 
@@ -35,18 +28,14 @@ export default {
   name: 'QBreadcrumbs',
   componentName: 'QBreadcrumbs',
 
+  /**
+   * if you have vue router, QBreadcrumbs will get crumbs from this.$route.matched
+   */
   props: {
     /**
      * custom last crumb
      */
     last: {
-      type: String,
-      default: null
-    },
-    /**
-     * custom postfix after last crumb
-     */
-    postfix: {
       type: String,
       default: null
     },
@@ -80,7 +69,7 @@ export default {
   },
 
   methods: {
-    routerTo({ name, path }) {
+    pushTo({ name, path }) {
       return name ? { name } : path;
     }
   }
