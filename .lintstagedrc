@@ -5,7 +5,8 @@
     "stylelint --fix",
     "prettier --parser vue --write",
     "eslint --fix --no-ignore",
-    "git add"
+    "git add",
+    "jest --coverage"
   ],
   "{*.json,.*rc}": ["prettier --parser json --write", "git add"],
   "*.{yaml,yml}": ["prettier --parser yaml --write", "git add"]
