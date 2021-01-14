@@ -6,7 +6,6 @@ describe('QBreadcrumbs', () => {
 
   beforeEach(() => {
     options = {
-      $route: {},
       mocks: {
         $route: { matched: [{ meta: 'one' }] }
       }

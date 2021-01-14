@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QCascader should match snapshot 1`] = `
+<div
+  class="q-cascader"
+>
+  <div
+    class="q-input q-input_suffix"
+  >
+    <!---->
+     
+    <input
+      aria-label=""
+      autocomplete="off"
+      class="q-input__inner"
+      placeholder="placeholder"
+      readonly="readonly"
+      tabindex=""
+      type="text"
+    />
+     
+    <span
+      class="q-input__suffix"
+    >
+      <span
+        class="q-input__suffix-inner"
+      >
+        <span
+          class="q-input__icon q-icon-triangle-down"
+        />
+         
+        <!---->
+         
+        <!---->
+      </span>
+    </span>
+  </div>
+   
+  <!---->
+   
+  <div
+    class="q-cascader-panel"
+  >
+    <div
+      class="q-cascader-menu"
+    >
+      <div
+        class="q-cascader-menu__wrap"
+      >
+        <div
+          class="q-scrollbar"
+        >
+          <div
+            class="q-scrollbar__wrap q-cascader-menu__scrollbar q-scrollbar__wrap_hidden-default"
+          >
+            <div
+              class="q-scrollbar__view"
+            >
+              <div
+                class="q-cascader-node"
+              >
+                <!---->
+                 
+                <span
+                  class="q-cascader-node__label"
+                >
+                  Guide
+                </span>
+                 
+                <!---->
+              </div>
+              <div
+                class="q-cascader-node"
+              >
+                <!---->
+                 
+                <span
+                  class="q-cascader-node__label"
+                >
+                  Resource
+                </span>
+                 
+                <!---->
+              </div>
+            </div>
+          </div>
+           
+          <div
+            class="q-scrollbar__bar q-scrollbar__bar_horizontal"
+            style="display: none;"
+          >
+            <div
+              class="q-scrollbar__thumb"
+              style="transform: translateX(0%); webkit-transform: translateX(0%);"
+            />
+          </div>
+           
+          <div
+            class="q-scrollbar__bar q-scrollbar__bar_vertical"
+            style="display: none;"
+          >
+            <div
+              class="q-scrollbar__thumb"
+              style="transform: translateY(0%); webkit-transform: translateY(0%);"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
