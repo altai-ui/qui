@@ -92,7 +92,7 @@
   "homepage": "https://github.com/Qvant-lab/qui#readme",
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && yarn test:unit --coverage"
     }
   },
   "keywords": [
