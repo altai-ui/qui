@@ -67,7 +67,9 @@ exports[`QCascader should match snapshot 1`] = `
                   Guide
                 </span>
                  
-                <!---->
+                <span
+                  class="q-cascader-node__postfix q-icon-triangle-right"
+                />
               </div>
               <div
                 class="q-cascader-node"

@@ -15,7 +15,14 @@ describe('QCascader', () => {
         options: [
           {
             value: 'guide',
-            label: 'Guide'
+            label: 'Guide',
+            children: [
+              {
+                value: 'child',
+                label: 'Child',
+                children: [{ value: 'next child', label: 'Next child' }]
+              }
+            ]
           },
           {
             value: 'resource',
@@ -54,9 +61,9 @@ describe('QCascader', () => {
 
   describe('watch', () => {
     describe('value', () => {
-      it('should set checkedValues if value is array', () => {
-        const expected = ['guide', 'resource'];
-        instance.setProps({
+      it('should set checkedValues if value is array', async () => {
+        const expected = ['guide', 'child'];
+        await instance.setProps({
           value: expected
         });
         expect(instance.vm.checkedValues).toEqual(expected);

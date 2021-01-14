@@ -314,7 +314,13 @@ export default {
      *  `draggabble` (boolean) - whether to drag and drop columns inside the group.
      *  `align` (left/right) - content's align.
      * Each column MUST contain `key` and `value`.
-     * Each column MAY contain `sortable`, `slots`, `width` (works with `fixedLayout: true`)
+     * Each column MAY contain:
+     *  `sortable`,
+     *  `slots`,
+     *  `width` (works with `fixedLayout: true`),
+     *  `customCellClass`,
+     *  `formatter` (fn),
+     *  `slots`
      */
     groupsOfColumns: {
       type: Array,

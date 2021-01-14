@@ -12,8 +12,6 @@ import {
 
 import { isTimeValueValid } from '../../../helpers/dateHelpers';
 
-const formatter = new Intl.DateTimeFormat('ru', { month: 'short' });
-
 export default {
   inject: {
     picker: {
@@ -36,6 +34,10 @@ export default {
           this.leftDate
         ).getFullYear()}`;
       }
+      const formatter = new Intl.DateTimeFormat(this.$Q.locale, {
+        month: 'short'
+      });
+
       return `${formatter.format(
         this.leftDate
       )} ${this.leftDate.getFullYear()}`;
@@ -47,6 +49,10 @@ export default {
           this.rightDate
         ).getFullYear()}`;
       }
+
+      const formatter = new Intl.DateTimeFormat(this.$Q.locale, {
+        month: 'short'
+      });
 
       return `${formatter.format(
         this.rightDate
