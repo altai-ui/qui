@@ -214,6 +214,13 @@ export default {
 
     handleDragover() {
       if (!this.isDisabled) this.isDragover = true;
+    },
+
+    /**
+     * @public
+     */
+    open() {
+      this.$refs.fileInput.click();
     }
   }
 };
