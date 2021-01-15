@@ -5,8 +5,11 @@
   >
     <div
       v-if="isShown"
+      ref="messageBox"
       class="q-message-box"
       :style="{ zIndex }"
+      tabindex="-1"
+      @keyup.esc="closeBox"
     >
       <q-scrollbar
         theme="secondary"
@@ -96,18 +99,30 @@ export default {
   componentName: 'QMessageBox',
 
   props: {
+    /**
+     * z-index of the QMessageBox
+     */
     zIndex: {
       type: Number,
       default: null
     },
+    /**
+     * title of the QMessageBox
+     */
     title: {
       type: String,
       default: ''
     },
+    /**
+     * content of the QMessageBox
+     */
     message: {
       type: String,
       default: ''
     },
+    /**
+     * subcontent of the QMessageBox
+     */
     submessage: {
       type: String,
       default: ''
@@ -119,22 +134,37 @@ export default {
       type: Boolean,
       default: false
     },
+    /**
+     * text content of confirm button
+     */
     confirmButtonText: {
       type: String,
       default: null
     },
+    /**
+     * text content of cancel button
+     */
     cancelButtonText: {
       type: String,
       default: null
     },
+    /**
+     * whether QMessageBox can be closed by clicking the mask
+     */
     closeOnClickShadow: {
       type: Boolean,
       default: true
     },
+    /**
+     * whether to distinguish canceling and closing the QMessageBox
+     */
     distinguishCancelAndClose: {
       type: Boolean,
       default: false
     },
+    /**
+     * callback before QMessageBox closes, and it will prevent QMessageBox from closing
+     */
     beforeClose: {
       type: Function,
       default: null
@@ -154,7 +184,8 @@ export default {
       isShown: false,
       isConfirmBtnLoading: false,
       isCancelBtnLoading: false,
-      callback: null
+      callback: null,
+      focusAfterClosed: null
     };
   },
 
@@ -164,12 +195,25 @@ export default {
     }
   },
 
+  watch: {
+    isShown(value) {
+      if (!value) return;
+
+      this.$nextTick(() => {
+        this.focusAfterClosed = document.activeElement;
+        this.$refs.messageBox.focus();
+      });
+    }
+  },
+
   mounted() {
     document.documentElement.style.overflow = 'hidden';
+    document.addEventListener('focus', this.trapFocus, true);
   },
 
   beforeDestroy() {
     document.documentElement.style.overflow = '';
+    document.removeEventListener('focus', this.trapFocus, true);
 
     const el = this.$el;
     if (el?.parentNode === document.body) {
@@ -178,6 +222,12 @@ export default {
   },
 
   methods: {
+    trapFocus(event) {
+      if (!this.$refs.messageBox.contains(event.target)) {
+        this.$refs.messageBox.focus();
+      }
+    },
+
     handleHookAfterLeave() {
       this.$destroy();
     },
@@ -193,6 +243,8 @@ export default {
         this.callback({ action, payload });
         this.isShown = false;
       }
+
+      this.focusAfterClosed?.focus();
     },
 
     handleConfirmBtnClick() {

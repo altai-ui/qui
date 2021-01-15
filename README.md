@@ -22,12 +22,12 @@ What is it?
 
 Some examples below:
 
-![Alt text](/.readme-assets/buttons.jpg?raw=true)
-![Alt text](/.readme-assets/inputs.gif?raw=true)
-![Alt text](/.readme-assets/icons.gif?raw=true)
-![Alt text](/.readme-assets/tables.jpg?raw=true)
-![Alt text](/.readme-assets/datepicker.jpg?raw=true)
-![Alt text](/.readme-assets/other.jpg?raw=true)
+![buttons](/.readme-assets/buttons.jpg?raw=true)
+![inputs](/.readme-assets/inputs.gif?raw=true)
+![icons](/.readme-assets/icons.gif?raw=true)
+![tables](/.readme-assets/tables.jpg?raw=true)
+![datepicker](/.readme-assets/datepicker.jpg?raw=true)
+![other](/.readme-assets/other.jpg?raw=true)
 
 ## Install
 
@@ -181,7 +181,7 @@ import QMessageBox from '@qvant/qui/src/qComponents/QMessageBox';
 import QDialog from '@qvant/qui/src/qComponents/QDialog';
 import QNotification from '@qvant/qui/src/qComponents/QNotification';
 
-Vue.prototype.$message = QMessageBox.bind(Vue);
+Vue.prototype.$message = QMessageBox;
 Vue.prototype.$dialog = QDialog.bind(Vue);
 Vue.prototype.$notify = options =>
   QNotification({

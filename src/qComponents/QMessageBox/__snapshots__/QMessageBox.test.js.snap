@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QMessageBox data should match snapshot 1`] = `
+Object {
+  "callback": null,
+  "focusAfterClosed": null,
+  "isCancelBtnLoading": false,
+  "isComponentUsed": false,
+  "isConfirmBtnLoading": false,
+  "isShown": false,
+}
+`;
+
+exports[`QMessageBox should match snapshot 1`] = `
+<transition-stub
+  name="q-msgbox-fade"
+>
+  <!---->
+</transition-stub>
+`;
