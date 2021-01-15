@@ -199,8 +199,8 @@ export default {
     isShown(value) {
       if (!value) return;
 
+      this.focusAfterClosed = document.activeElement;
       this.$nextTick(() => {
-        this.focusAfterClosed = document.activeElement;
         this.$refs.messageBox.focus();
       });
     }
@@ -213,7 +213,6 @@ export default {
 
   beforeDestroy() {
     document.documentElement.style.overflow = '';
-    document.removeEventListener('focus', this.trapFocus, true);
 
     const el = this.$el;
     if (el?.parentNode === document.body) {
@@ -242,9 +241,12 @@ export default {
       if (isReadyToClose) {
         this.callback({ action, payload });
         this.isShown = false;
-      }
 
-      this.focusAfterClosed?.focus();
+        document.removeEventListener('focus', this.trapFocus, true);
+        this.$nextTick(() => {
+          this.focusAfterClosed?.focus();
+        });
+      }
     },
 
     handleConfirmBtnClick() {

@@ -182,7 +182,7 @@ import QDialog from '@qvant/qui/src/qComponents/QDialog';
 import QNotification from '@qvant/qui/src/qComponents/QNotification';
 
 Vue.prototype.$message = QMessageBox;
-Vue.prototype.$dialog = QDialog.bind(Vue);
+Vue.prototype.$dialog = QDialog;
 Vue.prototype.$notify = options =>
   QNotification({
     duration: 3000, // - ms

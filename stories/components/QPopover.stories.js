@@ -41,7 +41,7 @@ export const Default = (_, { argTypes }) => ({
     }
   },
   template: `
-    <q-popover v-bind="$props" :key="componentKey">>
+    <q-popover v-bind="$props" :key="componentKey">
       <q-button
         slot="reference"
         circle

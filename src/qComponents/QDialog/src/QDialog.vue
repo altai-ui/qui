@@ -6,8 +6,11 @@
   >
     <div
       v-if="isShown"
+      ref="dialog"
       class="q-dialog"
       :style="dialogStyles"
+      tabindex="-1"
+      @keyup.esc="closeBox"
     >
       <div class="q-dialog__container">
         <q-scrollbar
@@ -48,28 +51,28 @@ export default {
 
   props: {
     /**
-     * wrapper's z-index
+     * z-index of the QDialog
      */
     zIndex: {
       type: Number,
       default: null
     },
     /**
-     * wrapper's margin-top
+     * offset from top border of parent relative element
      */
     offsetTop: {
       type: Number,
       default: null
     },
     /**
-     * Dialog's title
+     * title of the QDialog
      */
     title: {
       type: String,
       default: ''
     },
     /**
-     * triggers when the Dialog closes
+     * callback before QDialog closes, and it will prevent QDialog from closing
      */
     beforeClose: {
       type: Function,
@@ -88,7 +91,8 @@ export default {
     return {
       isShown: false,
       callback: null,
-      top: null
+      top: null,
+      focusAfterClosed: null
     };
   },
 
@@ -103,12 +107,20 @@ export default {
 
   watch: {
     isShown(value) {
+      if (value) {
+        this.focusAfterClosed = document.activeElement;
+        this.$nextTick(() => {
+          this.$refs.dialog.focus();
+        });
+      }
+
       this.$emit(value ? 'open' : 'close');
     }
   },
 
   mounted() {
     document.documentElement.style.overflowY = 'hidden';
+    document.addEventListener('focus', this.trapFocus, true);
   },
 
   beforeDestroy() {
@@ -121,6 +133,12 @@ export default {
   },
 
   methods: {
+    trapFocus(event) {
+      if (!this.$refs.dialog.contains(event.target)) {
+        this.$refs.dialog.focus();
+      }
+    },
+
     handleHookAfterEnter() {
       this.$emit('opened');
     },
@@ -139,7 +157,13 @@ export default {
 
       if (isReadyToClose) {
         this.callback({ payload });
+
         this.isShown = false;
+
+        document.removeEventListener('focus', this.trapFocus, true);
+        this.$nextTick(() => {
+          this.focusAfterClosed?.focus();
+        });
       }
     }
   }

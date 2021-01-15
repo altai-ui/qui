@@ -1,9 +1,9 @@
-import Component from './src/QMessageBox.vue';
+import Component from './src/QDialog.vue';
 
-describe('QMessageBox', () => {
+describe('QDialog', () => {
   it('should match snapshot', async () => {
     const instance = shallowMount(Component, {
-      stubs: ['message-box-content']
+      stubs: ['dialog-content']
     });
 
     await instance.setData({

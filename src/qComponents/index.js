@@ -144,7 +144,7 @@ const install = (
   }
 
   if (!Vue.prototype.$dialog) {
-    Vue.prototype.$dialog = QDialog.bind(Vue);
+    Vue.prototype.$dialog = QDialog;
   } else if (process.env.NODE_ENV !== 'production') {
     console.warn(`$dialog hasn't been registered, it has existed before`);
   }
