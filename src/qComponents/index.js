@@ -118,7 +118,10 @@ const install = (
       }
     },
     locale: {
-      value: locale
+      get: () => locale,
+      set(newLocale) {
+        locale = newLocale;
+      }
     }
   });
 

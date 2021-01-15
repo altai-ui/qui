@@ -45,6 +45,7 @@ export const decorators = [
   (args, { globals: { locale } }) => ({
     i18n,
     beforeCreate: function() {
+      this.$Q.locale = locale;
       i18n.locale = locale;
       this.$root._i18n = i18n;
     },

@@ -1,4 +1,3 @@
-import { multiply } from 'lodash-es';
 import QCascader from '../../src/qComponents/QCascader';
 
 const args = {
