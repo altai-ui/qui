@@ -20,24 +20,23 @@
         theme="secondary"
       >
         <div
+          v-if="isLoading || !isLoadingAnimationComplete"
+          class="q-table__loader"
+          :class="{ 'q-table__loader_is-loading': isLoading }"
+        >
+          <div class="q-table__loader-circle">
+            <div class="q-table__loader-circle_quarter" />
+            <div class="q-table__loader-circle_quarter" />
+            <div class="q-table__loader-circle_quarter" />
+            <div class="q-table__loader-circle_quarter" />
+          </div>
+        </div>
+        <div
           ref="tableWrapper"
           class="q-table__wrapper"
           :class="wrapperClass"
           :style="loadingWrapperClass"
         >
-          <div
-            v-if="isLoading || !isLoadingAnimationComplete"
-            class="q-table__loader"
-            :class="{ 'q-table__loader_is-loading': isLoading }"
-          >
-            <div class="q-table__loader-circle">
-              <div class="q-table__loader-circle_quarter" />
-              <div class="q-table__loader-circle_quarter" />
-              <div class="q-table__loader-circle_quarter" />
-              <div class="q-table__loader-circle_quarter" />
-            </div>
-          </div>
-
           <template v-if="isDraggable">
             <div class="dnd-handler" />
             <div class="dnd-separator" />
