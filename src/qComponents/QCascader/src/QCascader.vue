@@ -19,7 +19,6 @@
       @mouseleave.native="showClose = false"
       @focus="handleFocus"
       @blur="handleBlur"
-      @keyup.esc="togglePopper"
     >
       <template slot="suffix">
         <span
@@ -329,13 +328,22 @@ export default {
     this.inputInitialHeight = input?.$el?.offsetHeight ?? DEFAULT_INPUT_HEIGHT;
 
     addResizeListener(this.$el, this.updateStyle);
+    document.addEventListener('keyup', this.handleKeyUp, true);
   },
 
   beforeDestroy() {
     removeResizeListener(this.$el, this.updateStyle);
+    document.removeEventListener('keyup', this.handleKeyUp, true);
   },
 
   methods: {
+    handleKeyUp(e) {
+      if (e.key === 'Escape') {
+        this.$refs.input.blur();
+        this.hidePopper();
+      }
+    },
+
     handleTagsHover() {
       this.areTagsHovered = true;
       this.showClose = true;
@@ -424,7 +432,7 @@ export default {
     },
 
     handleBlur() {
-      // console.log(document.activeElement);
+      console.log(document.activeElement);
       // if (!this.popper) return;
       // this.hidePopper();
       // this.$emit('blur', e);

@@ -13,7 +13,7 @@
           v-else
           :key="key"
           :class="getNodeClass(node)"
-          :tabindex="key"
+          tabindex="0"
           @click="e => handleExpand(e, node)"
           @keyup.enter="e => handleExpand(e, node)"
         >
