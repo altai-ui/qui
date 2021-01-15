@@ -39,6 +39,10 @@ describe('QCascader', () => {
     expect(instance.element).toMatchSnapshot();
   });
 
+  it('data should match snapshot', () => {
+    expect(Component.data()).toMatchSnapshot();
+  });
+
   describe('computed', () => {
     describe('model', () => {
       it('should set inputValue if has been changed', () => {
@@ -50,10 +54,15 @@ describe('QCascader', () => {
     });
     describe('clearBtnVisible', () => {
       it('should return false if showClose is false', () => {
+        instance.setData({
+          showClose: false
+        });
         expect(instance.vm.clearBtnVisible).toBeFalsy();
       });
       it('should return true if showClose is true', () => {
-        instance.vm.showClose = true;
+        instance.setData({
+          showClose: true
+        });
         expect(instance.vm.clearBtnVisible).toBeTruthy();
       });
     });

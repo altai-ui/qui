@@ -28,7 +28,7 @@ describe('QButton', () => {
     it('should emit click', () => {
       const instance = shallowMount(Component);
       instance.vm.handleClick();
-      expect(instance.emitted()).toBeTruthy();
+      expect(instance.emitted().click).toBeTruthy();
     });
   });
 });
