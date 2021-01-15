@@ -65,7 +65,7 @@
               </template>
             </colgroup>
 
-            <thead>
+            <thead v-if="doesHeaderExist">
               <tr>
                 <th
                   v-if="selectable"
@@ -451,6 +451,14 @@ export default {
         });
         return acc.concat(eachGroup);
       }, []);
+    },
+
+    doesHeaderExist() {
+      return this.groupsOfColumns.some(({ columns }) => {
+        return columns.some(({ value, slots }) => {
+          return value || slots?.header;
+        });
+      });
     },
 
     isDraggable() {
