@@ -111,6 +111,7 @@
       }
     }
 
+    &:focus,
     &_active {
       position: relative;
       color: var(--color-primary-black);

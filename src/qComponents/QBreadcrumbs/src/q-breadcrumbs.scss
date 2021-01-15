@@ -30,6 +30,10 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 
+    &:focus {
+      text-decoration: underline;
+    }
+
     &_last:first-child {
       color: var(--color-primary-black);
     }

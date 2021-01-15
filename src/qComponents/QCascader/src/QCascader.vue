@@ -15,11 +15,11 @@
         'q-input_focus': Boolean(popper),
         'q-input_hover': areTagsHovered
       }"
-      @focus="handleFocus"
-      @blur="handleBlur"
       @mouseenter.native="handleMouseEnter"
       @mouseleave.native="showClose = false"
-      @click="togglePopper"
+      @focus="handleFocus"
+      @blur="handleBlur"
+      @keyup.esc="togglePopper"
     >
       <template slot="suffix">
         <span
@@ -419,10 +419,15 @@ export default {
 
     handleFocus(e) {
       this.$emit('focus', e);
+      if (this.popper) return;
+      this.showPopper();
     },
 
-    handleBlur(e) {
-      this.$emit('blur', e);
+    handleBlur() {
+      // console.log(document.activeElement);
+      // if (!this.popper) return;
+      // this.hidePopper();
+      // this.$emit('blur', e);
     },
 
     updateStyle() {

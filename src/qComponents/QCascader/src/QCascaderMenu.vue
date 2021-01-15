@@ -13,7 +13,9 @@
           v-else
           :key="key"
           :class="getNodeClass(node)"
+          :tabindex="key"
           @click="e => handleExpand(e, node)"
+          @keyup.enter="e => handleExpand(e, node)"
         >
           <q-checkbox
             v-if="cascader.multiple"
