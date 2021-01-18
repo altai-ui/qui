@@ -13,7 +13,7 @@
           v-else
           :key="key"
           :class="getNodeClass(node)"
-          tabindex="0"
+          :tabindex="getTabIndex(node)"
           @click="e => handleExpand(e, node)"
           @keyup.enter="e => handleExpand(e, node)"
         >
@@ -112,6 +112,14 @@ export default {
   },
 
   methods: {
+    getTabIndex(node) {
+      if (this.cascader.multiple && !node.children) {
+        return '-1';
+      }
+
+      return '0';
+    },
+
     getIndeterminate(node) {
       if (
         !this.cascader.checkedValues ||

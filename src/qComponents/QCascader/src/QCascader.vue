@@ -17,8 +17,7 @@
       }"
       @mouseenter.native="handleMouseEnter"
       @mouseleave.native="showClose = false"
-      @focus="handleFocus"
-      @blur="handleBlur"
+      @focus="handleInputFocus"
     >
       <template slot="suffix">
         <span
@@ -251,7 +250,8 @@ export default {
       inputInitialHeight: 0,
       popper: null,
       showClose: false,
-      areTagsHovered: false
+      areTagsHovered: false,
+      focus: false
     };
   },
 
@@ -338,9 +338,22 @@ export default {
 
   methods: {
     handleKeyUp(e) {
-      if (e.key === 'Escape') {
-        this.$refs.input.blur();
-        this.hidePopper();
+      if (this.focus) {
+        if (e.key === 'Escape') {
+          this.$refs.input.blur();
+          this.hidePopper();
+        }
+
+        if (e.key === 'Backspace') {
+          this.deleteTag();
+        }
+
+        if (e.key === 'Tab') {
+          if (!this.$refs.reference.contains(document.activeElement)) {
+            this.hidePopper();
+            this.focus = false;
+          }
+        }
       }
     },
 
@@ -361,9 +374,14 @@ export default {
       }
     },
 
-    deleteTag({ value }) {
+    deleteTag({ value } = {}) {
+      if (!this.checkedValues) return;
       const result = new Set(this.checkedValues);
-      result.delete(value);
+      if (value) {
+        result.delete(value);
+      } else {
+        result.delete(this.checkedValues[this.checkedValues.length - 1]);
+      }
       const payload = Array.from(result);
       this.emit(payload.length ? payload : null);
     },
@@ -425,19 +443,11 @@ export default {
       }
     },
 
-    handleFocus(e) {
+    handleInputFocus(e) {
       this.$emit('focus', e);
-      if (this.popper) return;
+      this.focus = true;
       this.showPopper();
     },
-
-    handleBlur() {
-      console.log(document.activeElement);
-      // if (!this.popper) return;
-      // this.hidePopper();
-      // this.$emit('blur', e);
-    },
-
     updateStyle() {
       const { $el, inputInitialHeight } = this;
       if (!$el) return;
