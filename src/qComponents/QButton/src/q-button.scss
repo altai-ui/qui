@@ -63,18 +63,6 @@
     }
   }
 
-  &_size {
-    &_small {
-      &.q-button_type_icon {
-        width: 24px;
-        height: 24px;
-        padding: 0;
-        font-size: 16px;
-        line-height: 1;
-      }
-    }
-  }
-
   &_theme {
     &_secondary {
       color: var(--color-primary-blue);
@@ -113,6 +101,22 @@
       &:active {
         outline: none;
         box-shadow: none;
+      }
+    }
+  }
+
+  &_size {
+    &_small {
+      &.q-button_type_icon {
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        font-size: 16px;
+        line-height: 1;
+      }
+
+      &.q-button_theme_link {
+        font-size: 12px;
       }
     }
   }
