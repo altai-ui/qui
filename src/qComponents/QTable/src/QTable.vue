@@ -455,7 +455,9 @@ export default {
 
     doesHeaderExist() {
       return this.groupsOfColumns.some(({ columns }) =>
-        columns.some(({ value, slots }) => value?.length ?? slots?.header)
+        columns.some(
+          ({ value, slots }) => value || value === 0 || slots?.header
+        )
       );
     },
 
