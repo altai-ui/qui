@@ -108,7 +108,7 @@
                         />
 
                         <template v-else>
-                          {{ column.value }}
+                          {{ String(column.value) }}
                         </template>
 
                         <span
@@ -455,9 +455,7 @@ export default {
 
     doesHeaderExist() {
       return this.groupsOfColumns.some(({ columns }) =>
-        columns.some(
-          ({ value, slots }) => value || value === 0 || slots?.header
-        )
+        columns.some(({ value, slots }) => value?.toString() ?? slots?.header)
       );
     },
 
@@ -868,15 +866,7 @@ export default {
     },
 
     updateItem(item, index, key) {
-      let value = null;
-
-      if (item[key] === 0 || Boolean(item[key])) {
-        value = item[key];
-      }
-
-      if (item.value) {
-        value = item.value;
-      }
+      const value = item.value ?? item[key] ?? null;
 
       return {
         columnKey: key || null,
