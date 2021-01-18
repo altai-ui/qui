@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QColorAlphaSlider data should match snapshot 1`] = `
+Object {
+  "thumbLeft": 0,
+}
+`;
+
+exports[`QColorAlphaSlider should match snapshot 1`] = `
+<div
+  class="q-color-alpha-slider"
+>
+  <div
+    class="q-color-alpha-slider__bar"
+  />
+   
+  <div
+    class="q-color-alpha-slider__thumb"
+    style="left: 0px;"
+  />
+</div>
+`;

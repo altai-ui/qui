@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QColorSvpanel data should match snapshot 1`] = `
+Object {
+  "cursorLeft": 0,
+  "cursorTop": 0,
+}
+`;
+
+exports[`QColorSvpanel should match snapshot 1`] = `
+<div
+  class="q-color-svpanel"
+  style="background-color: rgb(0, 0, 0);"
+>
+  <div
+    class="q-color-svpanel__cursor"
+    style="top: 0px; left: 0px;"
+  />
+</div>
+`;

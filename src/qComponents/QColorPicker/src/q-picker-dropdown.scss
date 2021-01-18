@@ -2,6 +2,7 @@
   padding: 16px;
   background-color: var(--color-tertiary-gray-ultra-light);
   border-radius: var(--border-radius-base);
+  outline: none;
   box-shadow: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
     1px 1px 3px rgba(var(--color-rgb-blue), 0.4);
 
@@ -17,18 +18,5 @@
   &__input {
     width: 223px;
     margin-right: auto;
-  }
-
-  &__btn-clear {
-    margin: 0;
-    margin-right: 16px;
-    padding: 0;
-    font-weight: var(--font-weight-base);
-    font-size: var(--font-size-base);
-    line-height: var(--line-height-base);
-    color: var(--color-primary-blue);
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
   }
 }
