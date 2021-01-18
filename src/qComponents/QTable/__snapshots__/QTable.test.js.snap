@@ -17,12 +17,12 @@ exports[`QTable QTable should match snapshot 1`] = `
       viewtag="div"
       wrapclass="q-table__scroll-wrapper"
     >
+      <!---->
+       
       <div
         class="q-table__wrapper"
         style="transition: all 0.2s;"
       >
-        <!---->
-         
         <!---->
          
         <table
