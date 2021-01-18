@@ -185,7 +185,7 @@ export default {
       isConfirmBtnLoading: false,
       isCancelBtnLoading: false,
       callback: null,
-      focusAfterClosed: null
+      elementToFocusAfterClosing: null
     };
   },
 
@@ -199,7 +199,7 @@ export default {
     isShown(value) {
       if (!value) return;
 
-      this.focusAfterClosed = document.activeElement;
+      this.elementToFocusAfterClosing = document.activeElement;
       this.$nextTick(() => {
         this.$refs.messageBox.focus();
       });
@@ -208,7 +208,7 @@ export default {
 
   mounted() {
     document.documentElement.style.overflow = 'hidden';
-    document.addEventListener('focus', this.trapFocus, true);
+    document.addEventListener('focus', this.handleDocumentFocus, true);
   },
 
   beforeDestroy() {
@@ -221,7 +221,7 @@ export default {
   },
 
   methods: {
-    trapFocus(event) {
+    handleDocumentFocus(event) {
       if (!this.$refs.messageBox.contains(event.target)) {
         this.$refs.messageBox.focus();
       }
@@ -242,9 +242,9 @@ export default {
         this.callback({ action, payload });
         this.isShown = false;
 
-        document.removeEventListener('focus', this.trapFocus, true);
+        document.removeEventListener('focus', this.handleDocumentFocus, true);
         this.$nextTick(() => {
-          this.focusAfterClosed?.focus();
+          this.elementToFocusAfterClosing?.focus();
         });
       }
     },

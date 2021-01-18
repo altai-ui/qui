@@ -92,7 +92,7 @@ export default {
       isShown: false,
       callback: null,
       top: null,
-      focusAfterClosed: null
+      elementToFocusAfterClosing: null
     };
   },
 
@@ -108,7 +108,7 @@ export default {
   watch: {
     isShown(value) {
       if (value) {
-        this.focusAfterClosed = document.activeElement;
+        this.elementToFocusAfterClosing = document.activeElement;
         this.$nextTick(() => {
           this.$refs.dialog.focus();
         });
@@ -120,7 +120,7 @@ export default {
 
   mounted() {
     document.documentElement.style.overflowY = 'hidden';
-    document.addEventListener('focus', this.trapFocus, true);
+    document.addEventListener('focus', this.handleDocumentFocus, true);
   },
 
   beforeDestroy() {
@@ -133,7 +133,7 @@ export default {
   },
 
   methods: {
-    trapFocus(event) {
+    handleDocumentFocus(event) {
       if (!this.$refs.dialog.contains(event.target)) {
         this.$refs.dialog.focus();
       }
@@ -160,9 +160,9 @@ export default {
 
         this.isShown = false;
 
-        document.removeEventListener('focus', this.trapFocus, true);
+        document.removeEventListener('focus', this.handleDocumentFocus, true);
         this.$nextTick(() => {
-          this.focusAfterClosed?.focus();
+          this.elementToFocusAfterClosing?.focus();
         });
       }
     }

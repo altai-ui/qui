@@ -3,7 +3,7 @@
 exports[`QMessageBox data should match snapshot 1`] = `
 Object {
   "callback": null,
-  "focusAfterClosed": null,
+  "elementToFocusAfterClosing": null,
   "isCancelBtnLoading": false,
   "isComponentUsed": false,
   "isConfirmBtnLoading": false,

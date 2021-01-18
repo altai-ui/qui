@@ -118,7 +118,7 @@ export default {
     return {
       zIndex: null,
       isRendered: false,
-      focusAfterClosed: null
+      elementToFocusAfterClosing: null
     };
   },
 
@@ -139,25 +139,25 @@ export default {
         if (!isVisible) {
           document.body.style.overflow = '';
 
-          document.removeEventListener('focus', this.trapFocus, true);
+          document.removeEventListener('focus', this.handleDocumentFocus, true);
           if (this.destroyOnClose) {
             this.isRendered = false;
           }
 
           this.$nextTick(() => {
-            this.focusAfterClosed?.focus();
+            this.elementToFocusAfterClosing?.focus();
           });
           return;
         }
 
-        this.focusAfterClosed = document.activeElement;
+        this.elementToFocusAfterClosing = document.activeElement;
         this.$nextTick(() => {
           this.$refs.drawer.focus();
         });
         this.$emit('open');
         this.zIndex = this.$Q?.zIndex ?? 2000;
         document.body.style.overflow = 'hidden';
-        document.addEventListener('focus', this.trapFocus, true);
+        document.addEventListener('focus', this.handleDocumentFocus, true);
 
         if (this.appendToBody && !this.isRendered)
           document.body.appendChild(this.$el);
@@ -184,7 +184,7 @@ export default {
   },
 
   methods: {
-    trapFocus(event) {
+    handleDocumentFocus(event) {
       if (!this.$refs.drawer.contains(event.target)) {
         this.$refs.drawer.focus();
       }

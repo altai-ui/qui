@@ -2,7 +2,7 @@
 
 exports[`QDrawer data should match snapshot 1`] = `
 Object {
-  "focusAfterClosed": null,
+  "elementToFocusAfterClosing": null,
   "isRendered": false,
   "zIndex": null,
 }
