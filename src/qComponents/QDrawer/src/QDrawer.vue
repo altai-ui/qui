@@ -12,9 +12,12 @@
       @click.self="handleWrapperClick"
     >
       <div
+        ref="drawer"
+        tabindex="-1"
         class="q-drawer-wrapper"
         :style="drawerStyle"
         :class="[drawerClass, customClass]"
+        @keyup.esc="closeDrawer"
       >
         <div class="q-drawer__header">
           <div
@@ -114,7 +117,8 @@ export default {
   data() {
     return {
       zIndex: null,
-      isRendered: false
+      isRendered: false,
+      focusAfterClosed: null
     };
   },
 
@@ -135,16 +139,25 @@ export default {
         if (!isVisible) {
           document.body.style.overflow = '';
 
+          document.removeEventListener('focus', this.trapFocus, true);
           if (this.destroyOnClose) {
             this.isRendered = false;
           }
 
+          this.$nextTick(() => {
+            this.focusAfterClosed?.focus();
+          });
           return;
         }
 
+        this.focusAfterClosed = document.activeElement;
+        this.$nextTick(() => {
+          this.$refs.drawer.focus();
+        });
         this.$emit('open');
         this.zIndex = this.$Q?.zIndex ?? 2000;
         document.body.style.overflow = 'hidden';
+        document.addEventListener('focus', this.trapFocus, true);
 
         if (this.appendToBody && !this.isRendered)
           document.body.appendChild(this.$el);
@@ -171,6 +184,12 @@ export default {
   },
 
   methods: {
+    trapFocus(event) {
+      if (!this.$refs.drawer.contains(event.target)) {
+        this.$refs.drawer.focus();
+      }
+    },
+
     afterEnter() {
       this.$emit('opened');
     },
