@@ -1,7 +1,6 @@
-import QDrawer from './src/QDrawer.vue';
+import QDrawer from './src/QDrawer';
 
-/* istanbul ignore next */
-QDrawer.install = function(Vue) {
+QDrawer.install = Vue => {
   Vue.component(QDrawer.name, QDrawer);
 };
 
