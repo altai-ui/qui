@@ -3,7 +3,7 @@
 exports[`QPickerDropdown data should match snapshot 1`] = `
 Object {
   "alpha": 100,
-  "focusAfterClosed": null,
+  "elementToFocusAfterClosing": null,
   "hue": 0,
   "saturation": 100,
   "tempColor": "",

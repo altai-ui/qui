@@ -100,7 +100,7 @@ export default {
 
   data() {
     return {
-      focusAfterClosed: null,
+      elementToFocusAfterClosing: null,
       tempColor: '',
       hue: 0,
       saturation: 100,
@@ -136,16 +136,16 @@ export default {
   watch: {
     async isShown(value) {
       if (!value) {
-        document.removeEventListener('focus', this.trapFocus, true);
+        document.removeEventListener('focus', this.handleDocumentFocus, true);
         await this.$nextTick();
-        this.focusAfterClosed?.focus();
+        this.elementToFocusAfterClosing?.focus();
         return;
       }
 
-      document.addEventListener('focus', this.trapFocus, true);
+      document.addEventListener('focus', this.handleDocumentFocus, true);
       this.updateHSVA(this.color);
       this.tempColor = this.colorString;
-      this.focusAfterClosed = document.activeElement;
+      this.elementToFocusAfterClosing = document.activeElement;
 
       await this.$nextTick();
 
@@ -177,7 +177,7 @@ export default {
       this.$emit('close');
     },
 
-    trapFocus(event) {
+    handleDocumentFocus(event) {
       if (!this.$refs.dropdown.contains(event.target)) {
         this.$refs.dropdown.focus();
       }
