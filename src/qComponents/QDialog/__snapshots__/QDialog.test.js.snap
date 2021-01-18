@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QDialog data should match snapshot 1`] = `
+Object {
+  "callback": null,
+  "elementToFocusAfterClosing": null,
+  "isShown": false,
+  "top": null,
+}
+`;
+
+exports[`QDialog should match snapshot 1`] = `
+<transition-stub
+  name="q-dialog-fade"
+>
+  <div
+    class="q-dialog"
+    tabindex="-1"
+  >
+    <div
+      class="q-dialog__container"
+    >
+      <q-scrollbar-stub
+        theme="secondary"
+        viewclass="q-dialog__view"
+        viewtag="div"
+        wrapclass=""
+      >
+        <div
+          class="q-dialog__inner"
+        >
+          <div
+            class="q-dialog__title"
+          >
+            
+            
+          
+          </div>
+           
+          <q-button-stub
+            circle="true"
+            class="q-dialog__close"
+            icon="q-icon-close"
+            nativetype="button"
+            size="medium"
+            theme="secondary"
+            type="icon"
+          />
+           
+          <div
+            class="q-dialog__content"
+          >
+            <dialog-content-stub />
+          </div>
+        </div>
+      </q-scrollbar-stub>
+    </div>
+  </div>
+</transition-stub>
+`;

@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QMessageBox data should match snapshot 1`] = `
+Object {
+  "callback": null,
+  "elementToFocusAfterClosing": null,
+  "isCancelBtnLoading": false,
+  "isComponentUsed": false,
+  "isConfirmBtnLoading": false,
+  "isShown": false,
+}
+`;
+
+exports[`QMessageBox should match snapshot 1`] = `
+<transition-stub
+  name="q-msgbox-fade"
+>
+  <div
+    class="q-message-box"
+    tabindex="-1"
+  >
+    <q-scrollbar-stub
+      class="q-message-box__scrollbar"
+      theme="secondary"
+      viewclass="q-message-box__view"
+      viewtag="div"
+      visible="true"
+      wrapclass=""
+    >
+      <div
+        class="q-message-box__shadow"
+      />
+       
+      <div
+        class="q-message-box__container"
+      >
+        <div
+          class="q-message-box__title"
+        >
+          
+          
+        
+        </div>
+         
+        <button
+          class="q-message-box__close q-icon-close"
+        />
+         
+        <div
+          class="q-message-box__content"
+        >
+          <!---->
+           
+          <!---->
+        </div>
+         
+        <!---->
+      </div>
+    </q-scrollbar-stub>
+  </div>
+</transition-stub>
+`;
