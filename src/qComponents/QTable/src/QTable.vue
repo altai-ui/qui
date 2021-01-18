@@ -454,11 +454,9 @@ export default {
     },
 
     doesHeaderExist() {
-      return this.groupsOfColumns.some(({ columns }) => {
-        return columns.some(({ value, slots }) => {
-          return value || slots?.header;
-        });
-      });
+      return this.groupsOfColumns.some(({ columns }) =>
+        columns.some(({ value, slots }) => value?.length ?? slots?.header)
+      );
     },
 
     isDraggable() {
