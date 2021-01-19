@@ -11,6 +11,10 @@
       :placeholder="calcPlaceholder"
       :disabled="isDisabled"
       :validate-event="false"
+      aria-haspopup="true"
+      role="button"
+      :aria-controls="id"
+      :aria-expanded="popper"
       :class="{
         'q-input_focus': Boolean(popper),
         'q-input_hover': areTagsHovered
@@ -18,6 +22,7 @@
       @mouseenter.native="handleMouseEnter"
       @mouseleave.native="showClose = false"
       @focus="handleInputFocus"
+      @click="togglePopper"
     >
       <template slot="suffix">
         <span
@@ -251,7 +256,8 @@ export default {
       popper: null,
       showClose: false,
       areTagsHovered: false,
-      focus: false
+      focus: false,
+      id: null
     };
   },
 
@@ -323,6 +329,10 @@ export default {
     }
   },
 
+  created() {
+    this.id = `id${(+new Date()).toString(16)}`;
+  },
+
   mounted() {
     const { input } = this.$refs;
     this.inputInitialHeight = input?.$el?.offsetHeight ?? DEFAULT_INPUT_HEIGHT;
@@ -339,6 +349,13 @@ export default {
   methods: {
     handleKeyUp(e) {
       if (this.focus) {
+        if (
+          e.target.classList.contains('q-input__inner') &&
+          e.key === 'Enter'
+        ) {
+          this.togglePopper();
+        }
+
         if (e.key === 'Escape') {
           this.$refs.input.blur();
           this.hidePopper();
@@ -353,6 +370,12 @@ export default {
             this.hidePopper();
             this.focus = false;
           }
+        }
+
+        if (
+          ['ArrowRight', 'ArrowUp', 'ArrowLeft', 'ArrowDown'].includes(e.key)
+        ) {
+          this.$refs.panel.navigateFocus(e);
         }
       }
     },
@@ -446,7 +469,6 @@ export default {
     handleInputFocus(e) {
       this.$emit('focus', e);
       this.focus = true;
-      this.showPopper();
     },
     updateStyle() {
       const { $el, inputInitialHeight } = this;

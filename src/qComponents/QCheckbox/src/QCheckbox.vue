@@ -35,6 +35,7 @@
         :disabled="isDisabled"
         :value="label"
         :name="name"
+        :tabindex="inputTabIndex"
         @change="handleChange"
         @focus="focus = true"
         @blur="focus = false"
@@ -96,7 +97,14 @@ export default {
      * as native name
      */
     name: { type: String, default: '' },
-    rootTag: { type: String, default: 'label' }
+    rootTag: { type: String, default: 'label' },
+    /**
+     * as native tabIndex
+     */
+    inputTabIndex: {
+      type: String,
+      default: '0'
+    }
   },
 
   data() {

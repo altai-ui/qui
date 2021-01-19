@@ -11,14 +11,18 @@
         <div
           v-for="(node, key) in nodes"
           v-else
+          :id="`q-cascader-node-${index}-${key}`"
           :key="key"
           :class="getNodeClass(node)"
-          :tabindex="getTabIndex(node)"
+          role="menuitem"
+          tabindex="-1"
           @click="e => handleExpand(e, node)"
-          @keyup.enter="e => handleExpand(e, node)"
+          @keyup.enter="e => handleEnterKeyUp(e, node)"
+          @keyup.right="e => handleExpand(e, node)"
         >
           <q-checkbox
             v-if="cascader.multiple"
+            input-tab-index="-1"
             :value="getChecked(node)"
             :indeterminate="getIndeterminate(node)"
             @change="isChecked => handleValueChange(node, isChecked)"
@@ -112,14 +116,15 @@ export default {
   },
 
   methods: {
-    getTabIndex(node) {
-      if (this.cascader.multiple && !node.children) {
-        return '-1';
+    handleEnterKeyUp(e, node) {
+      if (this.cascader.multiple) {
+        const checkbox = e.target.querySelector('.q-checkbox__original');
+        if (checkbox) checkbox.click();
+        return;
       }
 
-      return '0';
+      this.handleExpand(e, node);
     },
-
     getIndeterminate(node) {
       if (
         !this.cascader.checkedValues ||
@@ -231,6 +236,7 @@ export default {
     },
 
     handleExpand(e, value) {
+      if (e.key === 'ArrowRight' && !value.children) return;
       if (!value.children && !this.cascader.multiple) {
         this.cascader.emit(value.value);
       }
