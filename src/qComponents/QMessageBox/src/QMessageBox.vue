@@ -22,7 +22,10 @@
           @click="handleShadowClick"
         />
 
-        <div class="q-message-box__container">
+        <div
+          :style="containerStyle"
+          class="q-message-box__container"
+        >
           <div class="q-message-box__title">
             {{ title }}
           </div>
@@ -175,6 +178,13 @@ export default {
     componentProps: {
       type: Object,
       default: () => ({})
+    },
+    /**
+     * Message Container width
+     */
+    width: {
+      type: [String, Number],
+      default: ''
     }
   },
 
@@ -192,6 +202,12 @@ export default {
   computed: {
     isActionsSectionShown() {
       return Boolean(this.confirmButtonText) || Boolean(this.cancelButtonText);
+    },
+
+    containerStyle() {
+      return {
+        width: Number(this.width) ? `${Number(this.width)}px` : this.width
+      };
     }
   },
 
