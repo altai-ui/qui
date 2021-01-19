@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 import QDialog from './QDialog.vue';
 
 let currentPromise;
@@ -7,7 +9,7 @@ const defaultCallback = ({ payload }) => {
 };
 
 const Dialog = function(config = {}) {
-  const DialogComponent = this.extend({
+  const DialogComponent = Vue.extend({
     components: {
       DialogContent: config.component
     },
@@ -21,7 +23,7 @@ const Dialog = function(config = {}) {
   });
 
   if (!instance.zIndex) {
-    instance.zIndex = this.prototype.$Q?.zIndex ?? 2000;
+    instance.zIndex = Vue.prototype.$Q?.zIndex ?? 2000;
   }
 
   instance.callback = defaultCallback;
@@ -32,7 +34,7 @@ const Dialog = function(config = {}) {
   }
   parent.appendChild(instance.$mount().$el);
 
-  this.nextTick(() => {
+  Vue.nextTick(() => {
     instance.isShown = true;
   });
 

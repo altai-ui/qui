@@ -51,7 +51,11 @@
   "overrides": [
     {
       "files": ["**/*.test.js"],
-      "env": { "jest": true }
+      "env": { "jest": true },
+      "globals": {
+        "mount": "readonly",
+        "shallowMount": "readonly"
+      }
     }
   ]
 }

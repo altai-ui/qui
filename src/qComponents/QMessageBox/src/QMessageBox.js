@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 import QMessageBox from './QMessageBox.vue';
 
 let currentPromise;
@@ -11,7 +13,7 @@ const defaultCallback = ({ action, payload }) => {
 };
 
 const Message = function(config = {}) {
-  const MessageBox = this.extend({
+  const MessageBox = Vue.extend({
     components: {
       MessageBoxContent: config.component
     },
@@ -25,7 +27,7 @@ const Message = function(config = {}) {
   });
 
   if (!instance.zIndex) {
-    instance.zIndex = this.prototype.$Q?.zIndex ?? 2000;
+    instance.zIndex = Vue.prototype.$Q?.zIndex ?? 2000;
   }
 
   instance.callback = defaultCallback;
@@ -45,7 +47,7 @@ const Message = function(config = {}) {
 
   document.body.appendChild(instance.$mount().$el);
 
-  this.nextTick(() => {
+  Vue.nextTick(() => {
     instance.isShown = true;
   });
 
