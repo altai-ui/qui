@@ -179,12 +179,10 @@ export default {
       type: Object,
       default: () => ({})
     },
-    /**
-     * width of Message container
-     */
-    width: {
-      type: [String, Number],
-      default: ''
+
+    containerStyles: {
+      type: Object,
+      default: () => ({})
     }
   },
 
@@ -202,12 +200,6 @@ export default {
   computed: {
     isActionsSectionShown() {
       return Boolean(this.confirmButtonText) || Boolean(this.cancelButtonText);
-    },
-
-    containerStyles() {
-      return {
-        width: Number(this.width) ? `${Number(this.width)}px` : this.width
-      };
     }
   },
 
