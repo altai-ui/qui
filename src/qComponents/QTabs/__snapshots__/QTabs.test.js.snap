@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QTabs data should match snapshot 1`] = `
+Object {
+  "currentName": "",
+}
+`;
+
+exports[`QTabs should match snapshot 1`] = `
+<div
+  class="q-tabs"
+/>
+`;
