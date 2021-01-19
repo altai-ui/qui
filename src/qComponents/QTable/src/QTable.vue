@@ -108,7 +108,7 @@
                         />
 
                         <template v-else>
-                          {{ String(column.value) }}
+                          {{ column.value }}
                         </template>
 
                         <span
