@@ -10,13 +10,13 @@ export default {
     alignV: {
       control: {
         type: 'select',
-        options: ['start', 'end', 'center', 'baseline', 'stretch']
+        options: [null, 'start', 'end', 'center', 'baseline', 'stretch']
       }
     },
     alignH: {
       control: {
         type: 'select',
-        options: ['start', 'end', 'center', 'between', 'around']
+        options: [null, 'start', 'end', 'center', 'between', 'around']
       }
     }
   }
@@ -25,23 +25,21 @@ export default {
 export const QRowStory = (_, { argTypes }) => ({
   props: Object.keys(argTypes),
   template: `
-    <q-row
-      v-bind="$props"
-      class="demo-row"
-    >
-      <q-col
-        cols="2"
-        class="demo-col"
-      >2</q-col>
-      <q-col
-        cols="4"
-        class="demo-col"
-      >4</q-col>
-      <q-col
-        cols="2"
-        class="demo-col"
-      >2</q-col>
-    </q-row>
+    <div class="demo">
+      <q-row class="demo__row" v-bind="$props">
+        <q-col class="demo-col" cols="2">
+          <div class="demo__content">2</div>
+        </q-col>
+
+        <q-col class="demo__col" cols="4">
+          <div class="demo__content" style="height: 25px;">4</div>
+        </q-col>
+
+        <q-col class="demo__col" cols="2">
+          <div class="demo__content">2</div>
+        </q-col>
+      </q-row>
+    </div>
   `
 });
 
