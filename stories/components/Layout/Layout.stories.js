@@ -99,8 +99,7 @@ export const QRowStory = (_, { argTypes }) => ({
         </q-col>
       </q-row>
 
-      <q-row class="demo__row"
-      >
+      <q-row class="demo__row">
         <q-col class="demo__col" cols="10">
           <div class="demo__content">10</div>
         </q-col>
