@@ -23,10 +23,7 @@
           @click="handleShadowClick"
         />
 
-        <div
-          :style="containerStyles"
-          class="q-message-box__container"
-        >
+        <div class="q-message-box__container">
           <div class="q-message-box__title">
             {{ title }}
           </div>
