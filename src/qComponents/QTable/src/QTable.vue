@@ -96,14 +96,14 @@
                           v-if="$scopedSlots.header"
                           name="header"
                           :data="column"
-                          v-bind="updateItem(column, index, column.key)"
+                          v-bind="updateColumnItem(column, index, column.key)"
                         />
 
                         <slot
                           v-else-if="column.slots && column.slots.header"
                           :name="column.slots.header"
                           :data="column"
-                          v-bind="updateItem(column, index, column.key)"
+                          v-bind="updateColumnItem(column, index, column.key)"
                         />
 
                         <template v-else>
@@ -188,14 +188,14 @@
                       v-if="$scopedSlots.total"
                       name="total"
                       :data="total"
-                      v-bind="updateItem(total, index, column.key)"
+                      v-bind="updateTotalItem(total, index, column.key)"
                     />
 
                     <slot
                       v-else-if="column.slots && column.slots.total"
                       :name="column.slots.total"
                       :data="total"
-                      v-bind="updateItem(total, index, column.key)"
+                      v-bind="updateTotalItem(total, index, column.key)"
                     />
 
                     <template v-else-if="total[column.key]">
@@ -864,13 +864,19 @@ export default {
       };
     },
 
-    updateItem(item, index, key) {
-      const value = item.value ?? item[key] ?? null;
-
+    updateColumnItem(item, index, key) {
       return {
         columnKey: key || null,
         index,
-        value
+        value: item.value ?? null
+      };
+    },
+
+    updateTotalItem(item, index, key) {
+      return {
+        columnKey: key || null,
+        index,
+        value: item[key] ?? null
       };
     },
 
