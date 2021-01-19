@@ -23,7 +23,7 @@
         />
 
         <div
-          :style="containerStyle"
+          :style="containerStyles"
           class="q-message-box__container"
         >
           <div class="q-message-box__title">
@@ -180,7 +180,7 @@ export default {
       default: () => ({})
     },
     /**
-     * Message Container width
+     * width of Message container
      */
     width: {
       type: [String, Number],
@@ -204,7 +204,7 @@ export default {
       return Boolean(this.confirmButtonText) || Boolean(this.cancelButtonText);
     },
 
-    containerStyle() {
+    containerStyles() {
       return {
         width: Number(this.width) ? `${Number(this.width)}px` : this.width
       };
