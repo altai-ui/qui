@@ -3,7 +3,7 @@
     class="q-radio"
     :class="[
       { 'q-radio_disabled': isDisabled },
-      { 'q-radio_focus': focus },
+      { 'q-radio_focus': hasFocus },
       { 'q-radio_checked': isChecked }
     ]"
     role="radio"
@@ -22,8 +22,8 @@
         :value="value"
         :checked="isChecked"
         :disabled="isDisabled"
-        @focus="focus = true"
-        @blur="focus = false"
+        @focus="handleFocus"
+        @blur="handleBlur"
         @change="handleChange"
       />
     </span>
@@ -51,6 +51,9 @@ export default {
     },
     qFormItem: {
       default: null
+    },
+    qRadioGroup: {
+      default: null
     }
   },
 
@@ -76,32 +79,35 @@ export default {
     /**
      * as native name
      */
-    name: { type: String, default: undefined }
+    name: { type: String, default: null }
   },
 
   data() {
     return {
-      focus: false,
-      isGroup: false,
-      radioGroup: null
+      hasFocus: false
     };
   },
 
   computed: {
-    isChecked() {
-      if (this.isGroup) return this.radioGroup?.value === this.value;
+    isGroup() {
+      return Boolean(this.qRadioGroup);
+    },
 
-      if (typeof this.checked === typeof this.value)
+    isChecked() {
+      if (this.isGroup) return this.qRadioGroup?.value === this.value;
+
+      if (typeof this.checked === typeof this.value) {
         return this.checked === this.value;
+      }
 
       return Boolean(this.checked);
     },
 
     isDisabled() {
       return (
-        (this.isGroup && this.radioGroup.disabled) ||
-        this.disabled ||
-        (this.qForm?.disabled ?? false)
+        (this.qForm?.disabled ?? false) ||
+        (this.qRadioGroup?.disabled ?? false) ||
+        this.disabled
       );
     },
 
@@ -110,22 +116,15 @@ export default {
     }
   },
 
-  mounted() {
-    let parent = this.$parent;
-
-    while (parent) {
-      if (parent.$options.componentName !== 'QRadioGroup') {
-        parent = parent.$parent;
-        this.isGroup = false;
-      } else {
-        this.radioGroup = parent;
-        this.isGroup = true;
-        break;
-      }
-    }
-  },
-
   methods: {
+    handleFocus() {
+      this.hasFocus = true;
+    },
+
+    handleBlur() {
+      this.hasFocus = false;
+    },
+
     handleChange() {
       /**
        * triggers when the value changes

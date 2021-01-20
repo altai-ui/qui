@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QRadioGroup should match snapshot 1`] = `
+<div
+  class="q-radio-group q-radio-group_vertical"
+  role="radiogroup"
+/>
+`;
