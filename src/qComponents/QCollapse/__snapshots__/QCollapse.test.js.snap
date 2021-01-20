@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QCollapse data should match snapshot 1`] = `
+Object {
+  "activeNames": Array [],
+  "uniqueId": [Function],
+}
+`;
+
+exports[`QCollapse should match snapshot 1`] = `
+<div
+  class="q-collapse"
+/>
+`;
