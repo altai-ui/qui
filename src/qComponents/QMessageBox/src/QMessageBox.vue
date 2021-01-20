@@ -7,6 +7,7 @@
       v-if="isShown"
       ref="messageBox"
       class="q-message-box"
+      :class="wrapClass"
       :style="{ zIndex }"
       tabindex="-1"
       @keyup.esc="closeBox"
@@ -175,6 +176,10 @@ export default {
     componentProps: {
       type: Object,
       default: () => ({})
+    },
+    wrapClass: {
+      type: [String, Object, Array],
+      default: null
     }
   },
 
