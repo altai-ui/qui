@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QColorPicker data should match snapshot 1`] = `
+Object {
+  "isClickIgnored": false,
+  "isPickerShown": false,
+  "popperJS": null,
+  "zIndex": null,
+}
+`;
+
+exports[`QColorPicker should match snapshot 1`] = `
+<div
+  class="q-color-picker"
+>
+  <div
+    class="q-color-picker-trigger"
+  >
+    <button
+      class="q-color-picker-trigger__default"
+    >
+      <div
+        class="q-color-picker-trigger__color"
+      />
+       
+      <span
+        class="q-color-picker-trigger__icon q-icon-triangle-down"
+      />
+    </button>
+  </div>
+   
+  <q-picker-dropdown-stub
+    colorformat="hex"
+    isclearbtnshown="true"
+  />
+</div>
+`;

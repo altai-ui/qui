@@ -1,6 +1,6 @@
-import QTabs from './src/QTabs.vue';
+import QTabs from './src/QTabs';
 
-QTabs.install = function(Vue) {
+QTabs.install = Vue => {
   Vue.component(QTabs.name, QTabs);
 };
 

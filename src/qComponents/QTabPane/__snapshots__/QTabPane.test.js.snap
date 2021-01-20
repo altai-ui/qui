@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QTabPane should match snapshot 1`] = `
+<div
+  class="q-tab-pane"
+>
+  <div
+    class="q-tab-pane__inner"
+  >
+    <button
+      class="q-tab-pane__btn"
+      type="button"
+    >
+      
+      Pane Title
+    
+    </button>
+     
+  </div>
+   
+  <!---->
+</div>
+`;
