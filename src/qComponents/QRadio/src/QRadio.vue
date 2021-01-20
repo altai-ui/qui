@@ -1,11 +1,7 @@
 <template>
   <label
     class="q-radio"
-    :class="[
-      { 'q-radio_disabled': isDisabled },
-      { 'q-radio_focus': hasFocus },
-      { 'q-radio_checked': isChecked }
-    ]"
+    :class="wrapClass"
     role="radio"
     :aria-checked="isChecked"
     :aria-disabled="isDisabled"
@@ -105,10 +101,18 @@ export default {
 
     isDisabled() {
       return (
+        this.disabled ||
         (this.qForm?.disabled ?? false) ||
-        (this.qRadioGroup?.disabled ?? false) ||
-        this.disabled
+        (this.qRadioGroup?.disabled ?? false)
       );
+    },
+
+    wrapClass() {
+      return {
+        'q-radio_disabled': this.isDisabled,
+        'q-radio_focus': this.hasFocus,
+        'q-radio_checked': this.isChecked
+      };
     },
 
     tabIndex() {
