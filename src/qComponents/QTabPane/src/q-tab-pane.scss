@@ -32,16 +32,9 @@
     }
 
     &:focus {
-      color: var(--color-primary-blue);
-      background-color: var(--color-tertiary-gray);
+      color: var(--color-primary-black);
+      background-color: var(--color-tertiary-gray-dark);
       outline: none;
-      box-shadow: inset -2px -2px 3px rgba(var(--color-rgb-white), 0.7),
-        inset 2px 2px 3px rgba(var(--color-rgb-blue), 0.2);
-
-      &.q-tab-pane__btn_active {
-        color: var(--color-primary-black);
-        background-color: var(--color-tertiary-gray-ultra-light);
-      }
     }
 
     &_active {
