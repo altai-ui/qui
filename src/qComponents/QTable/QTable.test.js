@@ -11,7 +11,10 @@ describe('QTable', () => {
             columns: [
               {
                 key: 'col1',
-                value: 'Column 1'
+                value: 'Column 1',
+                slots: {
+                  row: 'row-slot'
+                }
               }
             ]
           },
@@ -53,7 +56,10 @@ describe('QTable', () => {
         {
           align: 'left',
           key: 'col1',
-          value: 'Column 1'
+          value: 'Column 1',
+          slots: {
+            row: 'row-slot'
+          }
         },
         {
           align: 'right',
@@ -220,6 +226,240 @@ describe('QTable', () => {
       const { vm } = shallowMount(Component, options);
 
       expect(vm.computedRows).toMatchSnapshot();
+    });
+  });
+
+  describe('watch', () => {
+    it('isLoading should trigger isLoadingAnimationComplete twice', () => {
+      options.propsData.isLoading = true;
+      const instance = shallowMount(Component, options);
+
+      instance.setProps({
+        isLoading: false
+      });
+
+      jest.useFakeTimers();
+
+      instance.vm.$nextTick(() => {
+        expect(instance.vm.isLoadingAnimationComplete).toBeFalsy();
+
+        jest.runAllTimers();
+        expect(instance.vm.isLoadingAnimationComplete).toBeTruthy();
+      });
+    });
+  });
+
+  describe('methods', () => {
+    it('updateChildrenRows should return updated rows', () => {
+      const { vm } = shallowMount(Component, options);
+
+      const updatedChilds = vm.updateChildrenRows(
+        [{ key: 'child key' }],
+        { key: 'key' },
+        {
+          data: {
+            key: 'key'
+          },
+          treeIndex: 1
+        }
+      );
+
+      expect(updatedChilds).toEqual([
+        {
+          data: { key: 'child key' },
+          indent: 16,
+          parentRow: { key: 'key' },
+          treeIndex: 1
+        }
+      ]);
+    });
+
+    it('handleHeaderClick should call setSort', () => {
+      const { vm } = shallowMount(Component, options);
+      const spy = jest.spyOn(vm, 'setSort');
+
+      vm.handleHeaderClick({
+        key: 'col1',
+        sortable: true
+      });
+
+      expect(spy).toBeCalled();
+    });
+
+    it('findSlotForRow should find slot for row', () => {
+      const { vm } = shallowMount(Component, options);
+
+      expect(vm.findSlotForRow('col1')).toEqual('row-slot');
+    });
+
+    describe('handleRowCheck', () => {
+      it('should add row index to checked array', () => {
+        const { vm } = shallowMount(Component, options);
+
+        vm.handleRowCheck({ isChecked: true, rowIndex: 0 });
+
+        expect(vm.checkedRows).toEqual([0]);
+      });
+
+      it('should remove row index from checked array', () => {
+        const instance = shallowMount(Component, options);
+        instance.setData({
+          checkedRows: [0]
+        });
+
+        instance.vm.handleRowCheck({ isChecked: false, rowIndex: 0 });
+
+        expect(instance.vm.checkedRows).toEqual([]);
+      });
+    });
+
+    describe('setSort', () => {
+      it('should process passed direction', () => {
+        const instance = shallowMount(Component, options);
+
+        instance.vm.setSort('col1', 'descending');
+
+        expect(instance.emitted()['change-sort']).toEqual([
+          [
+            {
+              direction: 'descending',
+              key: 'col1'
+            }
+          ]
+        ]);
+      });
+
+      it('should process new key in sort', () => {
+        const instance = shallowMount(Component, options);
+
+        instance.vm.setSort('col1');
+
+        expect(instance.emitted()['change-sort']).toEqual([
+          [
+            {
+              direction: 'ascending',
+              key: 'col1'
+            }
+          ]
+        ]);
+      });
+
+      it('should process existed key in sort if no direction', () => {
+        const instance = shallowMount(Component, options);
+
+        instance.setData({
+          sort: {
+            key: 'col1',
+            direction: null
+          }
+        });
+        instance.vm.setSort('col1');
+
+        expect(instance.emitted()['change-sort']).toEqual([
+          [
+            {
+              direction: 'ascending',
+              key: 'col1'
+            }
+          ]
+        ]);
+      });
+
+      it('should process existed key in sort with opposite direction', () => {
+        const instance = shallowMount(Component, options);
+
+        instance.setData({
+          sort: {
+            key: 'col1',
+            direction: 'ascending'
+          }
+        });
+        instance.vm.setSort('col1');
+
+        expect(instance.emitted()['change-sort']).toEqual([
+          [
+            {
+              direction: 'descending',
+              key: 'col1'
+            }
+          ]
+        ]);
+      });
+
+      it('should process existed key in sort with descending direction', () => {
+        const instance = shallowMount(Component, options);
+
+        instance.setData({
+          sort: {
+            key: 'col1',
+            direction: 'descending'
+          }
+        });
+        instance.vm.setSort('col1');
+
+        expect(instance.emitted()['change-sort']).toEqual([
+          [
+            {
+              direction: null,
+              key: 'col1'
+            }
+          ]
+        ]);
+      });
+    });
+
+    describe('handleExpandClick', () => {
+      it('should open minimized row', () => {
+        const { vm } = shallowMount(Component, options);
+        const testedRowIndex = 0;
+        vm.handleExpandClick(vm.treeRows[testedRowIndex]);
+
+        expect(vm.treeRows[testedRowIndex].isTreeOpened).toBeTruthy();
+      });
+
+      it('should close expanded row', () => {
+        const { vm } = shallowMount(Component, options);
+
+        const testedRowIndex = 0;
+        vm.treeRows[testedRowIndex].isTreeOpened = true;
+        vm.handleExpandClick(vm.treeRows[testedRowIndex]);
+
+        expect(vm.treeRows[testedRowIndex].isTreeOpened).toBeFalsy();
+      });
+    });
+
+    describe('findScopedRow', () => {
+      it('should return current row', () => {
+        const { vm } = shallowMount(Component, options);
+        const testedRow = { someKey: 'row' };
+
+        expect(vm.findScopedRow(testedRow, 'someKey', 'row')).toEqual(
+          testedRow
+        );
+      });
+
+      it('should process row without children', () => {
+        const { vm } = shallowMount(Component, options);
+        const testedRow = { someKey: 'row' };
+
+        expect(vm.findScopedRow(testedRow, 'someKey', 'key')).toEqual(null);
+      });
+
+      it('should process row with children', () => {
+        const { vm } = shallowMount(Component, options);
+        const testedRow = {
+          someKey: 'row',
+          children: [
+            {
+              someKey: 'child row'
+            }
+          ]
+        };
+
+        expect(vm.findScopedRow(testedRow, 'someKey', 'child row')).toEqual(
+          testedRow.children[0]
+        );
+      });
     });
   });
 });

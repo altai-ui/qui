@@ -424,6 +424,7 @@ export default {
 
   data() {
     return {
+      lolkek: 0,
       timer: 2,
       isLoadingAnimationComplete: true,
       loaderWrapperHeight: 0,
