@@ -29,9 +29,8 @@
       </button>
     </div>
 
-    <picker-dropdown
+    <q-picker-dropdown
       ref="dropdown"
-      v-click-outside="handleOutsideClick"
       :is-shown="isPickerShown"
       :is-clear-btn-shown="clearable"
       :color="value"
@@ -39,6 +38,7 @@
       :alpha-shown="alphaShown"
       :style="{ zIndex }"
       @click.stop
+      @close="handleClose"
       @clear="handleClear"
       @pick="handlePick"
     />
@@ -51,14 +51,14 @@ import Color from 'color';
 
 import Emitter from '../../mixins/emitter';
 import PLACEMENTS from '../../constants/popperPlacements';
-import PickerDropdown from './QPickerDropdown';
+import QPickerDropdown from './QPickerDropdown';
 
 export default {
   name: 'QColorPicker',
   componentName: 'QColorPicker',
 
   components: {
-    PickerDropdown
+    QPickerDropdown
   },
 
   mixins: [Emitter],
@@ -198,7 +198,7 @@ export default {
   },
 
   methods: {
-    handleOutsideClick() {
+    handleClose() {
       if (this.isClickIgnored) {
         this.isClickIgnored = false;
         return;
