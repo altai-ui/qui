@@ -1,6 +1,6 @@
-import QTabPane from './src/QTabPane.vue';
+import QTabPane from './src/QTabPane';
 
-QTabPane.install = function(Vue) {
+QTabPane.install = Vue => {
   Vue.component(QTabPane.name, QTabPane);
 };
 
