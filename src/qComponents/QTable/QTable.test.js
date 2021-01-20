@@ -8,10 +8,18 @@ describe('QTable', () => {
       propsData: {
         groupsOfColumns: [
           {
+            key: 'group-key',
             columns: [
               {
                 key: 'col1',
                 value: 'Column 1',
+                slots: {
+                  row: 'row-slot'
+                }
+              },
+              {
+                key: 'col2',
+                value: 'Column 2',
                 slots: {
                   row: 'row-slot'
                 }
@@ -21,8 +29,8 @@ describe('QTable', () => {
           {
             columns: [
               {
-                key: 'col2',
-                value: 'Column 2',
+                key: 'col3',
+                value: 'Column 3',
                 align: 'right'
               }
             ]
@@ -31,11 +39,13 @@ describe('QTable', () => {
         rows: [
           {
             col1: 'Col 1 row 1',
-            col2: 'Col 2 row 1'
+            col2: 'Col 2 row 1',
+            col3: 'Col 3 row 1'
           },
           {
             col1: 'Col 1 row 2',
-            col2: 'Col 2 row 2'
+            col2: 'Col 2 row 2',
+            col3: 'Col 3 row 2'
           }
         ]
       }
@@ -62,9 +72,17 @@ describe('QTable', () => {
           }
         },
         {
-          align: 'right',
+          align: 'left',
           key: 'col2',
-          value: 'Column 2'
+          value: 'Column 2',
+          slots: {
+            row: 'row-slot'
+          }
+        },
+        {
+          align: 'right',
+          key: 'col3',
+          value: 'Column 3'
         }
       ]);
     });
@@ -459,6 +477,21 @@ describe('QTable', () => {
         expect(vm.findScopedRow(testedRow, 'someKey', 'child row')).toEqual(
           testedRow.children[0]
         );
+      });
+    });
+
+    describe('changeColumnsOrder', () => {
+      it('should add new children', () => {
+        options.propsData.groupsOfColumns[0];
+        const instance = shallowMount(Component, options);
+        instance.vm.changeColumnsOrder(
+          { newPositionIndex: 0, oldPositionIndex: 1 },
+          'group-key'
+        );
+
+        expect(
+          instance.emitted()['change-order'][0][0][0].columns[0].key
+        ).toEqual('col2');
       });
     });
   });

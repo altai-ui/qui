@@ -884,6 +884,7 @@ export default {
     changeColumnsOrder({ newPositionIndex, oldPositionIndex }, groupKey) {
       const columns = cloneDeep(this.groupsOfColumns);
       const group = columns.find(({ key }) => key === groupKey);
+
       if (group?.columns) {
         group.columns.splice(
           newPositionIndex,
