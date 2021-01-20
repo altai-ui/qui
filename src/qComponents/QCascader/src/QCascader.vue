@@ -330,7 +330,7 @@ export default {
   },
 
   created() {
-    this.id = `id${(+new Date()).toString(16)}`;
+    this.id = `id${Date.now().toString(16)}`;
   },
 
   mounted() {

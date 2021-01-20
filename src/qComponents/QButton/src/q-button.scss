@@ -29,6 +29,10 @@
     margin-left: 16px;
   }
 
+  &:focus {
+    outline: none;
+  }
+
   &:hover {
     background-color: var(--color-primary);
     background-image: none;
