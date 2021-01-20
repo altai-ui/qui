@@ -7,7 +7,7 @@
       v-if="isShown"
       ref="messageBox"
       class="q-message-box"
-      :class="rootClasses"
+      :class="wrapClass"
       :style="{ zIndex }"
       tabindex="-1"
       @keyup.esc="closeBox"
@@ -177,7 +177,7 @@ export default {
       type: Object,
       default: () => ({})
     },
-    rootClasses: {
+    wrapClass: {
       type: [String, Object, Array],
       default: null
     }
