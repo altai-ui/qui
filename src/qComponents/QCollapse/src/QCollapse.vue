@@ -11,6 +11,12 @@ export default {
   name: 'QCollapse',
   componentName: 'QCollapse',
 
+  provide() {
+    return {
+      qCollapse: this
+    };
+  },
+
   model: {
     prop: 'value',
     event: 'change'
@@ -39,10 +45,10 @@ export default {
 
   watch: {
     value: {
+      immediate: true,
       handler(value) {
         this.activeNames = [].concat(value);
-      },
-      immediate: true
+      }
     }
   },
 

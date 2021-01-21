@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QCollapseItem data should match snapshot 1`] = `
+Object {
+  "activeNames": Array [],
+}
+`;
+
+exports[`QCollapseItem should match snapshot 1`] = `
+<div
+  class="q-collapse-item"
+>
+  <button
+    class="q-collapse-item__header"
+  >
+    <div
+      class="q-collapse-item__title"
+    >
+      
+    </div>
+     
+    <div
+      class="q-collapse-item__icon q-icon-plus"
+    />
+  </button>
+   
+  <transition-stub>
+    <div
+      class="q-collapse-item__body"
+      style="display: none;"
+    >
+      <div
+        class="q-collapse-item__content"
+      />
+    </div>
+  </transition-stub>
+</div>
+`;
