@@ -1,7 +1,6 @@
-import QTag from './src/QTag.vue';
+import QTag from './src/QTag';
 
-/* istanbul ignore next */
-QTag.install = function(Vue) {
+QTag.install = Vue => {
   Vue.component(QTag.name, QTag);
 };
 

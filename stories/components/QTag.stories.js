@@ -13,8 +13,9 @@ export const QTagStory = (_, { argTypes }) => ({
     };
   },
   methods: {
-    handleCloseClick() {
+    handleCloseClick(clickedTag) {
       console.log('Close tag clicked');
+      this.tags = this.tags.filter(tag => tag !== clickedTag);
     }
   },
   template: `
@@ -23,7 +24,7 @@ export const QTagStory = (_, { argTypes }) => ({
         v-for="tag in tags"
         :key="tag"
         :closable="closable"
-        @close="handleCloseClick"
+        @close="handleCloseClick(tag)"
       >
         {{ tag }}
       </q-tag>
