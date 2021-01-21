@@ -1,5 +1,6 @@
 .q-message-box {
   --message-box-indent: 32px;
+  --container-width: 488px;
 
   position: fixed;
   top: 0;
@@ -35,7 +36,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 488px;
+    width: var(--container-width);
     margin-top: 80px;
     margin-bottom: 80px;
     background-color: var(--color-tertiary-gray-ultra-light);
@@ -108,12 +109,6 @@
     margin-top: 32px;
     margin-bottom: 24px;
     padding-left: var(--message-box-indent);
-  }
-
-  &_custom-width {
-    .q-message-box__container {
-      width: var(--custom-container-width);
-    }
   }
 }
 
