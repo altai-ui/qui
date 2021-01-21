@@ -8,7 +8,7 @@
       ref="messageBox"
       class="q-message-box"
       :class="wrapClass"
-      :style="{ zIndex }"
+      :style="qMessageBoxStyles"
       tabindex="-1"
       @keyup.esc="closeBox"
     >
@@ -180,6 +180,10 @@ export default {
     wrapClass: {
       type: [String, Object, Array],
       default: null
+    },
+    wrapStyle: {
+      type: [Object],
+      default: () => ({})
     }
   },
 
@@ -197,6 +201,17 @@ export default {
   computed: {
     isActionsSectionShown() {
       return Boolean(this.confirmButtonText) || Boolean(this.cancelButtonText);
+    },
+
+    qMessageBoxStyles() {
+      if (this.zIndex) {
+        return {
+          ...this.wrapStyle,
+          zIndex: this.zIndex
+        };
+      }
+
+      return this.wrapStyle;
     }
   },
 
