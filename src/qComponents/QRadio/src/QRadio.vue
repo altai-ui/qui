@@ -6,6 +6,7 @@
     :aria-checked="isChecked"
     :aria-disabled="isDisabled"
     :tabindex="tabIndex"
+    @keyup.space="handleSpaceKeyUp"
   >
     <span class="q-radio__input">
       <span class="q-radio__inner" />
@@ -18,8 +19,6 @@
         :value="value"
         :checked="isChecked"
         :disabled="isDisabled"
-        @focus="handleFocus"
-        @blur="handleBlur"
         @change="handleChange"
       />
     </span>
@@ -78,12 +77,6 @@ export default {
     name: { type: String, default: null }
   },
 
-  data() {
-    return {
-      hasFocus: false
-    };
-  },
-
   computed: {
     isGroup() {
       return Boolean(this.qRadioGroup);
@@ -110,7 +103,6 @@ export default {
     wrapClass() {
       return {
         'q-radio_disabled': this.isDisabled,
-        'q-radio_focus': this.hasFocus,
         'q-radio_checked': this.isChecked
       };
     },
@@ -121,12 +113,10 @@ export default {
   },
 
   methods: {
-    handleFocus() {
-      this.hasFocus = true;
-    },
+    handleSpaceKeyUp() {
+      if (this.isGroup) return;
 
-    handleBlur() {
-      this.hasFocus = false;
+      this.$emit('change', this.value);
     },
 
     handleChange() {

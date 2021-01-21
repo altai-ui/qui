@@ -6,8 +6,4 @@ describe('QRadio', () => {
 
     expect(element).toMatchSnapshot();
   });
-
-  it('data should match snapshot', () => {
-    expect(Component.data()).toMatchSnapshot();
-  });
 });

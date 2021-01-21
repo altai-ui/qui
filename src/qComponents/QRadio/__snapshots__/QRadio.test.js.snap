@@ -1,11 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`QRadio data should match snapshot 1`] = `
-Object {
-  "hasFocus": false,
-}
-`;
-
 exports[`QRadio should match snapshot 1`] = `
 <label
   class="q-radio"
