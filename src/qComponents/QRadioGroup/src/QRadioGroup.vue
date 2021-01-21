@@ -1,7 +1,8 @@
 <template>
   <component
     :is="tag"
-    :class="['q-radio-group', `q-radio-group_${direction}`]"
+    class="q-radio-group"
+    :class="`q-radio-group_${direction}`"
     role="radiogroup"
     @keydown="handleKeydown"
   >
@@ -29,6 +30,12 @@ export default {
     qFormItem: {
       default: null
     }
+  },
+
+  provide() {
+    return {
+      qRadioGroup: this
+    };
   },
 
   model: {
