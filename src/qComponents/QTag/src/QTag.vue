@@ -11,6 +11,7 @@
     </div>
     <button
       v-if="closable"
+      type="button"
       class="q-tag__close q-icon-close"
       @click.stop="handleClose"
     />
