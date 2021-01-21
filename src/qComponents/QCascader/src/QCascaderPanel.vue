@@ -68,7 +68,9 @@ export default {
   methods: {
     navigateFocus(e) {
       if (e.target.classList.contains('q-input__inner')) {
-        const firstNode = this.$el.querySelector('#q-cascader-node-0-0');
+        const firstNode = this.$el.querySelector(
+          `#${this.cascader.id}-node-0-0`
+        );
         if (firstNode) {
           firstNode.focus();
         }
@@ -120,7 +122,7 @@ export default {
       }
 
       const node = this.$el.querySelector(
-        `#q-cascader-node-${nextNodePosition[0]}-${nextNodePosition[1]}`
+        `#${this.cascader.id}-node-${nextNodePosition[0]}-${nextNodePosition[1]}`
       );
 
       if (node) {

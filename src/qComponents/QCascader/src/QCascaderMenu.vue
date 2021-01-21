@@ -11,17 +11,18 @@
         <div
           v-for="(node, key) in nodes"
           v-else
-          :id="`q-cascader-node-${index}-${key}`"
+          :id="`${cascader.id}-node-${index}-${key}`"
           :key="key"
           :class="getNodeClass(node)"
           role="menuitem"
           tabindex="-1"
-          @click="e => handleExpand(e, node)"
-          @keyup.enter="e => handleEnterKeyUp(e, node)"
-          @keyup.right="e => handleExpand(e, node)"
+          @click="e => expandMenuItem(e, node)"
+          @keyup.enter="e => handleEnterKeyUp(e, node, index, key)"
+          @keyup.right="e => expandMenuItem(e, node)"
         >
           <q-checkbox
             v-if="cascader.multiple"
+            :ref="`QCheckbox${index}${key}`"
             input-tab-index="-1"
             :value="getChecked(node)"
             :indeterminate="getIndeterminate(node)"
@@ -116,14 +117,16 @@ export default {
   },
 
   methods: {
-    handleEnterKeyUp(e, node) {
+    handleEnterKeyUp(e, node, index, key) {
       if (this.cascader.multiple) {
-        const checkbox = e.target.querySelector('.q-checkbox__original');
-        if (checkbox) checkbox.click();
+        const QCheckboxInstance = this.$refs[`QCheckbox${index}${key}`]?.[0];
+        if (QCheckboxInstance) {
+          QCheckboxInstance.nativeClick();
+        }
         return;
       }
 
-      this.handleExpand(e, node);
+      this.expandMenuItem(e, node);
     },
     getIndeterminate(node) {
       if (
@@ -235,7 +238,7 @@ export default {
       };
     },
 
-    handleExpand(e, value) {
+    expandMenuItem(e, value) {
       if (e.key === 'ArrowRight' && !value.children) return;
       if (!value.children && !this.cascader.multiple) {
         this.cascader.emit(value.value);

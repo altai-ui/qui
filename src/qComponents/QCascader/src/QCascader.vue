@@ -106,7 +106,7 @@
 <script>
 import { createPopper } from '@popperjs/core';
 import Emitter from '../../mixins/emitter';
-import { addResizeListener, removeResizeListener } from '../../helpers';
+import { addResizeListener, removeResizeListener, randId } from '../../helpers';
 
 import QCascaderPanel from './QCascaderPanel';
 
@@ -330,7 +330,7 @@ export default {
   },
 
   created() {
-    this.id = `id${Date.now().toString(16)}`;
+    this.id = randId('q-cascader-');
   },
 
   mounted() {
@@ -348,35 +348,41 @@ export default {
 
   methods: {
     handleKeyUp(e) {
-      if (this.focus) {
-        if (
-          e.target.classList.contains('q-input__inner') &&
-          e.key === 'Enter'
-        ) {
-          this.togglePopper();
-        }
+      if (!this.focus) return;
+      if (e.target.classList.contains('q-input__inner') && e.key === 'Enter') {
+        this.togglePopper();
+      }
 
-        if (e.key === 'Escape') {
+      switch (e.key) {
+        case 'Escape': {
           this.$refs.input.blur();
           this.hidePopper();
+          break;
         }
 
-        if (e.key === 'Backspace') {
+        case 'Backspace': {
           this.deleteTag();
+          break;
         }
 
-        if (e.key === 'Tab') {
+        case 'Tab': {
           if (!this.$refs.reference.contains(document.activeElement)) {
             this.hidePopper();
             this.focus = false;
           }
+          break;
         }
 
-        if (
-          ['ArrowRight', 'ArrowUp', 'ArrowLeft', 'ArrowDown'].includes(e.key)
-        ) {
+        case 'ArrowRight':
+        case 'ArrowUp':
+        case 'ArrowLeft':
+        case 'ArrowDown': {
           this.$refs.panel.navigateFocus(e);
+          break;
         }
+
+        default:
+          break;
       }
     },
 

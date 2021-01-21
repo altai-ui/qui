@@ -28,6 +28,7 @@
         />
       </span>
       <input
+        ref="checkboxInput"
         v-model="model"
         class="q-checkbox__original"
         type="checkbox"
@@ -102,8 +103,8 @@ export default {
      * as native tabIndex
      */
     inputTabIndex: {
-      type: String,
-      default: '0'
+      type: [Number, String],
+      default: null
     }
   },
 
@@ -194,6 +195,13 @@ export default {
   },
 
   methods: {
+    /**
+     * @public
+     */
+    nativeClick() {
+      this.$refs.checkboxInput.click();
+    },
+
     addToStore() {
       if (Array.isArray(this.model) && this.model.includes(this.label)) {
         this.model.push(this.label);
