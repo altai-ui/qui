@@ -109,6 +109,12 @@
     margin-bottom: 24px;
     padding-left: var(--message-box-indent);
   }
+
+  &_custom-width {
+    .q-message-box__container {
+      width: var(--custom-container-width);
+    }
+  }
 }
 
 .q-msgbox-fade-enter-active {
