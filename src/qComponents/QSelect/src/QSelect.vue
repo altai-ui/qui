@@ -1,5 +1,6 @@
 <template>
   <div
+    id=""
     v-click-outside="handleOutsideClick"
     class="q-select"
     @click="toggleMenu"
@@ -19,9 +20,9 @@
       @focus="handleFocus"
       @blur="handleBlur"
       @keyup.native="onInputChange"
-      @keydown.native.enter.prevent="handleEnterKeydown"
-      @keydown.native.esc.stop.prevent="visible = false"
-      @keydown.native.tab="visible = false"
+      @keyup.native.enter.prevent="handleEnterKeyUp"
+      @keyup.native.esc.stop.prevent="visible = false"
+      @keyup.native.tab="visible = false"
       @paste.native="onInputChange"
       @mouseenter.native="inputHovering = true"
       @mouseleave.native="inputHovering = false"
@@ -413,10 +414,12 @@ export default {
     if (this.multiple) {
       if (!Array.isArray(this.value)) this.$emit('input', []);
     } else if (Array.isArray(this.value)) this.$emit('input', '');
+    // this.id = randId('q-select-');
   },
 
   mounted() {
     addResizeListener(this.$el, this.handleResize);
+    document.addEventListener('keyup', this.handleKeyUp, true);
 
     this.$nextTick(() => {
       this.inputWidth = this.$el.getBoundingClientRect().width;
@@ -427,6 +430,7 @@ export default {
 
   beforeDestroy() {
     if (this.$el) removeResizeListener(this.$el, this.handleResize);
+    document.removeEventListener('keyup', this.handleKeyUp, true);
 
     const dropdown = this.$refs.dropdown?.$el;
     if (dropdown?.parentNode === document.body) {
@@ -435,6 +439,40 @@ export default {
   },
 
   methods: {
+    handleKeyUp(e) {
+      if (!this.focus) return;
+      if (e.target.classList.contains('q-input__inner') && e.key === 'Enter') {
+        this.togglePopper();
+      }
+      switch (e.key) {
+        case 'Escape': {
+          this.$refs.input.blur();
+          this.hidePopper();
+          break;
+        }
+        case 'Backspace': {
+          this.deleteTag();
+          break;
+        }
+        case 'Tab': {
+          if (!this.$refs.reference.contains(document.activeElement)) {
+            this.hidePopper();
+            this.focus = false;
+          }
+          break;
+        }
+        case 'ArrowRight':
+        case 'ArrowUp':
+        case 'ArrowLeft':
+        case 'ArrowDown': {
+          this.$refs.panel.navigateFocus(e);
+          break;
+        }
+        default:
+          break;
+      }
+    },
+
     handleOutsideClick() {
       this.visible = false;
     },
@@ -623,11 +661,14 @@ export default {
       }
     },
 
-    handleEnterKeydown() {
+    handleEnterKeyUp() {
       if (!this.visible) {
         this.toggleMenu();
+        this.focusDropdown = true;
         return;
       }
+
+      this.focusDropdown = false;
 
       let option = null;
       if (this.isNewOptionShown) {

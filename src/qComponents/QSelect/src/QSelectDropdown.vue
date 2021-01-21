@@ -13,11 +13,13 @@
     >
       <div
         v-if="selectAllShown && isVisibleOptionExist && multiple"
+        tabindex="-1"
         class="q-option q-option_with-checkbox q-option_all"
         @click.stop="handleSelectAllClick"
       >
         <q-checkbox
           root-tag="div"
+          tabindex="-1"
           :value="areAllSelected"
           :indeterminate="isIndeterminate"
         />
