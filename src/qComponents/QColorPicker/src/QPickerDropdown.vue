@@ -2,7 +2,11 @@
   <transition name="fade">
     <div
       v-show="isShown"
+      ref="dropdown"
+      v-click-outside="closeDropdown"
       class="q-picker-dropdown"
+      tabindex="-1"
+      @keyup.esc="closeDropdown"
     >
       <div class="q-picker-dropdown__base">
         <q-color-svpanel
@@ -35,13 +39,13 @@
           />
         </div>
 
-        <button
+        <q-button
           v-if="isClearBtnShown"
-          class="q-picker-dropdown__btn-clear"
+          theme="link"
           @click="handleClearBtnClick"
         >
           {{ $t('QColorPicker.clear') }}
-        </button>
+        </q-button>
 
         <q-button @click="handleConfirmBtnClick">
           {{ $t('QColorPicker.confirm') }}
@@ -60,8 +64,8 @@ import QColorAlphaSlider from './QColorAlphaSlider';
 import QColorHueSlider from './QColorHueSlider';
 
 export default {
-  name: 'PickerDropdown',
-  componentName: 'PickerDropdown',
+  name: 'QPickerDropdown',
+  componentName: 'QPickerDropdown',
 
   components: {
     QButton,
@@ -96,6 +100,7 @@ export default {
 
   data() {
     return {
+      elementToFocusAfterClosing: null,
       tempColor: '',
       hue: 0,
       saturation: 100,
@@ -130,16 +135,26 @@ export default {
 
   watch: {
     async isShown(value) {
-      if (!value) return;
+      if (!value) {
+        document.removeEventListener('focus', this.handleDocumentFocus, true);
+        await this.$nextTick();
+        this.elementToFocusAfterClosing?.focus();
+        return;
+      }
+
+      document.addEventListener('focus', this.handleDocumentFocus, true);
       this.updateHSVA(this.color);
       this.tempColor = this.colorString;
+      this.elementToFocusAfterClosing = document.activeElement;
 
       await this.$nextTick();
 
+      this.$refs.dropdown.focus();
+
       const { sv, hue, alpha } = this.$refs;
-      sv && sv.update();
-      hue && hue.update();
-      alpha && alpha.update();
+      sv?.update();
+      hue?.update();
+      alpha?.update();
     },
 
     color: {
@@ -158,6 +173,16 @@ export default {
   },
 
   methods: {
+    closeDropdown() {
+      this.$emit('close');
+    },
+
+    handleDocumentFocus(event) {
+      if (!this.$refs.dropdown.contains(event.target)) {
+        this.$refs.dropdown.focus();
+      }
+    },
+
     updateHSVA(value) {
       try {
         const { valpha, color } = Color(value).hsv();

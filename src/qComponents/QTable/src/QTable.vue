@@ -64,7 +64,7 @@
               </template>
             </colgroup>
 
-            <thead>
+            <thead v-if="doesHeaderExist">
               <tr>
                 <th
                   v-if="selectable"
@@ -96,14 +96,14 @@
                           v-if="$scopedSlots.header"
                           name="header"
                           :data="column"
-                          v-bind="updateItem(column, index, column.key)"
+                          v-bind="updateColumnItem(column, index, column.key)"
                         />
 
                         <slot
                           v-else-if="column.slots && column.slots.header"
                           :name="column.slots.header"
                           :data="column"
-                          v-bind="updateItem(column, index, column.key)"
+                          v-bind="updateColumnItem(column, index, column.key)"
                         />
 
                         <template v-else>
@@ -188,14 +188,14 @@
                       v-if="$scopedSlots.total"
                       name="total"
                       :data="total"
-                      v-bind="updateItem(total, index, column.key)"
+                      v-bind="updateTotalItem(total, index, column.key)"
                     />
 
                     <slot
                       v-else-if="column.slots && column.slots.total"
                       :name="column.slots.total"
                       :data="total"
-                      v-bind="updateItem(total, index, column.key)"
+                      v-bind="updateTotalItem(total, index, column.key)"
                     />
 
                     <template v-else-if="total[column.key]">
@@ -450,6 +450,12 @@ export default {
         });
         return acc.concat(eachGroup);
       }, []);
+    },
+
+    doesHeaderExist() {
+      return this.groupsOfColumns.some(({ columns }) =>
+        columns.some(({ value, slots }) => value?.toString() ?? slots?.header)
+      );
     },
 
     isDraggable() {
@@ -858,21 +864,19 @@ export default {
       };
     },
 
-    updateItem(item, index, key) {
-      let value = null;
-
-      if (item[key] === 0 || Boolean(item[key])) {
-        value = item[key];
-      }
-
-      if (item.value) {
-        value = item.value;
-      }
-
+    updateColumnItem(item, index, key) {
       return {
         columnKey: key || null,
         index,
-        value
+        value: item.value ?? null
+      };
+    },
+
+    updateTotalItem(item, index, key) {
+      return {
+        columnKey: key || null,
+        index,
+        value: item[key] ?? null
       };
     },
 

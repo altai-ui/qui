@@ -1,5 +1,9 @@
 .q-tab-pane {
-  margin-right: 8px;
+  --tab-pane-width: 200px;
+
+  &:not(:last-child) {
+    margin-right: 8px;
+  }
 
   &__inner {
     display: flex;
@@ -7,7 +11,7 @@
   }
 
   &__btn {
-    width: 200px;
+    width: var(--tab-pane-width);
     padding: 11px 0;
     font-weight: var(--font-weight-base);
     font-size: var(--font-size-base);
@@ -28,10 +32,11 @@
     }
 
     &:focus {
-      color: var(--color-primary-blue);
+      color: var(--color-primary-black);
+      background-color: var(--color-tertiary-gray-dark);
+      outline: none;
     }
 
-    &:active,
     &_active {
       color: var(--color-primary-black);
       background-color: var(--color-tertiary-gray-ultra-light);
@@ -58,9 +63,9 @@
   }
 
   &__description {
-    width: 200px;
+    width: var(--tab-pane-width);
     margin-top: 8px;
-    font-weight: 500;
+    font-weight: var(--font-weight-base);
     font-size: 10px;
     line-height: 12px;
     color: rgba(var(--color-rgb-gray), 0.32);

@@ -1,6 +1,6 @@
-import QColorPicker from './src/QColorPicker.vue';
+import QColorPicker from './src/QColorPicker';
 
-QColorPicker.install = function(Vue) {
+QColorPicker.install = Vue => {
   Vue.component(QColorPicker.name, QColorPicker);
 };
 

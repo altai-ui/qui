@@ -25,22 +25,21 @@ export default {
 export const QColStory = (_, { argTypes }) => ({
   props: Object.keys(argTypes),
   template: `
-    <q-row
-      class="demo-row"
-    >
-      <q-col
-        cols="2"
-        class="demo-col"
-      >2</q-col>
-      <q-col
-        v-bind="$props"
-        class="demo-col"
-      >dyn</q-col>
-      <q-col
-        cols="2"
-        class="demo-col"
-      >2</q-col>
-    </q-row>
+    <div class="demo">
+      <q-row class="demo__row">
+        <q-col class="demo__col" cols="2">
+          <div class="demo__content">2</div>
+        </q-col>
+
+        <q-col class="demo__col" v-bind="$props">
+          <div class="demo__content">dyn</div>
+        </q-col>
+
+        <q-col class="demo__col" cols="2">
+          <div class="demo__content">2</div>
+        </q-col>
+      </q-row>
+    </div>
   `
 });
 

@@ -14,20 +14,26 @@ export default {
     event: 'change'
   },
 
+  provide() {
+    return {
+      qTabs: this
+    };
+  },
+
   props: {
     /**
-     * width of Tab panes
+     * width of QTabPanes
      */
     tabWidth: {
       type: [String, Number],
-      default: ''
+      default: null
     },
     value: {
       type: String,
-      default: ''
+      default: null
     },
     /**
-     * whether Tab is disabled
+     * whether QTabs is disabled
      */
     disabled: {
       type: Boolean,

@@ -1,22 +1,24 @@
 <template>
-  <div class="q-tab-pane">
+  <div
+    class="q-tab-pane"
+    :style="tabWidthStyle"
+  >
     <div class="q-tab-pane__inner">
       <button
         type="button"
         class="q-tab-pane__btn"
-        :class="getTabBtnClasses"
-        :style="tabWidthStyle"
+        :class="tabBtnClasses"
         :disabled="isDisabled"
         @click="handleTabClick"
       >
         {{ title }}
       </button>
+
       <slot name="content" />
     </div>
     <div
       v-if="description"
       class="q-tab-pane__description"
-      :style="tabWidthStyle"
     >
       {{ description }}
     </div>
@@ -28,82 +30,74 @@ export default {
   name: 'QTabPane',
   componentName: 'QTabPane',
 
+  inject: {
+    qTabs: {
+      default: null
+    }
+  },
+
   props: {
     /**
-     * name of pane
+     * key of QTabPane
      */
     name: {
       type: String,
       required: true
     },
     /**
-     * title of pane
+     * title of QTabPane
      */
     title: {
       type: String,
       required: true
     },
     /**
-     * whether pane is disabled
+     * description of QTabPane
+     */
+    description: {
+      type: String,
+      default: null
+    },
+    /**
+     * width of QTabPane
+     */
+    width: {
+      type: [String, Number],
+      default: null
+    },
+    /**
+     * whether QTabPane is disabled
      */
     disabled: {
       type: Boolean,
       default: false
-    },
-    /**
-     * description of pane
-     */
-    description: {
-      type: String,
-      default: ''
-    },
-    /**
-     * width of Tab pane
-     */
-    width: {
-      type: [String, Number],
-      default: ''
     }
   },
 
   computed: {
     isDisabled() {
-      return this.disabled || this.$parent.disabled;
+      return this.disabled || this.qTabs?.disabled;
     },
 
     tabWidthStyle() {
-      const sourceWidthValue = this.width || this.$parent.tabWidth;
+      const width = this.width ?? this.qTabs?.tabWidth;
 
       return {
-        width: Number(sourceWidthValue)
-          ? `${Number(sourceWidthValue)}px`
-          : sourceWidthValue
+        '--tab-pane-width': Number(width) ? `${Number(width)}px` : width
       };
     },
 
-    getTabBtnClasses() {
+    tabBtnClasses() {
       return {
-        'q-tab-pane__btn_active': this.$parent.currentName === this.name,
+        'q-tab-pane__btn_active': this.qTabs?.currentName === this.name,
         'q-tab-pane__btn_disabled': this.isDisabled
       };
     }
   },
 
-  created() {
-    // eslint-disable-next-line no-underscore-dangle
-    const parentComponentName = this.$parent.$options._componentTag;
-
-    if (
-      parentComponentName !== 'q-tabs' &&
-      process.env.NODE_ENV !== 'production'
-    ) {
-      console.error('QTabPane: component parent must be q-tabs');
-    }
-  },
-
   methods: {
     handleTabClick() {
-      this.$parent.updateValue(this.name);
+      this.qTabs?.updateValue(this.name);
     }
   }
 };

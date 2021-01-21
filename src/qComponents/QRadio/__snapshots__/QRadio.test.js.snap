@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QRadio should match snapshot 1`] = `
+<label
+  class="q-radio"
+  role="radio"
+  tabindex="0"
+>
+  <span
+    class="q-radio__input"
+  >
+    <span
+      class="q-radio__inner"
+    />
+     
+    <input
+      aria-hidden="true"
+      class="q-radio__original"
+      tabindex="-1"
+      type="radio"
+      value=""
+    />
+  </span>
+   
+  <span
+    class="q-radio__label"
+  >
+    
+  </span>
+</label>
+`;
