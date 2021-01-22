@@ -29,7 +29,12 @@
     margin-left: 16px;
   }
 
+  &:focus {
+    outline: none;
+  }
+
   &:hover {
+    background-color: var(--color-primary);
     background-image: none;
     box-shadow: -1px -1px 4px rgba(var(--color-rgb-white), 0.25),
       1px 1px 4px rgba(var(--color-rgb-blue), 0.4),
@@ -64,6 +69,13 @@
   }
 
   &_theme {
+    &_primary {
+      &:focus {
+        background-color: var(--color-primary-darker);
+        background-image: none;
+      }
+    }
+
     &_secondary {
       color: var(--color-primary-blue);
       background-color: var(--color-tertiary-gray);
@@ -80,6 +92,11 @@
         outline: none;
         box-shadow: var(--box-shadow-pressed);
       }
+
+      &:focus {
+        color: var(--color-tertiary-white);
+        background-color: var(--color-primary-darker);
+      }
     }
 
     &_link {
@@ -91,6 +108,10 @@
       background-color: transparent;
       background-image: none;
       box-shadow: none;
+
+      &:focus {
+        text-decoration: underline;
+      }
 
       &:hover {
         color: var(--color-primary-black);

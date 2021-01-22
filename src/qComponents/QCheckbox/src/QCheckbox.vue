@@ -28,6 +28,7 @@
         />
       </span>
       <input
+        ref="checkboxInput"
         v-model="model"
         class="q-checkbox__original"
         type="checkbox"
@@ -35,6 +36,7 @@
         :disabled="isDisabled"
         :value="label"
         :name="name"
+        :tabindex="inputTabIndex"
         @change="handleChange"
         @focus="focus = true"
         @blur="focus = false"
@@ -96,7 +98,14 @@ export default {
      * as native name
      */
     name: { type: String, default: '' },
-    rootTag: { type: String, default: 'label' }
+    rootTag: { type: String, default: 'label' },
+    /**
+     * as native tabIndex
+     */
+    inputTabIndex: {
+      type: [Number, String],
+      default: null
+    }
   },
 
   data() {
@@ -186,6 +195,13 @@ export default {
   },
 
   methods: {
+    /**
+     * @public
+     */
+    nativeClick() {
+      this.$refs.checkboxInput.click();
+    },
+
     addToStore() {
       if (Array.isArray(this.model) && this.model.includes(this.label)) {
         this.model.push(this.label);

@@ -1,5 +1,9 @@
 import Component from './src/QCascader';
 
+const module = require('../helpers');
+
+module.randId = jest.fn();
+
 describe('QCascader', () => {
   let instance;
   let options;
@@ -36,6 +40,9 @@ describe('QCascader', () => {
   });
 
   it('should match snapshot', () => {
+    const spy = prefix => `${prefix}000`;
+    module.randId.mockImplementation(spy);
+    instance = mount(Component, options);
     expect(instance.element).toMatchSnapshot();
   });
 

@@ -11,14 +11,17 @@
       :placeholder="calcPlaceholder"
       :disabled="isDisabled"
       :validate-event="false"
+      aria-haspopup="true"
+      role="button"
+      :aria-controls="id"
+      :aria-expanded="popper"
       :class="{
         'q-input_focus': Boolean(popper),
         'q-input_hover': areTagsHovered
       }"
-      @focus="handleFocus"
-      @blur="handleBlur"
       @mouseenter.native="handleMouseEnter"
       @mouseleave.native="showClose = false"
+      @focus="handleInputFocus"
       @click="togglePopper"
     >
       <template slot="suffix">
@@ -103,7 +106,7 @@
 <script>
 import { createPopper } from '@popperjs/core';
 import Emitter from '../../mixins/emitter';
-import { addResizeListener, removeResizeListener } from '../../helpers';
+import { addResizeListener, removeResizeListener, randId } from '../../helpers';
 
 import QCascaderPanel from './QCascaderPanel';
 
@@ -252,7 +255,9 @@ export default {
       inputInitialHeight: 0,
       popper: null,
       showClose: false,
-      areTagsHovered: false
+      areTagsHovered: false,
+      focus: false,
+      id: randId('q-cascader-')
     };
   },
 
@@ -329,13 +334,54 @@ export default {
     this.inputInitialHeight = input?.$el?.offsetHeight ?? DEFAULT_INPUT_HEIGHT;
 
     addResizeListener(this.$el, this.updateStyle);
+    document.addEventListener('keyup', this.handleKeyUp, true);
   },
 
   beforeDestroy() {
     removeResizeListener(this.$el, this.updateStyle);
+    document.removeEventListener('keyup', this.handleKeyUp, true);
   },
 
   methods: {
+    handleKeyUp(e) {
+      if (!this.focus) return;
+      if (e.target.classList.contains('q-input__inner') && e.key === 'Enter') {
+        this.togglePopper();
+      }
+
+      switch (e.key) {
+        case 'Escape': {
+          this.$refs.input.blur();
+          this.hidePopper();
+          break;
+        }
+
+        case 'Backspace': {
+          this.deleteTag();
+          break;
+        }
+
+        case 'Tab': {
+          if (!this.$refs.reference.contains(document.activeElement)) {
+            this.hidePopper();
+            this.focus = false;
+          }
+          break;
+        }
+
+        case 'ArrowRight':
+        case 'ArrowUp':
+        case 'ArrowLeft':
+        case 'ArrowDown': {
+          this.$refs.panel.navigateFocus(e);
+          break;
+        }
+
+        default:
+          break;
+      }
+    },
+
     handleTagsHover() {
       this.areTagsHovered = true;
       this.showClose = true;
@@ -353,9 +399,14 @@ export default {
       }
     },
 
-    deleteTag({ value }) {
+    deleteTag({ value } = {}) {
+      if (!this.checkedValues) return;
       const result = new Set(this.checkedValues);
-      result.delete(value);
+      if (value) {
+        result.delete(value);
+      } else {
+        result.delete(this.checkedValues[this.checkedValues.length - 1]);
+      }
       const payload = Array.from(result);
       this.emit(payload.length ? payload : null);
     },
@@ -417,14 +468,10 @@ export default {
       }
     },
 
-    handleFocus(e) {
+    handleInputFocus(e) {
       this.$emit('focus', e);
+      this.focus = true;
     },
-
-    handleBlur(e) {
-      this.$emit('blur', e);
-    },
-
     updateStyle() {
       const { $el, inputInitialHeight } = this;
       if (!$el) return;

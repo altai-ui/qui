@@ -22,6 +22,10 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 
+    &:focus {
+      text-decoration: underline;
+    }
+
     &_exact-active:not(:first-child),
     &_last:not(:first-child) {
       font-weight: var(--font-weight-bold);

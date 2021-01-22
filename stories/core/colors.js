@@ -4,7 +4,8 @@ export const primaryColors = {
   '--color-primary-blue': '#4162f0',
   '--color-primary-blue-light': '#74aff8',
   '--color-primary-blue-aqua': '#5ecae7',
-  '--color-primary-black': '#1d1c1a'
+  '--color-primary-black': '#1d1c1a',
+  '--color-primary-darker': '#b83e65'
 };
 
 export const secondaryColors = {
