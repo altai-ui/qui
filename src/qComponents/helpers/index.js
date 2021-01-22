@@ -65,3 +65,8 @@ export const removeResizeListener = (element, fn) => {
     element.__ro__.disconnect();
   }
 };
+
+export const randId = prefix =>
+  Math.random()
+    .toString(36)
+    .replace('0.', prefix ?? '');

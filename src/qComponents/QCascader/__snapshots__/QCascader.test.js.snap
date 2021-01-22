@@ -5,6 +5,8 @@ Object {
   "areTagsHovered": false,
   "checkedNodes": Array [],
   "checkedValues": Array [],
+  "focus": false,
+  "id": "q-cascader-000",
   "inputInitialHeight": 0,
   "inputValue": null,
   "popper": null,
@@ -23,11 +25,14 @@ exports[`QCascader should match snapshot 1`] = `
     <!---->
      
     <input
+      aria-controls="q-cascader-000"
+      aria-haspopup="true"
       aria-label=""
       autocomplete="off"
       class="q-input__inner"
       placeholder="placeholder"
       readonly="readonly"
+      role="button"
       tabindex=""
       type="text"
     />
@@ -55,13 +60,15 @@ exports[`QCascader should match snapshot 1`] = `
     class="q-cascader-panel"
   >
     <div
+      aria-labelledby="q-cascader-000"
       class="q-cascader-menu"
+      role="menu"
     >
       <div
         class="q-cascader-menu__wrap"
       >
         <div
-          class="q-scrollbar"
+          class="q-scrollbar q-scrollbar_has-horizontal-bar q-scrollbar_has-vertical-bar"
         >
           <div
             class="q-scrollbar__wrap q-cascader-menu__scrollbar q-scrollbar__wrap_hidden-default"
@@ -71,6 +78,9 @@ exports[`QCascader should match snapshot 1`] = `
             >
               <div
                 class="q-cascader-node"
+                id="q-cascader-000-node-0-0"
+                role="menuitem"
+                tabindex="-1"
               >
                 <!---->
                  
@@ -86,6 +96,9 @@ exports[`QCascader should match snapshot 1`] = `
               </div>
               <div
                 class="q-cascader-node"
+                id="q-cascader-000-node-0-1"
+                role="menuitem"
+                tabindex="-1"
               >
                 <!---->
                  
@@ -102,21 +115,19 @@ exports[`QCascader should match snapshot 1`] = `
            
           <div
             class="q-scrollbar__bar q-scrollbar__bar_horizontal"
-            style="display: none;"
           >
             <div
               class="q-scrollbar__thumb"
-              style="transform: translateX(0%); webkit-transform: translateX(0%);"
+              style="width: 0px; transform: translateX(0%); webkit-transform: translateX(0%);"
             />
           </div>
            
           <div
             class="q-scrollbar__bar q-scrollbar__bar_vertical"
-            style="display: none;"
           >
             <div
               class="q-scrollbar__thumb"
-              style="transform: translateY(0%); webkit-transform: translateY(0%);"
+              style="height: 0px; transform: translateY(0%); webkit-transform: translateY(0%);"
             />
           </div>
         </div>

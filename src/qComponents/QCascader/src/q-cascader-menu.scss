@@ -111,16 +111,24 @@
       }
     }
 
+    &:focus,
     &_active {
       position: relative;
       color: var(--color-primary-black);
-      background-color: var(--color-tertiary-gray-ultra-light);
       box-shadow: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
         1px 1px 3px rgba(var(--color-rgb-blue), 0.4);
 
       .q-cascader-node__postfix::before {
         color: var(--color-primary-blue);
       }
+    }
+
+    &_active {
+      background-color: var(--color-tertiary-gray-ultra-light);
+    }
+
+    &:focus {
+      background-color: var(--color-tertiary-gray);
     }
 
     &_disabled {
