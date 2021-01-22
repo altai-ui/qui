@@ -6,10 +6,12 @@
     }"
   >
     <div class="q-tag__text">
+      <!-- @slot text of QTag -->
       <slot />
     </div>
-    <div
+    <button
       v-if="closable"
+      type="button"
       class="q-tag__close q-icon-close"
       @click.stop="handleClose"
     />
@@ -23,7 +25,7 @@ export default {
 
   props: {
     /**
-     * whether Tag can be removed
+     * whether is close button shown
      */
     closable: {
       type: Boolean,
@@ -33,6 +35,9 @@ export default {
 
   methods: {
     handleClose(event) {
+      /**
+       * triggers when the close button is clicked
+       */
       this.$emit('close', event);
     }
   }

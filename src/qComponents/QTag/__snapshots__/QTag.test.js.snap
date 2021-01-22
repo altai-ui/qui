@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QTag should match snapshot 1`] = `
+<div
+  class="q-tag"
+>
+  <div
+    class="q-tag__text"
+  />
+   
+  <!---->
+</div>
+`;
