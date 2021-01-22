@@ -1,0 +1,115 @@
+import QCol from '../../../src/qComponents/QCol';
+import QRow from '../../../src/qComponents/QRow';
+import './layout.scss';
+
+export default {
+  title: 'Components/Layout',
+  subcomponents: { QRow, QCol },
+  argTypes: {
+    gutter: {
+      name: 'gutter',
+      control: 'text',
+      type: { name: 'string', required: false },
+      description: 'grid spacing (in CSS units)',
+      table: {
+        type: {
+          summary: ['string']
+        }
+      }
+    }
+  }
+};
+
+export const QRowStory = (_, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  computed: {
+    demoStyles() {
+      return {
+        '--layout-gutter': (this.gutter ?? '').trim()
+      };
+    }
+  },
+  template: `
+    <div class="demo" :style="demoStyles">
+      <q-row class="demo__row">
+        <q-col class="demo__col" cols="8">
+          <div class="demo__content">8</div>
+        </q-col>
+
+        <q-col class="demo__col" cols="4">
+          <div class="demo__content">4</div>
+        </q-col>
+
+        <q-col class="demo__col" cols="4">
+          <div class="demo__content">4</div>
+        </q-col>
+
+        <q-col class="demo__col" cols="4">
+          <div class="demo__content">4</div>
+        </q-col>
+
+        <q-col class="demo__col" cols="2">
+          <div class="demo__content">2</div>
+        </q-col>
+
+        <q-col class="demo__col" cols="2">
+          <div class="demo__content">2</div>
+        </q-col>
+      </q-row>
+
+      <q-row class="demo__row">
+        <q-col class="demo__col" cols="2">
+          <div class="demo__content">2</div>
+        </q-col>
+
+        <q-col class="demo__col" cols="8">
+          <div class="demo__content">8</div>
+        </q-col>
+
+        <q-col class="demo__col" cols="2">
+          <div class="demo__content">2</div>
+        </q-col>
+      </q-row>
+
+      <q-row class="demo__row">
+        <q-col class="demo__col" cols="2">
+          <div class="demo__content">2</div>
+        </q-col>
+
+        <q-col class="demo__col" cols="5">
+          <div class="demo__content">5</div>
+        </q-col>
+
+        <q-col class="demo__col" cols="2">
+          <div class="demo__content">2</div>
+        </q-col>
+
+        <q-col class="demo__col" cols="3">
+          <div class="demo__content">3</div>
+        </q-col>
+      </q-row>
+
+      <q-row class="demo__row">
+        <q-col class="demo__col" cols="5">
+          <div class="demo__content">5</div>
+        </q-col>
+
+        <q-col class="demo__col" cols="7">
+          <div class="demo__content">7</div>
+        </q-col>
+      </q-row>
+
+      <q-row class="demo__row">
+        <q-col class="demo__col" cols="10">
+          <div class="demo__content">10</div>
+        </q-col>
+
+        <q-col class="demo__col" cols="2">
+          <div class="demo__content">2</div>
+        </q-col>
+      </q-row>
+    </div>
+  `
+});
+
+QRowStory.storyName = 'Default';

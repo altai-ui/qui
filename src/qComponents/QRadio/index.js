@@ -1,7 +1,6 @@
 import QRadio from './src/QRadio';
 
-/* istanbul ignore next */
-QRadio.install = function(Vue) {
+QRadio.install = Vue => {
   Vue.component(QRadio.name, QRadio);
 };
 

@@ -257,7 +257,7 @@ export default {
       showClose: false,
       areTagsHovered: false,
       focus: false,
-      id: null
+      id: randId('q-cascader-')
     };
   },
 
@@ -327,10 +327,6 @@ export default {
         this.$nextTick(this.updateStyle);
       }
     }
-  },
-
-  created() {
-    this.id = randId('q-cascader-');
   },
 
   mounted() {

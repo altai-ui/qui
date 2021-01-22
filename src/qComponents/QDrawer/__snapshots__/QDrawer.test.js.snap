@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QDrawer data should match snapshot 1`] = `
+Object {
+  "elementToFocusAfterClosing": null,
+  "isRendered": false,
+  "zIndex": null,
+}
+`;
+
+exports[`QDrawer should match snapshot 1`] = `
+<transition-stub
+  name="q-drawer-fade"
+>
+  <div
+    class="q-drawer"
+    style="z-index: 2001;"
+  >
+    <div
+      class="q-drawer-wrapper q-drawer-wrapper_right"
+      tabindex="-1"
+    >
+      <div
+        class="q-drawer__header"
+      >
+        <!---->
+         
+        <button
+          class="q-drawer__close q-icon-close"
+        />
+      </div>
+       
+      <q-scrollbar-stub
+        theme="primary"
+        viewclass=""
+        viewtag="div"
+        wrapclass=""
+      >
+        <div
+          class="q-drawer__content"
+        />
+      </q-scrollbar-stub>
+    </div>
+  </div>
+</transition-stub>
+`;

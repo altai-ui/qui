@@ -40,6 +40,12 @@ export default {
 
   components: { QCollapseTransition },
 
+  inject: {
+    qCollapse: {
+      default: null
+    }
+  },
+
   props: {
     title: {
       type: String,
@@ -59,11 +65,11 @@ export default {
 
   computed: {
     preparedName() {
-      return this.name ?? this.$parent?.uniqueId('default-collapse-name-');
+      return this.name ?? this.qCollapse?.uniqueId('default-collapse-name-');
     },
 
     isActive() {
-      return this.$parent.activeNames?.includes(this.preparedName) ?? false;
+      return this.qCollapse?.activeNames?.includes(this.preparedName) ?? false;
     },
 
     icon() {
@@ -73,7 +79,7 @@ export default {
 
   methods: {
     handleTabClick() {
-      this.$parent.updateValue(this.preparedName);
+      this.qCollapse?.updateValue(this.preparedName);
     }
   }
 };

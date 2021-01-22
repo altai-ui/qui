@@ -1,6 +1,4 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable global-require */
-/* eslint-disable no-param-reassign */
+/* eslint-disable no-underscore-dangle, global-require, no-param-reassign */
 import { kebabCase, isString } from 'lodash-es';
 import vClickOutside from 'v-click-outside';
 import { version } from '../../package.json';
@@ -118,7 +116,10 @@ const install = (
       }
     },
     locale: {
-      value: locale
+      get: () => locale,
+      set(newLocale) {
+        locale = newLocale;
+      }
     }
   });
 
@@ -137,13 +138,13 @@ const install = (
   }
 
   if (!Vue.prototype.$message) {
-    Vue.prototype.$message = QMessageBox.bind(Vue);
+    Vue.prototype.$message = QMessageBox;
   } else if (process.env.NODE_ENV !== 'production') {
     console.warn(`$message hasn't been registered, it has existed before`);
   }
 
   if (!Vue.prototype.$dialog) {
-    Vue.prototype.$dialog = QDialog.bind(Vue);
+    Vue.prototype.$dialog = QDialog;
   } else if (process.env.NODE_ENV !== 'production') {
     console.warn(`$dialog hasn't been registered, it has existed before`);
   }

@@ -1,0 +1,138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QCascader data should match snapshot 1`] = `
+Object {
+  "areTagsHovered": false,
+  "checkedNodes": Array [],
+  "checkedValues": Array [],
+  "focus": false,
+  "id": "q-cascader-000",
+  "inputInitialHeight": 0,
+  "inputValue": null,
+  "popper": null,
+  "presentText": null,
+  "showClose": false,
+}
+`;
+
+exports[`QCascader should match snapshot 1`] = `
+<div
+  class="q-cascader"
+>
+  <div
+    class="q-input q-input_suffix"
+  >
+    <!---->
+     
+    <input
+      aria-controls="q-cascader-000"
+      aria-haspopup="true"
+      aria-label=""
+      autocomplete="off"
+      class="q-input__inner"
+      placeholder="placeholder"
+      readonly="readonly"
+      role="button"
+      tabindex=""
+      type="text"
+    />
+     
+    <span
+      class="q-input__suffix"
+    >
+      <span
+        class="q-input__suffix-inner"
+      >
+        <span
+          class="q-input__icon q-icon-triangle-down"
+        />
+         
+        <!---->
+         
+        <!---->
+      </span>
+    </span>
+  </div>
+   
+  <!---->
+   
+  <div
+    class="q-cascader-panel"
+  >
+    <div
+      aria-labelledby="q-cascader-000"
+      class="q-cascader-menu"
+      role="menu"
+    >
+      <div
+        class="q-cascader-menu__wrap"
+      >
+        <div
+          class="q-scrollbar q-scrollbar_has-horizontal-bar q-scrollbar_has-vertical-bar"
+        >
+          <div
+            class="q-scrollbar__wrap q-cascader-menu__scrollbar q-scrollbar__wrap_hidden-default"
+          >
+            <div
+              class="q-scrollbar__view"
+            >
+              <div
+                class="q-cascader-node"
+                id="q-cascader-000-node-0-0"
+                role="menuitem"
+                tabindex="-1"
+              >
+                <!---->
+                 
+                <span
+                  class="q-cascader-node__label"
+                >
+                  Guide
+                </span>
+                 
+                <span
+                  class="q-cascader-node__postfix q-icon-triangle-right"
+                />
+              </div>
+              <div
+                class="q-cascader-node"
+                id="q-cascader-000-node-0-1"
+                role="menuitem"
+                tabindex="-1"
+              >
+                <!---->
+                 
+                <span
+                  class="q-cascader-node__label"
+                >
+                  Resource
+                </span>
+                 
+                <!---->
+              </div>
+            </div>
+          </div>
+           
+          <div
+            class="q-scrollbar__bar q-scrollbar__bar_horizontal"
+          >
+            <div
+              class="q-scrollbar__thumb"
+              style="width: 0px; transform: translateX(0%); webkit-transform: translateX(0%);"
+            />
+          </div>
+           
+          <div
+            class="q-scrollbar__bar q-scrollbar__bar_vertical"
+          >
+            <div
+              class="q-scrollbar__thumb"
+              style="height: 0px; transform: translateY(0%); webkit-transform: translateY(0%);"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

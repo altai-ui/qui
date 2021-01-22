@@ -5,8 +5,12 @@
   >
     <div
       v-if="isShown"
+      ref="messageBox"
       class="q-message-box"
+      :class="wrapClass"
       :style="{ zIndex }"
+      tabindex="-1"
+      @keyup.esc="closeBox"
     >
       <q-scrollbar
         theme="secondary"
@@ -96,18 +100,30 @@ export default {
   componentName: 'QMessageBox',
 
   props: {
+    /**
+     * z-index of the QMessageBox
+     */
     zIndex: {
       type: Number,
       default: null
     },
+    /**
+     * title of the QMessageBox
+     */
     title: {
       type: String,
       default: ''
     },
+    /**
+     * content of the QMessageBox
+     */
     message: {
       type: String,
       default: ''
     },
+    /**
+     * subcontent of the QMessageBox
+     */
     submessage: {
       type: String,
       default: ''
@@ -119,22 +135,37 @@ export default {
       type: Boolean,
       default: false
     },
+    /**
+     * text content of confirm button
+     */
     confirmButtonText: {
       type: String,
       default: null
     },
+    /**
+     * text content of cancel button
+     */
     cancelButtonText: {
       type: String,
       default: null
     },
+    /**
+     * whether QMessageBox can be closed by clicking the mask
+     */
     closeOnClickShadow: {
       type: Boolean,
       default: true
     },
+    /**
+     * whether to distinguish canceling and closing the QMessageBox
+     */
     distinguishCancelAndClose: {
       type: Boolean,
       default: false
     },
+    /**
+     * callback before QMessageBox closes, and it will prevent QMessageBox from closing
+     */
     beforeClose: {
       type: Function,
       default: null
@@ -145,6 +176,10 @@ export default {
     componentProps: {
       type: Object,
       default: () => ({})
+    },
+    wrapClass: {
+      type: [String, Object, Array],
+      default: null
     }
   },
 
@@ -154,7 +189,8 @@ export default {
       isShown: false,
       isConfirmBtnLoading: false,
       isCancelBtnLoading: false,
-      callback: null
+      callback: null,
+      elementToFocusAfterClosing: null
     };
   },
 
@@ -164,8 +200,20 @@ export default {
     }
   },
 
+  watch: {
+    isShown(value) {
+      if (!value) return;
+
+      this.elementToFocusAfterClosing = document.activeElement;
+      this.$nextTick(() => {
+        this.$refs.messageBox.focus();
+      });
+    }
+  },
+
   mounted() {
     document.documentElement.style.overflow = 'hidden';
+    document.addEventListener('focus', this.handleDocumentFocus, true);
   },
 
   beforeDestroy() {
@@ -178,6 +226,12 @@ export default {
   },
 
   methods: {
+    handleDocumentFocus(event) {
+      if (!this.$refs.messageBox.contains(event.target)) {
+        this.$refs.messageBox.focus();
+      }
+    },
+
     handleHookAfterLeave() {
       this.$destroy();
     },
@@ -192,6 +246,11 @@ export default {
       if (isReadyToClose) {
         this.callback({ action, payload });
         this.isShown = false;
+
+        document.removeEventListener('focus', this.handleDocumentFocus, true);
+        this.$nextTick(() => {
+          this.elementToFocusAfterClosing?.focus();
+        });
       }
     },
 

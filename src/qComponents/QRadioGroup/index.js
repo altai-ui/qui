@@ -1,7 +1,6 @@
 import QRadioGroup from './src/QRadioGroup';
 
-/* istanbul ignore next */
-QRadioGroup.install = function(Vue) {
+QRadioGroup.install = Vue => {
   Vue.component(QRadioGroup.name, QRadioGroup);
 };
 
