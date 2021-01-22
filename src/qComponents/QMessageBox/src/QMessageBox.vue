@@ -8,7 +8,7 @@
       ref="messageBox"
       class="q-message-box"
       :class="wrapClass"
-      :style="[wrapStyle, { zIndex: zIndex }]"
+      :style="wrapStyles"
       tabindex="-1"
       @keyup.esc="closeBox"
     >
@@ -182,7 +182,7 @@ export default {
       default: null
     },
     wrapStyle: {
-      type: [Object, Array],
+      type: [String, Object, Array],
       default: () => ({})
     }
   },
@@ -201,6 +201,16 @@ export default {
   computed: {
     isActionsSectionShown() {
       return Boolean(this.confirmButtonText) || Boolean(this.cancelButtonText);
+    },
+
+    wrapStyles() {
+      let styles;
+
+      if (typeof this.wrapStyle === 'string') {
+        styles = `${this.wrapStyle} zIndex: ${this.zIndex}`;
+      }
+
+      return styles;
     }
   },
 
