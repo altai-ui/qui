@@ -25,7 +25,7 @@ export default {
 
   props: {
     /**
-     * whether close button shown
+     * whether is close button shown
      */
     closable: {
       type: Boolean,
