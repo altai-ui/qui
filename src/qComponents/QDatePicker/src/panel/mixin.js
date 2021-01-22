@@ -140,6 +140,7 @@ export default {
       }
 
       if (isDate(val.maxDate)) {
+        // eslint-disable-next-line no-param-reassign
         val.maxDate = endOfDay(val.maxDate);
       }
 
