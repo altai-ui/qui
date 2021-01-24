@@ -67,13 +67,11 @@
   }
 
   &__title {
-    width: 392px;
-    margin-top: 32px;
-    margin-bottom: 16px;
-    margin-left: var(--message-box-indent);
-    font-weight: 600;
+    margin: 32px calc(var(--message-box-indent) + 16px) 16px
+      var(--message-box-indent);
+    font-weight: var(--font-weight-bold);
     font-size: 16px;
-    line-height: 22px;
+    line-height: var(--line-height-base);
     color: var(--color-primary-black);
     word-break: break-word;
   }
