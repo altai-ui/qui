@@ -8,7 +8,7 @@
       ref="messageBox"
       class="q-message-box"
       :class="wrapClass"
-      :style="{ zIndex }"
+      :style="[wrapStyle, { zIndex }]"
       tabindex="-1"
       @keyup.esc="closeBox"
     >
@@ -177,7 +177,17 @@ export default {
       type: Object,
       default: () => ({})
     },
+    /**
+     * class list of the QMessageBox
+     */
     wrapClass: {
+      type: [String, Object, Array],
+      default: null
+    },
+    /**
+     * style list of the QMessageBox
+     */
+    wrapStyle: {
       type: [String, Object, Array],
       default: null
     }

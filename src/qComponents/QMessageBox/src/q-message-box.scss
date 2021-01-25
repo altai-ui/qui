@@ -1,5 +1,6 @@
 .q-message-box {
   --message-box-indent: 32px;
+  --message-box-container-width: 488px;
 
   position: fixed;
   top: 0;
@@ -35,7 +36,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 488px;
+    width: var(--message-box-container-width);
     margin-top: 80px;
     margin-bottom: 80px;
     background-color: var(--color-tertiary-gray-ultra-light);
@@ -66,13 +67,11 @@
   }
 
   &__title {
-    width: 392px;
-    margin-top: 32px;
-    margin-bottom: 16px;
-    margin-left: var(--message-box-indent);
-    font-weight: 600;
+    margin: var(--message-box-indent) calc(var(--message-box-indent) * 2)
+      calc(var(--message-box-indent) / 2) var(--message-box-indent);
+    font-weight: var(--font-weight-bold);
     font-size: 16px;
-    line-height: 22px;
+    line-height: var(--line-height-base);
     color: var(--color-primary-black);
     word-break: break-word;
   }
