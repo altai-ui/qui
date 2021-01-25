@@ -183,7 +183,7 @@ export default {
     },
     wrapStyle: {
       type: [String, Object, Array],
-      default: () => ({})
+      default: null
     }
   },
 
