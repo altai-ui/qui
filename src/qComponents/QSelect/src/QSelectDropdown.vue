@@ -136,68 +136,43 @@ export default {
   },
 
   methods: {
-    navigateFocus(e) {
+    navigateDropdown(e) {
       if (e.target.classList.contains('q-input__inner')) {
         const firstNode = this.$el.querySelector(`.q-option`);
         if (firstNode) {
-          this.$nextTick(() => {
-            firstNode.focus();
-          });
+          firstNode.focus();
         }
       }
 
-      // if (!e.target.classList.contains('q-option')) return;
-      // const nodeText = e.target.innerText;
-      // let nodeIndex;
-      // let currentNodePosition;
-      // this.menus.forEach((menu, menuIndex) => {
-      //   nodeIndex = menu.findIndex(node => node.label === nodeText);
-      //   if (nodeIndex > -1) {
-      //     currentNodePosition = [menuIndex, nodeIndex];
-      //   }
-      // });
+      if (!e.target.classList.contains('q-option')) return;
+      const elements = this.options.map(option => option.$el);
+      let currentNodeIndex;
+      let nextNodeIndex;
+      elements.forEach((element, index) => {
+        if (document.activeElement === element) {
+          currentNodeIndex = index;
+        }
+      });
 
-      // let nextNodePosition;
+      switch (e.key) {
+        case 'ArrowUp':
+        case 'ArrowLeft':
+          nextNodeIndex = currentNodeIndex - 1;
+          break;
 
-      // switch (e.key) {
-      //   case 'ArrowRight':
-      //     nextNodePosition = [
-      //       currentNodePosition[0] + 1,
-      //       currentNodePosition[1]
-      //     ];
-      //     break;
-      //   case 'ArrowLeft':
-      //     nextNodePosition = [
-      //       currentNodePosition[0] === 0 ? 0 : currentNodePosition[0] - 1,
-      //       currentNodePosition[1]
-      //     ];
+        case 'ArrowDown':
+        case 'ArrowRight':
+          nextNodeIndex = currentNodeIndex + 1;
+          break;
+        default:
+          break;
+      }
 
-      //     break;
+      const node = elements[nextNodeIndex];
 
-      //   case 'ArrowUp':
-      //     nextNodePosition = [
-      //       currentNodePosition[0],
-      //       currentNodePosition[1] === 0 ? 0 : currentNodePosition[1] - 1
-      //     ];
-      //     break;
-
-      //   case 'ArrowDown':
-      //     nextNodePosition = [
-      //       currentNodePosition[0],
-      //       currentNodePosition[1] + 1
-      //     ];
-      //     break;
-      //   default:
-      //     break;
-      // }
-
-      // const node = this.$el.querySelector(
-      //   `#${this.cascader.id}-node-${nextNodePosition[0]}-${nextNodePosition[1]}`
-      // );
-
-      // if (node) {
-      //   node.focus();
-      // }
+      if (node) {
+        node.focus();
+      }
     },
     handleSelectAllClick() {
       if (this.areAllSelected) {

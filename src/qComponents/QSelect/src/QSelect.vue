@@ -51,7 +51,7 @@
       :filterable="filterable"
       :is-disabled="isDisabled"
       :query.sync="query"
-      @keydown-enter="handleEnterKeyUp"
+      @keyup.enter="handleEnterKeyUp"
       @focus="handleFocus"
       @remove-tag="deleteTag"
       @exit="visible = false"
@@ -457,12 +457,14 @@ export default {
       ) {
         this.togglePopper();
       }
+
       switch (e.key) {
         case 'Escape': {
           this.$refs.input.blur();
           this.hidePopper();
           break;
         }
+
         case 'Backspace': {
           this.deleteTag();
           break;
@@ -477,8 +479,9 @@ export default {
         case 'ArrowRight':
         case 'ArrowUp':
         case 'ArrowLeft':
-        case 'ArrowDown': {
-          this.$refs.dropdown.navigateFocus(e);
+        case 'ArrowDown':
+        case 'Enter': {
+          this.$refs.dropdown.navigateDropdown(e);
           break;
         }
         default:
