@@ -67,8 +67,8 @@
   }
 
   &__title {
-    margin: 32px calc(var(--message-box-indent) + 16px) 16px
-      var(--message-box-indent);
+    margin: var(--message-box-indent) calc(var(--message-box-indent) * 2)
+      calc(var(--message-box-indent) / 2) var(--message-box-indent);
     font-weight: var(--font-weight-bold);
     font-size: 16px;
     line-height: var(--line-height-base);
