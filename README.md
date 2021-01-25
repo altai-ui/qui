@@ -227,7 +227,7 @@ new Vue({
 
 - Russian ✅
 - English ✅
-- Also you can use any language by setting texts for components via Vue I18n (https://kazupon.github.io/vue-i18n/)
+- Also you can use any language by setting texts for components via Vue I18n (https://kazupon.github.io/vue-i18n/). See the example above.
 
 ## Browser Support
 
