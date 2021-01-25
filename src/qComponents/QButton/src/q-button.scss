@@ -70,7 +70,7 @@
 
   &_theme {
     &_primary {
-      &:focus {
+      &:focus-visible {
         background-color: var(--color-primary-darker);
         background-image: none;
       }

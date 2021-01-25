@@ -7,6 +7,7 @@
       'q-option_disabled': isDisabled,
       'q-option_with-checkbox': qSelect.multiple
     }"
+    tabindex="-1"
     @mouseenter="handleMouseEnter"
     @click.stop="handleOptionClick"
   >

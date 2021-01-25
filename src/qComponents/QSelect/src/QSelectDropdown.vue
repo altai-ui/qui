@@ -136,6 +136,69 @@ export default {
   },
 
   methods: {
+    navigateFocus(e) {
+      if (e.target.classList.contains('q-input__inner')) {
+        const firstNode = this.$el.querySelector(`.q-option`);
+        if (firstNode) {
+          this.$nextTick(() => {
+            firstNode.focus();
+          });
+        }
+      }
+
+      // if (!e.target.classList.contains('q-option')) return;
+      // const nodeText = e.target.innerText;
+      // let nodeIndex;
+      // let currentNodePosition;
+      // this.menus.forEach((menu, menuIndex) => {
+      //   nodeIndex = menu.findIndex(node => node.label === nodeText);
+      //   if (nodeIndex > -1) {
+      //     currentNodePosition = [menuIndex, nodeIndex];
+      //   }
+      // });
+
+      // let nextNodePosition;
+
+      // switch (e.key) {
+      //   case 'ArrowRight':
+      //     nextNodePosition = [
+      //       currentNodePosition[0] + 1,
+      //       currentNodePosition[1]
+      //     ];
+      //     break;
+      //   case 'ArrowLeft':
+      //     nextNodePosition = [
+      //       currentNodePosition[0] === 0 ? 0 : currentNodePosition[0] - 1,
+      //       currentNodePosition[1]
+      //     ];
+
+      //     break;
+
+      //   case 'ArrowUp':
+      //     nextNodePosition = [
+      //       currentNodePosition[0],
+      //       currentNodePosition[1] === 0 ? 0 : currentNodePosition[1] - 1
+      //     ];
+      //     break;
+
+      //   case 'ArrowDown':
+      //     nextNodePosition = [
+      //       currentNodePosition[0],
+      //       currentNodePosition[1] + 1
+      //     ];
+      //     break;
+      //   default:
+      //     break;
+      // }
+
+      // const node = this.$el.querySelector(
+      //   `#${this.cascader.id}-node-${nextNodePosition[0]}-${nextNodePosition[1]}`
+      // );
+
+      // if (node) {
+      //   node.focus();
+      // }
+    },
     handleSelectAllClick() {
       if (this.areAllSelected) {
         const keysToRemove = this.options

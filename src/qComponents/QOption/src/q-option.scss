@@ -34,8 +34,11 @@
   }
 
   &:focus {
-    background-color: var(--option-background-color-hover);
     outline: none;
+  }
+
+  &:focus-visible {
+    background-color: var(--option-background-color-hover);
   }
 
   &_all ~ .q-option {

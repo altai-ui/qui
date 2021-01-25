@@ -1,12 +1,13 @@
 <template>
   <div
-    id=""
+    :id="id"
+    ref="reference"
     v-click-outside="handleOutsideClick"
     class="q-select"
     @click="toggleMenu"
   >
     <q-input
-      ref="reference"
+      ref="input"
       v-model="selectedLabel"
       type="text"
       class="q-select__input"
@@ -50,7 +51,7 @@
       :filterable="filterable"
       :is-disabled="isDisabled"
       :query.sync="query"
-      @keydown-enter="handleEnterKeydown"
+      @keydown-enter="handleEnterKeyUp"
       @focus="handleFocus"
       @remove-tag="deleteTag"
       @exit="visible = false"
@@ -92,7 +93,7 @@ import { createPopper } from '@popperjs/core';
 
 import QSelectDropdown from './QSelectDropdown';
 import QSelectTags from './QSelectTags';
-import { addResizeListener, removeResizeListener } from '../../helpers';
+import { addResizeListener, removeResizeListener, randId } from '../../helpers';
 import Emitter from '../../mixins/emitter';
 
 export default {
@@ -250,7 +251,8 @@ export default {
       inputHovering: false,
       menuVisibleOnFocus: false,
       popper: null,
-      isDropdownShown: false
+      isDropdownShown: false,
+      id: randId('q-select-')
     };
   },
 
@@ -439,9 +441,20 @@ export default {
   },
 
   methods: {
+    togglePopper() {
+      if (this.popper) {
+        this.hidePopper();
+      } else {
+        this.showPopper();
+      }
+    },
+
     handleKeyUp(e) {
-      if (!this.focus) return;
-      if (e.target.classList.contains('q-input__inner') && e.key === 'Enter') {
+      if (!this.focusDropdown) return;
+      if (
+        this.$refs.input.$el.querySelector('input') === e.target &&
+        e.key === 'Enter'
+      ) {
         this.togglePopper();
       }
       switch (e.key) {
@@ -457,7 +470,7 @@ export default {
         case 'Tab': {
           if (!this.$refs.reference.contains(document.activeElement)) {
             this.hidePopper();
-            this.focus = false;
+            this.focusDropdown = false;
           }
           break;
         }
@@ -465,7 +478,7 @@ export default {
         case 'ArrowUp':
         case 'ArrowLeft':
         case 'ArrowDown': {
-          this.$refs.panel.navigateFocus(e);
+          this.$refs.dropdown.navigateFocus(e);
           break;
         }
         default:
@@ -486,13 +499,13 @@ export default {
     },
 
     createPopper() {
-      const { reference, dropdown } = this.$refs;
+      const { input, dropdown } = this.$refs;
 
       if (this.appendToBody) {
         document.body.appendChild(dropdown.$el);
       }
 
-      this.popper = createPopper(reference.$el, dropdown.$el, {
+      this.popper = createPopper(input.$el, dropdown.$el, {
         modifiers: [
           {
             name: 'offset',
@@ -594,7 +607,7 @@ export default {
 
     blur() {
       this.visible = false;
-      this.$refs.reference.blur();
+      this.$refs.input.blur();
     },
 
     handleBlur(event) {
@@ -657,7 +670,7 @@ export default {
       }
 
       if (this.visible) {
-        (this.$refs.tags?.$refs.input ?? this.$refs.reference).focus();
+        (this.$refs.tags?.$refs.input ?? this.$refs.input).focus();
       }
     },
 
