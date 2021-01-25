@@ -177,10 +177,16 @@ export default {
       type: Object,
       default: () => ({})
     },
+    /**
+     * class list of the QMessageBox
+     */
     wrapClass: {
       type: [String, Object, Array],
       default: null
     },
+    /**
+     * style list of the QMessageBox
+     */
     wrapStyle: {
       type: [String, Object, Array],
       default: null
