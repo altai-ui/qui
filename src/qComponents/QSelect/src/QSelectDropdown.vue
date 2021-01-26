@@ -19,7 +19,7 @@
       >
         <q-checkbox
           root-tag="div"
-          tabindex="-1"
+          input-tab-index="-1"
           :value="areAllSelected"
           :indeterminate="isIndeterminate"
         />
@@ -137,7 +137,10 @@ export default {
 
   methods: {
     navigateDropdown(e) {
-      if (e.target.classList.contains('q-input__inner')) {
+      if (
+        ['ArrowDown', 'ArrowUp'].includes(e.key) &&
+        e.target instanceof HTMLInputElement
+      ) {
         const firstNode = this.$el.querySelector(`.q-option`);
         if (firstNode) {
           firstNode.focus();
@@ -145,10 +148,13 @@ export default {
       }
 
       if (!e.target.classList.contains('q-option')) return;
-      const elements = this.options.map(option => option.$el);
+      const availableOptions = this.options.filter(
+        ({ isDisabled, isVisible }) => !isDisabled && isVisible
+      );
+      const availableElements = availableOptions.map(option => option.$el);
       let currentNodeIndex;
       let nextNodeIndex;
-      elements.forEach((element, index) => {
+      availableElements.forEach((element, index) => {
         if (document.activeElement === element) {
           currentNodeIndex = index;
         }
@@ -160,15 +166,26 @@ export default {
           nextNodeIndex = currentNodeIndex - 1;
           break;
 
+        case 'Tab':
+          this.qSelect.visible = false;
+          break;
+
         case 'ArrowDown':
         case 'ArrowRight':
           nextNodeIndex = currentNodeIndex + 1;
           break;
+
+        case 'Enter': {
+          this.qSelect.toggleOptionSelection(
+            availableOptions[currentNodeIndex]
+          );
+          break;
+        }
         default:
           break;
       }
 
-      const node = elements[nextNodeIndex];
+      const node = availableElements[nextNodeIndex];
 
       if (node) {
         node.focus();

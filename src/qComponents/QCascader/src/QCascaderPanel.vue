@@ -67,7 +67,10 @@ export default {
 
   methods: {
     navigateFocus(e) {
-      if (e.target.classList.contains('q-input__inner')) {
+      if (
+        ['ArrowDown', 'ArrowUp'].includes(e.key) &&
+        e.target instanceof HTMLInputElement
+      ) {
         const firstNode = this.$el.querySelector(
           `#${this.cascader.id}-node-0-0`
         );

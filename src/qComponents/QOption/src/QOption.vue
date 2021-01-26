@@ -7,13 +7,14 @@
       'q-option_disabled': isDisabled,
       'q-option_with-checkbox': qSelect.multiple
     }"
-    tabindex="-1"
+    :tabindex="isDisabled ? null : '-1'"
     @mouseenter="handleMouseEnter"
     @click.stop="handleOptionClick"
   >
     <q-checkbox
       v-if="qSelect.multiple"
       root-tag="div"
+      input-tab-index="-1"
       :value="isSelected"
       :disabled="isDisabled"
     />

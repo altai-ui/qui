@@ -1,6 +1,5 @@
 <template>
   <div
-    :id="id"
     ref="reference"
     v-click-outside="handleOutsideClick"
     class="q-select"
@@ -24,6 +23,7 @@
       @keyup.native.enter.prevent="handleEnterKeyUp"
       @keyup.native.esc.stop.prevent="visible = false"
       @keyup.native.tab="visible = false"
+      @keyup.native.backspace="handleClear"
       @paste.native="onInputChange"
       @mouseenter.native="inputHovering = true"
       @mouseleave.native="inputHovering = false"
@@ -37,7 +37,7 @@
         <span
           v-if="isClearBtnShown"
           class="q-select__caret q-input__icon q-icon-close"
-          @click.stop="handleClearClick"
+          @click.stop="handleClear"
         />
       </template>
     </q-input>
@@ -51,7 +51,7 @@
       :filterable="filterable"
       :is-disabled="isDisabled"
       :query.sync="query"
-      @keyup.enter="handleEnterKeyUp"
+      @keyup-enter="handleEnterKeyUp"
       @focus="handleFocus"
       @remove-tag="deleteTag"
       @exit="visible = false"
@@ -93,7 +93,7 @@ import { createPopper } from '@popperjs/core';
 
 import QSelectDropdown from './QSelectDropdown';
 import QSelectTags from './QSelectTags';
-import { addResizeListener, removeResizeListener, randId } from '../../helpers';
+import { addResizeListener, removeResizeListener } from '../../helpers';
 import Emitter from '../../mixins/emitter';
 
 export default {
@@ -251,8 +251,7 @@ export default {
       inputHovering: false,
       menuVisibleOnFocus: false,
       popper: null,
-      isDropdownShown: false,
-      id: randId('q-select-')
+      isDropdownShown: false
     };
   },
 
@@ -416,7 +415,6 @@ export default {
     if (this.multiple) {
       if (!Array.isArray(this.value)) this.$emit('input', []);
     } else if (Array.isArray(this.value)) this.$emit('input', '');
-    // this.id = randId('q-select-');
   },
 
   mounted() {
@@ -450,7 +448,7 @@ export default {
     },
 
     handleKeyUp(e) {
-      if (!this.focusDropdown) return;
+      if (!this.isDropdownShown) return;
       if (
         this.$refs.input.$el.querySelector('input') === e.target &&
         e.key === 'Enter'
@@ -460,19 +458,12 @@ export default {
 
       switch (e.key) {
         case 'Escape': {
-          this.$refs.input.blur();
-          this.hidePopper();
-          break;
-        }
-
-        case 'Backspace': {
-          this.deleteTag();
+          this.visible = false;
           break;
         }
         case 'Tab': {
           if (!this.$refs.reference.contains(document.activeElement)) {
             this.hidePopper();
-            this.focusDropdown = false;
           }
           break;
         }
@@ -619,7 +610,7 @@ export default {
       }, 50);
     },
 
-    handleClearClick() {
+    handleClear() {
       const value = this.multiple ? [] : null;
       this.emitValueUpdate(value);
 
@@ -680,11 +671,8 @@ export default {
     handleEnterKeyUp() {
       if (!this.visible) {
         this.toggleMenu();
-        this.focusDropdown = true;
         return;
       }
-
-      this.focusDropdown = false;
 
       let option = null;
       if (this.isNewOptionShown) {
