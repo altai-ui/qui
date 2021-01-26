@@ -21,7 +21,7 @@
   &.q-select-tags_collapse-tags {
     flex-wrap: nowrap;
 
-    .q-tag:last-of-type {
+    .q-tag + .q-tag {
       flex-shrink: 0;
     }
   }
