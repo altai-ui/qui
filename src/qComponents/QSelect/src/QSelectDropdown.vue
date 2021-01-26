@@ -142,9 +142,7 @@ export default {
         e.target instanceof HTMLInputElement
       ) {
         const firstNode = this.$el.querySelector(`.q-option`);
-        if (firstNode) {
-          firstNode.focus();
-        }
+        firstNode?.focus();
       }
 
       if (!e.target.classList.contains('q-option')) return;
@@ -187,9 +185,7 @@ export default {
 
       const node = availableElements[nextNodeIndex];
 
-      if (node) {
-        node.focus();
-      }
+      node?.focus();
     },
     handleSelectAllClick() {
       if (this.areAllSelected) {

@@ -23,7 +23,7 @@
       @keyup.native.enter.prevent="handleEnterKeyUp"
       @keyup.native.esc.stop.prevent="visible = false"
       @keyup.native.tab="visible = false"
-      @keyup.native.backspace="handleClear"
+      @keyup.native.backspace="clearSelected"
       @paste.native="onInputChange"
       @mouseenter.native="inputHovering = true"
       @mouseleave.native="inputHovering = false"
@@ -37,7 +37,7 @@
         <span
           v-if="isClearBtnShown"
           class="q-select__caret q-input__icon q-icon-close"
-          @click.stop="handleClear"
+          @click.stop="clearSelected"
         />
       </template>
     </q-input>
@@ -419,7 +419,6 @@ export default {
 
   mounted() {
     addResizeListener(this.$el, this.handleResize);
-    document.addEventListener('keyup', this.handleKeyUp, true);
 
     this.$nextTick(() => {
       this.inputWidth = this.$el.getBoundingClientRect().width;
@@ -430,12 +429,13 @@ export default {
 
   beforeDestroy() {
     if (this.$el) removeResizeListener(this.$el, this.handleResize);
-    document.removeEventListener('keyup', this.handleKeyUp, true);
 
     const dropdown = this.$refs.dropdown?.$el;
     if (dropdown?.parentNode === document.body) {
       document.body.removeChild(dropdown);
     }
+
+    document.removeEventListener('keyup', this.handleKeyUp, true);
   },
 
   methods: {
@@ -448,7 +448,6 @@ export default {
     },
 
     handleKeyUp(e) {
-      if (!this.isDropdownShown) return;
       if (
         this.$refs.input.$el.querySelector('input') === e.target &&
         e.key === 'Enter'
@@ -514,6 +513,7 @@ export default {
     showPopper() {
       this.isDropdownShown = true;
       this.createPopper();
+      document.addEventListener('keyup', this.handleKeyUp, true);
     },
 
     hidePopper() {
@@ -524,6 +524,7 @@ export default {
 
       this.popper.destroy();
       this.popper = null;
+      document.removeEventListener('keyup', this.handleKeyUp, true);
     },
 
     getKey(value) {
@@ -610,7 +611,7 @@ export default {
       }, 50);
     },
 
-    handleClear() {
+    clearSelected() {
       const value = this.multiple ? [] : null;
       this.emitValueUpdate(value);
 

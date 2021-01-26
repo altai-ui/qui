@@ -1,6 +1,7 @@
 .q-option {
   --option-background-color-base: var(--color-tertiary-gray-light);
   --option-background-color-hover: var(--color-tertiary-gray);
+  --option-background-color-focus: var(--color-tertiary-gray);
   --option-background-color-selected: var(--color-tertiary-gray-ultra-light);
   --option-background-color-disabled: var(--color-tertiary-gray-light);
 
@@ -37,8 +38,8 @@
     outline: none;
   }
 
-  &:focus-visible {
-    background-color: var(--option-background-color-hover);
+  &.focus-visible {
+    background-color: var(--option-background-color-focus);
   }
 
   &_all ~ .q-option {

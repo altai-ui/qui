@@ -41,7 +41,7 @@
       :autocomplete="autocomplete"
       @focus="$emit('focus')"
       @keyup.esc.stop.prevent="emitExit"
-      @keydown.enter.prevent="$emit('keyup-enter')"
+      @keyup.enter.prevent="$emit('keyup-enter')"
       @keydown.backspace.capture="handleBackspaceKeyDown"
       @input="handleInput"
     />
