@@ -463,7 +463,7 @@ export default {
         }
         case 'Tab': {
           if (!this.$refs.reference.contains(document.activeElement)) {
-            this.hidePopper();
+            this.visible = false;
           }
           break;
         }
