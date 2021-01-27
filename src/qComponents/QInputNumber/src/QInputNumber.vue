@@ -15,6 +15,7 @@
       :value="currentValue"
       class="q-input-number__input"
       :disabled="isDisabled"
+      :placeholder="placeholder"
       @blur="handleBlur"
       @focus="handleFocus"
       @input="handleChangeInput($event, 'input')"
@@ -87,6 +88,10 @@ export default {
     controls: {
       type: Boolean,
       default: true
+    },
+    placeholder: {
+      type: String,
+      default: null
     },
     value: {
       type: [Number, String],

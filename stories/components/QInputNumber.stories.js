@@ -16,7 +16,7 @@ export const Default = (_, { argTypes }) => ({
   props: Object.keys(argTypes).filter(val => val !== 'value'),
   data() {
     return {
-      value: '2'
+      value: 2
     };
   },
   methods: {
@@ -35,4 +35,3 @@ export const Default = (_, { argTypes }) => ({
 });
 
 Default.storyName = 'Default';
-Default.args = { value: 17 };
