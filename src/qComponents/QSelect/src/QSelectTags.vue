@@ -66,7 +66,7 @@ export default {
 
   methods: {
     handleBackspaceKeyDown() {
-      if (this.query.length === 0) {
+      if (!this.query) {
         this.$emit('remove-tag', this.selected[this.selected.length - 1]);
       }
     },
