@@ -223,6 +223,38 @@ new Vue({
 }).$mount('#your-app');
 ```
 
+## NuxtJS
+To use this with Nuxt.js you need to create a plugin file and reference it in the nuxt.config.js file.
+```js
+// plugins/qui.js
+import Vue from 'vue'
+import Qui from '@qvant/qui'
+
+Vue.use(Qui)
+```
+
+```js
+// nuxt.config.js
+plugins: [
+    {
+        src: '@/plugins/qui',
+        mode: 'client'
+    }
+]
+```
+
+```scss
+// assets/styles/qui.scss
+$--base-path: '~@qvant/qui/src';
+@import '~@qvant/qui/src/main.scss';
+@import '~@qvant/qui/src/fonts/index.scss';
+@import '~@qvant/qui/src/icons/index.scss';
+@import '~@qvant/qui/src/transition.scss';
+
+@import '~@qvant/qui/src/qComponents/QButton/src/q-button.scss';
+// and other component styles
+```
+
 ## Supported languages
 
 - Russian ✅
