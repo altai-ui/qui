@@ -40,9 +40,9 @@
       class="q-select-tags__input"
       :autocomplete="autocomplete"
       @focus="$emit('focus')"
-      @keydown.enter.prevent="$emit('keydown-enter')"
-      @keydown.esc.stop.prevent="emitExit"
-      @keydown.tab="emitExit"
+      @keyup.esc.stop.prevent="emitExit"
+      @keyup.enter.prevent="$emit('keyup-enter')"
+      @keydown.backspace.capture="handleBackspaceKeyDown"
       @input="handleInput"
     />
   </div>
@@ -65,6 +65,12 @@ export default {
   },
 
   methods: {
+    handleBackspaceKeyDown() {
+      if (!this.query) {
+        this.$emit('remove-tag', this.selected[this.selected.length - 1]);
+      }
+    },
+
     handleTagClose(option) {
       this.$emit('remove-tag', option);
     },

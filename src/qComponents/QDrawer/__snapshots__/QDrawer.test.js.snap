@@ -17,7 +17,8 @@ exports[`QDrawer should match snapshot 1`] = `
     style="z-index: 2001;"
   >
     <div
-      class="q-drawer-wrapper q-drawer-wrapper_right"
+      class="q-drawer-wrapper q-drawer-wrapper_right focus-visible"
+      data-focus-visible-added=""
       tabindex="-1"
     >
       <div

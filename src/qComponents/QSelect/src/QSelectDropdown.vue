@@ -13,11 +13,13 @@
     >
       <div
         v-if="selectAllShown && isVisibleOptionExist && multiple"
+        tabindex="-1"
         class="q-option q-option_with-checkbox q-option_all"
         @click.stop="handleSelectAllClick"
       >
         <q-checkbox
           root-tag="div"
+          input-tab-index="-1"
           :value="areAllSelected"
           :indeterminate="isIndeterminate"
         />
@@ -134,6 +136,57 @@ export default {
   },
 
   methods: {
+    navigateDropdown(e) {
+      if (
+        ['ArrowDown', 'ArrowUp'].includes(e.key) &&
+        e.target instanceof HTMLInputElement
+      ) {
+        const firstNode = this.$el.querySelector(`.q-option`);
+        firstNode?.focus();
+      }
+
+      if (!e.target.classList.contains('q-option')) return;
+      const availableOptions = this.options.filter(
+        ({ isDisabled, isVisible }) => !isDisabled && isVisible
+      );
+      const availableElements = availableOptions.map(option => option.$el);
+      let currentNodeIndex;
+      let nextNodeIndex;
+      availableElements.forEach((element, index) => {
+        if (document.activeElement === element) {
+          currentNodeIndex = index;
+        }
+      });
+
+      switch (e.key) {
+        case 'ArrowUp':
+        case 'ArrowLeft':
+          nextNodeIndex = currentNodeIndex - 1;
+          break;
+
+        case 'Tab':
+          this.qSelect.visible = false;
+          break;
+
+        case 'ArrowDown':
+        case 'ArrowRight':
+          nextNodeIndex = currentNodeIndex + 1;
+          break;
+
+        case 'Enter': {
+          this.qSelect.toggleOptionSelection(
+            availableOptions[currentNodeIndex]
+          );
+          break;
+        }
+        default:
+          break;
+      }
+
+      const node = availableElements[nextNodeIndex];
+
+      node?.focus();
+    },
     handleSelectAllClick() {
       if (this.areAllSelected) {
         const keysToRemove = this.options

@@ -1,6 +1,7 @@
 .q-option {
   --option-background-color-base: var(--color-tertiary-gray-light);
   --option-background-color-hover: var(--color-tertiary-gray);
+  --option-background-color-focus: var(--color-tertiary-gray);
   --option-background-color-selected: var(--color-tertiary-gray-ultra-light);
   --option-background-color-disabled: var(--color-tertiary-gray-light);
 
@@ -15,6 +16,7 @@
   height: 40px;
   padding: 8px 16px;
   background-color: var(--option-background-color-base);
+  outline: none;
   box-shadow: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
     1px 1px 3px rgba(var(--color-rgb-blue), 0.4);
   cursor: pointer;
@@ -30,6 +32,14 @@
 
   &:hover:not(.q-option_disabled) {
     background-color: var(--option-background-color-hover);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &.focus-visible {
+    background-color: var(--option-background-color-focus);
   }
 
   &_all ~ .q-option {
