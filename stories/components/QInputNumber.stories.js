@@ -16,10 +16,22 @@ export const Default = (_, { argTypes }) => ({
   props: Object.keys(argTypes).filter(val => val !== 'value'),
   data() {
     return {
-      value: ''
+      value: '2'
     };
   },
-  template: '<q-input-number v-bind="$props" v-model="value" />'
+  methods: {
+    handleEmit($event, type) {
+      console.log($event, type);
+    }
+  },
+  template: `
+    <q-input-number 
+      v-bind="$props" 
+      v-model="value"
+      @input="handleEmit($event, 'input')"
+      @change="handleEmit($event, 'change')"
+    />
+  `
 });
 
 Default.storyName = 'Default';

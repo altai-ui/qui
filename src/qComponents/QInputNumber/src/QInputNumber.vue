@@ -17,8 +17,8 @@
       :disabled="isDisabled"
       @blur="handleBlur"
       @focus="handleFocus"
-      @input="handleInput"
-      @change="handleChange"
+      @input="handleChangeInput($event, 'input')"
+      @change="handleChangeInput($event, 'change')"
     />
 
     <button
@@ -102,7 +102,8 @@ export default {
   data() {
     return {
       number: null,
-      userNumber: null
+      userNumber: null,
+      prevNumber: null
     };
   },
 
@@ -150,14 +151,18 @@ export default {
       const updatedNumber = Math.round((this.number + this.step) * 100) / 100;
 
       if (updatedNumber > this.max) return;
-      this.changesEmmiter(updatedNumber);
+
+      this.userNumber = updatedNumber;
+      this.changesEmmiter(updatedNumber, 'change');
     },
 
     handleDecreaseClick() {
       const updatedNumber = Math.round((this.number - this.step) * 100) / 100;
 
       if (updatedNumber < this.min) return;
-      this.changesEmmiter(updatedNumber);
+
+      this.userNumber = updatedNumber;
+      this.changesEmmiter(updatedNumber, 'change');
     },
 
     handleBlur(event) {
@@ -168,32 +173,54 @@ export default {
       this.$emit('focus', event);
     },
 
-    handleInput(value) {
-      this.userNumber = value;
+    handleChangeInput(value, type) {
+      switch (value) {
+        case '-':
+          this.userNumber = type === 'change' ? this.prevNumber : value;
+          break;
+        case '':
+          this.userNumber = value;
+          this.changesEmmiter(null, type);
+          break;
+        default:
+          this.processUserValue(value, type);
+          break;
+      }
     },
 
-    handleChange(value) {
+    processUserValue(value, type) {
       const userValue = Number(value);
-
       this.userNumber = null;
 
-      if (
-        !value.length ||
-        Number.isNaN(userValue) ||
-        value > this.max ||
-        value < this.min
-      ) {
+      if (Number.isNaN(userValue) || value > this.max || value < this.min) {
         return;
       }
 
-      this.changesEmmiter(userValue);
+      this.prevNumber = userValue;
+
+      if (type === 'change') {
+        this.changesEmmiter(userValue);
+        return;
+      }
+
+      this.$emit('input', Number(userValue.toFixed(this.precision)));
     },
 
-    changesEmmiter(value) {
-      this.number = Number(value.toFixed(this.precision));
+    changesEmmiter(value, type) {
+      let passedData = null;
 
-      this.$emit('input', this.number);
-      this.$emit('change', this.number);
+      if (value && value !== null) {
+        this.number = Number(value.toFixed(this.precision));
+        passedData = this.number;
+      }
+
+      if (type === 'change') {
+        this.$emit('input', passedData);
+        this.$emit('change', passedData);
+        return;
+      }
+
+      this.$emit('input', passedData);
     }
   }
 };
