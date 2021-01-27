@@ -16,6 +16,8 @@
       class="q-input-number__input"
       :disabled="isDisabled"
       :placeholder="placeholder"
+      :validate-event="false"
+      type="number"
       @blur="handleBlur"
       @focus="handleFocus"
       @input="handleChangeInput($event, 'input')"
@@ -101,6 +103,10 @@ export default {
 
         return false;
       }
+    },
+    validateEvent: {
+      type: Boolean,
+      default: true
     }
   },
 
@@ -172,6 +178,7 @@ export default {
 
     handleBlur(event) {
       this.$emit('blur', event);
+      if (this.validateEvent) this.qFormItem?.validateField('blur');
     },
 
     handleFocus(event) {
@@ -179,18 +186,13 @@ export default {
     },
 
     handleChangeInput(value, type) {
-      switch (value) {
-        case '-':
-          this.userNumber = type === 'change' ? this.prevNumber : value;
-          break;
-        case '':
-          this.userNumber = value;
-          this.changesEmmiter(null, type);
-          break;
-        default:
-          this.processUserValue(value, type);
-          break;
+      if (!value) {
+        this.userNumber = value;
+        this.changesEmmiter(null, type);
+        return;
       }
+
+      this.processUserValue(value, type);
     },
 
     processUserValue(value, type) {
@@ -204,7 +206,7 @@ export default {
       this.prevNumber = userValue;
 
       if (type === 'change') {
-        this.changesEmmiter(userValue);
+        this.changesEmmiter(userValue, type);
         return;
       }
 
@@ -219,9 +221,12 @@ export default {
         passedData = this.number;
       }
 
+      this.prevNumber = passedData;
+
       if (type === 'change') {
         this.$emit('input', passedData);
         this.$emit('change', passedData);
+        if (this.validateEvent) this.qFormItem?.validateField('change');
         return;
       }
 

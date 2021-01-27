@@ -20,8 +20,8 @@ export const Default = (_, { argTypes }) => ({
     };
   },
   methods: {
-    handleEmit($event, type) {
-      console.log($event, type);
+    handleEmit(value, type) {
+      console.log(value, type);
     }
   },
   template: `

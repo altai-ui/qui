@@ -22,8 +22,7 @@ exports[`QInputNumber should match snapshot 1`] = `
     label=""
     suffixicon=""
     tabindex=""
-    type="text"
-    validateevent="true"
+    type="number"
     value=""
   />
    
@@ -45,8 +44,7 @@ exports[`QInputNumber should match snapshot without controls 1`] = `
     label=""
     suffixicon=""
     tabindex=""
-    type="text"
-    validateevent="true"
+    type="number"
     value=""
   />
    

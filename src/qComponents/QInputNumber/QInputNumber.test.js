@@ -1,13 +1,13 @@
-import Component from './src/QInputNumber.vue';
+import Component from './src/QInputNumber';
 
 describe('QInputNumber', () => {
-  it('should match snapshot', async () => {
+  it('should match snapshot', () => {
     const { element } = shallowMount(Component);
 
     expect(element).toMatchSnapshot();
   });
 
-  it('should match snapshot without controls', async () => {
+  it('should match snapshot without controls', () => {
     const { element } = shallowMount(Component, {
       propsData: {
         controls: false
