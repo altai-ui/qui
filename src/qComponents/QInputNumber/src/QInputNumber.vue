@@ -220,7 +220,7 @@ export default {
     changesEmmiter(value, type) {
       let passedData = null;
 
-      if (value && value !== null) {
+      if (value) {
         this.number = Number(value.toFixed(this.precision));
         passedData = this.number;
       }
