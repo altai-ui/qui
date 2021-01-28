@@ -42,6 +42,9 @@ export default {
   inject: {
     qForm: {
       default: null
+    },
+    qFormItem: {
+      default: null
     }
   },
 
@@ -211,6 +214,7 @@ export default {
       }
 
       this.$emit('input', Number(userValue.toFixed(this.precision)));
+      if (this.validateEvent) this.qFormItem?.validateField('input');
     },
 
     changesEmmiter(value, type) {
@@ -231,6 +235,7 @@ export default {
       }
 
       this.$emit('input', passedData);
+      if (this.validateEvent) this.qFormItem?.validateField('input');
     }
   }
 };
