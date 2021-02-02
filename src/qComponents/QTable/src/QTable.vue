@@ -84,7 +84,7 @@
                     v-for="(column, index) in group.columns"
                     :key="`group${groupIndex}${index}`"
                     :class="getCellClasses(column, group)"
-                    :style="getHeaderCellStyle(group)"
+                    :style="getHeaderCellStyle(group, column)"
                     class="q-table__header-cell"
                   >
                     <div class="q-table__header-cell-wrapper">
@@ -109,16 +109,16 @@
                         <template v-else>
                           {{ column.value }}
                         </template>
-
-                        <span
-                          v-if="column.sortable"
-                          class="q-table__sort-arrow"
-                          :class="{
-                            'q-icon-arrow-up': sort.direction !== 'descending',
-                            'q-icon-arrow-down': sort.direction === 'descending'
-                          }"
-                        />
                       </div>
+
+                      <span
+                        v-if="column.sortable"
+                        class="q-table__sort-arrow"
+                        :class="{
+                          'q-icon-arrow-up': sort.direction !== 'descending',
+                          'q-icon-arrow-down': sort.direction === 'descending'
+                        }"
+                      />
 
                       <template v-if="group.draggable">
                         <div
@@ -317,6 +317,7 @@ export default {
      *  `sortable`,
      *  `slots`,
      *  `width` (works with `fixedLayout: true`),
+     *  `minWidth` (works with `fixedLayout: false`),
      *  `customCellClass`,
      *  `formatter` (fn),
      *  `slots`
@@ -813,10 +814,14 @@ export default {
       this.scrolled = target.scrollLeft;
     },
 
-    getHeaderCellStyle(group) {
-      if (!this.isSeparated || !group) return {};
+    getHeaderCellStyle(group, column) {
+      const style = {};
+
+      if (column?.minWidth) style.minWidth = column.minWidth;
+      if (!this.isSeparated || !group) return style;
 
       return {
+        ...style,
         borderColor: group.color ?? ''
       };
     },

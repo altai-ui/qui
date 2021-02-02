@@ -53,9 +53,10 @@ exports[`QTable QTable should match snapshot 1`] = `
                   >
                     
                         Column 1
-                       
-                    <!---->
+                      
                   </div>
+                   
+                  <!---->
                    
                   <!---->
                 </div>

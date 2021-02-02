@@ -57,13 +57,13 @@ export default {
           },
           {
             key: 'col3',
-            value: 'Column 3',
-            sortable: true
+            value: 'Column 3'
           },
           {
             key: 'col4',
             value: 'Column 4',
             sortable: true,
+            minWidth: '300px',
             slots: {
               header: 'customHeader',
               row: 'customRow'
@@ -71,7 +71,7 @@ export default {
           },
           {
             key: 'col5',
-            value: 'Column 5'
+            value: 'Column with very long title'
           },
           {
             key: 'col6',
