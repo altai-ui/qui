@@ -90,6 +90,7 @@
                     <div class="q-table__header-cell-wrapper">
                       <div
                         class="q-table__header-cell-content"
+                        :title="getHeaderTitle(column)"
                         @click="handleHeaderClick(column)"
                       >
                         <slot
@@ -319,8 +320,7 @@ export default {
      *  `width` (works with `fixedLayout: true`),
      *  `minWidth` (works with `fixedLayout: false`),
      *  `customCellClass`,
-     *  `formatter` (fn),
-     *  `slots`
+     *  `formatter` (fn)
      */
     groupsOfColumns: {
       type: Array,
@@ -621,6 +621,10 @@ export default {
   },
 
   methods: {
+    getHeaderTitle({ value, slots }) {
+      return slots ? '' : value;
+    },
+
     changeWrapperHeight() {
       if (this.isLoading || !this.isLoadingAnimationComplete) return;
 
