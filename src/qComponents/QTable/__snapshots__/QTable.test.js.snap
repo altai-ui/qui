@@ -50,6 +50,7 @@ exports[`QTable QTable should match snapshot 1`] = `
                 >
                   <div
                     class="q-table__header-cell-content"
+                    title="Column 1"
                   >
                     
                         Column 1
