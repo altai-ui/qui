@@ -12,6 +12,7 @@
       tabindex="-1"
       @keyup.esc="closeBox"
     >
+      <div class="q-message-box__shadow" />
       <q-scrollbar
         theme="secondary"
         class="q-message-box__scrollbar"
@@ -19,8 +20,9 @@
         visible
       >
         <div
-          class="q-message-box__shadow"
-          @click="handleShadowClick"
+          v-if="closeOnClickShadow"
+          class="q-message-box__clickable-shadow"
+          @click="emitCloseEvent"
         />
 
         <div class="q-message-box__container">
@@ -30,7 +32,7 @@
 
           <button
             class="q-message-box__close q-icon-close"
-            @click="handleCloseBtnClick"
+            @click="emitCloseEvent"
           />
 
           <message-box-content
@@ -272,15 +274,7 @@ export default {
       this.closeBox({ action: 'cancel' });
     },
 
-    handleCloseBtnClick() {
-      this.closeBox({
-        action: this.distinguishCancelAndClose ? 'close' : 'cancel'
-      });
-    },
-
-    handleShadowClick() {
-      if (!this.closeOnClickShadow) return;
-
+    emitCloseEvent() {
       this.closeBox({
         action: this.distinguishCancelAndClose ? 'close' : 'cancel'
       });
