@@ -191,12 +191,16 @@
 
     &-content {
       display: flex;
+      white-space: nowrap;
 
-      display: -webkit-box;
-      align-items: center;
-      overflow: hidden;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+      &__original {
+        display: -webkit-box;
+        align-items: center;
+        overflow: hidden;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        white-space: initial;
+      }
     }
 
     .q-context-wrapper {

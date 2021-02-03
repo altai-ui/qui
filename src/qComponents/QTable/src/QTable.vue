@@ -90,6 +90,7 @@
                     <div class="q-table__header-cell-wrapper">
                       <div
                         class="q-table__header-cell-content"
+                        :class="getHeaderContentClass(column)"
                         :title="getHeaderTitle(column)"
                         @click="handleHeaderClick(column)"
                       >
@@ -621,8 +622,14 @@ export default {
   },
 
   methods: {
+    getHeaderContentClass({ slots }) {
+      return slots || this.$scopedSlots.header
+        ? null
+        : 'q-table__header-cell-content__original';
+    },
+
     getHeaderTitle({ value, slots }) {
-      return slots ? '' : value;
+      return slots || this.$scopedSlots.header ? null : value;
     },
 
     changeWrapperHeight() {

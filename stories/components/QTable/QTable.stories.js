@@ -63,7 +63,6 @@ export default {
             key: 'col4',
             value: 'Column 4',
             sortable: true,
-            minWidth: '300px',
             slots: {
               header: 'customHeader',
               row: 'customRow'
