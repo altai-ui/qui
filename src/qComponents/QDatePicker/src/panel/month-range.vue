@@ -21,7 +21,8 @@
           </button>
         </div>
         <div
-          class="q-picker-panel__content q-picker-panel__content_no-right-borders"
+          ref="leftPanel"
+          :class="leftPanelClasses"
         >
           <div class="q-picker-panel__header">
             <button
@@ -51,7 +52,8 @@
           />
         </div>
         <div
-          class="q-picker-panel__content q-picker-panel__content_no-left-borders"
+          ref="rightPanel"
+          :class="rightPanelClasses"
         >
           <div class="q-picker-panel__header">
             <button
@@ -89,10 +91,11 @@
 import { isDate, addYears } from 'date-fns';
 import MonthTable from '../basic/month-table';
 import rangeMixin from './mixin';
+import focusMixin from './focus-mixin';
 
 export default {
   components: { MonthTable },
-  mixins: [rangeMixin],
+  mixins: [rangeMixin, focusMixin],
   props: {
     value: {
       type: Array,
@@ -113,11 +116,28 @@ export default {
         endDate: null,
         selecting: false
       },
-      shortcuts: ''
+      shortcuts: '',
+      panelInFocus: null,
+      isRanged: true,
+      currentView: 'monthrange'
     };
   },
 
   computed: {
+    leftPanelClasses() {
+      return {
+        'q-picker-panel__content': true,
+        'q-picker-panel__content_no-right-borders': true,
+        'q-picker-panel__content_focused': this.panelInFocus === 'left'
+      };
+    },
+    rightPanelClasses() {
+      return {
+        'q-picker-panel__content': true,
+        'q-picker-panel__content_no-left-borders': true,
+        'q-picker-panel__content_focused': this.panelInFocus === 'right'
+      };
+    },
     rightYear() {
       if (isDate(this.rightDate) && isDate(this.leftDate)) {
         return this.rightDate.getFullYear() === this.leftDate.getFullYear()

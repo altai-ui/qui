@@ -439,20 +439,12 @@ export default {
   },
 
   methods: {
-    togglePopper() {
-      if (this.popper) {
-        this.hidePopper();
-      } else {
-        this.showPopper();
-      }
-    },
-
     handleKeyUp(e) {
       if (
         this.$refs.input.$el.querySelector('input') === e.target &&
         e.key === 'Enter'
       ) {
-        this.togglePopper();
+        this.toggleMenu();
       }
 
       switch (e.key) {

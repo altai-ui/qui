@@ -18,6 +18,7 @@
           :class="getCellClasses(cell)"
           :disabled="cell.disabled"
           type="button"
+          tabindex="-1"
           @click="handleMonthTableClick(cell)"
         >
           {{ getMonthName(cell.text) }}
@@ -161,7 +162,7 @@ export default {
     },
 
     getCellClasses(cell) {
-      const classes = ['cell'];
+      const classes = ['cell', 'cell_month'];
       if (this.value && isSameMonth(this.value, cell.month))
         classes.push('cell_current');
       if (cell.type === 'today') classes.push('cell_today');

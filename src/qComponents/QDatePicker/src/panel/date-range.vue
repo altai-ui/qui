@@ -21,7 +21,10 @@
             </button>
           </div>
         </slot>
-        <div :class="leftPanelClasses">
+        <div
+          ref="leftPanel"
+          :class="leftPanelClasses"
+        >
           <div class="q-picker-panel__header">
             <button
               type="button"
@@ -64,7 +67,10 @@
             @pick="handleRangePick"
           />
         </div>
-        <div :class="rightPanelClasses">
+        <div
+          ref="rightPanel"
+          :class="rightPanelClasses"
+        >
           <div class="q-picker-panel__header">
             <button
               type="button"
@@ -115,8 +121,10 @@
         >
           <div class="q-picker-panel__timepicker">
             <time-panel
+              ref="leftTimePanel"
               class="time-panel time-panel_no-left-borders time-panel_no-right-borders"
               :value="parsedLeftTime"
+              :panel-in-focus="panelInFocus === 'timeLeft'"
               :disabled="isLeftTimeDisabled"
               :disabled-values="disabledValues.time"
               :prefix-to-time="$t('QDatePicker.timeFrom')"
@@ -125,6 +133,8 @@
           </div>
           <div class="q-picker-panel__timepicker">
             <time-panel
+              ref="rightTimePanel"
+              :panel-in-focus="panelInFocus === 'timeRight'"
               :disabled="isLeftTimeDisabled"
               class="time-panel time-panel_no-left-borders"
               :value="parsedRightTime"
@@ -143,15 +153,17 @@
 import { addMonths, isDate, isSameDay, isSameMonth, subMonths } from 'date-fns';
 import DateTable from '../basic/date-table';
 import rangeMixin from './mixin';
+import focusMixin from './focus-mixin';
 import { setTimeToDate } from '../helpers';
 import { addZero } from '../../../helpers/dateHelpers';
 import TimePanel from '../../../QTimePicker/src/components/panel';
 
-const MONTH_COUNT = 12;
+const MONTHS_COUNT = 12;
 
 export default {
+  name: 'QDatePickerPanelDateRange',
   components: { DateTable, TimePanel },
-  mixins: [rangeMixin],
+  mixins: [rangeMixin, focusMixin],
   props: {
     firstDayOfWeek: {
       type: Number,
@@ -192,7 +204,9 @@ export default {
       rangeState: {
         endDate: null,
         selecting: false
-      }
+      },
+      panelInFocus: null,
+      isRanged: true
     };
   },
 
@@ -248,7 +262,8 @@ export default {
       return {
         'q-picker-panel__content': true,
         'q-picker-panel__content_no-left-borders': true,
-        'q-picker-panel__content_no-right-borders': this.showTime
+        'q-picker-panel__content_no-right-borders': this.showTime,
+        'q-picker-panel__content_focused': this.panelInFocus === 'right'
       };
     },
     leftPanelClasses() {
@@ -256,7 +271,8 @@ export default {
         'q-picker-panel__content': true,
         'q-picker-panel__content_no-left-borders':
           this.$slots.sidebar || this.shortcuts.length,
-        'q-picker-panel__content_no-right-borders': true
+        'q-picker-panel__content_no-right-borders': true,
+        'q-picker-panel__content_focused': this.panelInFocus === 'left'
       };
     },
 
@@ -275,10 +291,10 @@ export default {
 
     enableYearArrow() {
       return (
-        this.rightYear * MONTH_COUNT +
+        this.rightYear * MONTHS_COUNT +
           this.rightMonth -
-          (this.leftYear * MONTH_COUNT + this.leftMonth + 1) >=
-        MONTH_COUNT
+          (this.leftYear * MONTHS_COUNT + this.leftMonth + 1) >=
+        MONTHS_COUNT
       );
     }
   },

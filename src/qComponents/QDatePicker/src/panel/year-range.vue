@@ -93,12 +93,13 @@
 import { addYears, getDecade, isDate, subYears } from 'date-fns';
 import YearTable from '../basic/year-table';
 import rangeMixin from './mixin';
+import focusMixin from './focus-mixin';
 
 const YEARS_IN_DECADE = 10;
 
 export default {
   components: { YearTable },
-  mixins: [rangeMixin],
+  mixins: [rangeMixin, focusMixin],
   props: {
     value: {
       type: Array,

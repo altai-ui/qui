@@ -30,6 +30,7 @@
           <button
             :class="getCellClasses(cell)"
             type="button"
+            tabindex="-1"
             @click="handleClick(cell)"
           >
             {{ cell.text }}
@@ -243,7 +244,7 @@ export default {
 
   methods: {
     getCellClasses(cell) {
-      const classes = ['cell'];
+      const classes = ['cell', 'cell_date'];
       if (['today', 'prev-month', 'next-month'].includes(cell.type)) {
         classes.push(`cell_${cell.type}`);
       }

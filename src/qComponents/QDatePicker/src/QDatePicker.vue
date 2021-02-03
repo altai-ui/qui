@@ -1,16 +1,16 @@
 <template>
   <div v-click-outside="handleClose">
     <q-input
-      v-if="!ranged"
+      v-if="!isRanged"
       ref="reference"
-      class="q-date-editor"
+      :class="['q-date-editor', { 'q-input_focus': pickerVisible }]"
       :readonly="!editable"
       :disabled="pickerDisabled"
       :name="name"
       :placeholder="placeholder || $t('QDatePicker.placeholder')"
       :value="displayValue"
       @focus="handleFocus"
-      @keydown.native="handleKeydown"
+      @keyup.native="handleKeyUp"
       @input="handleInput"
       @change="handleChange"
       @mouseenter.native="handleMouseEnter"
@@ -27,10 +27,12 @@
       v-else
       ref="reference"
       :class="rangeClasses"
+      tabindex="0"
       @click="handleRangeClick"
       @mouseenter="handleMouseEnter"
       @mouseleave="showClose = false"
-      @keydown="handleKeydown"
+      @keyup="handleKeyUp"
+      @focus="handleFocus"
     >
       <input
         autocomplete="off"
@@ -40,7 +42,7 @@
         :disabled="pickerDisabled"
         :name="name && name[0]"
         readonly
-        @focus="handleFocus"
+        tabindex="-1"
       />
       <slot name="range-separator">
         <span class="q-range-separator">{{ rangeSeparator }}</span>
@@ -53,7 +55,7 @@
         :name="name && name[1]"
         class="q-range-input"
         readonly
-        @focus="handleFocus"
+        tabindex="-1"
       />
       <span
         :class="iconClass"
@@ -305,7 +307,8 @@ export default {
       return {
         'q-date-editor': true,
         'q-range-editor': true,
-        'q-range-editor_disabled': this.pickerDisabled
+        'q-range-editor_disabled': this.pickerDisabled,
+        'q-range-editor_focused': this.pickerVisible
       };
     },
     iconClass() {
@@ -330,7 +333,7 @@ export default {
       }
     },
 
-    ranged() {
+    isRanged() {
       return this.type.includes('range');
     },
 
@@ -409,6 +412,7 @@ export default {
 
   beforeDestroy() {
     this.destroyPopper();
+    document.removeEventListener('keyup', this.handleKeyUp, true);
   },
 
   methods: {
@@ -447,6 +451,7 @@ export default {
       });
 
       panel.style.zIndex = this.$Q?.zIndex ?? 2000;
+      document.addEventListener('keyup', this.handleKeyUp, true);
     },
 
     destroyPopper() {
@@ -459,10 +464,12 @@ export default {
       if (dropdown?.parentNode === document.body) {
         document.body.removeChild(dropdown);
       }
+
+      document.removeEventListener('keyup', this.handleKeyUp, true);
     },
 
     focus() {
-      if (!this.ranged) {
+      if (!this.isRanged) {
         this.$refs.reference.focus();
       } else {
         this.handleFocus();
@@ -481,6 +488,44 @@ export default {
       if (this.pickerDisabled) return;
       if (!this.isValueEmpty && this.clearable) {
         this.showClose = true;
+      }
+    },
+
+    handleKeyUp(e) {
+      // if user is typing, do not let picker handle key input
+      if (this.userInput) {
+        e.stopPropagation();
+      }
+
+      switch (e.key) {
+        case 'ArrowRight':
+        case 'ArrowUp':
+        case 'ArrowLeft':
+        case 'ArrowDown': {
+          this.$refs.panel.navigateDropdown(e);
+          break;
+        }
+        case 'Escape': {
+          this.pickerVisible = false;
+          e.stopPropagation();
+          break;
+        }
+        case 'Tab': {
+          if (this.$el.contains(document.activeElement)) {
+            this.$refs.panel.navigateDropdown(e);
+            return;
+          }
+
+          if (!this.isRanged) {
+            this.handleChange();
+          }
+
+          this.pickerVisible = false;
+          e.stopPropagation();
+          break;
+        }
+        default:
+          break;
       }
     },
 
@@ -561,38 +606,6 @@ export default {
         format,
         this.$Q.locale
       );
-    },
-
-    handleKeydown(event) {
-      const keyCode = event.keyCode;
-
-      // ESC
-      if (keyCode === 27) {
-        this.pickerVisible = false;
-        event.stopPropagation();
-        return;
-      }
-
-      // Tab
-      if (keyCode === 9) {
-        if (!this.ranged) {
-          this.handleChange();
-          this.pickerVisible = false;
-          event.stopPropagation();
-        } else {
-          // user may change focus between two input
-          setTimeout(() => {
-            this.pickerVisible = false;
-            event.stopPropagation();
-          }, 0);
-        }
-        return;
-      }
-
-      // if user is typing, do not let picker handle key input
-      if (this.userInput) {
-        event.stopPropagation();
-      }
     },
 
     handleRangeClick() {

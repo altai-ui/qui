@@ -19,6 +19,7 @@
           :class="getCellClasses(cell)"
           :disabled="cell.disabled"
           type="button"
+          tabindex="-1"
         >
           {{ cell.year.getFullYear() }}
         </button>
@@ -153,7 +154,7 @@ export default {
     },
 
     getCellClasses(cell) {
-      const style = ['cell'];
+      const style = ['cell', 'cell_year'];
       if (this.selectionMode === 'year') {
         if (
           isDate(this.value) &&
