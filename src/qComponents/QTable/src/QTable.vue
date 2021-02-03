@@ -623,13 +623,13 @@ export default {
 
   methods: {
     getHeaderContentClass({ slots }) {
-      return slots || this.$scopedSlots.header
-        ? null
-        : 'q-table__header-cell-content__original';
+      const hasSlot = Boolean(slots?.header || this.$scopedSlots.header);
+      return hasSlot ? null : 'q-table__header-cell-content_original';
     },
 
     getHeaderTitle({ value, slots }) {
-      return slots || this.$scopedSlots.header ? null : value;
+      const hasSlot = Boolean(slots?.header || this.$scopedSlots.header);
+      return hasSlot ? null : value;
     },
 
     changeWrapperHeight() {
