@@ -57,8 +57,7 @@ export default {
           },
           {
             key: 'col3',
-            value: 'Column 3',
-            sortable: true
+            value: 'Column 3'
           },
           {
             key: 'col4',
@@ -71,7 +70,7 @@ export default {
           },
           {
             key: 'col5',
-            value: 'Column 5'
+            value: 'Column with very long title'
           },
           {
             key: 'col6',

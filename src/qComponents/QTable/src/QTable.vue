@@ -84,12 +84,14 @@
                     v-for="(column, index) in group.columns"
                     :key="`group${groupIndex}${index}`"
                     :class="getCellClasses(column, group)"
-                    :style="getHeaderCellStyle(group)"
+                    :style="getHeaderCellStyle(group, column)"
                     class="q-table__header-cell"
                   >
                     <div class="q-table__header-cell-wrapper">
                       <div
                         class="q-table__header-cell-content"
+                        :class="getHeaderContentClass(column)"
+                        :title="getHeaderTitle(column)"
                         @click="handleHeaderClick(column)"
                       >
                         <slot
@@ -109,16 +111,16 @@
                         <template v-else>
                           {{ column.value }}
                         </template>
-
-                        <span
-                          v-if="column.sortable"
-                          class="q-table__sort-arrow"
-                          :class="{
-                            'q-icon-arrow-up': sort.direction !== 'descending',
-                            'q-icon-arrow-down': sort.direction === 'descending'
-                          }"
-                        />
                       </div>
+
+                      <span
+                        v-if="column.sortable"
+                        class="q-table__sort-arrow"
+                        :class="{
+                          'q-icon-arrow-up': sort.direction !== 'descending',
+                          'q-icon-arrow-down': sort.direction === 'descending'
+                        }"
+                      />
 
                       <template v-if="group.draggable">
                         <div
@@ -317,9 +319,9 @@ export default {
      *  `sortable`,
      *  `slots`,
      *  `width` (works with `fixedLayout: true`),
+     *  `minWidth` (works with `fixedLayout: false`),
      *  `customCellClass`,
-     *  `formatter` (fn),
-     *  `slots`
+     *  `formatter` (fn)
      */
     groupsOfColumns: {
       type: Array,
@@ -620,6 +622,16 @@ export default {
   },
 
   methods: {
+    getHeaderContentClass({ slots }) {
+      const hasSlot = Boolean(slots?.header || this.$scopedSlots.header);
+      return hasSlot ? null : 'q-table__header-cell-content_original';
+    },
+
+    getHeaderTitle({ value, slots }) {
+      const hasSlot = Boolean(slots?.header || this.$scopedSlots.header);
+      return hasSlot ? null : value;
+    },
+
     changeWrapperHeight() {
       if (this.isLoading || !this.isLoadingAnimationComplete) return;
 
@@ -813,10 +825,14 @@ export default {
       this.scrolled = target.scrollLeft;
     },
 
-    getHeaderCellStyle(group) {
-      if (!this.isSeparated || !group) return {};
+    getHeaderCellStyle(group, column) {
+      const style = {};
+
+      if (column?.minWidth) style.minWidth = column.minWidth;
+      if (!this.isSeparated || !group) return style;
 
       return {
+        ...style,
         borderColor: group.color ?? ''
       };
     },
