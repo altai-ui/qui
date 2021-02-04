@@ -26,7 +26,7 @@
     >
       <template slot="suffix">
         <span
-          v-if="clearBtnVisible"
+          v-if="isClearBtnVisible"
           key="clear"
           class="q-input__icon q-icon-close"
           @click.stop="handleClear"
@@ -278,8 +278,8 @@ export default {
     isDisabled() {
       return this.disabled || (this.qForm?.disabled ?? false);
     },
-    clearBtnVisible() {
-      return this.value && this.showClose;
+    isClearBtnVisible() {
+      return Boolean(this.value?.length) && this.showClose;
     },
     panel() {
       return this.$refs.panel;

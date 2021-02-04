@@ -59,18 +59,18 @@ describe('QCascader', () => {
         expect(instance.vm.inputValue).toEqual(expected);
       });
     });
-    describe('clearBtnVisible', () => {
-      it('should return false if showClose is false', () => {
-        instance.setData({
+    describe('isClearBtnVisible', () => {
+      it('should return false if showClose is false', async () => {
+        await instance.setData({
           showClose: false
         });
-        expect(instance.vm.clearBtnVisible).toBeFalsy();
+        expect(instance.vm.isClearBtnVisible).toBeFalsy();
       });
-      it('should return true if showClose is true', () => {
-        instance.setData({
+      it('should return true if showClose is true', async () => {
+        await instance.setData({
           showClose: true
         });
-        expect(instance.vm.clearBtnVisible).toBeTruthy();
+        expect(instance.vm.isClearBtnVisible).toBeTruthy();
       });
     });
   });
