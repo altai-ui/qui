@@ -120,6 +120,7 @@
                           'q-icon-arrow-up': sort.direction !== 'descending',
                           'q-icon-arrow-down': sort.direction === 'descending'
                         }"
+                        @click="handleHeaderClick(column)"
                       />
 
                       <template v-if="group.draggable">
