@@ -182,7 +182,7 @@
     &-wrapper {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-end;
     }
 
     &_align-right .q-table__header-cell-wrapper {
@@ -195,11 +195,13 @@
 
       &_original {
         display: -webkit-box;
-        align-items: center;
+        align-items: flex-end;
+        width: auto;
         overflow: hidden;
+        white-space: initial;
+        word-break: break-word;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
-        white-space: initial;
       }
     }
 
