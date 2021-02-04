@@ -205,7 +205,6 @@ export default {
         endDate: null,
         selecting: false
       },
-      panelInFocus: null,
       isRanged: true
     };
   },

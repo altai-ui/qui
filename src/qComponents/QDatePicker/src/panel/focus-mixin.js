@@ -11,6 +11,7 @@ const RIGHT_DATE_PANEL_START_INDEX = 42;
 
 const LEFT_MONTH_PANEL_START_INDEX = 0;
 const RIGHT_MONTH_PANEL_START_INDEX = 12;
+const RIGHT_YEAR_PANEL_START_INDEX = 10;
 
 const LEFT_TIME_PANEL_HOURS_INDEX = 0;
 const LEFT_TIME_PANEL_MINUTES_INDEX = 24;
@@ -21,6 +22,12 @@ const RIGHT_TIME_PANEL_MINUTES_INDEX = 168;
 const RIGHT_TIME_PANEL_SECONDS_INDEX = 228;
 
 export default {
+  data() {
+    return {
+      panelInFocus: null,
+      lastFocusedCellIndex: null
+    };
+  },
   mounted() {
     this.dateCells = this.$el.querySelectorAll('.q-date-table .cell');
     this.timeCells = this.$el.querySelectorAll('.time-panel__pickers .cell');
@@ -79,6 +86,10 @@ export default {
       let currentNodeIndex;
       let nextNodeIndex;
       const periodCells = period === 'month' ? this.monthCells : this.yearCells;
+      const rightPanelStartIndex =
+        period === 'month'
+          ? RIGHT_MONTH_PANEL_START_INDEX
+          : RIGHT_YEAR_PANEL_START_INDEX;
       Array.from(periodCells).some((element, index) => {
         if (document.activeElement === element) {
           currentNodeIndex = index;
@@ -100,7 +111,7 @@ export default {
             this.panelInFocus === 'left' &&
             (currentNodeIndex + 1) % PERIOD_CELLS_IN_ROW_COUNT === 0
           ) {
-            nextNodeIndex = RIGHT_MONTH_PANEL_START_INDEX;
+            nextNodeIndex = rightPanelStartIndex;
           } else {
             nextNodeIndex = currentNodeIndex + 1;
           }
@@ -148,7 +159,6 @@ export default {
         } else {
           this.handlePrevYearClick();
         }
-        periodCells[DATE_CELLS_COUNT + newIndex]?.focus();
       }
     },
 

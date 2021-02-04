@@ -170,8 +170,6 @@ export default {
       year: new Date().getFullYear(),
       month: new Date().getMonth(),
       currentView: 'date',
-      lastFocusedCellIndex: null,
-      panelInFocus: null,
       isRanged: false
     };
   },

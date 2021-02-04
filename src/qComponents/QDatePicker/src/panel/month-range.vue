@@ -117,7 +117,6 @@ export default {
         selecting: false
       },
       shortcuts: '',
-      panelInFocus: null,
       isRanged: true,
       currentView: 'monthrange'
     };

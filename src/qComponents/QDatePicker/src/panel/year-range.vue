@@ -21,7 +21,8 @@
       </div>
       <div class="q-picker-panel__body">
         <div
-          class="q-picker-panel__content q-picker-panel__content_no-right-borders"
+          ref="leftPanel"
+          :class="leftPanelClasses"
         >
           <div class="q-picker-panel__header">
             <button
@@ -52,7 +53,8 @@
           />
         </div>
         <div
-          class="q-picker-panel__content q-picker-panel__content_no-left-borders"
+          ref="rightPanel"
+          :class="rightPanelClasses"
         >
           <div class="q-picker-panel__header">
             <button
@@ -120,7 +122,9 @@ export default {
         endDate: null,
         selecting: false
       },
-      shortcuts: ''
+      shortcuts: '',
+      isRanged: true,
+      currentView: 'yearrange'
     };
   },
 
@@ -137,6 +141,20 @@ export default {
 
     enableYearArrow() {
       return this.rightYear > this.leftYear + YEARS_IN_DECADE;
+    },
+    leftPanelClasses() {
+      return {
+        'q-picker-panel__content': true,
+        'q-picker-panel__content_no-right-borders': true,
+        'q-picker-panel__content_focused': this.panelInFocus === 'left'
+      };
+    },
+    rightPanelClasses() {
+      return {
+        'q-picker-panel__content': true,
+        'q-picker-panel__content_no-left-borders': true,
+        'q-picker-panel__content_focused': this.panelInFocus === 'right'
+      };
     }
   },
 
