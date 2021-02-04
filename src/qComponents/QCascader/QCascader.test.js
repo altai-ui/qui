@@ -10,9 +10,7 @@ describe('QCascader', () => {
 
   beforeEach(() => {
     options = {
-      mocks: {
-        $t: () => {}
-      },
+      mocks: { $t: () => {} },
       propsData: {
         value: 'resource',
         placeholder: 'placeholder',
@@ -28,10 +26,7 @@ describe('QCascader', () => {
               }
             ]
           },
-          {
-            value: 'resource',
-            label: 'Resource'
-          }
+          { value: 'resource', label: 'Resource' }
         ]
       }
     };
@@ -59,17 +54,15 @@ describe('QCascader', () => {
         expect(instance.vm.inputValue).toEqual(expected);
       });
     });
+
     describe('isClearBtnVisible', () => {
       it('should return false if showClose is false', async () => {
-        await instance.setData({
-          showClose: false
-        });
+        await instance.setData({ showClose: false });
         expect(instance.vm.isClearBtnVisible).toBeFalsy();
       });
+
       it('should return true if showClose is true', async () => {
-        await instance.setData({
-          showClose: true
-        });
+        await instance.setData({ showClose: true });
         expect(instance.vm.isClearBtnVisible).toBeTruthy();
       });
     });
@@ -79,9 +72,7 @@ describe('QCascader', () => {
     describe('value', () => {
       it('should set checkedValues if value is array', async () => {
         const expected = ['guide', 'child'];
-        await instance.setProps({
-          value: expected
-        });
+        await instance.setProps({ value: expected });
         expect(instance.vm.checkedValues).toEqual(expected);
       });
     });
