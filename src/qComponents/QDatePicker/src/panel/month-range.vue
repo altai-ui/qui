@@ -90,7 +90,7 @@
 <script>
 import { isDate, addYears } from 'date-fns';
 import MonthTable from '../basic/month-table';
-import rangeMixin from './mixin';
+import rangeMixin from './range-mixin';
 import focusMixin from './focus-mixin';
 
 export default {

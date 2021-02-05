@@ -123,6 +123,7 @@ import YearTable from '../basic/year-table';
 import MonthTable from '../basic/month-table';
 import DateTable from '../basic/date-table';
 import focusMixin from './focus-mixin';
+import focusTimeMixin from './focus-time-mixin';
 
 export default {
   name: 'QDatePickerPanelDate',
@@ -132,7 +133,7 @@ export default {
     MonthTable,
     DateTable
   },
-  mixins: [focusMixin],
+  mixins: [focusMixin, focusTimeMixin],
   props: {
     firstDayOfWeek: {
       type: Number,

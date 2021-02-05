@@ -124,12 +124,14 @@ export default {
 
           let maxDate = this.maxDate;
           let minDate = this.minDate;
+
           if (this.rangeState.selecting) {
             maxDate = this.rangeState.endDate;
           }
 
           minDate = startOfMonth(minDate);
-          maxDate = startOfMonth(maxDate) || minDate;
+          maxDate = maxDate ? startOfMonth(maxDate) : minDate;
+
           [minDate, maxDate] = [
             Math.min(minDate, maxDate),
             Math.max(minDate, maxDate)

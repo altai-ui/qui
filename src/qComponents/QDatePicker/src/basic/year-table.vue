@@ -115,7 +115,7 @@ export default {
           }
 
           minDate = startOfMonth(minDate);
-          maxDate = startOfMonth(maxDate) || minDate;
+          maxDate = maxDate ? startOfMonth(maxDate) : minDate;
           [minDate, maxDate] = [
             Math.min(minDate, maxDate),
             Math.max(minDate, maxDate)

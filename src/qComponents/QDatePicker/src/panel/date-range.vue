@@ -152,8 +152,9 @@
 <script>
 import { addMonths, isDate, isSameDay, isSameMonth, subMonths } from 'date-fns';
 import DateTable from '../basic/date-table';
-import rangeMixin from './mixin';
+import rangeMixin from './range-mixin';
 import focusMixin from './focus-mixin';
+import focusTimeMixin from './focus-time-mixin';
 import { setTimeToDate } from '../helpers';
 import { addZero } from '../../../helpers/dateHelpers';
 import TimePanel from '../../../QTimePicker/src/components/panel';
@@ -163,7 +164,7 @@ const MONTHS_COUNT = 12;
 export default {
   name: 'QDatePickerPanelDateRange',
   components: { DateTable, TimePanel },
-  mixins: [rangeMixin, focusMixin],
+  mixins: [rangeMixin, focusMixin, focusTimeMixin],
   props: {
     firstDayOfWeek: {
       type: Number,

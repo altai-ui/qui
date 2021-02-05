@@ -94,7 +94,7 @@
 <script>
 import { addYears, getDecade, isDate, subYears } from 'date-fns';
 import YearTable from '../basic/year-table';
-import rangeMixin from './mixin';
+import rangeMixin from './range-mixin';
 import focusMixin from './focus-mixin';
 
 const YEARS_IN_DECADE = 10;

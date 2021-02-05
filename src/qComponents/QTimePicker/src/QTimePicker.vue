@@ -26,6 +26,8 @@
       :value="parsedTime"
       :disabled-values="disabledValues"
       :visible="Boolean(popper)"
+      :minutes-gap="minutesGap"
+      :seconds-gap="secondsGap"
       @change="handleTimeChange"
     />
   </div>
@@ -84,6 +86,14 @@ export default {
     disabledValues: {
       type: Object,
       default: null
+    },
+    minutesGap: {
+      type: [String, Number],
+      default: 1
+    },
+    secondsGap: {
+      type: [String, Number],
+      default: 1
     }
   },
   data() {
