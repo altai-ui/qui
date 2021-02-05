@@ -181,7 +181,6 @@
 
     &-wrapper {
       display: flex;
-      justify-content: space-between;
       align-items: flex-end;
     }
 
@@ -192,6 +191,10 @@
     &-content {
       display: flex;
       white-space: nowrap;
+
+      .q-table__cell-sortable & {
+        cursor: pointer;
+      }
 
       &_original {
         display: -webkit-box;
@@ -241,8 +244,6 @@
     }
 
     &.q-table__cell-sortable {
-      cursor: pointer;
-
       & .q-table__sort-arrow {
         vertical-align: middle;
         color: inherit;
