@@ -19,6 +19,7 @@
           :class="getCellClasses(cell)"
           :disabled="cell.disabled"
           type="button"
+          tabindex="-1"
         >
           {{ cell.year.getFullYear() }}
         </button>
@@ -114,7 +115,7 @@ export default {
           }
 
           minDate = startOfMonth(minDate);
-          maxDate = startOfMonth(maxDate) || minDate;
+          maxDate = maxDate ? startOfMonth(maxDate) : minDate;
           [minDate, maxDate] = [
             Math.min(minDate, maxDate),
             Math.max(minDate, maxDate)
@@ -153,7 +154,7 @@ export default {
     },
 
     getCellClasses(cell) {
-      const style = ['cell'];
+      const style = ['cell', 'cell_year'];
       if (this.selectionMode === 'year') {
         if (
           isDate(this.value) &&

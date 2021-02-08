@@ -37,6 +37,16 @@
         }
       }
 
+      &[data-focus-visible-added] {
+        &:not(.cell_disabled) {
+          color: var(--color-tertiary-white);
+          background-color: var(--color-primary-blue);
+          box-shadow: var(--box-shadow-pressed);
+          transform: scale(1.2);
+          transition: transform 0.2s;
+        }
+      }
+
       &_disabled {
         color: rgba(var(--color-primary-black), 0.64);
         background-color: var(--color-tertiary-gray);
