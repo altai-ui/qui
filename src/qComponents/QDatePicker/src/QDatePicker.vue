@@ -412,7 +412,6 @@ export default {
 
   beforeDestroy() {
     this.destroyPopper();
-    document.removeEventListener('keyup', this.handleKeyUp, true);
   },
 
   methods: {

@@ -91,4 +91,8 @@
       cursor: not-allowed;
     }
   }
+
+  .q-form-item_is-error & {
+    border: var(--border-error);
+  }
 }
