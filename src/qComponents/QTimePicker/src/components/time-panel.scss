@@ -25,6 +25,15 @@
     border-bottom-left-radius: 0;
   }
 
+  &_focused {
+    z-index: 2;
+    border-radius: 4px;
+    outline: none;
+    box-shadow: var(--box-shadow-secondary);
+    transform: scale(1.03);
+    transition: transform 0.2s;
+  }
+
   &__sign {
     height: 19px;
     font-weight: 500;
@@ -85,6 +94,16 @@
 
     &:last-child {
       margin-bottom: 5px;
+    }
+
+    &[data-focus-visible-added] {
+      &:not(.cell_disabled) {
+        color: var(--color-tertiary-white);
+        background-color: var(--color-primary-blue);
+        box-shadow: var(--box-shadow-pressed);
+        transform: scale(1.2);
+        transition: transform 0.2s;
+      }
     }
 
     &:hover {
