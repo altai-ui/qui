@@ -122,6 +122,7 @@ export default {
         options
       );
 
+      this.$refs.qContextMenu.style.zIndex = this.$Q?.zIndex ?? 2000;
       this.menuItemElements = this.$refs.qContextMenu.querySelectorAll(
         '.q-context-menu__item'
       );
