@@ -61,7 +61,7 @@
     display: inline-block;
     cursor: pointer;
 
-    &__default {
+    &__button {
       display: block;
       width: 40px;
       height: 40px;
@@ -72,7 +72,8 @@
       border: none;
       outline: none;
 
-      .q-context-trigger:hover & {
+      &:hover,
+      &[data-focus-visible-added] {
         color: var(--color-primary-black);
         background-color: rgba(var(--color-rgb-gray), 0.16);
         border-radius: 100%;
