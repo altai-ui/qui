@@ -67,7 +67,7 @@ export default {
       this.setPanelFocus();
     },
 
-    moveWithinPeriod({ period, e } = {}) {
+    moveWithinPeriod({ period, e }) {
       let currentNodeIndex;
       let nextNodeIndex;
       const periodCells = period === 'month' ? this.monthCells : this.yearCells;
@@ -152,13 +152,9 @@ export default {
       let currentNodeIndex;
       let nextNodeIndex;
       Array.from(this.dateCells).some((element, index) => {
-        if (document.activeElement === element) {
-          currentNodeIndex = index;
-
-          return true;
-        }
-
-        return false;
+        const isItActiveElement = document.activeElement === element;
+        if (isItActiveElement) currentNodeIndex = index;
+        return isItActiveElement;
       });
 
       switch (e.key) {
