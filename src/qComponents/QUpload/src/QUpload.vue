@@ -3,11 +3,13 @@
     <div
       class="q-upload-drag"
       :class="classes"
+      tabindex="0"
       @dragenter.prevent
       @drop.prevent="processFile"
       @dragover.prevent="handleDragover"
       @dragleave.prevent="isDragover = false"
       @click="handleUploadClick"
+      @keyup.enter="handleUploadClick"
     >
       <span
         class="q-upload-drag__icon"
@@ -21,6 +23,7 @@
       class="q-upload__input"
       type="file"
       :accept="accept.toString()"
+      tabindex="-1"
       @change="processFile"
     />
 

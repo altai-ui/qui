@@ -36,7 +36,8 @@
   box-shadow: var(--box-shadow);
   cursor: pointer;
 
-  &:hover {
+  &:hover,
+  &[data-focus-visible-added] {
     --background-color: var(--color-tertiary-gray);
     --box-shadow: var(--box-shadow-hover);
   }
