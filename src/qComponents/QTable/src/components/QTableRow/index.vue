@@ -5,11 +5,9 @@
     @click="rowClick && rowClick(row)"
   >
     <td
-      v-if="selectable"
+      v-if="isSelectable"
       class="q-table__cell q-table__cell_selectable"
-      :class="{
-        'q-table__cell_sticky': stickyColumnKey
-      }"
+      observer-key="QTable-checkboxes"
       :style="firstTdStyle"
     >
       <div
@@ -25,13 +23,13 @@
     <td
       v-for="(column, columnIndex) in columns"
       :key="column.key"
-      :class="getStickyColumnClass(column.key)"
-      :style="getCellStyle(column, columnIndex)"
+      :style="getCellStyle(columnIndex)"
       :align="column.align || 'left'"
+      :observer-key="column.sticky ? column.key : null"
       class="q-table__cell"
     >
       <div
-        v-if="!selectable && canRowExpand(columnIndex)"
+        v-if="!isSelectable && canRowExpand(columnIndex)"
         class="q-table__expand-arrow"
         :class="openedTreeClass"
         @click="handleExpandClick"
@@ -94,10 +92,6 @@ export default {
       type: String,
       default: 'children'
     },
-    stickyColumnKey: {
-      type: String,
-      default: null
-    },
     expandable: {
       type: Boolean,
       default: false
@@ -126,7 +120,11 @@ export default {
       type: Function,
       default: null
     },
-    selectable: {
+    isSelectable: {
+      type: Boolean,
+      default: false
+    },
+    isSelectColSticked: {
       type: Boolean,
       default: false
     },
@@ -216,7 +214,8 @@ export default {
       this.$emit('expand-click', this.row);
     },
     getFirstTdStyle() {
-      if (!this.selectable || !this.row.data[this.childrenKey]?.length) return;
+      if (!this.isSelectable || !this.row.data[this.childrenKey]?.length)
+        return;
 
       const elm = this.$el?.querySelector('td:first-child');
 
@@ -230,12 +229,12 @@ export default {
         paddingLeft: `${Number(paddingLeft) + this.indent}px`
       };
     },
-    getCellStyle(column, columnIndex) {
-      if (!this.indent) return {};
-
+    getCellStyle(index) {
       const style = {};
 
-      if (columnIndex === 0 && !this.selectable && this.$el) {
+      if (!this.indent) return style;
+
+      if (index === 0 && !this.isSelectable && this.$el) {
         const elm = this.$el.querySelector('td:first-child');
 
         if (elm) {
@@ -248,9 +247,6 @@ export default {
       }
 
       return style;
-    },
-    getStickyColumnClass(key) {
-      return this.stickyColumnKey === key ? 'q-table__cell_sticky' : '';
     },
     updateRow(row, index, key, column) {
       let value = get(row.data || row, key);

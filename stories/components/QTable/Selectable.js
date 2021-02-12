@@ -3,7 +3,9 @@ import Template from './Default';
 const Selectable = Template.bind({});
 
 Selectable.args = {
-  selectable: true
+  selectableColumn: {
+    totalCheckboxPosition: 'header'
+  }
 };
 
 export default Selectable;

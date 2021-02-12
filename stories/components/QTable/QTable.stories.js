@@ -41,7 +41,6 @@ export default {
       direction: 'descending'
     },
     fixedLayout: false,
-    selectable: false,
     groupsOfColumns: [
       {
         key: 'one',

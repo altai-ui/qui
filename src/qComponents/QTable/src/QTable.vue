@@ -1,21 +1,14 @@
 <template>
-  <div class="q-table">
-    <div
-      v-if="isLeftShadowShown"
-      class="q-table__column-shadow q-table__column-shadow_left"
-      :style="getColWidth({ key: 'shadow' })"
-    />
-
-    <div
-      v-if="isRightShadowShown"
-      class="q-table__column-shadow"
-    />
-
+  <div
+    ref="root"
+    class="q-table"
+  >
     <div
       ref="loaderWrapper"
       class="q-table__loading-wrapper"
     >
       <q-scrollbar
+        ref="scrollbar"
         wrap-class="q-table__scroll-wrapper"
         theme="secondary"
       >
@@ -52,7 +45,7 @@
           >
             <colgroup>
               <col
-                v-if="selectable"
+                v-if="isSelectable"
                 style="width: 64px"
               />
               <template v-for="(group, groupIndex) in groupsOfColumns">
@@ -67,14 +60,12 @@
             <thead v-if="doesHeaderExist">
               <tr>
                 <th
-                  v-if="selectable"
+                  v-if="isSelectable"
+                  :observer-key="isSelectColSticked && 'QTable-checkboxes'"
                   class="q-table__header-cell q-table__header-cell__checkbox"
-                  :class="{
-                    'q-table__cell_sticky': Boolean(stickyColumnKey)
-                  }"
                 >
                   <q-checkbox
-                    v-if="totalCheckboxPosition === 'header'"
+                    v-if="selectableColumn.totalCheckboxPosition === 'header'"
                     v-model="areAllChecked"
                     :indeterminate="isIndeterminate"
                   />
@@ -84,7 +75,8 @@
                     v-for="(column, index) in group.columns"
                     :key="`group${groupIndex}${index}`"
                     :class="getCellClasses(column, group)"
-                    :style="getHeaderCellStyle(group)"
+                    :style="getHeaderCellStyles(group, column)"
+                    :observer-key="column.sticky ? column.key : null"
                     class="q-table__header-cell"
                   >
                     <div class="q-table__header-cell-wrapper">
@@ -135,7 +127,7 @@
                           target-selector=".q-table__header-cell"
                           limit-box-selector=".q-table__table"
                           :drop-zone-selector="`.${getHandlerClass(group.key)}`"
-                          :is-first-blocked="selectable"
+                          :is-first-blocked="isSelectable"
                           @change-order="
                             data => changeColumnsOrder(data, group.key)
                           "
@@ -162,26 +154,27 @@
 
             <tbody>
               <tr v-if="isTotalExist">
-                <th
-                  v-if="selectable"
+                <td
+                  v-if="isSelectable"
                   class="q-table__total-cell"
+                  :observer-key="isSelectColSticked && 'QTable-checkboxes'"
                   :class="{
                     'q-table__total-cell_selectable':
-                      totalCheckboxPosition === 'total',
-                    'q-table__cell_sticky': Boolean(stickyColumnKey)
+                      selectableColumn.totalCheckboxPosition === 'total'
                   }"
                 >
                   <q-checkbox
-                    v-if="totalCheckboxPosition === 'total'"
+                    v-if="selectableColumn.totalCheckboxPosition === 'total'"
                     v-model="areAllChecked"
                     :indeterminate="isIndeterminate"
                   />
-                </th>
+                </td>
                 <template v-for="(group, groupIndex) in groupsOfColumns">
                   <td
                     v-for="(column, index) in group.columns"
                     :key="`col${groupIndex}${index}`"
                     :class="getCellClasses(column, group)"
+                    :observer-key="column.sticky ? column.key : null"
                     class="q-table__cell q-table__total-cell"
                   >
                     <slot
@@ -207,12 +200,12 @@
 
               <row-hoc
                 v-for="(row, rowIndex) in computedRows"
+                :ref="rowIndex === 0 && 'QFirstRow'"
                 :key="rowIndex"
                 :row="row"
                 :row-index="rowIndex"
                 :columns="allColumns"
                 :class="levelClass(row.indent)"
-                :sticky-column-key="stickyColumnKey"
                 :expandable="expandable"
                 :indent-size="indentSize"
                 :indent="row.indent"
@@ -221,7 +214,8 @@
                 :custom-row-class="customRowClass"
                 :custom-row-style="customRowStyle"
                 :checked-rows="checkedRows"
-                :selectable="selectable"
+                :is-selectable="isSelectable"
+                :is-select-col-sticked="isSelectColSticked"
                 :row-click="$listeners['row-click'] && handleRowClick"
                 @expand-click="handleExpandClick"
                 @check="handleRowCheck"
@@ -268,7 +262,7 @@
 </template>
 
 <script>
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep, throttle } from 'lodash-es';
 import QTableRow from './components/QTableRow';
 import DragElements from './components/DragElements';
 
@@ -325,10 +319,6 @@ export default {
       type: Array,
       required: true
     },
-    stickyColumnKey: {
-      type: String,
-      default: null
-    },
     /**
      * Array of objects, each object must contain `[column.key]: value` pair
      */
@@ -366,14 +356,6 @@ export default {
       type: String,
       default: ''
     },
-    /**
-     * Where total checkbox need to place, `header` or `total`
-     */
-    totalCheckboxPosition: {
-      type: String,
-      default: 'header',
-      validator: value => ['header', 'total'].includes(value)
-    },
     pagesInExpand: {
       type: [Boolean, String],
       default: false
@@ -399,11 +381,19 @@ export default {
       default: null
     },
     /**
-     * Show/hide checkboxes
+     * Checkboxes column.
+     * `sticky` - whether column should stick.
+     * `totalCheckboxPosition` - where total checkbox need to place, `header` or `total`.
      */
-    selectable: {
-      type: Boolean,
-      default: false
+    selectableColumn: {
+      type: Object,
+      default: () => ({}),
+      validator: ({ totalCheckboxPosition }) => {
+        return (
+          totalCheckboxPosition &&
+          ['header', 'total'].includes(totalCheckboxPosition)
+        );
+      }
     },
     defaultSort: {
       type: Object,
@@ -433,7 +423,14 @@ export default {
       loaderRow: null,
       wrapperClass: '',
       checkedRows: [],
-      sort: this.defaultSort
+      sort: this.defaultSort,
+      stickedOffsets: {
+        left: {},
+        right: {}
+      },
+      observers: {},
+      isRendered: false,
+      QFirstRowEl: null
     };
   },
 
@@ -445,7 +442,6 @@ export default {
             ...col,
             align: col.align ?? group.align ?? 'left'
           };
-
           return newCol;
         });
         return acc.concat(eachGroup);
@@ -477,10 +473,21 @@ export default {
       }
     },
 
+    isSelectable() {
+      return (
+        this.selectableColumn &&
+        Boolean(Object.keys(this.selectableColumn).length)
+      );
+    },
+
+    isSelectColSticked() {
+      return this.isSelectable && this.selectableColumn.sticky;
+    },
+
     tableClasses() {
       return {
         'q-table__draggable': this.isDraggable,
-        'q-table__selectable': this.selectable,
+        'q-table__selectable': this.isSelectable,
         'q-table__separated': this.isSeparated,
         'q-table__grid': this.grid,
         'q-table__fixed': this.fixedLayout
@@ -495,14 +502,6 @@ export default {
 
     isTotalExist() {
       return Boolean(Object.keys(this.total).length);
-    },
-
-    isLeftShadowShown() {
-      return this.stickyColumnKey && this.scrolled > 0;
-    },
-
-    isRightShadowShown() {
-      return this.stickyColumnKey && this.tableClass !== 'scrolled-right';
     },
 
     loadingWrapperClass() {
@@ -582,6 +581,14 @@ export default {
     this.changeWrapperHeight();
   },
 
+  beforeUpdate() {
+    this.QFirstRowEl = this.$refs.QFirstRow[0].$el;
+    this.getStickedOffsets();
+    this.createObservers();
+
+    if (!this.isRendered) this.detectIntersections(0);
+  },
+
   created() {
     window.addEventListener('resize', this.changeWrapperHeight, {
       passive: true
@@ -611,6 +618,13 @@ export default {
 
       this.wrapperWidth = wrapper.offsetWidth;
     }
+
+    if (!this.$refs.scrollbar) return;
+
+    this.$watch(
+      () => this.$refs.scrollbar.moveX,
+      throttle(this.detectIntersections, 100)
+    );
   },
 
   beforeDestroy() {
@@ -620,6 +634,182 @@ export default {
   },
 
   methods: {
+    createObservers() {
+      const table = this.$refs.QTable;
+      this.observers = {};
+
+      if (!table) return;
+
+      let totalWidth = parseFloat(
+        window.getComputedStyle(this.$refs.tableWrapper).paddingLeft
+      );
+
+      if (this.isSelectable) {
+        if (this.isSelectColSticked) {
+          this.observers['QTable-checkboxes'] = {
+            position: 'left',
+            triggerLeft: totalWidth,
+            triggerRight: totalWidth + 64,
+            offset: 0,
+            isSticked: false
+          };
+        }
+
+        totalWidth += 64;
+      }
+
+      this.allColumns.forEach(({ sticky, key }, index) => {
+        const elementWidth = this.QFirstRowEl.querySelector(
+          `td:nth-child(${index + (this.isSelectable ? 2 : 1)})`
+        ).offsetWidth;
+
+        if (!sticky) {
+          totalWidth += elementWidth;
+          return;
+        }
+
+        this.observers[key] = {
+          position: sticky.position,
+          triggerLeft: totalWidth,
+          triggerRight: totalWidth + elementWidth,
+          offset: this.getStickyOffset(sticky.position, key),
+          isSticked: false
+        };
+
+        totalWidth += elementWidth;
+      });
+
+      totalWidth += parseFloat(
+        window.getComputedStyle(this.$refs.tableWrapper).paddingRight
+      );
+    },
+
+    detectIntersections(moveX) {
+      const rootWidth = this.$refs.root.offsetWidth;
+      const moveXPixels = (rootWidth * moveX) / 100;
+
+      if (!this.$refs.QTable) return;
+
+      const observers = { ...this.observers };
+
+      Object.entries(observers).forEach(
+        (
+          [key, { position, triggerLeft, triggerRight, offset, isSticked }],
+          index
+        ) => {
+          const intersectableElements = this.$refs.QTable.querySelectorAll(
+            `[observer-key=${key}]`
+          );
+
+          const scroll = moveXPixels + offset;
+
+          let conditionIn = triggerLeft < scroll;
+          let conditionOut = triggerLeft >= scroll;
+
+          if (position === 'right') {
+            conditionIn = triggerRight + offset * 2 > scroll + rootWidth;
+            conditionOut = triggerRight + offset * 2 < scroll + rootWidth;
+          }
+
+          const conditionChanges =
+            (!isSticked && conditionIn) || (isSticked && conditionOut);
+
+          if (!conditionChanges) return;
+
+          observers[key].isSticked = !isSticked && conditionIn;
+          intersectableElements.forEach(elem =>
+            this.changeStickyStyles({
+              elem,
+              index,
+              position,
+              offset,
+              isOff: isSticked && conditionOut
+            })
+          );
+        }
+      );
+
+      this.observers = observers;
+      this.isRendered = true;
+    },
+
+    changeStickyStyles({ elem, index, position, isOff, offset }) {
+      /* eslint-disable no-param-reassign */
+
+      if (isOff) {
+        elem.classList.remove('q-table__sticked-cell');
+
+        if (position === 'right') {
+          elem.classList.remove('q-table__sticked-cell_is-reversed');
+          elem.style.zIndex = null;
+        }
+
+        elem.style[position] = null;
+
+        return;
+      }
+
+      elem.classList.add('q-table__sticked-cell');
+
+      let correction = this.grid ? index : 0;
+
+      if (position === 'right') {
+        const reversedIndex =
+          Object.keys(this.stickedOffsets.right).length + 2 - index;
+
+        elem.classList.add('q-table__sticked-cell_is-reversed');
+        elem.style.zIndex = reversedIndex;
+
+        correction = this.grid ? reversedIndex : 0;
+      }
+
+      elem.style[position] = `${offset + correction}px`;
+
+      /* eslint-enable no-param-reassign */
+    },
+
+    getStickyOffset(position, key) {
+      if (!Object.keys(this.stickedOffsets[position]).length) return '';
+
+      return this.stickedOffsets[position]?.[key];
+    },
+
+    getStickedOffsets() {
+      if (!this.$refs.QTable) return;
+
+      this.stickedOffsets = {
+        left: {},
+        right: {}
+      };
+
+      let tds = this.QFirstRowEl.querySelectorAll('td');
+
+      if (!tds.length) return;
+
+      let totalLeftWidth = 0;
+      let totalRightWidth = 0;
+
+      if (this.isSelectable && this.isSelectColSticked) {
+        this.stickedOffsets.left['QTable-checkboxes'] = 64;
+        totalLeftWidth += 64;
+      }
+
+      this.allColumns.forEach((col, index) => {
+        if (col.sticky?.position === 'left') {
+          this.stickedOffsets.left[col.key] = totalLeftWidth;
+          totalLeftWidth += tds[index].offsetWidth;
+        }
+      });
+
+      tds = Array.from(tds).reverse();
+      [...this.allColumns].reverse().forEach((col, index) => {
+        if (col.sticky?.position === 'right') {
+          this.stickedOffsets.right[col.key] = totalRightWidth;
+          totalRightWidth += tds[index].offsetWidth;
+        }
+      });
+    },
+
     changeWrapperHeight() {
       if (this.isLoading || !this.isLoadingAnimationComplete) return;
 
@@ -813,7 +1003,7 @@ export default {
       this.scrolled = target.scrollLeft;
     },
 
-    getHeaderCellStyle(group) {
+    getHeaderCellStyles(group) {
       if (!this.isSeparated || !group) return {};
 
       return {
@@ -832,10 +1022,6 @@ export default {
         classes.push(
           `q-table__header-cell_align-${column.align ?? group.align}`
         );
-      }
-
-      if (this.stickyColumnKey === column.key) {
-        classes.push('q-table__cell_sticky');
       }
 
       return classes;
