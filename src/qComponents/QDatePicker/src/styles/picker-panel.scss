@@ -95,6 +95,15 @@
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     }
+
+    &_focused {
+      z-index: 2;
+      border-radius: 4px;
+      outline: none;
+      box-shadow: var(--box-shadow-secondary);
+      transform: scale(1.03);
+      transition: transform 0.2s;
+    }
   }
 
   &__shortcut {
@@ -112,6 +121,11 @@
 
     &:hover {
       color: var(--color-primary-blue);
+    }
+
+    &[data-focus-visible-added] {
+      color: var(--color-primary-blue);
+      text-decoration: underline;
     }
   }
 
@@ -131,6 +145,11 @@
 
     &:hover {
       color: var(--color-primary-black);
+    }
+
+    &[data-focus-visible-added] {
+      color: var(--color-primary-black);
+      background-color: var(--color-tertiary-gray);
     }
 
     &_disabled {
@@ -154,6 +173,10 @@
       display: block;
       height: 100%;
       box-shadow: var(--box-shadow-pressed);
+
+      &_focused {
+        box-shadow: var(--box-shadow-secondary);
+      }
     }
   }
 }

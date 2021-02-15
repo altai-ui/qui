@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QInputNumber data should match snapshot 1`] = `
+Object {
+  "number": null,
+  "prevNumber": null,
+  "userNumber": null,
+}
+`;
+
+exports[`QInputNumber should match snapshot 1`] = `
+<div
+  class="q-input-number q-input-number_with-controls"
+>
+  <button
+    class="q-input-number__button_decrease q-input-number__button q-icon-minus"
+  />
+   
+  <q-input-stub
+    autocomplete="off"
+    class="q-input-number__input"
+    label=""
+    suffixicon=""
+    tabindex=""
+    type="number"
+    value=""
+  />
+   
+  <button
+    class="q-input-number__button_increase q-input-number__button q-icon-plus"
+  />
+</div>
+`;
+
+exports[`QInputNumber should match snapshot without controls 1`] = `
+<div
+  class="q-input-number"
+>
+  <!---->
+   
+  <q-input-stub
+    autocomplete="off"
+    class="q-input-number__input"
+    label=""
+    suffixicon=""
+    tabindex=""
+    type="number"
+    value=""
+  />
+   
+  <!---->
+</div>
+`;

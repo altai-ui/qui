@@ -1,5 +1,5 @@
 <template>
-  <div class="time-panel">
+  <div :class="timePanelClasses">
     <div class="time-panel__common">
       {{ fullTime }}
     </div>
@@ -11,8 +11,9 @@
             <button
               v-for="hour in hours"
               :key="hour"
-              class="cell cell_hours"
+              class="cell cell_time cell_hours"
               type="button"
+              tabindex="-1"
               :disabled="getDisabled({ type: 'hours', value: hour })"
               :class="getClasses({ type: 'hours', value: hour })"
               @click="$emit('change', { type: 'hours', value: hour })"
@@ -29,8 +30,9 @@
             <button
               v-for="minute in minutes"
               :key="minute"
-              class="cell cell_minutes"
+              class="cell cell_time cell_minutes"
               type="button"
+              tabindex="-1"
               :disabled="getDisabled({ type: 'minutes', value: minute })"
               :class="getClasses({ type: 'minutes', value: minute })"
               @click="$emit('change', { type: 'minutes', value: minute })"
@@ -47,8 +49,9 @@
             <button
               v-for="second in seconds"
               :key="second"
-              class="cell cell_seconds"
+              class="cell cell_time cell_seconds"
               type="button"
+              tabindex="-1"
               :class="getClasses({ type: 'seconds', value: second })"
               :disabled="getDisabled({ type: 'seconds', value: second })"
               @click="$emit('change', { type: 'seconds', value: second })"
@@ -120,6 +123,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    panelInFocus: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -132,6 +139,12 @@ export default {
   },
 
   computed: {
+    timePanelClasses() {
+      return {
+        'time-panel': true,
+        'time-panel_focused': this.panelInFocus
+      };
+    },
     hours() {
       return [...Array(24).keys()].map(hour => addZero(hour));
     },

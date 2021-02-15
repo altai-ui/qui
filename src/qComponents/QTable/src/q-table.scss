@@ -174,9 +174,8 @@
     overflow: hidden;
     font-weight: var(--font-weight-bold);
     line-height: var(--line-height-base);
-    vertical-align: top;
+    vertical-align: bottom;
     color: var(--color-primary-black);
-    white-space: nowrap;
 
     &:not(.q-table__header-cell__checkbox) [class*='q-icon'] {
       font-size: 24px;
@@ -185,8 +184,7 @@
 
     &-wrapper {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      align-items: flex-end;
     }
 
     &_align-right .q-table__header-cell-wrapper {
@@ -195,7 +193,22 @@
 
     &-content {
       display: flex;
-      align-items: center;
+      white-space: nowrap;
+
+      .q-table__cell-sortable & {
+        cursor: pointer;
+      }
+
+      &_original {
+        display: -webkit-box;
+        align-items: flex-end;
+        width: auto;
+        overflow: hidden;
+        white-space: initial;
+        word-break: break-word;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
     }
 
     .q-context-wrapper {
@@ -234,8 +247,6 @@
     }
 
     &.q-table__cell-sortable {
-      cursor: pointer;
-
       & .q-table__sort-arrow {
         vertical-align: middle;
         color: inherit;

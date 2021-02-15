@@ -7,7 +7,7 @@
     <td
       v-if="isSelectable"
       class="q-table__cell q-table__cell_selectable"
-      observer-key="QTable-checkboxes"
+      :observer-key="isSelectableColumnSticked && 'q-table-checkboxes'"
       :style="firstTdStyle"
     >
       <div
@@ -124,7 +124,7 @@ export default {
       type: Boolean,
       default: false
     },
-    isSelectColSticked: {
+    isSelectableColumnSticked: {
       type: Boolean,
       default: false
     },

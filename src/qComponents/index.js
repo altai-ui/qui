@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle, global-require, no-param-reassign */
+import 'focus-visible';
 import { kebabCase, isString } from 'lodash-es';
 import vClickOutside from 'v-click-outside';
 import { version } from '../../package.json';

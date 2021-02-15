@@ -1,11 +1,12 @@
 <template>
   <div
+    ref="reference"
     v-click-outside="handleOutsideClick"
     class="q-select"
     @click="toggleMenu"
   >
     <q-input
-      ref="reference"
+      ref="input"
       v-model="selectedLabel"
       type="text"
       class="q-select__input"
@@ -19,9 +20,10 @@
       @focus="handleFocus"
       @blur="handleBlur"
       @keyup.native="onInputChange"
-      @keydown.native.enter.prevent="handleEnterKeydown"
-      @keydown.native.esc.stop.prevent="visible = false"
-      @keydown.native.tab="visible = false"
+      @keyup.native.enter.prevent="handleEnterKeyUp"
+      @keyup.native.esc.stop.prevent="visible = false"
+      @keyup.native.tab="visible = false"
+      @keyup.native.backspace="clearSelected"
       @paste.native="onInputChange"
       @mouseenter.native="inputHovering = true"
       @mouseleave.native="inputHovering = false"
@@ -35,7 +37,7 @@
         <span
           v-if="isClearBtnShown"
           class="q-select__caret q-input__icon q-icon-close"
-          @click.stop="handleClearClick"
+          @click.stop="clearSelected"
         />
       </template>
     </q-input>
@@ -49,7 +51,7 @@
       :filterable="filterable"
       :is-disabled="isDisabled"
       :query.sync="query"
-      @keydown-enter="handleEnterKeydown"
+      @keyup-enter="handleEnterKeyUp"
       @focus="handleFocus"
       @remove-tag="deleteTag"
       @exit="visible = false"
@@ -432,9 +434,43 @@ export default {
     if (dropdown?.parentNode === document.body) {
       document.body.removeChild(dropdown);
     }
+
+    document.removeEventListener('keyup', this.handleKeyUp, true);
   },
 
   methods: {
+    handleKeyUp(e) {
+      if (
+        this.$refs.input.$el.querySelector('input') === e.target &&
+        e.key === 'Enter'
+      ) {
+        this.toggleMenu();
+      }
+
+      switch (e.key) {
+        case 'Escape': {
+          this.visible = false;
+          break;
+        }
+        case 'Tab': {
+          if (!this.$refs.reference.contains(document.activeElement)) {
+            this.visible = false;
+          }
+          break;
+        }
+        case 'ArrowRight':
+        case 'ArrowUp':
+        case 'ArrowLeft':
+        case 'ArrowDown':
+        case 'Enter': {
+          this.$refs.dropdown.navigateDropdown(e);
+          break;
+        }
+        default:
+          break;
+      }
+    },
+
     handleOutsideClick() {
       this.visible = false;
     },
@@ -448,13 +484,13 @@ export default {
     },
 
     createPopper() {
-      const { reference, dropdown } = this.$refs;
+      const { input, dropdown } = this.$refs;
 
       if (this.appendToBody) {
         document.body.appendChild(dropdown.$el);
       }
 
-      this.popper = createPopper(reference.$el, dropdown.$el, {
+      this.popper = createPopper(input.$el, dropdown.$el, {
         modifiers: [
           {
             name: 'offset',
@@ -469,6 +505,7 @@ export default {
     showPopper() {
       this.isDropdownShown = true;
       this.createPopper();
+      document.addEventListener('keyup', this.handleKeyUp, true);
     },
 
     hidePopper() {
@@ -479,6 +516,7 @@ export default {
 
       this.popper.destroy();
       this.popper = null;
+      document.removeEventListener('keyup', this.handleKeyUp, true);
     },
 
     getKey(value) {
@@ -556,7 +594,7 @@ export default {
 
     blur() {
       this.visible = false;
-      this.$refs.reference.blur();
+      this.$refs.input.blur();
     },
 
     handleBlur(event) {
@@ -565,7 +603,7 @@ export default {
       }, 50);
     },
 
-    handleClearClick() {
+    clearSelected() {
       const value = this.multiple ? [] : null;
       this.emitValueUpdate(value);
 
@@ -619,11 +657,11 @@ export default {
       }
 
       if (this.visible) {
-        (this.$refs.tags?.$refs.input ?? this.$refs.reference).focus();
+        (this.$refs.tags?.$refs.input ?? this.$refs.input).focus();
       }
     },
 
-    handleEnterKeydown() {
+    handleEnterKeyUp() {
       if (!this.visible) {
         this.toggleMenu();
         return;

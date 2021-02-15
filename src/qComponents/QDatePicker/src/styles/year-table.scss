@@ -26,6 +26,16 @@
         background-color: var(--color-tertiary-gray);
       }
 
+      &[data-focus-visible-added] {
+        &:not(.cell_disabled) {
+          color: var(--color-tertiary-white);
+          background-color: var(--color-primary-blue);
+          box-shadow: var(--box-shadow-pressed);
+          transform: scale(1.1);
+          transition: transform 0.2s;
+        }
+      }
+
       &_current:not(.cell_disabled) {
         color: var(--color-tertiary-white);
         background-color: var(--color-primary-blue);

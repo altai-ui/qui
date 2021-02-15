@@ -17,7 +17,8 @@ export const QFormStory = (_, { argTypes }) => ({
     return {
       formModel: {
         name: '',
-        intro: ''
+        intro: '',
+        date: null
       }
     };
   },
@@ -63,6 +64,16 @@ export const QFormStory = (_, { argTypes }) => ({
         />
       </q-form-item>
 
+      <q-form-item
+        label="Date"
+        prop="date"
+      >
+        <q-date-picker
+          v-model="formModel.date"
+          type="daterange"
+        />
+      </q-form-item>    
+
       <q-button @click="handleSubmitClick">Create</q-button>
       <q-button @click="handleResetClick">Reset</q-button>
     </q-form>
@@ -89,6 +100,9 @@ QFormStory.args = {
       required: true,
       message: 'Please input introtext',
       trigger: 'change'
+    },
+    date: {
+      required: true
     }
   }
 };

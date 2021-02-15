@@ -148,7 +148,7 @@ export default {
         this.showPassword &&
         !this.inputDisabled &&
         !this.readonly &&
-        (Boolean(this.nativeInputValue) || this.focused)
+        (Boolean(this.nativeInputValue) || this.focused || this.hovering)
       );
     },
 

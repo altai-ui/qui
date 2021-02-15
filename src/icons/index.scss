@@ -4,7 +4,7 @@ $--base-path: '..' !default;
   font-style: normal;
   font-weight: 400;
   font-family: 'qicon';
-  src: url('#{$--base-path}/icons/qicon.woff?10092020') format('woff');
+  src: url('#{$--base-path}/icons/qicon.woff?02022021') format('woff');
   font-display: block;
 }
 
@@ -432,4 +432,20 @@ $--base-path: '..' !default;
 
 .q-icon-key::before {
   content: '\e964';
+}
+
+.q-icon-cart::before {
+  content: '\e965';
+}
+
+.q-icon-house-stroke::before {
+  content: '\e966';
+}
+
+.q-icon-info-fill::before {
+  content: '\e967';
+}
+
+.q-icon-phone-settings-stroke::before {
+  content: '\e968';
 }

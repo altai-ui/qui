@@ -33,7 +33,7 @@ export const Default = (_, { argTypes }) => ({
     }
   },
   template: `
-      <q-time-picker :clearable="clearable" :disabled="disabled" :disabled-values="disabledValues" @change="handleTimeChange" :value="value" />
+      <q-time-picker :clearable="clearable" :disabled="disabled" :disabled-values="disabledValues" @change="handleTimeChange" :value="value" :minutes-gap="minutesGap" :seconds-gap="secondsGap" />
   `
 });
 

@@ -227,6 +227,7 @@ new Vue({
 
 - Russian ✅
 - English ✅
+- Also you can use any language by setting texts for components via 'customI18nMessages' property in the Qui instance. See the example above.
 
 ## Browser Support
 

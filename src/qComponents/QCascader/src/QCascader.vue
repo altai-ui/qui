@@ -26,7 +26,7 @@
     >
       <template slot="suffix">
         <span
-          v-if="clearBtnVisible"
+          v-if="isClearBtnVisible"
           key="clear"
           class="q-input__icon q-icon-close"
           @click.stop="handleClear"
@@ -270,17 +270,21 @@ export default {
         this.inputValue = value;
       }
     },
+
     calcPlaceholder() {
       return this.checkedNodes.length
         ? ''
         : this.placeholder ?? this.$t('QCascader.placeholder');
     },
+
     isDisabled() {
       return this.disabled || (this.qForm?.disabled ?? false);
     },
-    clearBtnVisible() {
-      return this.value && this.showClose;
+
+    isClearBtnVisible() {
+      return Boolean(this.value?.length) && this.showClose;
     },
+
     panel() {
       return this.$refs.panel;
     }
@@ -401,12 +405,14 @@ export default {
 
     deleteTag({ value } = {}) {
       if (!this.checkedValues) return;
+
       const result = new Set(this.checkedValues);
       if (value) {
         result.delete(value);
       } else {
         result.delete(this.checkedValues[this.checkedValues.length - 1]);
       }
+
       const payload = Array.from(result);
       this.emit(payload.length ? payload : null);
     },
@@ -472,6 +478,7 @@ export default {
       this.$emit('focus', e);
       this.focus = true;
     },
+
     updateStyle() {
       const { $el, inputInitialHeight } = this;
       if (!$el) return;
@@ -488,7 +495,7 @@ export default {
         inputInner.style.height = height;
       }
 
-      this.popper && this.popper.update();
+      this.popper?.update();
     }
   }
 };

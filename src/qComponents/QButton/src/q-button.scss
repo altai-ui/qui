@@ -33,7 +33,7 @@
     outline: none;
   }
 
-  &:hover {
+  &:hover:not([disabled]) {
     background-color: var(--color-primary);
     background-image: none;
     box-shadow: -1px -1px 4px rgba(var(--color-rgb-white), 0.25),
@@ -70,7 +70,7 @@
 
   &_theme {
     &_primary {
-      &:focus {
+      &.focus-visible {
         background-color: var(--color-primary-darker);
         background-image: none;
       }
@@ -93,7 +93,7 @@
         box-shadow: var(--box-shadow-pressed);
       }
 
-      &:focus {
+      &.focus-visible {
         color: var(--color-tertiary-white);
         background-color: var(--color-primary-darker);
       }
@@ -109,7 +109,7 @@
       background-image: none;
       box-shadow: none;
 
-      &:focus {
+      &.focus-visible {
         text-decoration: underline;
       }
 

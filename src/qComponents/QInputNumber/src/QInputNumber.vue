@@ -15,10 +15,13 @@
       :value="currentValue"
       class="q-input-number__input"
       :disabled="isDisabled"
+      :placeholder="placeholder"
+      :validate-event="false"
+      type="number"
       @blur="handleBlur"
       @focus="handleFocus"
-      @input="handleInput"
-      @change="handleChange"
+      @input="handleChangeInput($event, 'input')"
+      @change="handleChangeInput($event, 'change')"
     />
 
     <button
@@ -38,6 +41,9 @@ export default {
 
   inject: {
     qForm: {
+      default: null
+    },
+    qFormItem: {
       default: null
     }
   },
@@ -88,6 +94,10 @@ export default {
       type: Boolean,
       default: true
     },
+    placeholder: {
+      type: String,
+      default: null
+    },
     value: {
       type: [Number, String],
       default: null,
@@ -96,13 +106,18 @@ export default {
 
         return false;
       }
+    },
+    validateEvent: {
+      type: Boolean,
+      default: true
     }
   },
 
   data() {
     return {
       number: null,
-      userNumber: null
+      userNumber: null,
+      prevNumber: null
     };
   },
 
@@ -150,50 +165,77 @@ export default {
       const updatedNumber = Math.round((this.number + this.step) * 100) / 100;
 
       if (updatedNumber > this.max) return;
-      this.changesEmmiter(updatedNumber);
+
+      this.userNumber = updatedNumber;
+      this.changesEmmiter(updatedNumber, 'change');
     },
 
     handleDecreaseClick() {
       const updatedNumber = Math.round((this.number - this.step) * 100) / 100;
 
       if (updatedNumber < this.min) return;
-      this.changesEmmiter(updatedNumber);
+
+      this.userNumber = updatedNumber;
+      this.changesEmmiter(updatedNumber, 'change');
     },
 
     handleBlur(event) {
       this.$emit('blur', event);
+      if (this.validateEvent) this.qFormItem?.validateField('blur');
     },
 
     handleFocus(event) {
       this.$emit('focus', event);
     },
 
-    handleInput(value) {
-      this.userNumber = value;
-    },
-
-    handleChange(value) {
-      const userValue = Number(value);
-
-      this.userNumber = null;
-
-      if (
-        !value.length ||
-        Number.isNaN(userValue) ||
-        value > this.max ||
-        value < this.min
-      ) {
+    handleChangeInput(value, type) {
+      if (!value) {
+        this.userNumber = value;
+        this.changesEmmiter(null, type);
         return;
       }
 
-      this.changesEmmiter(userValue);
+      this.processUserValue(value, type);
     },
 
-    changesEmmiter(value) {
-      this.number = Number(value.toFixed(this.precision));
+    processUserValue(value, type) {
+      const userValue = Number(value);
+      this.userNumber = null;
 
-      this.$emit('input', this.number);
-      this.$emit('change', this.number);
+      if (Number.isNaN(userValue) || value > this.max || value < this.min) {
+        return;
+      }
+
+      this.prevNumber = userValue;
+
+      if (type === 'change') {
+        this.changesEmmiter(userValue, type);
+        return;
+      }
+
+      this.$emit('input', Number(userValue.toFixed(this.precision)));
+      if (this.validateEvent) this.qFormItem?.validateField('input');
+    },
+
+    changesEmmiter(value, type) {
+      let passedData = null;
+
+      if (value) {
+        this.number = Number(value.toFixed(this.precision));
+        passedData = this.number;
+      }
+
+      this.prevNumber = passedData;
+
+      if (type === 'change') {
+        this.$emit('input', passedData);
+        this.$emit('change', passedData);
+        if (this.validateEvent) this.qFormItem?.validateField('change');
+        return;
+      }
+
+      this.$emit('input', passedData);
+      if (this.validateEvent) this.qFormItem?.validateField('input');
     }
   }
 };

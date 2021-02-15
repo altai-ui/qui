@@ -8,7 +8,7 @@
       <slot v-if="$slots.default" />
       <button
         v-else
-        class="q-context-trigger__default q-icon-dots-3-horizontal"
+        class="q-context-trigger__button q-icon-dots-3-horizontal"
       />
     </div>
 
@@ -20,6 +20,7 @@
       <button
         v-for="(item, index) in menuItems"
         :key="index"
+        tabindex="-1"
         class="q-context-menu__item"
         :class="{ 'q-context-menu__item_with-icon': item.icon }"
         @click.prevent="handleItemClick(item.action)"
@@ -60,7 +61,8 @@ export default {
 
   data() {
     return {
-      isContextMenuShown: false
+      isContextMenuShown: false,
+      menuItemElements: null
     };
   },
 
@@ -93,6 +95,7 @@ export default {
 
     createPopper() {
       document.addEventListener('click', this.handleDocumentClick);
+      document.addEventListener('keyup', this.handleKeyUp);
       this.isContextMenuShown = true;
 
       if (this.appendToBody) document.body.appendChild(this.$refs.qContextMenu);
@@ -118,6 +121,11 @@ export default {
         this.$refs.qContextMenu,
         options
       );
+
+      this.$refs.qContextMenu.style.zIndex = this.$Q?.zIndex ?? 2000;
+      this.menuItemElements = this.$refs.qContextMenu.querySelectorAll(
+        '.q-context-menu__item'
+      );
     },
 
     handleTriggerClick() {
@@ -134,12 +142,49 @@ export default {
       this.closePopper();
     },
 
+    handleKeyUp(e) {
+      if (!this.isContextMenuShown) return;
+      if (e.key === 'Escape') this.closePopper();
+      if (!['ArrowUp', 'ArrowDown'].includes(e.key)) return;
+      if (document.activeElement.classList.contains('q-context-menu__item')) {
+        let currentNodeIndex;
+        let nextNodeIndex;
+        Array.from(this.menuItemElements).some((element, index) => {
+          const isItActiveElement = document.activeElement === element;
+
+          if (isItActiveElement) currentNodeIndex = index;
+
+          return isItActiveElement;
+        });
+
+        switch (e.key) {
+          case 'ArrowUp': {
+            nextNodeIndex = currentNodeIndex - 1;
+            break;
+          }
+
+          case 'ArrowDown': {
+            nextNodeIndex = currentNodeIndex + 1;
+            break;
+          }
+
+          default:
+            break;
+        }
+        this.menuItemElements[nextNodeIndex]?.focus();
+      } else {
+        this.menuItemElements[0]?.focus();
+      }
+    },
+
     closePopper() {
       document.removeEventListener('click', this.handleDocumentClick);
+      document.removeEventListener('keyup', this.handleKeyUp);
 
       if (this.appendToBody) document.body.removeChild(this.$refs.qContextMenu);
 
       this.isContextMenuShown = false;
+      this.menuItemElements = null;
     }
   }
 };

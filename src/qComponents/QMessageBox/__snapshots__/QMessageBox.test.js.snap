@@ -19,6 +19,10 @@ exports[`QMessageBox should match snapshot 1`] = `
     class="q-message-box"
     tabindex="-1"
   >
+    <div
+      class="q-message-box__shadow"
+    />
+     
     <q-scrollbar-stub
       class="q-message-box__scrollbar"
       theme="secondary"
@@ -28,7 +32,7 @@ exports[`QMessageBox should match snapshot 1`] = `
       wrapclass=""
     >
       <div
-        class="q-message-box__shadow"
+        class="q-message-box__clickable-shadow"
       />
        
       <div

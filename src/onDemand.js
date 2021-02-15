@@ -1,6 +1,7 @@
 /* eslint-disable global-require */
 /* eslint-disable no-param-reassign */
 import vClickOutside from 'v-click-outside';
+import 'focus-visible';
 import { version } from '../package.json';
 import { installI18n } from './qComponents/constants/locales';
 

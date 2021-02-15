@@ -20,7 +20,10 @@
           </button>
         </div>
       </slot>
-      <div :class="panelContentClasses">
+      <div
+        ref="datePanel"
+        :class="panelContentClasses"
+      >
         <div class="q-picker-panel__header">
           <button
             type="button"
@@ -95,13 +98,15 @@
         />
       </div>
       <div
-        v-show="showTime && currentView === 'date'"
+        v-if="showTime && currentView === 'date'"
         class="q-picker-panel__timepickers"
       >
         <time-panel
+          ref="timePanel"
           class="time-panel_no-left-borders"
           :value="parsedTime"
           :disabled-values="disabledValues"
+          :panel-in-focus="panelInFocus === 'time'"
           @change="handleTimeChange"
         />
       </div>
@@ -117,15 +122,18 @@ import TimePanel from '../../../QTimePicker/src/components/panel';
 import YearTable from '../basic/year-table';
 import MonthTable from '../basic/month-table';
 import DateTable from '../basic/date-table';
+import focusMixin from './focus-mixin';
+import focusTimeMixin from './focus-time-mixin';
 
 export default {
+  name: 'QDatePickerPanelDate',
   components: {
     TimePanel,
     YearTable,
     MonthTable,
     DateTable
   },
-
+  mixins: [focusMixin, focusTimeMixin],
   props: {
     firstDayOfWeek: {
       type: Number,
@@ -162,7 +170,8 @@ export default {
     return {
       year: new Date().getFullYear(),
       month: new Date().getMonth(),
-      currentView: 'date'
+      currentView: 'date',
+      isRanged: false
     };
   },
 
@@ -170,7 +179,8 @@ export default {
     panelContentClasses() {
       return {
         'q-picker-panel__content': true,
-        'q-picker-panel__content_no-right-borders': this.showTime
+        'q-picker-panel__content_no-right-borders': this.showTime,
+        'q-picker-panel__content_focused': this.panelInFocus === 'date'
       };
     },
     parsedTime() {
