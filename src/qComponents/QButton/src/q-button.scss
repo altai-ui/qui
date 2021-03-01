@@ -33,7 +33,7 @@
     outline: none;
   }
 
-  &:hover:not([disabled]) {
+  &:hover {
     background-color: var(--color-primary);
     background-image: none;
     box-shadow: -1px -1px 4px rgba(var(--color-rgb-white), 0.25),
@@ -147,36 +147,27 @@
   }
 
   &_disabled {
+    --color: rgba(var(--color-rgb-gray), 0.64);
+    --background-color: var(--color-tertiary-gray);
     --box-shadow: 1px 1px 3px rgba(var(--color-rgb-blue), 0.4),
       -1px -1px 3px rgba(var(--color-rgb-white), 0.25);
 
-    color: rgba(var(--color-rgb-gray), 0.64);
-    background-color: var(--color-tertiary-gray);
+    color: var(--color);
+    background-color: var(--background-color);
     background-image: none;
     box-shadow: var(--box-shadow);
     cursor: not-allowed;
 
     &:hover,
     &:active {
+      color: var(--color);
+      background-color: var(--background-color);
       box-shadow: var(--box-shadow);
-    }
-
-    &.q-button_theme_secondary {
-      &:hover {
-        color: rgba(var(--color-rgb-gray), 0.64);
-        background-color: var(--color-tertiary-gray);
-      }
     }
 
     &.q-button_theme_link {
       --box-shadow: none;
-
-      background-color: transparent;
-
-      &:hover {
-        color: rgba(var(--color-rgb-gray), 0.64);
-        background-color: transparent;
-      }
+      --background-color: transparent;
     }
   }
 
