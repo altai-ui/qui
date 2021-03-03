@@ -13,9 +13,17 @@ export const QUploadStory = (_, { argTypes }) => ({
   data() {
     return {
       formModel: {
-        file: null
+        files: null
       }
     };
+  },
+  watch: {
+    formModel: {
+      deep: true,
+      handler(value) {
+        console.log('value', value);
+      }
+    }
   },
   methods: {
     async handleFileSelect(sourceFile) {
@@ -33,9 +41,11 @@ export const QUploadStory = (_, { argTypes }) => ({
   },
   template: `
     <q-upload
-      v-model="formModel.file"
+      v-model="formModel.files"
       v-bind="$props"
       :on-select-file="handleFileSelect"
+      drag
+      multiple
     />
   `
 });

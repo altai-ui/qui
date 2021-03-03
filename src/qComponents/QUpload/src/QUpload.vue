@@ -24,23 +24,34 @@
       type="file"
       :accept="accept.toString()"
       tabindex="-1"
+      :multiple="multiple"
       @change="processFile"
     />
 
+    <pre>{{ value }}</pre>
     <div
       v-if="value"
-      class="q-upload-file"
+      class="q-upload-files"
       :title="fileTitle"
     >
-      <div class="q-icon-file q-upload-file__file" />
-      <div class="q-upload-file__name">{{ preparedFileName }}</div>
+      <div class="q-icon-file q-upload-files__file" />
+      <div class="q-upload-files__name">{{ preparedFileName }}</div>
 
-      <button
-        v-if="clearable && !isDisabled"
-        type="button"
-        class="q-icon-close q-upload-file__remove"
-        @click="handleRemoveFileBtnClick"
-      />
+      <template v-if="isOneFile">
+        <button
+          v-if="clearable && !isDisabled"
+          type="button"
+          class="q-icon-close q-upload-files__remove"
+          @click="handleRemoveFileBtnClick"
+        />
+      </template>
+      <template v-else>
+        <button
+          type="button"
+          class="q-icon-eye q-upload-files__show-more"
+          @click="handleRemoveFileBtnClick"
+        />
+      </template>
     </div>
   </div>
 </template>
@@ -72,7 +83,7 @@ export default {
 
   props: {
     value: {
-      type: [Object, File],
+      type: [Object, File, FileList],
       default: null
     },
     /**
@@ -110,6 +121,15 @@ export default {
     onSelectFile: {
       type: Function,
       default: null
+    },
+
+    drag: {
+      type: Boolean,
+      default: true
+    },
+    multiple: {
+      type: Boolean,
+      default: true
     }
   },
 
@@ -142,8 +162,9 @@ export default {
     },
 
     uploadDragText() {
-      if (this.isFileLoading)
+      if (this.isFileLoading) {
         return this.textLoadingFile ?? this.$t('QUpload.loading');
+      }
 
       return this.value
         ? this.textReplaceFile ?? this.$t('QUpload.replaceFile')
@@ -159,6 +180,10 @@ export default {
     },
 
     preparedFileName() {
+      if (this.selectedFilesQuantity > 1) {
+        return `Загружено ${this.selectedFilesQuantity} файла`;
+      }
+
       const name = this.fileName;
 
       return this.isTitleShown
@@ -168,6 +193,14 @@ export default {
 
     fileTitle() {
       return this.isTitleShown ? this.fileName : '';
+    },
+
+    selectedFilesQuantity() {
+      return this.value?.length ?? 0;
+    },
+
+    isOneFile() {
+      return !this.multiple && this.selectedFilesQuantity === 1 && this.value;
     }
   },
 
@@ -190,7 +223,9 @@ export default {
       if (this.isDisabled) return;
       if (this.isDragover) this.isDragover = false;
 
-      const sourceFile = (dataTransfer ?? target)?.files?.[0];
+      const source = dataTransfer ?? target;
+
+      const sourceFile = !this.multiple ? source?.files?.[0] : source?.files;
 
       if (typeof this.onSelectFile !== 'function') {
         this.$emit('change', sourceFile);
