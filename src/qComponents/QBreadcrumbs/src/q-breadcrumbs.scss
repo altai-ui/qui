@@ -26,6 +26,10 @@
       text-decoration: underline;
     }
 
+    &_last:first-child {
+      color: var(--color-primary-black);
+    }
+
     &_exact-active:not(:first-child),
     &_last:not(:first-child) {
       font-weight: var(--font-weight-bold);
