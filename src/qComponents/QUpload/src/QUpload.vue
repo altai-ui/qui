@@ -1,8 +1,8 @@
 <template>
-  <div class="q-upload">
+  <div :class="wrapperClasses">
     <div
       class="q-upload-drag"
-      :class="classes"
+      :class="uploadDragClasses"
       tabindex="0"
       @dragenter.prevent
       @drop.prevent="processFile"
@@ -16,6 +16,112 @@
         :class="uploadDragIcon"
       />
       <div class="q-upload-drag__text">{{ uploadDragText }}</div>
+
+      <div
+        v-if="value && !multiple"
+        class="q-upload-file"
+        :title="fileTitle"
+      >
+        <div class="q-icon-file q-upload-file__file" />
+        <div class="q-upload-file__name">{{ preparedFileName }}</div>
+
+        <button
+          v-if="clearable && !isDisabled"
+          type="button"
+          class="q-icon-close q-upload-file__remove"
+          @click="handleRemoveFileBtnClick"
+        />
+      </div>
+    </div>
+
+    <div
+      v-show="multiple"
+      class="q-upload-list"
+    >
+      <div class="q-upload-list__inner">
+        <div class="q-upload-list__header">
+          <div class="q-upload-list__title">Загруженные файлы</div>
+          <q-button
+            class="q-upload-list__clear-btn"
+            type="icon"
+            icon="q-icon-trash-bin"
+            theme="secondary"
+            size="small"
+            circle
+            @click="handleRemoveFileBtnClick"
+          />
+        </div>
+
+        <q-scrollbar wrap-class="q-upload-list__items">
+          <div
+            v-for="(file, index) in 2"
+            :key="index"
+            class="file-panel"
+          >
+            <span class="file-panel__icon q-icon-file" />
+
+            <div class="file-panel__middle">
+              <div class="file-panel__name">Filemane.csv</div>
+            </div>
+
+            <button
+              type="button"
+              class="file-panel__remove-btn q-icon-trash-bin"
+            />
+          </div>
+
+          <div class="file-panel file-panel_loading">
+            <span class="file-panel__icon q-icon-reverse" />
+
+            <div class="file-panel__middle">
+              <div class="file-panel__name">Filemane.csv</div>
+              <div class="file-panel__progress">
+                <div
+                  class="file-panel__progress-line"
+                  style="width: 70%;"
+                />
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="file-panel__remove-btn q-icon-trash-bin"
+            />
+          </div>
+
+          <div class="file-panel file-panel_error">
+            <span class="file-panel__icon q-icon-alert-fill" />
+
+            <div class="file-panel__middle">
+              <div class="file-panel__name">Filemane.csv</div>
+              <div class="file-panel__error-text">
+                Текст ошибки
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="file-panel__remove-btn q-icon-trash-bin"
+            />
+          </div>
+
+          <div class="file-panel file-panel_error">
+            <span class="file-panel__icon q-icon-alert-fill" />
+
+            <div class="file-panel__middle">
+              <div class="file-panel__name">Filemane.csv</div>
+              <div class="file-panel__error-text">
+                Текст ошибки с очень длинным названием
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="file-panel__remove-btn q-icon-trash-bin"
+            />
+          </div>
+        </q-scrollbar>
+      </div>
     </div>
 
     <input
@@ -27,32 +133,6 @@
       :multiple="multiple"
       @change="processFile"
     />
-
-    <pre>{{ value }}</pre>
-    <div
-      v-if="value"
-      class="q-upload-files"
-      :title="fileTitle"
-    >
-      <div class="q-icon-file q-upload-files__file" />
-      <div class="q-upload-files__name">{{ preparedFileName }}</div>
-
-      <template v-if="isOneFile">
-        <button
-          v-if="clearable && !isDisabled"
-          type="button"
-          class="q-icon-close q-upload-files__remove"
-          @click="handleRemoveFileBtnClick"
-        />
-      </template>
-      <template v-else>
-        <button
-          type="button"
-          class="q-icon-eye q-upload-files__show-more"
-          @click="handleRemoveFileBtnClick"
-        />
-      </template>
-    </div>
   </div>
 </template>
 
@@ -63,6 +143,7 @@ const MAX_VISIBLE_FILE_NAME_LENGTH = 23;
 
 export default {
   name: 'QUpload',
+
   componentName: 'QUpload',
 
   mixins: [emitter],
@@ -76,6 +157,7 @@ export default {
     qForm: {
       default: null
     },
+
     qFormItem: {
       default: null
     }
@@ -83,59 +165,62 @@ export default {
 
   props: {
     value: {
-      type: [Object, File, FileList],
+      type: [Object, File],
       default: null
     },
     /**
      * the accept attribute value is a string or an array that defines the file types the file input should accept.
      * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Unique_file_type_specifiers
      */
+
     accept: {
       type: [String, Array],
       default: () => []
     },
+
     disabled: {
       type: Boolean,
       default: false
     },
+
     clearable: {
       type: Boolean,
       default: true
     },
+
     validateEvent: {
       type: Boolean,
       default: true
     },
+
     textUploadFile: {
       type: String,
       default: null
     },
+
     textReplaceFile: {
       type: String,
       default: null
     },
+
     textLoadingFile: {
       type: String,
       default: null
     },
+
     onSelectFile: {
       type: Function,
       default: null
     },
 
-    drag: {
-      type: Boolean,
-      default: true
-    },
     multiple: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
 
   data() {
     return {
-      selectedFile: null,
       isDragover: false,
       isFileLoading: false
     };
@@ -146,7 +231,14 @@ export default {
       return this.disabled || (this.qForm?.disabled ?? false);
     },
 
-    classes() {
+    wrapperClasses() {
+      return {
+        'q-upload': true,
+        'q-upload_opened-list': this.value && this.multiple
+      };
+    },
+
+    uploadDragClasses() {
       return {
         'q-upload-drag_is-filled': this.value,
         'q-upload-drag_is-dragover': this.isDragover,
@@ -157,15 +249,12 @@ export default {
 
     uploadDragIcon() {
       if (this.isFileLoading) return 'q-icon-reverse';
-
       return this.isDisabled ? 'q-icon-lock' : 'q-icon-cloud-upload';
     },
 
     uploadDragText() {
-      if (this.isFileLoading) {
+      if (this.isFileLoading)
         return this.textLoadingFile ?? this.$t('QUpload.loading');
-      }
-
       return this.value
         ? this.textReplaceFile ?? this.$t('QUpload.replaceFile')
         : this.textUploadFile ?? this.$t('QUpload.uploadFile');
@@ -180,12 +269,7 @@ export default {
     },
 
     preparedFileName() {
-      if (this.selectedFilesQuantity > 1) {
-        return `Загружено ${this.selectedFilesQuantity} файла`;
-      }
-
       const name = this.fileName;
-
       return this.isTitleShown
         ? `${name.slice(0, 10)}...${name.slice(-10)}`
         : name;
@@ -193,14 +277,6 @@ export default {
 
     fileTitle() {
       return this.isTitleShown ? this.fileName : '';
-    },
-
-    selectedFilesQuantity() {
-      return this.value?.length ?? 0;
-    },
-
-    isOneFile() {
-      return !this.multiple && this.selectedFilesQuantity === 1 && this.value;
     }
   },
 
@@ -223,9 +299,7 @@ export default {
       if (this.isDisabled) return;
       if (this.isDragover) this.isDragover = false;
 
-      const source = dataTransfer ?? target;
-
-      const sourceFile = !this.multiple ? source?.files?.[0] : source?.files;
+      const sourceFile = (dataTransfer ?? target)?.files?.[0];
 
       if (typeof this.onSelectFile !== 'function') {
         this.$emit('change', sourceFile);
@@ -236,7 +310,6 @@ export default {
 
       try {
         const file = await this.onSelectFile(sourceFile);
-
         this.$emit('change', file);
       } catch {
         // do nothing
@@ -251,7 +324,9 @@ export default {
     },
 
     handleDragover() {
-      if (!this.isDisabled) this.isDragover = true;
+      if (!this.isDisabled) {
+        this.isDragover = true;
+      }
     }
   }
 };

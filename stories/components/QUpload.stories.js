@@ -37,6 +37,10 @@ export const QUploadStory = (_, { argTypes }) => ({
       } catch {
         return null;
       }
+    },
+
+    handleShowFiles(fileList) {
+      console.log(fileList);
     }
   },
   template: `
@@ -44,13 +48,13 @@ export const QUploadStory = (_, { argTypes }) => ({
       v-model="formModel.files"
       v-bind="$props"
       :on-select-file="handleFileSelect"
-      drag
-      multiple
+      @show-files="handleShowFiles"
     />
   `
 });
 
 QUploadStory.storyName = 'Default';
 QUploadStory.args = {
-  accept: ['image/*', '.pdf']
+  accept: ['image/*', '.pdf'],
+  multiple: true
 };
