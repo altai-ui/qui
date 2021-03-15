@@ -38,7 +38,9 @@ export default {
         array.pop();
       }
 
-      this.userInput = array.join('');
+      const parsedInputValue = array.join('');
+      this.userInput = parsedInputValue;
+      this.$emit('input', parsedInputValue);
     }
   }
 };

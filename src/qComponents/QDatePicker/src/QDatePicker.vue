@@ -87,7 +87,7 @@
 
 <script>
 import { createPopper } from '@popperjs/core';
-import { isEqual, isString } from 'lodash-es';
+import { isString } from 'lodash-es';
 import {
   formatISO,
   isDate,
@@ -148,6 +148,11 @@ export default {
     qFormItem: {
       default: null
     }
+  },
+
+  model: {
+    prop: 'value',
+    event: 'change'
   },
 
   props: {
@@ -395,7 +400,6 @@ export default {
         this.createPopper();
       } else {
         this.destroyPopper();
-        this.emitChange(this.transformedValue);
         this.userInput = null;
         if (this.validateEvent) {
           this.qFormItem?.validateField('blur');
@@ -418,7 +422,6 @@ export default {
     handlePickClick(val, { hidePicker = true } = {}) {
       this.pickerVisible = !hidePicker;
       this.emitChange(val);
-      this.emitInput(val);
     },
 
     createPopper() {
@@ -555,10 +558,9 @@ export default {
               resultValue = value;
               break;
           }
-          this.emitInput(resultValue);
+          this.emitChange(resultValue);
         }
       } else {
-        this.emitInput(null);
         this.emitChange(null);
       }
       this.userInput = null;
@@ -568,8 +570,8 @@ export default {
       if (this.pickerDisabled) return;
       if (this.showClose) {
         event.stopPropagation();
-        this.emitInput(null);
         this.emitChange(null);
+        this.userInput = null;
         this.showClose = false;
       } else {
         this.pickerVisible = !this.pickerVisible;
@@ -613,22 +615,16 @@ export default {
     },
 
     emitChange(val) {
-      if (val !== this.value) {
-        this.$emit('change', val);
-        if (this.validateEvent) {
-          this.qFormItem?.validateField('change');
-        }
-      }
-    },
-
-    emitInput(val) {
       let formatted = val;
       if (this.outputFormat === 'iso' && val) {
         formatted = this.formatToISO(val);
       }
 
-      if (!isEqual(this.transformedValue, formatted)) {
-        this.$emit('input', formatted);
+      if (formatted !== this.value) {
+        this.$emit('change', formatted);
+        if (this.validateEvent) {
+          this.qFormItem?.validateField('change');
+        }
       }
     }
   }

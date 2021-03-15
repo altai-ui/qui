@@ -11,6 +11,12 @@ export default (_, { argTypes }) => ({
   methods: {
     handleRangePickClick(val) {
       console.log('handleRangePickClick', val);
+    },
+    handleChange(value) {
+      console.log('handleChange', value);
+    },
+    handleInput(value) {
+      console.log('handleInput', value);
     }
   },
   watch: {
@@ -74,6 +80,8 @@ export default (_, { argTypes }) => ({
         :range-separator="rangeSeparator"
         :validate-event="validateEvent"
         @rangepick="handleRangePickClick"
+        @input="handleInput"
+        @change="handleChange"
         :append-to-body="appendToBody"
       />`
 });
