@@ -74,7 +74,9 @@ StickyColumn.args = {
     col3: 'Total 300',
     col4: 'Total 400',
     col5: 'Total 500',
-    col6: 'Total 600'
+    col6: 'Total 600',
+    col7: 'Total 700',
+    col8: 'Total 800'
   }
 };
 
