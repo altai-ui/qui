@@ -13,6 +13,9 @@
   --custom-box-shadow: -1px -1px 3px rgba(var(--color-rgb-white), 0.25),
     2px 1px 3px rgba(var(--color-rgb-blue), 0.4);
 
+  --custom-box-shadow-reversed: 1px -1px 3px rgba(var(--color-rgb-white), 0.25),
+    -2px 1px 3px rgba(var(--color-rgb-blue), 0.4);
+
   &__fixed {
     table-layout: fixed;
   }
@@ -85,7 +88,7 @@
 
     &_scrollable {
       .q-table__table {
-        padding-bottom: 3px;
+        padding-bottom: 11px;
       }
     }
 
@@ -239,7 +242,7 @@
       padding-left: 16px;
     }
 
-    &.q-table__cell_sticky {
+    &.q-table__sticked-cell {
       background-color: var(--color-tertiary-gray-light);
     }
 
@@ -316,14 +319,18 @@
     }
   }
 
-  &__cell_sticky {
+  &__cell {
+    position: relative;
+  }
+
+  &__sticked-cell {
     position: sticky;
     left: 0;
-    z-index: 1;
-    text-align: left;
+    z-index: 2;
+    box-shadow: var(--custom-box-shadow);
 
-    .q-table__selectable &:not(:first-child) {
-      left: 64px;
+    &_is-reversed {
+      box-shadow: var(--custom-box-shadow-reversed);
     }
   }
 

@@ -4,10 +4,6 @@ exports[`QTable QTable should match snapshot 1`] = `
 <div
   class="q-table"
 >
-  <!---->
-   
-  <!---->
-   
   <div
     class="q-table__loading-wrapper"
   >
