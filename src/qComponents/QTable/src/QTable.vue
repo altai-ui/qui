@@ -392,7 +392,6 @@ export default {
      * Checkboxes column.
      * `sticky` - whether column should stick.
      * `totalCheckboxPosition` - where total checkbox need to place, `header` or `total`.
-     * console.log(selectableColumn)
      */
     selectableColumn: {
       type: Object,

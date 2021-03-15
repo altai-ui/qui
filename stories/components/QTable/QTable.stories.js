@@ -19,6 +19,7 @@ export default {
     total: {
       control: { type1: 'object' }
     },
+
     childrenKey: {
       table: { disable: true }
     },
