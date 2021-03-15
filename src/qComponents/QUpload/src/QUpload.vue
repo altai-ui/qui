@@ -1,43 +1,37 @@
 <template>
-  <div :class="wrapperClasses">
-    <div
-      class="q-upload-drag"
-      :class="uploadDragClasses"
-      tabindex="0"
-      @dragenter.prevent
-      @drop.prevent="processFile"
-      @dragover.prevent="handleDragover"
-      @dragleave.prevent="isDragover = false"
-      @click="handleUploadClick"
-      @keyup.enter="handleUploadClick"
-    >
-      <span
-        class="q-upload-drag__icon"
-        :class="uploadDragIcon"
-      />
-      <div class="q-upload-drag__text">{{ uploadDragText }}</div>
-
+  <div
+    class="q-upload"
+    :class="wrapperClasses"
+  >
+    <div class="q-upload__drag-wrapper">
       <div
-        v-if="value && !multiple"
-        class="q-upload-file"
-        :title="fileTitle"
+        class="q-upload-drag"
+        :class="uploadDragClasses"
+        tabindex="0"
+        @dragenter.prevent
+        @drop.prevent="processFiles"
+        @dragover.prevent="handleDragover"
+        @dragleave.prevent="isDragover = false"
+        @click="handleUploadClick"
+        @keyup.enter="handleUploadClick"
       >
-        <div class="q-icon-file q-upload-file__file" />
-        <div class="q-upload-file__name">{{ preparedFileName }}</div>
-
-        <button
-          v-if="clearable && !isDisabled"
-          type="button"
-          class="q-icon-close q-upload-file__remove"
-          @click="handleRemoveFileBtnClick"
+        <span
+          class="q-upload-drag__icon"
+          :class="uploadDragIcon"
         />
+        <div class="q-upload-drag__text">{{ uploadDragText }}</div>
       </div>
+
+      <upload-file
+        v-if="value && !multiple"
+        :file-name="preparedFileName"
+        class="q-upload__file"
+        @cancel="handleRemoveFileBtnClick"
+        @remove="handleRemoveFileBtnClick"
+      />
     </div>
 
-    <div
-      v-show="multiple"
-      class="q-upload-list"
-    >
+    <div class="q-upload-list">
       <div class="q-upload-list__inner">
         <div class="q-upload-list__header">
           <div class="q-upload-list__title">Загруженные файлы</div>
@@ -53,73 +47,16 @@
         </div>
 
         <q-scrollbar wrap-class="q-upload-list__items">
-          <div
-            v-for="(file, index) in 2"
-            :key="index"
-            class="file-panel"
-          >
-            <span class="file-panel__icon q-icon-file" />
-
-            <div class="file-panel__middle">
-              <div class="file-panel__name">Filemane.csv</div>
-            </div>
-
-            <button
-              type="button"
-              class="file-panel__remove-btn q-icon-trash-bin"
-            />
-          </div>
-
-          <div class="file-panel file-panel_loading">
-            <span class="file-panel__icon q-icon-reverse" />
-
-            <div class="file-panel__middle">
-              <div class="file-panel__name">Filemane.csv</div>
-              <div class="file-panel__progress">
-                <div
-                  class="file-panel__progress-line"
-                  style="width: 70%;"
-                />
-              </div>
-            </div>
-
-            <button
-              type="button"
-              class="file-panel__remove-btn q-icon-trash-bin"
-            />
-          </div>
-
-          <div class="file-panel file-panel_error">
-            <span class="file-panel__icon q-icon-alert-fill" />
-
-            <div class="file-panel__middle">
-              <div class="file-panel__name">Filemane.csv</div>
-              <div class="file-panel__error-text">
-                Текст ошибки
-              </div>
-            </div>
-
-            <button
-              type="button"
-              class="file-panel__remove-btn q-icon-trash-bin"
-            />
-          </div>
-
-          <div class="file-panel file-panel_error">
-            <span class="file-panel__icon q-icon-alert-fill" />
-
-            <div class="file-panel__middle">
-              <div class="file-panel__name">Filemane.csv</div>
-              <div class="file-panel__error-text">
-                Текст ошибки с очень длинным названием
-              </div>
-            </div>
-
-            <button
-              type="button"
-              class="file-panel__remove-btn q-icon-trash-bin"
-            />
-          </div>
+          <upload-file
+            v-for="file in value"
+            :key="file.id"
+            :file-name="file.name"
+            :percentage="file.percentage"
+            :status="file.status"
+            class="q-upload-list__item"
+            @cancel="handleCancel(file.id)"
+            @remove="handleRemoveFile(file.id)"
+          />
         </q-scrollbar>
       </div>
     </div>
@@ -131,12 +68,13 @@
       :accept="accept.toString()"
       tabindex="-1"
       :multiple="multiple"
-      @change="processFile"
+      @change="processFiles"
     />
   </div>
 </template>
 
 <script>
+import UploadFile from './components/UploadFile';
 import emitter from '../../mixins/emitter';
 
 const MAX_VISIBLE_FILE_NAME_LENGTH = 23;
@@ -145,6 +83,10 @@ export default {
   name: 'QUpload',
 
   componentName: 'QUpload',
+
+  components: {
+    UploadFile
+  },
 
   mixins: [emitter],
 
@@ -165,14 +107,14 @@ export default {
 
   props: {
     value: {
-      type: [Object, File],
+      type: [Object, Array, File, FileList],
       default: null
     },
+
     /**
      * the accept attribute value is a string or an array that defines the file types the file input should accept.
      * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Unique_file_type_specifiers
      */
-
     accept: {
       type: [String, Array],
       default: () => []
@@ -208,7 +150,7 @@ export default {
       default: null
     },
 
-    onSelectFile: {
+    onSelectFiles: {
       type: Function,
       default: null
     },
@@ -216,13 +158,19 @@ export default {
     multiple: {
       type: Boolean,
       default: false
+    },
+
+    filesPosition: {
+      type: String,
+      default: 'right',
+      validator: value => ['right', 'bottom'].includes(value)
     }
   },
 
   data() {
     return {
       isDragover: false,
-      isFileLoading: false
+      isFilesListShown: false
     };
   },
 
@@ -233,8 +181,14 @@ export default {
 
     wrapperClasses() {
       return {
-        'q-upload': true,
-        'q-upload_opened-list': this.value && this.multiple
+        'q-upload_opened-right':
+          this.multiple &&
+          this.filesPosition === 'right' &&
+          this.isFilesListShown,
+        'q-upload_opened-bottom':
+          this.multiple &&
+          this.filesPosition === 'bottom' &&
+          this.isFilesListShown
       };
     },
 
@@ -242,26 +196,22 @@ export default {
       return {
         'q-upload-drag_is-filled': this.value,
         'q-upload-drag_is-dragover': this.isDragover,
-        'q-upload-drag_is-disabled': this.isDisabled,
-        'q-upload-drag_is-loading': this.isFileLoading
+        'q-upload-drag_is-disabled': this.isDisabled
       };
     },
 
     uploadDragIcon() {
-      if (this.isFileLoading) return 'q-icon-reverse';
       return this.isDisabled ? 'q-icon-lock' : 'q-icon-cloud-upload';
     },
 
     uploadDragText() {
-      if (this.isFileLoading)
-        return this.textLoadingFile ?? this.$t('QUpload.loading');
       return this.value
         ? this.textReplaceFile ?? this.$t('QUpload.replaceFile')
         : this.textUploadFile ?? this.$t('QUpload.uploadFile');
     },
 
     fileName() {
-      return this.value?.name ?? this.value?.url ?? '';
+      return this.value?.[0].name ?? this.value?.[0].url ?? '';
     },
 
     isTitleShown() {
@@ -270,6 +220,7 @@ export default {
 
     preparedFileName() {
       const name = this.fileName;
+
       return this.isTitleShown
         ? `${name.slice(0, 10)}...${name.slice(-10)}`
         : name;
@@ -288,38 +239,37 @@ export default {
 
   methods: {
     handleUploadClick() {
-      if (this.isDisabled || this.isFileLoading) return;
+      if (this.isDisabled) return;
 
       const { fileInput } = this.$refs;
       fileInput.value = null;
       fileInput.click();
     },
 
-    async processFile({ dataTransfer, target }) {
+    async processFiles({ dataTransfer, target }) {
       if (this.isDisabled) return;
       if (this.isDragover) this.isDragover = false;
 
-      const sourceFile = (dataTransfer ?? target)?.files?.[0];
+      this.isFilesListShown = true;
 
-      if (typeof this.onSelectFile !== 'function') {
-        this.$emit('change', sourceFile);
+      const sourceFiles = (dataTransfer ?? target)?.files;
+
+      if (typeof this.onSelectFiles !== 'function') {
+        this.$emit('change', sourceFiles);
         return;
       }
 
-      this.isFileLoading = true;
-
       try {
-        const file = await this.onSelectFile(sourceFile);
-        this.$emit('change', file);
+        const files = await this.onSelectFiles(sourceFiles);
+        this.$emit('change', files);
       } catch {
         // do nothing
-      } finally {
-        this.isFileLoading = false;
       }
     },
 
     handleRemoveFileBtnClick() {
       this.$refs.fileInput.value = null;
+      this.isFilesListShown = false;
       this.$emit('change', null);
     },
 
@@ -327,6 +277,16 @@ export default {
       if (!this.isDisabled) {
         this.isDragover = true;
       }
+    },
+
+    handleCancel(fileId) {
+      console.log('handleCancel fileId', fileId);
+      this.$emit('cancel', fileId);
+    },
+
+    handleRemoveFile(fileId) {
+      console.log('handleRemoveFile fileId', fileId);
+      this.$emit('remove', fileId);
     }
   }
 };
