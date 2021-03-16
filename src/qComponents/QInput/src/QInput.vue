@@ -29,6 +29,8 @@
       @focus="handleFocus"
       @blur="handleBlur"
       @change="handleChange"
+      @keydown="handleKeydown"
+      @keyup="handleKeyup"
     />
     <span
       v-if="isSuffixVisible"

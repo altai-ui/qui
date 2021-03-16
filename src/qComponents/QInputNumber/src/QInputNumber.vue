@@ -12,16 +12,18 @@
     />
 
     <q-input
+      ref="input"
       :value="currentValue"
       class="q-input-number__input"
       :disabled="isDisabled"
       :placeholder="placeholder"
       :validate-event="false"
-      type="number"
       @blur="handleBlur"
       @focus="handleFocus"
       @input="handleChangeInput($event, 'input')"
       @change="handleChangeInput($event, 'change')"
+      @keydown="(val, event) => handleKeydown(val, event)"
+      @keyup="(val, event) => handleKeyup(val, event)"
     />
 
     <button
@@ -110,14 +112,41 @@ export default {
     validateEvent: {
       type: Boolean,
       default: true
+    },
+    /**
+     * `String` before number
+     */
+    prefix: {
+      type: String,
+      default: null
+    },
+    /**
+     * `String` after number
+     */
+    suffix: {
+      type: String,
+      default: null
+    },
+    /**
+     * BCP47 language identifier
+     */
+    localizationTag: {
+      type: String,
+      default: navigator.language
+    },
+    useGrouping: {
+      type: Boolean,
+      default: false
     }
   },
 
   data() {
     return {
       number: null,
-      userNumber: null,
-      prevNumber: null
+      userValue: null,
+      prevCaretPosition: 0,
+      prevValue: '',
+      prevSelectionPos: null
     };
   },
 
@@ -146,8 +175,22 @@ export default {
       return '';
     },
 
+    localeFormat() {
+      return Intl.NumberFormat(this.localizationTag, {
+        useGrouping: this.useGrouping,
+        minimumFractionDigits: this.precision
+      }).format;
+    },
+
     currentValue() {
-      return (this.userNumber ?? this.number ?? '').toString();
+      let value = this.userValue ?? this.number ?? '';
+      value = value ? this.getValueWithoutAdditions(value) : value;
+
+      const isValueHasNumber = value !== '' && value !== '-';
+      value = !isValueHasNumber ? value : this.localeFormat(value);
+
+      return `${(isValueHasNumber && this.prefix) ||
+        ''}${value}${(isValueHasNumber && this.suffix) || ''}`;
     }
   },
 
@@ -166,7 +209,7 @@ export default {
 
       if (updatedNumber > this.max) return;
 
-      this.userNumber = updatedNumber;
+      this.userValue = updatedNumber;
       this.changesEmmiter(updatedNumber, 'change');
     },
 
@@ -175,7 +218,7 @@ export default {
 
       if (updatedNumber < this.min) return;
 
-      this.userNumber = updatedNumber;
+      this.userValue = updatedNumber;
       this.changesEmmiter(updatedNumber, 'change');
     },
 
@@ -188,25 +231,171 @@ export default {
       this.$emit('focus', event);
     },
 
+    getlocaleSeparator(type) {
+      if (type === 'decimal')
+        return Intl.NumberFormat(this.localizationTag)
+          .format(1.1)
+          .replace(/\p{Number}/gu, '');
+
+      return Intl.NumberFormat(this.localizationTag)
+        .format(11111)
+        .replace(/\p{Number}/gu, '');
+    },
+
+    checkStringAdditions(value, addition) {
+      return value.toString().indexOf(addition) > -1;
+    },
+
+    handleKeydown(value, event) {
+      const {
+        key,
+        target: { selectionStart, selectionEnd }
+      } = event;
+
+      // range selection check
+      if (selectionStart !== selectionEnd) return;
+
+      const prefixLength = this.prefix?.length ?? 0;
+      const suffixLength = this.suffix?.length ?? 0;
+
+      this.prevSelectionPos =
+        value === '-' ? selectionStart + 1 : selectionStart;
+
+      let caretPos = selectionStart;
+
+      if (key === 'Backspace' || key === 'Delete') {
+        const separator = this.getlocaleSeparator('decimal');
+        const valuePart =
+          key === 'Backspace'
+            ? value[selectionStart - 1]
+            : value[selectionStart];
+        const correction = key === 'Backspace' ? -1 : 1;
+
+        // move caret if deleted part is separator
+        if (valuePart === separator) {
+          event.target.setSelectionRange(
+            caretPos + correction,
+            caretPos + correction
+          );
+          this.prevSelectionPos = caretPos + correction;
+          this.prevValue = value;
+          return;
+        }
+      }
+
+      if (
+        this.prefix &&
+        this.checkStringAdditions(value, this.prefix) &&
+        caretPos < prefixLength
+      ) {
+        caretPos = prefixLength;
+        event.target.setSelectionRange(caretPos, caretPos);
+        this.prevSelectionPos = caretPos;
+      }
+
+      if (
+        this.suffix &&
+        this.checkStringAdditions(value, this.suffix) &&
+        caretPos > value.length - suffixLength
+      ) {
+        caretPos = value.length - suffixLength;
+        event.target.setSelectionRange(caretPos, caretPos);
+        this.prevSelectionPos = caretPos;
+      }
+
+      this.prevValue = value;
+    },
+
+    getFormattedPartsLength(value, caretPos) {
+      return value.slice(0, caretPos).split(this.getlocaleSeparator()).length;
+    },
+
+    handleKeyup(value, event) {
+      const { selectionStart, selectionEnd } = event.target;
+      if (selectionStart !== selectionEnd) return;
+
+      const isSymbolDelete =
+        event.key === 'Backspace' || event.key === 'Delete';
+      const correction = isSymbolDelete ? -1 : 1;
+
+      const caretPos = this.prevSelectionPos + correction;
+
+      const prevValueLength = this.getFormattedPartsLength(
+        this.prevValue,
+        caretPos
+      );
+      const valueLength = this.getFormattedPartsLength(value, caretPos);
+
+      // add symbols and then format
+      if (prevValueLength > valueLength) {
+        event.target.setSelectionRange(caretPos - 1, caretPos - 1);
+
+        // remove symbols and then format
+      } else if (prevValueLength < valueLength) {
+        event.target.setSelectionRange(caretPos + 1, caretPos + 1);
+
+        // meta keys
+      } else if (this.prevValue !== value) {
+        event.target.setSelectionRange(caretPos, caretPos);
+      }
+
+      this.prevSelectionPos = null;
+    },
+
+    parseLocaleNumber(stringNumber) {
+      return parseFloat(
+        stringNumber
+          .replace(new RegExp(`\\${this.getlocaleSeparator()}`, 'g'), '')
+          .replace(new RegExp(`\\${this.getlocaleSeparator('decimal')}`), '.')
+      );
+    },
+
+    getValueWithoutAdditions(value) {
+      if (!value) return value;
+
+      let splittedValue = value;
+
+      if (splittedValue && this.checkStringAdditions(value, this.prefix)) {
+        splittedValue = splittedValue.replace(
+          new RegExp(`\\${this.prefix}`, 'g'),
+          ''
+        );
+      }
+
+      if (splittedValue && this.checkStringAdditions(value, this.suffix)) {
+        splittedValue = splittedValue.replace(
+          new RegExp(`\\${this.suffix}`, 'g'),
+          ''
+        );
+      }
+
+      return splittedValue;
+    },
+
     handleChangeInput(value, type) {
-      if (!value) {
-        this.userNumber = value;
+      const splittedValue = this.getValueWithoutAdditions(value);
+
+      if (type === 'input' && splittedValue === '-') {
+        this.userValue = value;
+        return;
+      }
+
+      if (!splittedValue) {
+        this.userValue = null;
         this.changesEmmiter(null, type);
         return;
       }
 
-      this.processUserValue(value, type);
+      this.processUserValue(splittedValue, type);
     },
 
     processUserValue(value, type) {
-      const userValue = Number(value);
-      this.userNumber = null;
+      const userValue = this.parseLocaleNumber(value);
+      this.userValue = null;
 
       if (Number.isNaN(userValue) || value > this.max || value < this.min) {
         return;
       }
-
-      this.prevNumber = userValue;
 
       if (type === 'change') {
         this.changesEmmiter(userValue, type);
@@ -220,12 +409,10 @@ export default {
     changesEmmiter(value, type) {
       let passedData = null;
 
-      if (value) {
+      if (value || value === 0) {
         this.number = Number(value.toFixed(this.precision));
         passedData = this.number;
       }
-
-      this.prevNumber = passedData;
 
       if (type === 'change') {
         this.$emit('input', passedData);

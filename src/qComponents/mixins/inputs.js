@@ -146,6 +146,14 @@ export default {
 
     handleChange(event) {
       this.$emit('change', event.target.value);
+    },
+
+    handleKeydown(event) {
+      this.$emit('keydown', event.target.value, event);
+    },
+
+    handleKeyup(event) {
+      this.$emit('keyup', event.target.value, event);
     }
   }
 };

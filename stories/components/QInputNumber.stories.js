@@ -16,7 +16,7 @@ export const Default = (_, { argTypes }) => ({
   props: Object.keys(argTypes).filter(val => val !== 'value'),
   data() {
     return {
-      value: 2
+      value: 1234
     };
   },
   methods: {
@@ -28,9 +28,15 @@ export const Default = (_, { argTypes }) => ({
     <q-input-number 
       v-bind="$props" 
       v-model="value"
+      prefix=">"
+      suffix="<"
+      :precision="2"
+      use-grouping
       @input="handleEmit($event, 'input')"
       @change="handleEmit($event, 'change')"
-    />
+    >
+      <template #suffix>123</template>
+    </q-input-number>
   `
 });
 

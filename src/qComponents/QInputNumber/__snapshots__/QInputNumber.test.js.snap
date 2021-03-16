@@ -3,8 +3,10 @@
 exports[`QInputNumber data should match snapshot 1`] = `
 Object {
   "number": null,
-  "prevNumber": null,
-  "userNumber": null,
+  "prevCaretPosition": 0,
+  "prevSelectionPos": null,
+  "prevValue": "",
+  "userValue": null,
 }
 `;
 
@@ -22,7 +24,7 @@ exports[`QInputNumber should match snapshot 1`] = `
     label=""
     suffixicon=""
     tabindex=""
-    type="number"
+    type="text"
     value=""
   />
    
@@ -44,7 +46,7 @@ exports[`QInputNumber should match snapshot without controls 1`] = `
     label=""
     suffixicon=""
     tabindex=""
-    type="number"
+    type="text"
     value=""
   />
    
