@@ -23,10 +23,11 @@
       </div>
 
       <upload-file
-        v-if="value && !multiple"
+        v-if="false"
         :file-name="preparedFileName"
+        :status="singleFile.status"
+        :percentage="singleFile.percentage"
         class="q-upload__file"
-        @cancel="handleRemoveFileBtnClick"
         @remove="handleRemoveFileBtnClick"
       />
     </div>
@@ -41,6 +42,8 @@
             icon="q-icon-trash-bin"
             theme="secondary"
             size="small"
+            :disabled="disabled"
+            title="Очистить список файлов"
             circle
             @click="handleRemoveFileBtnClick"
           />
@@ -53,8 +56,9 @@
             :file-name="file.name"
             :percentage="file.percentage"
             :status="file.status"
+            :error="file.error"
+            :disabled="disabled"
             class="q-upload-list__item"
-            @cancel="handleCancel(file.id)"
             @remove="handleRemoveFile(file.id)"
           />
         </q-scrollbar>
@@ -210,8 +214,14 @@ export default {
         : this.textUploadFile ?? this.$t('QUpload.uploadFile');
     },
 
+    singleFile() {
+      if (this.multiple && this.value.length > 1) return false;
+      return this.value?.[0] ?? {};
+    },
+
     fileName() {
-      return this.value?.[0].name ?? this.value?.[0].url ?? '';
+      if (!this.value) return '';
+      return this.value?.[0]?.name ?? this.value?.[0]?.url ?? '';
     },
 
     isTitleShown() {
@@ -234,6 +244,12 @@ export default {
   watch: {
     value() {
       if (this.validateEvent) this.qFormItem?.validateField('change');
+    }
+  },
+
+  mounted() {
+    if (this.multiple && this.value.length) {
+      this.isFilesListShown = true;
     }
   },
 
@@ -279,14 +295,15 @@ export default {
       }
     },
 
-    handleCancel(fileId) {
-      console.log('handleCancel fileId', fileId);
-      this.$emit('cancel', fileId);
-    },
-
     handleRemoveFile(fileId) {
-      console.log('handleRemoveFile fileId', fileId);
       this.$emit('remove', fileId);
+
+      this.$nextTick(() => {
+        if (this.value.length === 0) {
+          this.$refs.fileInput.value = null;
+          this.isFilesListShown = false;
+        }
+      });
     }
   }
 };
