@@ -156,7 +156,7 @@
   background-color: var(--color-tertiary-gray-light);
   transform: translateX(-100%);
   visibility: hidden;
-  transition: transform 0.5s linear;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 
   &__header {
     display: flex;
@@ -187,22 +187,5 @@
 
   100% {
     transform: rotateZ(360deg);
-  }
-}
-
-@keyframes backInLeft {
-  0% {
-    transform: translateX(-2000px) scale(0.7);
-    opacity: 0.7;
-  }
-
-  80% {
-    transform: translateX(0) scale(0.7);
-    opacity: 0.7;
-  }
-
-  to {
-    transform: translateX(0) scale(1);
-    opacity: 1;
   }
 }

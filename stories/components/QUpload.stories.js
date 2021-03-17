@@ -1,3 +1,4 @@
+import { uniqueId } from 'lodash-es';
 import QUpload from '../../src/qComponents/QUpload';
 
 export default {
@@ -16,17 +17,62 @@ export const QUploadStory = (_, { argTypes }) => ({
   data() {
     return {
       formModel: {
-        files: []
+        files: [
+          // {
+          //   id: 1,
+          //   name: 'test1.jpg',
+          //   percentage: 0,
+          //   status: 'success',
+          //   error: null,
+          // },
+          // {
+          //   id: 2,
+          //   name: 'test2.jpg',
+          //   percentage: 0,
+          //   status: 'success',
+          //   error: null,
+          // },
+          // {
+          //   id: 3,
+          //   name: 'test3.jpg',
+          //   percentage: 0,
+          //   status: 'success',
+          //   error: null,
+          // },
+          // {
+          //   id: 4,
+          //   name: 'test4.jpg',
+          //   percentage: 0,
+          //   status: 'success',
+          //   error: null,
+          // },
+          // {
+          //   id: 5,
+          //   name: 'test5.jpg',
+          //   percentage: 0,
+          //   status: 'success',
+          //   error: null,
+          // },
+          // {
+          //   id: 6,
+          //   name: 'test6.jpg',
+          //   percentage: 0,
+          //   status: 'success',
+          //   error: null,
+          // },
+        ]
       }
     };
   },
 
   methods: {
     async handleFileSelect(sourceFiles) {
-      console.log('sourceFiles', sourceFiles);
-
       sourceFiles.forEach(file => {
-        const id = Date.now() + Math.random();
+        const id = uniqueId('file-');
+
+        if (!this.formModel.files) {
+          this.formModel.files = [];
+        }
 
         this.formModel.files.push({
           id,
@@ -38,40 +84,34 @@ export const QUploadStory = (_, { argTypes }) => ({
           error: null
         });
 
+        const foundFile = this.formModel.files.find(item => item.id === id);
+
         const promise = new Promise((resolve, reject) => {
           const reader = new FileReader();
-          reader.readAsDataURL(file);
+          reader.readAsArrayBuffer(file);
 
           reader.addEventListener('progress', ({ loaded, total }) => {
-            const foundFile = this.formModel.files.find(item => item.id === id);
-
             if (foundFile) {
               foundFile.percentage = Math.ceil((loaded * 100) / total);
             }
           });
 
           reader.addEventListener('load', () => {
-            resolve(file);
+            resolve(foundFile);
           });
 
           reader.addEventListener('error', () => {
-            reject(file);
+            reject(foundFile);
           });
         });
 
         promise
           .then(() => {
-            const foundFile = this.formModel.files.find(item => item.id === id);
-
             if (foundFile) {
               foundFile.status = 'success';
-              foundFile.percentage = 50;
-              foundFile.error = 'Ошибка при загрузке файла';
             }
           })
           .catch(() => {
-            const foundFile = this.formModel.files.find(item => item.id === id);
-
             if (foundFile) {
               foundFile.status = 'error';
               foundFile.percentage = 0;
@@ -80,23 +120,13 @@ export const QUploadStory = (_, { argTypes }) => ({
           });
       });
 
-      const promise = () =>
-        new Promise(resolve => {
-          setTimeout(() => resolve(this.formModel.files), 1000);
-        });
-
-      try {
-        return await promise();
-      } catch {
-        return null;
-      }
+      return this.formModel.files;
     },
 
     handleRemove(fileId) {
       this.formModel.files = this.formModel.files.filter(
         ({ id }) => id !== fileId
       );
-      console.log('this.formModel.files', this.formModel.files);
     }
   },
 
@@ -105,7 +135,6 @@ export const QUploadStory = (_, { argTypes }) => ({
       v-model="formModel.files"
       v-bind="$props"
       :on-select-files="handleFileSelect"
-      @cancel="handleRemove"
       @remove="handleRemove"
     />
   `
@@ -115,5 +144,6 @@ QUploadStory.storyName = 'Default';
 QUploadStory.args = {
   accept: [],
   multiple: true,
+  disabled: false,
   filesPosition: 'right'
 };

@@ -22,7 +22,7 @@
       </div>
 
       <div
-        v-if="error"
+        v-if="status === 'error' && error"
         class="upload-file__error-text"
       >
         {{ error }}
@@ -30,17 +30,25 @@
     </div>
 
     <button
-      v-if="status === 'progress'"
+      v-if="disabled"
       type="button"
-      class="upload-file__btn q-icon-close"
-      @click="$emit('cancel')"
+      :disabled="disabled"
+      class="upload-file__btn q-icon-lock"
     />
-    <button
-      v-else
-      type="button"
-      class="upload-file__btn q-icon-trash-bin"
-      @click="$emit('remove')"
-    />
+    <template v-else>
+      <button
+        v-if="status === 'progress'"
+        type="button"
+        class="upload-file__btn q-icon-close"
+        @click="$emit('remove')"
+      />
+      <button
+        v-else
+        type="button"
+        class="upload-file__btn q-icon-trash-bin"
+        @click="$emit('remove')"
+      />
+    </template>
   </div>
 </template>
 
@@ -59,14 +67,19 @@ export default {
       default: null
     },
 
+    percentage: {
+      type: Number,
+      default: null
+    },
+
     error: {
       type: String,
       default: null
     },
 
-    percentage: {
-      type: Number,
-      default: null
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -75,6 +88,7 @@ export default {
       return {
         'upload-file': true,
         'upload-file_loading': this.status === 'progress',
+        'upload-file_disabled': this.disabled,
         'upload-file_error': this.error
       };
     },
@@ -110,17 +124,17 @@ export default {
     width: 168px;
     margin-right: 8px;
     margin-left: 8px;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   &__name {
     width: 100%;
+    overflow: hidden;
     font-size: var(--font-size-base);
     line-height: 24px;
     text-align: left;
-    color: var(--color-primary-black);
+    color: rgba(var(--color-rgb-gray), 0.64);
     white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   &__error-text {
@@ -163,6 +177,12 @@ export default {
 
     .upload-file__progress {
       display: block;
+    }
+  }
+
+  &_disabled {
+    .upload-file__btn {
+      color: rgba(var(--color-rgb-gray), 0.64);
     }
   }
 
