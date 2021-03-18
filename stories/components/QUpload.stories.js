@@ -66,8 +66,8 @@ export const QUploadStory = (_, { argTypes }) => ({
   },
 
   methods: {
-    async handleFileSelect(sourceFiles) {
-      sourceFiles.forEach(file => {
+    handleFileSelect(sourceFiles) {
+      sourceFiles.forEach(sourceFile => {
         const id = uniqueId('file-');
 
         if (!this.formModel.files) {
@@ -76,48 +76,40 @@ export const QUploadStory = (_, { argTypes }) => ({
 
         this.formModel.files.push({
           id,
-          name: file.name,
-          size: file.size,
-          type: file.type,
+          name: sourceFile.name,
+          size: sourceFile.size,
+          type: sourceFile.type,
           status: 'progress',
           percentage: 0,
           error: null
         });
 
-        const foundFile = this.formModel.files.find(item => item.id === id);
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(sourceFile);
 
-        const promise = new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.readAsArrayBuffer(file);
+        const foundFile = this.formModel.files.find(
+          currentFile => currentFile.id === id
+        );
 
-          reader.addEventListener('progress', ({ loaded, total }) => {
-            if (foundFile) {
-              foundFile.percentage = Math.ceil((loaded * 100) / total);
-            }
-          });
-
-          reader.addEventListener('load', () => {
-            resolve(foundFile);
-          });
-
-          reader.addEventListener('error', () => {
-            reject(foundFile);
-          });
+        reader.addEventListener('progress', ({ loaded, total }) => {
+          if (foundFile) {
+            foundFile.percentage = Math.ceil((loaded * 100) / total);
+          }
         });
 
-        promise
-          .then(() => {
-            if (foundFile) {
-              foundFile.status = 'success';
-            }
-          })
-          .catch(() => {
-            if (foundFile) {
-              foundFile.status = 'error';
-              foundFile.percentage = 0;
-              foundFile.error = 'Ошибка при загрузке файла';
-            }
-          });
+        reader.addEventListener('load', () => {
+          if (foundFile) {
+            foundFile.status = 'success';
+          }
+        });
+
+        reader.addEventListener('error', () => {
+          if (foundFile) {
+            foundFile.status = 'error';
+            foundFile.percentage = 0;
+            foundFile.error = 'Ошибка при загрузке файла'; // пример текста ошибки
+          }
+        });
       });
 
       return this.formModel.files;

@@ -262,7 +262,7 @@ export default {
       fileInput.click();
     },
 
-    async processFiles({ dataTransfer, target }) {
+    processFiles({ dataTransfer, target }) {
       if (this.isDisabled) return;
       if (this.isDragover) this.isDragover = false;
 
@@ -275,12 +275,7 @@ export default {
         return;
       }
 
-      try {
-        const files = await this.onSelectFiles(sourceFiles);
-        this.$emit('change', files);
-      } catch {
-        // do nothing
-      }
+      this.$emit('change', this.onSelectFiles(sourceFiles));
     },
 
     handleRemoveFileBtnClick() {
