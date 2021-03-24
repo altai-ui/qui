@@ -134,8 +134,9 @@ export default {
 
   methods: {
     handleDocumentFocus(event) {
-      if (!this.$refs.dialog.contains(event.target)) {
-        this.$refs.dialog.focus();
+      const { dialog } = this.$refs;
+      if (dialog && !dialog.contains(event.target)) {
+        dialog.focus();
       }
     },
 
