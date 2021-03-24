@@ -87,7 +87,7 @@
 
 <script>
 import { createPopper } from '@popperjs/core';
-import { isString } from 'lodash-es';
+import { isNil, isString } from 'lodash-es';
 import {
   formatISO,
   isDate,
@@ -295,9 +295,9 @@ export default {
 
   computed: {
     calcFirstDayOfWeek() {
-      if (!Number.isNaN(Number(this.firstDayOfWeek)))
-        return this.firstDayOfWeek;
-      return this.$Q.locale === 'ru' ? 1 : 0;
+      if (isNil(this.firstDayOfWeek)) return this.$Q.locale === 'ru' ? 1 : 0;
+
+      return this.firstDayOfWeek;
     },
     transformedValue() {
       if (Array.isArray(this.value) && this.value.length) {
