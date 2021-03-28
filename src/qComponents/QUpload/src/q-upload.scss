@@ -2,14 +2,6 @@
   position: relative;
   display: inline-flex;
 
-  &__drag-wrapper {
-    position: relative;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-
   &__file {
     position: absolute;
     right: 24px;
@@ -43,11 +35,12 @@
   }
 
   &_opened-bottom {
-    height: 528px;
+    width: 264px;
+    height: 544px;
 
     .q-upload-list {
       width: 264px;
-      transform: translateX(-100%) translateY(264px);
+      transform: translateX(-100%) translateY(280px);
       visibility: visible;
     }
   }

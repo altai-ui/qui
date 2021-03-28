@@ -23,19 +23,22 @@
       </div>
 
       <upload-file
-        v-if="false"
-        :file-name="preparedFileName"
+        v-if="isSingleFileShown"
         :status="singleFile.status"
         :percentage="singleFile.percentage"
+        :error="singleFile.error"
+        :file-name="preparedFileName"
         class="q-upload__file"
-        @remove="handleRemoveFileBtnClick"
+        @remove="handleRemoveFilesBtnClick"
       />
     </div>
 
     <div class="q-upload-list">
       <div class="q-upload-list__inner">
         <div class="q-upload-list__header">
-          <div class="q-upload-list__title">Загруженные файлы</div>
+          <div class="q-upload-list__title">
+            {{ $t('QUpload.uploadedFiles') }}
+          </div>
           <q-button
             class="q-upload-list__clear-btn"
             type="icon"
@@ -43,24 +46,27 @@
             theme="secondary"
             size="small"
             :disabled="disabled"
-            title="Очистить список файлов"
+            :title="$t('QUpload.clearUploadedFilesTitle')"
             circle
-            @click="handleRemoveFileBtnClick"
+            @click="handleRemoveFilesBtnClick"
           />
         </div>
 
         <q-scrollbar wrap-class="q-upload-list__items">
-          <upload-file
-            v-for="file in value"
-            :key="file.id"
-            :file-name="file.name"
-            :percentage="file.percentage"
-            :status="file.status"
-            :error="file.error"
-            :disabled="disabled"
-            class="q-upload-list__item"
-            @remove="handleRemoveFile(file.id)"
-          />
+          <template v-if="value && value.length">
+            <upload-file
+              v-for="file in value"
+              :key="file.id"
+              :file-name="file.name"
+              :status="file.status"
+              :percentage="file.percentage"
+              :error="file.error"
+              :disabled="disabled"
+              class="q-upload-list__item"
+              @abort="handleAbortFile(file.id)"
+              @remove="handleRemoveFile(file.id)"
+            />
+          </template>
         </q-scrollbar>
       </div>
     </div>
@@ -78,6 +84,7 @@
 </template>
 
 <script>
+import { uniqueId } from 'lodash-es';
 import UploadFile from './components/UploadFile';
 import emitter from '../../mixins/emitter';
 
@@ -111,7 +118,7 @@ export default {
 
   props: {
     value: {
-      type: [Object, Array, File, FileList],
+      type: [Object, File, Array, FileList],
       default: null
     },
 
@@ -154,7 +161,7 @@ export default {
       default: null
     },
 
-    onSelectFiles: {
+    onSelectFile: {
       type: Function,
       default: null
     },
@@ -214,8 +221,11 @@ export default {
         : this.textUploadFile ?? this.$t('QUpload.uploadFile');
     },
 
+    isSingleFileShown() {
+      return !this.multiple && this.value;
+    },
+
     singleFile() {
-      if (this.multiple && this.value.length > 1) return false;
       return this.value?.[0] ?? {};
     },
 
@@ -248,7 +258,7 @@ export default {
   },
 
   mounted() {
-    if (this.multiple && this.value.length) {
+    if (this.multiple && this.value && this.value.length) {
       this.isFilesListShown = true;
     }
   },
@@ -268,17 +278,23 @@ export default {
 
       this.isFilesListShown = true;
 
-      const sourceFiles = (dataTransfer ?? target)?.files;
+      const sourceFiles = Array.from((dataTransfer ?? target)?.files);
 
-      if (typeof this.onSelectFiles !== 'function') {
-        this.$emit('change', sourceFiles);
-        return;
-      }
+      const preparedFiles = sourceFiles.map(file => ({
+        id: uniqueId('file-'),
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        status: null,
+        percentage: 0,
+        error: null,
+        rawFile: file
+      }));
 
-      this.$emit('change', this.onSelectFiles(sourceFiles));
+      this.$emit('change', preparedFiles);
     },
 
-    handleRemoveFileBtnClick() {
+    handleRemoveFilesBtnClick() {
       this.$refs.fileInput.value = null;
       this.isFilesListShown = false;
       this.$emit('change', null);
@@ -288,6 +304,10 @@ export default {
       if (!this.isDisabled) {
         this.isDragover = true;
       }
+    },
+
+    handleAbortFile(fileId) {
+      this.$emit('abort', fileId);
     },
 
     handleRemoveFile(fileId) {

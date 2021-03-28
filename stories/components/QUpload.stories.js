@@ -1,4 +1,3 @@
-import { uniqueId } from 'lodash-es';
 import QUpload from '../../src/qComponents/QUpload';
 
 export default {
@@ -17,118 +16,75 @@ export const QUploadStory = (_, { argTypes }) => ({
   data() {
     return {
       formModel: {
-        files: [
-          // {
-          //   id: 1,
-          //   name: 'test1.jpg',
-          //   percentage: 0,
-          //   status: 'success',
-          //   error: null,
-          // },
-          // {
-          //   id: 2,
-          //   name: 'test2.jpg',
-          //   percentage: 0,
-          //   status: 'success',
-          //   error: null,
-          // },
-          // {
-          //   id: 3,
-          //   name: 'test3.jpg',
-          //   percentage: 0,
-          //   status: 'success',
-          //   error: null,
-          // },
-          // {
-          //   id: 4,
-          //   name: 'test4.jpg',
-          //   percentage: 0,
-          //   status: 'success',
-          //   error: null,
-          // },
-          // {
-          //   id: 5,
-          //   name: 'test5.jpg',
-          //   percentage: 0,
-          //   status: 'success',
-          //   error: null,
-          // },
-          // {
-          //   id: 6,
-          //   name: 'test6.jpg',
-          //   percentage: 0,
-          //   status: 'success',
-          //   error: null,
-          // },
-        ]
+        files: null
       }
     };
   },
 
   methods: {
-    handleFileSelect(sourceFiles) {
-      sourceFiles.forEach(sourceFile => {
-        const id = uniqueId('file-');
-
-        if (!this.formModel.files) {
-          this.formModel.files = [];
-        }
-
-        this.formModel.files.push({
-          id,
-          name: sourceFile.name,
-          size: sourceFile.size,
-          type: sourceFile.type,
-          status: 'progress',
-          percentage: 0,
-          error: null
+    async handleFileSelect(sourceFile) {
+      const promise = () =>
+        new Promise(resolve => {
+          setTimeout(
+            () =>
+              resolve({
+                ...sourceFile,
+                status: null,
+                percentage: 100
+              }),
+            1000
+          );
         });
 
-        const reader = new FileReader();
-        reader.readAsArrayBuffer(sourceFile);
-
-        const foundFile = this.formModel.files.find(
-          currentFile => currentFile.id === id
-        );
-
-        reader.addEventListener('progress', ({ loaded, total }) => {
-          if (foundFile) {
-            foundFile.percentage = Math.ceil((loaded * 100) / total);
-          }
-        });
-
-        reader.addEventListener('load', () => {
-          if (foundFile) {
-            foundFile.status = 'success';
-          }
-        });
-
-        reader.addEventListener('error', () => {
-          if (foundFile) {
-            foundFile.status = 'error';
-            foundFile.percentage = 0;
-            foundFile.error = 'Ошибка при загрузке файла'; // пример текста ошибки
-          }
-        });
-      });
-
-      return this.formModel.files;
+      try {
+        return await promise();
+      } catch {
+        return null;
+      }
     },
 
-    handleRemove(fileId) {
-      this.formModel.files = this.formModel.files.filter(
-        ({ id }) => id !== fileId
-      );
+    handleAbort(fileId) {
+      console.log('fileId', fileId);
+    },
+
+    handleDelete(fileId) {
+      console.log('fileId', fileId);
+    },
+
+    handleUploadBtnClick() {
+      this.formModel.files = this.formModel.files.map(file => ({
+        ...file,
+        status: 'loading'
+      }));
+
+      const promises = [];
+
+      this.formModel.files.forEach(file => {
+        promises.push(this.handleFileSelect(file));
+      });
+
+      Promise.all(promises).then(response => {
+        this.formModel.files = response;
+      });
     }
   },
 
   template: `
-    <q-upload
-      v-model="formModel.files"
-      v-bind="$props"
-      :on-select-files="handleFileSelect"
-      @remove="handleRemove"
-    />
+    <div>
+      <q-upload
+        v-model="formModel.files"
+        v-bind="$props"
+        :on-select-file="handleFileSelect"
+        @abort="handleAbort"
+        @remove="handleDelete"
+      />
+
+      <div style="margin-top: 24px; display: flex; justify-content: center;">
+        <q-button
+          @click="handleUploadBtnClick"
+        >Загрузить</q-button>
+      </div>
+    </div>
   `
 });
 

@@ -42,6 +42,8 @@ export default {
   QUpload: {
     uploadFile: 'загрузить файл',
     replaceFile: 'заменить файл',
-    loading: 'загрузка'
+    loading: 'загрузка',
+    uploadedFiles: 'Загруженные файлы',
+    clearUploadedFilesTitle: 'Очистить список файлов'
   }
 };
