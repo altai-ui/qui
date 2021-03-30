@@ -12,7 +12,7 @@
       >{{ fileName }}</div>
 
       <div
-        v-if="status === 'loading'"
+        v-if="loading"
         class="upload-file__progress"
       >
         <div
@@ -37,7 +37,7 @@
     />
     <template v-else>
       <button
-        v-if="status === 'loading'"
+        v-if="loading"
         type="button"
         class="upload-file__btn q-icon-close"
         @click="$emit('abort')"
@@ -62,11 +62,6 @@ export default {
       default: ''
     },
 
-    status: {
-      type: String,
-      default: null
-    },
-
     percentage: {
       type: Number,
       default: null
@@ -75,6 +70,11 @@ export default {
     error: {
       type: String,
       default: null
+    },
+
+    loading: {
+      type: Boolean,
+      default: false
     },
 
     disabled: {
@@ -87,14 +87,14 @@ export default {
     wrapperClasses() {
       return {
         'upload-file': true,
-        'upload-file_loading': this.status === 'loading',
+        'upload-file_loading': this.loading,
         'upload-file_disabled': this.disabled,
         'upload-file_error': this.error
       };
     },
 
     iconClass() {
-      if (this.status === 'loading') return 'q-icon-reverse';
+      if (this.loading) return 'q-icon-reverse';
       if (this.error) return 'q-icon-alert-fill';
 
       return 'q-icon-file';

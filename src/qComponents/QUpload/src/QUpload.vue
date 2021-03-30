@@ -24,7 +24,7 @@
 
       <upload-file
         v-if="isSingleFileShown"
-        :status="singleFile.status"
+        :loading="singleFile.loading"
         :percentage="singleFile.percentage"
         :error="singleFile.error"
         :file-name="preparedFileName"
@@ -58,7 +58,7 @@
               v-for="file in value"
               :key="file.id"
               :file-name="file.name"
-              :status="file.status"
+              :loading="file.loading"
               :percentage="file.percentage"
               :error="file.error"
               :disabled="disabled"
@@ -285,7 +285,7 @@ export default {
         name: file.name,
         size: file.size,
         type: file.type,
-        status: null,
+        loading: false,
         percentage: 0,
         error: null,
         rawFile: file

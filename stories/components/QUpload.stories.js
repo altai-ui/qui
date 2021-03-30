@@ -29,7 +29,7 @@ export const QUploadStory = (_, { argTypes }) => ({
             () =>
               resolve({
                 ...sourceFile,
-                status: null,
+                loading: false,
                 percentage: 100
               }),
             1000
@@ -48,13 +48,15 @@ export const QUploadStory = (_, { argTypes }) => ({
     },
 
     handleDelete(fileId) {
-      console.log('fileId', fileId);
+      this.formModel.files = this.formModel.files.filter(
+        ({ id }) => id !== fileId
+      );
     },
 
     handleUploadBtnClick() {
       this.formModel.files = this.formModel.files.map(file => ({
         ...file,
-        status: 'loading'
+        loading: true
       }));
 
       const promises = [];
@@ -81,6 +83,7 @@ export const QUploadStory = (_, { argTypes }) => ({
 
       <div style="margin-top: 24px; display: flex; justify-content: center;">
         <q-button
+          style="margin-right: 24px;"
           @click="handleUploadBtnClick"
         >Загрузить</q-button>
       </div>
@@ -91,7 +94,5 @@ export const QUploadStory = (_, { argTypes }) => ({
 QUploadStory.storyName = 'Default';
 QUploadStory.args = {
   accept: [],
-  multiple: true,
-  disabled: false,
-  filesPosition: 'right'
+  multiple: true
 };
