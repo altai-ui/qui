@@ -594,7 +594,10 @@ export default {
   },
 
   beforeUpdate() {
-    this.QFirstRowEl = this.$refs.QFirstRow[0].$el;
+    this.QFirstRowEl = this.$refs.QFirstRow?.[0]?.$el;
+
+    if (!this.QFirstRowEl) return;
+
     this.getStickedOffsets();
     this.createObservers();
 
