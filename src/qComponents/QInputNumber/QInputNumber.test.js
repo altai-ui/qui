@@ -22,10 +22,10 @@ describe('QInputNumber', () => {
   });
 
   describe('computed', () => {
-    it('increaseClass', () => {
+    it('increaseClass', async () => {
       const instance = shallowMount(Component);
 
-      instance.setData({
+      await instance.setData({
         number: '9007199254740992'
       });
 
@@ -34,10 +34,10 @@ describe('QInputNumber', () => {
       );
     });
 
-    it('decreaseClass', () => {
+    it('decreaseClass', async () => {
       const instance = shallowMount(Component);
 
-      instance.setData({
+      await instance.setData({
         number: '-9007199254740992'
       });
 

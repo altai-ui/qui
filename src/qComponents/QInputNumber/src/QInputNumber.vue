@@ -130,9 +130,9 @@ export default {
     /**
      * BCP47 language identifier
      */
-    localizationTag: {
+    localization: {
       type: String,
-      default: navigator.language
+      default: null
     },
     useGrouping: {
       type: Boolean,
@@ -175,6 +175,10 @@ export default {
       return '';
     },
 
+    localizationTag() {
+      return this.localization ?? this.$Q?.locale ?? 'en';
+    },
+
     localeFormat() {
       return Intl.NumberFormat(this.localizationTag, {
         useGrouping: this.useGrouping,
@@ -189,8 +193,10 @@ export default {
       const isValueHasNumber = value !== '' && value !== '-';
       value = !isValueHasNumber ? value : this.localeFormat(value);
 
-      return `${(isValueHasNumber && this.prefix) ||
-        ''}${value}${(isValueHasNumber && this.suffix) || ''}`;
+      const prefix = (isValueHasNumber && this.prefix) || '';
+      const suffix = (isValueHasNumber && this.suffix) || '';
+
+      return `${prefix}${value}${suffix}`;
     }
   },
 
@@ -231,7 +237,7 @@ export default {
       this.$emit('focus', event);
     },
 
-    getlocaleSeparator(type) {
+    getLocaleSeparator(type) {
       if (type === 'decimal')
         return Intl.NumberFormat(this.localizationTag)
           .format(1.1)
@@ -243,7 +249,7 @@ export default {
     },
 
     checkStringAdditions(value, addition) {
-      return value.toString().indexOf(addition) > -1;
+      return String(value).indexOf(addition) > -1;
     },
 
     handleKeydown(value, event) {
@@ -264,7 +270,7 @@ export default {
       let caretPos = selectionStart;
 
       if (key === 'Backspace' || key === 'Delete') {
-        const separator = this.getlocaleSeparator('decimal');
+        const separator = this.getLocaleSeparator('decimal');
         const valuePart =
           key === 'Backspace'
             ? value[selectionStart - 1]
@@ -307,7 +313,7 @@ export default {
     },
 
     getFormattedPartsLength(value, caretPos) {
-      return value.slice(0, caretPos).split(this.getlocaleSeparator()).length;
+      return value.slice(0, caretPos).split(this.getLocaleSeparator()).length;
     },
 
     handleKeyup(value, event) {
@@ -345,8 +351,8 @@ export default {
     parseLocaleNumber(stringNumber) {
       return parseFloat(
         stringNumber
-          .replace(new RegExp(`\\${this.getlocaleSeparator()}`, 'g'), '')
-          .replace(new RegExp(`\\${this.getlocaleSeparator('decimal')}`), '.')
+          .replace(new RegExp(`\\${this.getLocaleSeparator()}`, 'g'), '')
+          .replace(new RegExp(`\\${this.getLocaleSeparator('decimal')}`), '.')
       );
     },
 
