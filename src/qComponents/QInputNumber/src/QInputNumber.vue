@@ -249,7 +249,12 @@ export default {
     },
 
     checkStringAdditions(value, addition) {
-      return String(value).indexOf(addition) > -1;
+      const position = String(value).indexOf(this[addition]);
+      const expectedPosition =
+        addition === 'suffix'
+          ? 0
+          : String(value).length - this[addition].length;
+      return position === expectedPosition;
     },
 
     handleKeydown(value, event) {
@@ -291,7 +296,7 @@ export default {
 
       if (
         this.prefix &&
-        this.checkStringAdditions(value, this.prefix) &&
+        this.checkStringAdditions(value, 'prefix') &&
         caretPos < prefixLength
       ) {
         caretPos = prefixLength;
@@ -301,7 +306,7 @@ export default {
 
       if (
         this.suffix &&
-        this.checkStringAdditions(value, this.suffix) &&
+        this.checkStringAdditions(value, 'suffix') &&
         caretPos > value.length - suffixLength
       ) {
         caretPos = value.length - suffixLength;
@@ -320,9 +325,8 @@ export default {
       const { selectionStart, selectionEnd } = event.target;
       if (selectionStart !== selectionEnd) return;
 
-      const isSymbolDelete =
-        event.key === 'Backspace' || event.key === 'Delete';
-      const correction = isSymbolDelete ? -1 : 1;
+      const isKeyDelete = event.key === 'Backspace' || event.key === 'Delete';
+      const correction = isKeyDelete ? -1 : 1;
 
       const caretPos = this.prevSelectionPos + correction;
 
@@ -361,14 +365,14 @@ export default {
 
       let splittedValue = value;
 
-      if (splittedValue && this.checkStringAdditions(value, this.prefix)) {
+      if (splittedValue && this.checkStringAdditions(value, 'prefix')) {
         splittedValue = splittedValue.replace(
           new RegExp(`\\${this.prefix}`, 'g'),
           ''
         );
       }
 
-      if (splittedValue && this.checkStringAdditions(value, this.suffix)) {
+      if (splittedValue && this.checkStringAdditions(value, 'suffix')) {
         splittedValue = splittedValue.replace(
           new RegExp(`\\${this.suffix}`, 'g'),
           ''
