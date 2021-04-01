@@ -254,6 +254,7 @@ export default {
         addition === 'suffix'
           ? 0
           : String(value).length - this[addition].length;
+
       return position === expectedPosition;
     },
 
@@ -365,14 +366,22 @@ export default {
 
       let splittedValue = value;
 
-      if (splittedValue && this.checkStringAdditions(value, 'prefix')) {
+      if (
+        splittedValue &&
+        this.prefix &&
+        this.checkStringAdditions(value, 'prefix')
+      ) {
         splittedValue = splittedValue.replace(
           new RegExp(`\\${this.prefix}`, 'g'),
           ''
         );
       }
 
-      if (splittedValue && this.checkStringAdditions(value, 'suffix')) {
+      if (
+        splittedValue &&
+        this.suffix &&
+        this.checkStringAdditions(value, 'suffix')
+      ) {
         splittedValue = splittedValue.replace(
           new RegExp(`\\${this.suffix}`, 'g'),
           ''
