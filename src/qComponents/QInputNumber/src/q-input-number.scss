@@ -57,19 +57,6 @@
     }
   }
 
-  &__prefix,
-  &__suffix {
-    position: absolute;
-    left: 34px;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  &__suffix {
-    right: 34px;
-    left: auto;
-  }
-
   &__input {
     &.q-input_disabled::after {
       display: none;

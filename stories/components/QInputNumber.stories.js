@@ -34,9 +34,7 @@ export const Default = (_, { argTypes }) => ({
       use-grouping
       @input="handleEmit($event, 'input')"
       @change="handleEmit($event, 'change')"
-    >
-      <template #suffix>123</template>
-    </q-input-number>
+    />
   `
 });
 

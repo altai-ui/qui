@@ -22,8 +22,8 @@
       @focus="handleFocus"
       @input="handleChangeInput($event, 'input')"
       @change="handleChangeInput($event, 'change')"
-      @keydown="(val, event) => handleKeydown(val, event)"
-      @keyup="(val, event) => handleKeyup(val, event)"
+      @keydown.native="handleKeydown"
+      @keyup.native="handleKeyup"
     />
 
     <button
@@ -190,11 +190,11 @@ export default {
       let value = this.userValue ?? this.number ?? '';
       value = value ? this.getValueWithoutAdditions(value) : value;
 
-      const isValueHasNumber = value !== '' && value !== '-';
-      value = !isValueHasNumber ? value : this.localeFormat(value);
+      const isNumeric = value !== '' && value !== '-';
+      value = !isNumeric ? value : this.localeFormat(value);
 
-      const prefix = (isValueHasNumber && this.prefix) || '';
-      const suffix = (isValueHasNumber && this.suffix) || '';
+      const prefix = (isNumeric && this.prefix) || '';
+      const suffix = (isNumeric && this.suffix) || '';
 
       return `${prefix}${value}${suffix}`;
     }
@@ -210,6 +210,10 @@ export default {
   },
 
   methods: {
+    setSelection(target, position) {
+      target.setSelectionRange(position, position);
+    },
+
     handleIncreaseClick() {
       const updatedNumber = Math.round((this.number + this.step) * 100) / 100;
 
@@ -252,13 +256,15 @@ export default {
       const position = String(value).indexOf(this[addition]);
       const expectedPosition =
         addition === 'suffix'
-          ? 0
-          : String(value).length - this[addition].length;
+          ? String(value).length - this[addition].length
+          : 0;
 
       return position === expectedPosition;
     },
 
-    handleKeydown(value, event) {
+    handleKeydown(event) {
+      const value = event.target.value;
+
       const {
         key,
         target: { selectionStart, selectionEnd }
@@ -276,7 +282,9 @@ export default {
       let caretPos = selectionStart;
 
       if (key === 'Backspace' || key === 'Delete') {
-        const separator = this.getLocaleSeparator('decimal');
+        const thousandSeparator = this.getLocaleSeparator();
+        const floatSeparator = this.getLocaleSeparator('decimal');
+
         const valuePart =
           key === 'Backspace'
             ? value[selectionStart - 1]
@@ -284,11 +292,8 @@ export default {
         const correction = key === 'Backspace' ? -1 : 1;
 
         // move caret if deleted part is separator
-        if (valuePart === separator) {
-          event.target.setSelectionRange(
-            caretPos + correction,
-            caretPos + correction
-          );
+        if (valuePart === thousandSeparator || valuePart === floatSeparator) {
+          this.setSelection(event.target, caretPos + correction);
           this.prevSelectionPos = caretPos + correction;
           this.prevValue = value;
           return;
@@ -301,7 +306,7 @@ export default {
         caretPos < prefixLength
       ) {
         caretPos = prefixLength;
-        event.target.setSelectionRange(caretPos, caretPos);
+        this.setSelection(event.target, caretPos);
         this.prevSelectionPos = caretPos;
       }
 
@@ -311,7 +316,7 @@ export default {
         caretPos > value.length - suffixLength
       ) {
         caretPos = value.length - suffixLength;
-        event.target.setSelectionRange(caretPos, caretPos);
+        this.setSelection(event.target, caretPos);
         this.prevSelectionPos = caretPos;
       }
 
@@ -322,7 +327,8 @@ export default {
       return value.slice(0, caretPos).split(this.getLocaleSeparator()).length;
     },
 
-    handleKeyup(value, event) {
+    handleKeyup(event) {
+      const value = event.target.value;
       const { selectionStart, selectionEnd } = event.target;
       if (selectionStart !== selectionEnd) return;
 
@@ -339,15 +345,15 @@ export default {
 
       // add symbols and then format
       if (prevValueLength > valueLength) {
-        event.target.setSelectionRange(caretPos - 1, caretPos - 1);
+        this.setSelection(event.target, caretPos - 1);
 
         // remove symbols and then format
       } else if (prevValueLength < valueLength) {
-        event.target.setSelectionRange(caretPos + 1, caretPos + 1);
+        this.setSelection(event.target, caretPos + 1);
 
         // meta keys
       } else if (this.prevValue !== value) {
-        event.target.setSelectionRange(caretPos, caretPos);
+        this.setSelection(event.target, caretPos);
       }
 
       this.prevSelectionPos = null;
@@ -361,38 +367,37 @@ export default {
       );
     },
 
+    getSplittedValue(value, addition) {
+      if (
+        value &&
+        this[addition] &&
+        this.checkStringAdditions(value, addition)
+      ) {
+        const startCharReg = addition === 'prefix' ? '^' : '';
+        const endCharReg = addition === 'suffix' ? '$' : '';
+
+        return value.replace(
+          new RegExp(`${startCharReg}${this[addition]}${endCharReg}`, 'g'),
+          ''
+        );
+      }
+
+      return value;
+    },
+
     getValueWithoutAdditions(value) {
       if (!value) return value;
 
-      let splittedValue = value;
-
-      if (
-        splittedValue &&
-        this.prefix &&
-        this.checkStringAdditions(value, 'prefix')
-      ) {
-        splittedValue = splittedValue.replace(
-          new RegExp(`\\${this.prefix}`, 'g'),
-          ''
-        );
-      }
-
-      if (
-        splittedValue &&
-        this.suffix &&
-        this.checkStringAdditions(value, 'suffix')
-      ) {
-        splittedValue = splittedValue.replace(
-          new RegExp(`\\${this.suffix}`, 'g'),
-          ''
-        );
-      }
+      let splittedValue = this.getSplittedValue(value, 'prefix');
+      splittedValue = this.getSplittedValue(splittedValue, 'suffix');
 
       return splittedValue;
     },
 
     handleChangeInput(value, type) {
       const splittedValue = this.getValueWithoutAdditions(value);
+
+      console.log(splittedValue);
 
       if (type === 'input' && splittedValue === '-') {
         this.userValue = value;
