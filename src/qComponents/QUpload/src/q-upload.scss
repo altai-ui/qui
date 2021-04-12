@@ -120,6 +120,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 8px;
+  overflow: hidden;
   background-color: var(--color-tertiary-gray);
   border-radius: var(--border-radius-base);
   box-shadow: var(--box-shadow-pressed);
@@ -141,7 +142,7 @@
     color: var(--text-color);
   }
 
-  &__remove {
+  &__btn {
     width: 24px;
     margin-left: 8px;
     padding: 0;
@@ -153,9 +154,25 @@
     cursor: pointer;
 
     &:hover,
-    &:focus {
+    &.focus-visible {
       color: var(--color-primary-black);
     }
+  }
+
+  &__loader {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(var(--color-rgb-gray), 0.16);
+  }
+
+  &__bar {
+    width: 0;
+    height: 100%;
+    background-color: var(--color-primary-blue);
+    transition: width 0.1s ease;
   }
 }
 

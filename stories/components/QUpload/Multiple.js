@@ -1,14 +1,4 @@
-import QUpload from '../../src/qComponents/QUpload';
-
-export default {
-  title: 'Components/QUpload',
-  component: QUpload,
-  argTypes: {
-    'v-model': { control: { type: 'none' } }
-  }
-};
-
-export const QUploadStory = (_, { argTypes }) => ({
+const QUploadStoryMultiple = (_, { argTypes }) => ({
   props: Object.keys(argTypes),
   data() {
     return {
@@ -40,7 +30,9 @@ export const QUploadStory = (_, { argTypes }) => ({
   `
 });
 
-QUploadStory.storyName = 'Default';
-QUploadStory.args = {
+QUploadStoryMultiple.storyName = 'Default';
+QUploadStoryMultiple.args = {
   accept: ['image/*', '.pdf']
 };
+
+export default QUploadStoryMultiple.bind({});

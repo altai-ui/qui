@@ -28,7 +28,7 @@
     />
 
     <div
-      v-if="value"
+      v-if="fileName"
       class="q-upload-file"
       :title="fileTitle"
     >
@@ -36,16 +36,33 @@
       <div class="q-upload-file__name">{{ preparedFileName }}</div>
 
       <button
-        v-if="clearable && !isDisabled"
+        v-if="clearable && !isDisabled && !isLoading"
         type="button"
-        class="q-icon-close q-upload-file__remove"
+        class="q-upload-file__btn q-icon-trash-bin"
         @click="handleRemoveFileBtnClick"
       />
+
+      <template v-if="isLoading">
+        <button
+          type="button"
+          class="q-upload-file__btn q-icon-close"
+          @click="handleAbortUploadingBtnClick"
+        />
+
+        <div class="q-upload-file__loader">
+          <div
+            class="q-upload-file__bar"
+            :style="barStyle"
+          ></div>
+        </div>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
+import { isNil } from 'lodash-es';
+
 import emitter from '../../mixins/emitter';
 
 const MAX_VISIBLE_FILE_NAME_LENGTH = 23;
@@ -106,18 +123,13 @@ export default {
     textLoadingFile: {
       type: String,
       default: null
-    },
-    onSelectFile: {
-      type: Function,
-      default: null
     }
   },
 
   data() {
     return {
       selectedFile: null,
-      isDragover: false,
-      isFileLoading: false
+      isDragover: false
     };
   },
 
@@ -126,23 +138,43 @@ export default {
       return this.disabled || (this.qForm?.disabled ?? false);
     },
 
+    isLoading() {
+      return !isNil(this.value?.loading);
+    },
+
+    fileName() {
+      return this.value?.name ?? null;
+    },
+
     classes() {
       return {
         'q-upload-drag_is-filled': this.value,
         'q-upload-drag_is-dragover': this.isDragover,
         'q-upload-drag_is-disabled': this.isDisabled,
-        'q-upload-drag_is-loading': this.isFileLoading
+        'q-upload-drag_is-loading': this.isLoading
+      };
+    },
+
+    barStyle() {
+      let loading = this.value?.loading ?? null;
+
+      if (loading === null) return {};
+
+      if (loading < 0) loading = 0;
+      if (loading > 100) loading = 100;
+      return {
+        width: `${loading}%`
       };
     },
 
     uploadDragIcon() {
-      if (this.isFileLoading) return 'q-icon-reverse';
+      if (this.isLoading) return 'q-icon-reverse';
 
       return this.isDisabled ? 'q-icon-lock' : 'q-icon-cloud-upload';
     },
 
     uploadDragText() {
-      if (this.isFileLoading)
+      if (this.isLoading)
         return this.textLoadingFile ?? this.$t('QUpload.loading');
 
       return this.value
@@ -150,24 +182,21 @@ export default {
         : this.textUploadFile ?? this.$t('QUpload.uploadFile');
     },
 
-    fileName() {
-      return this.value?.name ?? this.value?.url ?? '';
-    },
-
     isTitleShown() {
-      return this.fileName.length > MAX_VISIBLE_FILE_NAME_LENGTH;
+      return this.fileName?.length > MAX_VISIBLE_FILE_NAME_LENGTH;
     },
 
     preparedFileName() {
-      const name = this.fileName;
+      if (!this.fileName) return '';
 
+      const name = this.fileName;
       return this.isTitleShown
         ? `${name.slice(0, 10)}...${name.slice(-10)}`
         : name;
     },
 
     fileTitle() {
-      return this.isTitleShown ? this.fileName : '';
+      return this.isTitleShown && !this.fileName ? this.fileName : '';
     }
   },
 
@@ -179,7 +208,7 @@ export default {
 
   methods: {
     handleUploadClick() {
-      if (this.isDisabled || this.isFileLoading) return;
+      if (this.isDisabled || this.isLoading) return;
 
       const { fileInput } = this.$refs;
       fileInput.value = null;
@@ -192,27 +221,17 @@ export default {
 
       const sourceFile = (dataTransfer ?? target)?.files?.[0];
 
-      if (typeof this.onSelectFile !== 'function') {
-        this.$emit('change', sourceFile);
-        return;
-      }
-
-      this.isFileLoading = true;
-
-      try {
-        const file = await this.onSelectFile(sourceFile);
-
-        this.$emit('change', file);
-      } catch {
-        // do nothing
-      } finally {
-        this.isFileLoading = false;
-      }
+      this.$emit('select', sourceFile);
     },
 
     handleRemoveFileBtnClick() {
       this.$refs.fileInput.value = null;
-      this.$emit('change', null);
+      this.$emit('clear');
+    },
+
+    handleAbortUploadingBtnClick() {
+      this.$refs.fileInput.value = null;
+      this.$emit('abort');
     },
 
     handleDragover() {
