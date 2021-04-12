@@ -1,22 +1,14 @@
 <template>
   <div class="q-upload">
-    <div
-      class="q-upload-drag"
-      :class="classes"
-      tabindex="0"
-      @dragenter.prevent
-      @drop.prevent="processFile"
-      @dragover.prevent="handleDragover"
-      @dragleave.prevent="isDragover = false"
-      @click="handleUploadClick"
-      @keyup.enter="handleUploadClick"
-    >
-      <span
-        class="q-upload-drag__icon"
-        :class="uploadDragIcon"
-      />
-      <div class="q-upload-drag__text">{{ uploadDragText }}</div>
-    </div>
+    <q-upload-drop-zone
+      :is-disabled="isDisabled"
+      :is-loading="isLoading"
+      :text-upload-file="textUploadFile"
+      :text-replace-file="textReplaceFile"
+      :text-loading-file="textLoadingFile"
+      @click.native="handleUploadClick"
+      @keyup.enter.native="handleUploadClick"
+    />
 
     <input
       ref="fileInput"
@@ -27,51 +19,35 @@
       @change="processFile"
     />
 
-    <div
-      v-if="fileName"
-      class="q-upload-file"
-      :title="fileTitle"
-    >
-      <div class="q-icon-file q-upload-file__file" />
-      <div class="q-upload-file__name">{{ preparedFileName }}</div>
-
-      <button
-        v-if="clearable && !isDisabled && !isLoading"
-        type="button"
-        class="q-upload-file__btn q-icon-trash-bin"
-        @click="handleRemoveFileBtnClick"
+    <template v-if="!multiple">
+      <q-upload-file-single
+        v-if="value"
+        :value="value"
+        :is-loading="isLoading"
+        :is-disabled="isDisabled"
+        :is-clearable="clearable"
+        @clear="handleClear"
+        @abort="handleAbort"
       />
-
-      <template v-if="isLoading">
-        <button
-          type="button"
-          class="q-upload-file__btn q-icon-close"
-          @click="handleAbortUploadingBtnClick"
-        />
-
-        <div class="q-upload-file__loader">
-          <div
-            class="q-upload-file__bar"
-            :style="barStyle"
-          ></div>
-        </div>
-      </template>
-    </div>
+    </template>
+    <template v-else> multiple </template>
   </div>
 </template>
 
 <script>
 import { isNil } from 'lodash-es';
 
-import emitter from '../../mixins/emitter';
-
-const MAX_VISIBLE_FILE_NAME_LENGTH = 23;
+import QUploadDropZone from './QUploadDropZone';
+import QUploadFileSingle from './QUploadFileSingle';
 
 export default {
   name: 'QUpload',
   componentName: 'QUpload',
 
-  mixins: [emitter],
+  components: {
+    QUploadDropZone,
+    QUploadFileSingle
+  },
 
   model: {
     prop: 'value',
@@ -89,8 +65,12 @@ export default {
 
   props: {
     value: {
-      type: [Object, File],
+      type: [Object, Array],
       default: null
+    },
+    multiple: {
+      type: Boolean,
+      default: false
     },
     /**
      * the accept attribute value is a string or an array that defines the file types the file input should accept.
@@ -128,7 +108,6 @@ export default {
 
   data() {
     return {
-      selectedFile: null,
       isDragover: false
     };
   },
@@ -139,64 +118,7 @@ export default {
     },
 
     isLoading() {
-      return !isNil(this.value?.loading);
-    },
-
-    fileName() {
-      return this.value?.name ?? null;
-    },
-
-    classes() {
-      return {
-        'q-upload-drag_is-filled': this.value,
-        'q-upload-drag_is-dragover': this.isDragover,
-        'q-upload-drag_is-disabled': this.isDisabled,
-        'q-upload-drag_is-loading': this.isLoading
-      };
-    },
-
-    barStyle() {
-      let loading = this.value?.loading ?? null;
-
-      if (loading === null) return {};
-
-      if (loading < 0) loading = 0;
-      if (loading > 100) loading = 100;
-      return {
-        width: `${loading}%`
-      };
-    },
-
-    uploadDragIcon() {
-      if (this.isLoading) return 'q-icon-reverse';
-
-      return this.isDisabled ? 'q-icon-lock' : 'q-icon-cloud-upload';
-    },
-
-    uploadDragText() {
-      if (this.isLoading)
-        return this.textLoadingFile ?? this.$t('QUpload.loading');
-
-      return this.value
-        ? this.textReplaceFile ?? this.$t('QUpload.replaceFile')
-        : this.textUploadFile ?? this.$t('QUpload.uploadFile');
-    },
-
-    isTitleShown() {
-      return this.fileName?.length > MAX_VISIBLE_FILE_NAME_LENGTH;
-    },
-
-    preparedFileName() {
-      if (!this.fileName) return '';
-
-      const name = this.fileName;
-      return this.isTitleShown
-        ? `${name.slice(0, 10)}...${name.slice(-10)}`
-        : name;
-    },
-
-    fileTitle() {
-      return this.isTitleShown && !this.fileName ? this.fileName : '';
+      return !this.multiple && !isNil(this.value?.loading);
     }
   },
 
@@ -224,18 +146,14 @@ export default {
       this.$emit('select', sourceFile);
     },
 
-    handleRemoveFileBtnClick() {
+    handleClear() {
       this.$refs.fileInput.value = null;
       this.$emit('clear');
     },
 
-    handleAbortUploadingBtnClick() {
+    handleAbort() {
       this.$refs.fileInput.value = null;
       this.$emit('abort');
-    },
-
-    handleDragover() {
-      if (!this.isDisabled) this.isDragover = true;
     }
   }
 };

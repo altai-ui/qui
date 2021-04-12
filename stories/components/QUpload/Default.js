@@ -9,7 +9,6 @@ const QUploadStory = (_, { argTypes }) => ({
   },
   methods: {
     async handleFileSelect(sourceFile) {
-      console.log(111);
       this.formModel.file = {
         sourceFile,
         name: sourceFile.name,
@@ -30,6 +29,14 @@ const QUploadStory = (_, { argTypes }) => ({
         });
 
       await promise();
+    },
+
+    handleAbort() {
+      console.log('abort uploading');
+    },
+
+    handleClear() {
+      this.formModel.file = null;
     }
   },
   template: `
@@ -37,6 +44,8 @@ const QUploadStory = (_, { argTypes }) => ({
       v-bind="$props"
       :value="formModel.file"
       @select="handleFileSelect"
+      @abort="handleAbort"
+      @clear="handleClear"
     />
   `
 });

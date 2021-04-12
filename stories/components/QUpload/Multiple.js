@@ -3,36 +3,52 @@ const QUploadStoryMultiple = (_, { argTypes }) => ({
   data() {
     return {
       formModel: {
-        file: null
+        files: []
       }
     };
   },
   methods: {
-    async handleFileSelect(sourceFile) {
+    async handleFileSelect(sourceFile, fileId) {
+      this.formModel.files.push({
+        id: fileId,
+        sourceFile,
+        name: sourceFile.name,
+        loading: 0
+      });
+
+      const currentFile = this.formModel.files.find(
+        file => file.fileId === fileId
+      );
+
       const promise = () =>
         new Promise(resolve => {
-          setTimeout(() => resolve(sourceFile), 1000);
+          const interval = setInterval(() => {
+            currentFile.loading += 10;
+          }, 100);
+
+          setTimeout(() => {
+            clearInterval(interval);
+            currentFile.loading = null;
+            resolve();
+          }, 1000);
         });
 
-      try {
-        return await promise();
-      } catch {
-        return null;
-      }
+      await promise();
     }
   },
   template: `
     <q-upload
-      v-model="formModel.file"
       v-bind="$props"
-      :on-select-file="handleFileSelect"
+      multiple
+      :value="formModel.files"
+      @select="handleFileSelect"
     />
   `
 });
 
-QUploadStoryMultiple.storyName = 'Default';
+QUploadStoryMultiple.storyName = 'Multiple';
 QUploadStoryMultiple.args = {
   accept: ['image/*', '.pdf']
 };
 
-export default QUploadStoryMultiple.bind({});
+export default QUploadStoryMultiple;
