@@ -203,7 +203,7 @@ export default {
       fileInput.click();
     },
 
-    async processFile({ dataTransfer, target }) {
+    processFile({ dataTransfer, target }) {
       if (this.isDisabled) return;
 
       const fileList = (dataTransfer ?? target)?.files;

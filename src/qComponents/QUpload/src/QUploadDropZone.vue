@@ -76,7 +76,7 @@ export default {
   },
 
   methods: {
-    async handleDrop({ dataTransfer, target }) {
+    handleDrop({ dataTransfer, target }) {
       if (this.isDisabled) return;
       if (this.isDragover) this.isDragover = false;
 
