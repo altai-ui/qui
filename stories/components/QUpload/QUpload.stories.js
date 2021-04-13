@@ -8,6 +8,7 @@ export default {
   component: QUpload,
   argTypes: {
     'v-model': { control: { type: 'none' } },
+    multiple: { control: { type: 'none' } },
     direction: {
       control: { type: 'select', options: ['right', 'bottom'] }
     }
