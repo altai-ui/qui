@@ -58,7 +58,7 @@ export default {
 
   computed: {
     fileName() {
-      return this.value?.name ?? null;
+      return this.value?.name ?? '';
     },
 
     barStyle() {
@@ -87,7 +87,7 @@ export default {
     },
 
     fileTitle() {
-      return this.isTitleShown && !this.fileName ? this.fileName : '';
+      return this.isTitleShown ? this.fileName : '';
     }
   },
 
