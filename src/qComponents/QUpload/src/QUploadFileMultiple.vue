@@ -51,19 +51,22 @@
             </div>
           </div>
 
+          <div
+            v-if="isDisabled"
+            class="q-upload-file-multiple__action q-icon-lock"
+          ></div>
           <button
-            v-if="isClearable && !isDisabled && !line.isLoading"
+            v-else-if="line.isLoading"
             type="button"
-            class="q-upload-file-multiple__btn q-icon-trash-bin"
+            class="q-upload-file-multiple__action q-icon-close"
+            @click="handleAbortUploadingBtnClick(line.file.id)"
+          />
+          <button
+            v-else-if="isClearable"
+            type="button"
+            class="q-upload-file-multiple__action q-icon-trash-bin"
             @click="handleRemoveFileBtnClick(line.file.id)"
           />
-          <template v-if="line.isLoading">
-            <button
-              type="button"
-              class="q-upload-file-multiple__btn q-icon-close"
-              @click="handleAbortUploadingBtnClick(line.file.id)"
-            />
-          </template>
         </div>
       </div>
     </q-scrollbar>

@@ -3,8 +3,26 @@
 @import './q-upload-file-multiple.scss';
 
 .q-upload {
+  --q-upload-size: 264px;
+
   position: relative;
   display: inline-block;
+
+  &_multiple {
+    width: var(--q-upload-size);
+    height: var(--q-upload-size);
+    transition: width ease 0.5s, height ease 0.5s;
+
+    &_open {
+      &-right {
+        width: 544px;
+      }
+
+      &-bottom {
+        height: 544px;
+      }
+    }
+  }
 
   &__input {
     position: absolute;

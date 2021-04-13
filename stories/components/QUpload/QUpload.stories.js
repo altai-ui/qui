@@ -7,7 +7,10 @@ export default {
   title: 'Components/QUpload',
   component: QUpload,
   argTypes: {
-    'v-model': { control: { type: 'none' } }
+    'v-model': { control: { type: 'none' } },
+    direction: {
+      control: { type: 'select', options: ['right', 'bottom'] }
+    }
   }
 };
 

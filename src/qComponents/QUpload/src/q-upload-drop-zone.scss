@@ -10,8 +10,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 264px;
-  height: 264px;
+  width: var(--q-upload-size);
+  height: var(--q-upload-size);
   overflow: hidden;
   text-align: center;
   background-color: var(--background-color);

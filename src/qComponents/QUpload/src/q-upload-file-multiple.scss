@@ -2,24 +2,24 @@
   --text-color: rgba(var(--color-rgb-gray), 0.64);
 
   position: absolute;
-  top: 0;
-  left: 90%;
+  right: 0;
+  bottom: 0;
   z-index: 5;
   display: flex;
   flex-direction: column;
-  width: 264px;
-  height: 264px;
+  width: var(--q-upload-size);
+  height: var(--q-upload-size);
   background-color: var(--color-tertiary-gray-light);
   border-radius: var(--border-radius-base);
   box-shadow: var(--box-shadow-secondary);
   visibility: hidden;
   opacity: 0;
-  transition: left ease 0.5s, visibility ease 0.25s, opacity ease 0.25s;
+  transition: visibility ease 0.5s, opacity ease 0.25s;
 
   &_shown {
-    left: calc(100% + 16px);
     visibility: visible;
     opacity: 1;
+    transition: visibility ease 0.5s, opacity ease 0.25s 0.25s;
   }
 
   &__title {
@@ -30,6 +30,7 @@
     margin-left: 16px;
     font-weight: var(--font-weight-bold);
     font-size: 12px;
+    line-height: 24px;
     color: var(--color-primary-black);
     text-transform: uppercase;
     letter-spacing: var(--letter-spacing-base);
@@ -40,6 +41,7 @@
   }
 
   &__inner {
+    width: 100%;
     padding: 0 16px 16px;
   }
 
@@ -78,7 +80,7 @@
     text-overflow: ellipsis;
   }
 
-  &__btn {
+  &__action {
     width: 24px;
     margin-left: 8px;
     padding: 0;
@@ -92,6 +94,10 @@
     &:hover,
     &.focus-visible {
       color: var(--color-primary-black);
+    }
+
+    &.q-icon-lock {
+      color: var(--text-color);
     }
   }
 

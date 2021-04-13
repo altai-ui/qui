@@ -1,5 +1,8 @@
 <template>
-  <div class="q-upload">
+  <div
+    class="q-upload"
+    :class="classes"
+  >
     <q-upload-drop-zone
       :is-disabled="isDisabled"
       :is-loading="isLoading"
@@ -90,6 +93,14 @@ export default {
       default: false
     },
     /**
+     * direction to show the file list
+     */
+    direction: {
+      type: String,
+      default: 'right',
+      validator: value => ['right', 'bottom'].includes(value)
+    },
+    /**
      * maximum number of uploads allowed
      */
     limit: {
@@ -157,6 +168,17 @@ export default {
   },
 
   computed: {
+    classes() {
+      if (!this.multiple) return {};
+
+      return {
+        'q-upload_multiple': true,
+        [`q-upload_multiple_open-${this.direction}`]: Boolean(
+          this.value?.length
+        )
+      };
+    },
+
     isDisabled() {
       return this.disabled || (this.qForm?.disabled ?? false);
     },
