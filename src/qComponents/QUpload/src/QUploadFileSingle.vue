@@ -1,28 +1,28 @@
 <template>
   <div
-    class="q-upload-file"
+    class="q-upload-file-single"
     :title="fileTitle"
   >
-    <div class="q-icon-file q-upload-file__file" />
-    <div class="q-upload-file__name">{{ preparedFileName }}</div>
+    <div class="q-upload-file-single__icon q-icon-file" />
+    <div class="q-upload-file-single__name">{{ preparedFileName }}</div>
 
     <button
       v-if="isClearable && !isDisabled && !isLoading"
       type="button"
-      class="q-upload-file__btn q-icon-trash-bin"
+      class="q-upload-file-single__btn q-icon-trash-bin"
       @click="handleRemoveFileBtnClick"
     />
 
     <template v-if="isLoading">
       <button
         type="button"
-        class="q-upload-file__btn q-icon-close"
+        class="q-upload-file-single__btn q-icon-close"
         @click="handleAbortUploadingBtnClick"
       />
 
-      <div class="q-upload-file__loader">
+      <div class="q-upload-file-single__loader">
         <div
-          class="q-upload-file__bar"
+          class="q-upload-file-single__bar"
           :style="barStyle"
         ></div>
       </div>

@@ -53,7 +53,6 @@ export default {
   computed: {
     classes() {
       return {
-        // 'q-upload-drop-zone_is-filled': this.value,
         'q-upload-drop-zone_is-dragover': this.isDragover,
         'q-upload-drop-zone_is-disabled': this.isDisabled,
         'q-upload-drop-zone_is-loading': this.isLoading

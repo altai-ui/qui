@@ -5,6 +5,7 @@
   --box-shadow: var(--box-shadow-primary);
 
   position: relative;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -50,10 +51,6 @@
     text-transform: uppercase;
   }
 
-  // &_is-filled {
-  //   --background-color: var(--color-tertiary-gray-light);
-  // }
-
   &_is-dragover {
     --border-color: var(--color-primary-blue);
     --background-color: var(--color-tertiary-gray);
@@ -89,15 +86,5 @@
 
   .q-form-item_is-error & {
     --border-color: var(--color-secondary-orange);
-  }
-}
-
-@keyframes rotating {
-  0% {
-    transform: rotateZ(0deg);
-  }
-
-  100% {
-    transform: rotateZ(360deg);
   }
 }

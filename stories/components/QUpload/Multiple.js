@@ -16,9 +16,7 @@ const QUploadStoryMultiple = (_, { argTypes }) => ({
         loading: 0
       });
 
-      const currentFile = this.formModel.files.find(
-        file => file.fileId === fileId
-      );
+      const currentFile = this.formModel.files.find(({ id }) => id === fileId);
 
       const promise = () =>
         new Promise(resolve => {
@@ -34,6 +32,20 @@ const QUploadStoryMultiple = (_, { argTypes }) => ({
         });
 
       await promise();
+    },
+
+    handleAbort(fileId) {
+      console.log('abort uploading for: ', fileId);
+    },
+
+    handleClear(fileId) {
+      this.formModel.files = this.formModel.files.filter(
+        ({ id }) => id !== fileId
+      );
+    },
+
+    handleClearAll() {
+      this.formModel.files = [];
     }
   },
   template: `
@@ -42,6 +54,9 @@ const QUploadStoryMultiple = (_, { argTypes }) => ({
       multiple
       :value="formModel.files"
       @select="handleFileSelect"
+      @abort="handleAbort"
+      @clear="handleClear"
+      @clear-all="handleClearAll"
     />
   `
 });
