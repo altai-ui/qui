@@ -9,6 +9,12 @@ export default {
         type: 'none'
       }
     }
+  },
+  args: {
+    useGrouping: true,
+    prefix: '>',
+    suffix: '<',
+    precision: 2
   }
 };
 
@@ -28,10 +34,6 @@ export const Default = (_, { argTypes }) => ({
     <q-input-number 
       v-bind="$props" 
       v-model="value"
-      prefix=">"
-      suffix="<"
-      :precision="2"
-      use-grouping
       @input="handleEmit($event, 'input')"
       @change="handleEmit($event, 'change')"
     />

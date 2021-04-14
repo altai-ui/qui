@@ -210,7 +210,7 @@ export default {
   },
 
   methods: {
-    setSelection(target, position) {
+    setCursorPosition(target, position) {
       target.setSelectionRange(position, position);
     },
 
@@ -242,13 +242,8 @@ export default {
     },
 
     getLocaleSeparator(type) {
-      if (type === 'decimal')
-        return Intl.NumberFormat(this.localizationTag)
-          .format(1.1)
-          .replace(/\p{Number}/gu, '');
-
       return Intl.NumberFormat(this.localizationTag)
-        .format(11111)
+        .format(type === 'decimal' ? 1.1 : 11111)
         .replace(/\p{Number}/gu, '');
     },
 
@@ -263,7 +258,7 @@ export default {
     },
 
     handleKeydown(event) {
-      const value = event.target.value;
+      const { value } = event.target;
 
       const {
         key,
@@ -293,7 +288,7 @@ export default {
 
         // move caret if deleted part is separator
         if (valuePart === thousandSeparator || valuePart === floatSeparator) {
-          this.setSelection(event.target, caretPos + correction);
+          this.setCursorPosition(event.target, caretPos + correction);
           this.prevSelectionPos = caretPos + correction;
           this.prevValue = value;
           return;
@@ -306,7 +301,7 @@ export default {
         caretPos < prefixLength
       ) {
         caretPos = prefixLength;
-        this.setSelection(event.target, caretPos);
+        this.setCursorPosition(event.target, caretPos);
         this.prevSelectionPos = caretPos;
       }
 
@@ -316,7 +311,7 @@ export default {
         caretPos > value.length - suffixLength
       ) {
         caretPos = value.length - suffixLength;
-        this.setSelection(event.target, caretPos);
+        this.setCursorPosition(event.target, caretPos);
         this.prevSelectionPos = caretPos;
       }
 
@@ -345,15 +340,15 @@ export default {
 
       // add symbols and then format
       if (prevValueLength > valueLength) {
-        this.setSelection(event.target, caretPos - 1);
+        this.setCursorPosition(event.target, caretPos - 1);
 
         // remove symbols and then format
       } else if (prevValueLength < valueLength) {
-        this.setSelection(event.target, caretPos + 1);
+        this.setCursorPosition(event.target, caretPos + 1);
 
         // meta keys
       } else if (this.prevValue !== value) {
-        this.setSelection(event.target, caretPos);
+        this.setCursorPosition(event.target, caretPos);
       }
 
       this.prevSelectionPos = null;
