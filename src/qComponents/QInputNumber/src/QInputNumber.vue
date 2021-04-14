@@ -258,11 +258,9 @@ export default {
     },
 
     handleKeydown(event) {
-      const { value } = event.target;
-
       const {
         key,
-        target: { selectionStart, selectionEnd }
+        target: { value, selectionStart, selectionEnd }
       } = event;
 
       // range selection check
