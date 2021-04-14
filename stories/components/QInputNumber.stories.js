@@ -9,12 +9,6 @@ export default {
         type: 'none'
       }
     }
-  },
-  args: {
-    useGrouping: true,
-    prefix: '>',
-    suffix: '<',
-    precision: 2
   }
 };
 
@@ -40,4 +34,9 @@ export const Default = (_, { argTypes }) => ({
   `
 });
 
-Default.storyName = 'Default';
+Default.args = {
+  useGrouping: true,
+  prefix: '>',
+  suffix: '<',
+  precision: 2
+};

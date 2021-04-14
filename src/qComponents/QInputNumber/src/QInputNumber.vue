@@ -323,8 +323,7 @@ export default {
     },
 
     handleKeyup(event) {
-      const value = event.target.value;
-      const { selectionStart, selectionEnd } = event.target;
+      const { value, selectionStart, selectionEnd } = event.target;
       if (selectionStart !== selectionEnd) return;
 
       const isKeyDelete = event.key === 'Backspace' || event.key === 'Delete';
@@ -391,8 +390,6 @@ export default {
 
     handleChangeInput(value, type) {
       const splittedValue = this.getValueWithoutAdditions(value);
-
-      console.log(splittedValue);
 
       if (type === 'input' && splittedValue === '-') {
         this.userValue = value;
