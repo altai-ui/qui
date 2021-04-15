@@ -1,60 +1,70 @@
 <template>
-  <div class="q-upload">
-    <div
-      class="q-upload-drag"
-      :class="classes"
-      tabindex="0"
-      @dragenter.prevent
-      @drop.prevent="processFile"
-      @dragover.prevent="handleDragover"
-      @dragleave.prevent="isDragover = false"
-      @click="handleUploadClick"
-      @keyup.enter="handleUploadClick"
-    >
-      <span
-        class="q-upload-drag__icon"
-        :class="uploadDragIcon"
-      />
-      <div class="q-upload-drag__text">{{ uploadDragText }}</div>
-    </div>
+  <div
+    class="q-upload"
+    :class="classes"
+  >
+    <q-upload-drop-zone
+      :is-disabled="isDisabled"
+      :is-loading="isLoading"
+      :text-upload-file="textUploadFile"
+      :text-replace-file="textReplaceFile"
+      :text-loading-file="textLoadingFile"
+      @click.native="handleUploadClick"
+      @keyup.enter.native="handleUploadClick"
+    />
 
     <input
       ref="fileInput"
       class="q-upload__input"
       type="file"
-      :accept="accept.toString()"
       tabindex="-1"
+      :accept="accept.toString()"
+      :multiple="multiple"
       @change="processFile"
     />
 
-    <div
-      v-if="value"
-      class="q-upload-file"
-      :title="fileTitle"
-    >
-      <div class="q-icon-file q-upload-file__file" />
-      <div class="q-upload-file__name">{{ preparedFileName }}</div>
-
-      <button
-        v-if="clearable && !isDisabled"
-        type="button"
-        class="q-icon-close q-upload-file__remove"
-        @click="handleRemoveFileBtnClick"
+    <q-upload-file-multiple
+      v-if="multiple"
+      :value="value"
+      :is-disabled="isDisabled"
+      :is-clearable="clearable"
+      @clear-all="handleClearAll"
+      @clear="handleClear"
+      @abort="handleAbort"
+    />
+    <template v-else>
+      <q-upload-file-single
+        v-if="value"
+        :value="value"
+        :is-loading="isLoading"
+        :is-disabled="isDisabled"
+        :is-clearable="clearable"
+        :text-uploaded-files="textUploadedFiles"
+        @clear="handleClear"
+        @abort="handleAbort"
       />
-    </div>
+    </template>
   </div>
 </template>
 
 <script>
-import emitter from '../../mixins/emitter';
+import { isNil } from 'lodash-es';
 
-const MAX_VISIBLE_FILE_NAME_LENGTH = 23;
+import { randId } from '../../helpers';
+
+import QUploadDropZone from './QUploadDropZone';
+import QUploadFileSingle from './QUploadFileSingle';
+import QUploadFileMultiple from './QUploadFileMultiple';
 
 export default {
   name: 'QUpload',
   componentName: 'QUpload',
 
-  mixins: [emitter],
+  components: {
+    QUploadDropZone,
+    QUploadFileSingle,
+    QUploadFileMultiple
+  },
 
   model: {
     prop: 'value',
@@ -72,7 +82,29 @@ export default {
 
   props: {
     value: {
-      type: [Object, File],
+      type: [Object, Array],
+      default: null
+    },
+    /**
+     * whether uploading multiple files is permitted
+     */
+    multiple: {
+      type: Boolean,
+      default: false
+    },
+    /**
+     * direction to show the file list
+     */
+    direction: {
+      type: String,
+      default: 'right',
+      validator: value => ['right', 'bottom'].includes(value)
+    },
+    /**
+     * maximum number of uploads allowed
+     */
+    limit: {
+      type: Number,
       default: null
     },
     /**
@@ -83,91 +115,76 @@ export default {
       type: [String, Array],
       default: () => []
     },
+    /**
+     * whether to disable upload
+     */
     disabled: {
       type: Boolean,
       default: false
     },
+    /**
+     * whether to show clear button
+     */
     clearable: {
       type: Boolean,
       default: true
     },
+    /**
+     * whether to trigger form validation
+     */
     validateEvent: {
       type: Boolean,
       default: true
     },
+    /**
+     * text of text upload file
+     */
     textUploadFile: {
       type: String,
       default: null
     },
+    /**
+     * text of text replace file
+     */
     textReplaceFile: {
       type: String,
       default: null
     },
+    /**
+     * text of text loading file
+     */
     textLoadingFile: {
       type: String,
       default: null
     },
-    onSelectFile: {
-      type: Function,
+
+    /**
+     * text of text uploaded files
+     */
+    textUploadedFiles: {
+      type: String,
       default: null
     }
   },
 
-  data() {
-    return {
-      selectedFile: null,
-      isDragover: false,
-      isFileLoading: false
-    };
-  },
-
   computed: {
+    classes() {
+      if (!this.multiple) return {};
+
+      return {
+        'q-upload_multiple': true,
+        [`q-upload_multiple_open-${this.direction}`]: Boolean(
+          this.value?.length
+        )
+      };
+    },
+
     isDisabled() {
       return this.disabled || (this.qForm?.disabled ?? false);
     },
 
-    classes() {
-      return {
-        'q-upload-drag_is-filled': this.value,
-        'q-upload-drag_is-dragover': this.isDragover,
-        'q-upload-drag_is-disabled': this.isDisabled,
-        'q-upload-drag_is-loading': this.isFileLoading
-      };
-    },
-
-    uploadDragIcon() {
-      if (this.isFileLoading) return 'q-icon-reverse';
-
-      return this.isDisabled ? 'q-icon-lock' : 'q-icon-cloud-upload';
-    },
-
-    uploadDragText() {
-      if (this.isFileLoading)
-        return this.textLoadingFile ?? this.$t('QUpload.loading');
-
-      return this.value
-        ? this.textReplaceFile ?? this.$t('QUpload.replaceFile')
-        : this.textUploadFile ?? this.$t('QUpload.uploadFile');
-    },
-
-    fileName() {
-      return this.value?.name ?? this.value?.url ?? '';
-    },
-
-    isTitleShown() {
-      return this.fileName.length > MAX_VISIBLE_FILE_NAME_LENGTH;
-    },
-
-    preparedFileName() {
-      const name = this.fileName;
-
-      return this.isTitleShown
-        ? `${name.slice(0, 10)}...${name.slice(-10)}`
-        : name;
-    },
-
-    fileTitle() {
-      return this.isTitleShown ? this.fileName : '';
+    isLoading() {
+      return !this.multiple && !isNil(this.value?.loading);
     }
   },
 
@@ -179,44 +196,76 @@ export default {
 
   methods: {
     handleUploadClick() {
-      if (this.isDisabled || this.isFileLoading) return;
+      if (this.isDisabled || this.isLoading) return;
 
       const { fileInput } = this.$refs;
       fileInput.value = null;
       fileInput.click();
     },
 
-    async processFile({ dataTransfer, target }) {
+    processFile({ dataTransfer, target }) {
       if (this.isDisabled) return;
-      if (this.isDragover) this.isDragover = false;
 
-      const sourceFile = (dataTransfer ?? target)?.files?.[0];
+      const fileList = (dataTransfer ?? target)?.files;
 
-      if (typeof this.onSelectFile !== 'function') {
-        this.$emit('change', sourceFile);
+      if (!this.multiple) {
+        /**
+         * triggers when a file is selected
+         */
+        this.$emit('select', fileList?.[0], randId());
         return;
       }
 
-      this.isFileLoading = true;
-
-      try {
-        const file = await this.onSelectFile(sourceFile);
-
-        this.$emit('change', file);
-      } catch {
-        // do nothing
-      } finally {
-        this.isFileLoading = false;
+      if (this.limit && this.value.length + fileList.length > this.limit) {
+        /**
+         * triggers when limit is exceeded
+         */
+        this.$emit('exceed');
+        return;
       }
+
+      const preparedFileList = Array.from(fileList).map(sourceFile => {
+        const fileId = randId();
+        /**
+         * triggers when a file is selected
+         */
+        this.$emit('select', sourceFile, fileId);
+
+        return { id: fileId, sourceFile };
+      });
+
+      /**
+       * triggers when multiple files are selected
+       */
+      this.$emit('select-all', preparedFileList);
     },
 
-    handleRemoveFileBtnClick() {
+    resetNativeInput() {
       this.$refs.fileInput.value = null;
-      this.$emit('change', null);
     },
 
-    handleDragover() {
-      if (!this.isDisabled) this.isDragover = true;
+    handleClearAll() {
+      this.resetNativeInput();
+      /**
+       * triggers when clear all files button clicked
+       */
+      this.$emit('clear-all');
+    },
+
+    handleClear(fileId) {
+      this.resetNativeInput();
+      /**
+       * triggers when the file clear button clicked
+       */
+      this.$emit('clear', fileId);
+    },
+
+    handleAbort(fileId) {
+      this.resetNativeInput();
+      /**
+       * triggers when the file abort button clicked
+       */
+      this.$emit('abort', fileId);
     }
   }
 };
