@@ -31,6 +31,16 @@ Some examples below:
 
 ## Install
 
+CDN:
+
+```html
+<!-- import CSS -->
+<link rel="stylesheet" href="https://unpkg.com/@qvant/qui/dist/qui.css" />
+<!-- import JavaScript -->
+<script src="https://unpkg.com/@qvant/qui/dist/qui.umd.min.js"></script>
+```
+Npm | Yarn:
+
 ```bash
 npm install @qvant/qui -S
 yarn add @qvant/qui
