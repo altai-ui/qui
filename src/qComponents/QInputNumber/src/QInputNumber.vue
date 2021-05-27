@@ -13,17 +13,17 @@
 
     <q-input
       ref="input"
-      :value="currentValue"
+      :value="formattedValue"
       class="q-input-number__input"
       :disabled="isDisabled"
       :placeholder="placeholder"
       :validate-event="false"
       @blur="handleBlur"
       @focus="handleFocus"
-      @input="handleChangeInput($event, 'input')"
-      @change="handleChangeInput($event, 'change')"
       @keydown.native="handleKeydown"
-      @keyup.native="handleKeyup"
+      @keypress.native="onInputKeyPress"
+      @click.native="handleClick"
+      @paste.native="handlePaste"
     />
 
     <button
@@ -140,16 +140,6 @@ export default {
     }
   },
 
-  data() {
-    return {
-      number: null,
-      userValue: null,
-      prevCaretPosition: 0,
-      prevValue: '',
-      prevSelectionPos: null
-    };
-  },
-
   computed: {
     isDisabled() {
       return this.disabled || (this.qForm?.disabled ?? false);
@@ -160,7 +150,13 @@ export default {
     },
 
     increaseClass() {
-      if (this.number >= this.max) {
+      const number = this.formattedValue
+        ? this.parseLocaleNumber(
+            this.getValueWithoutAdditions(this.formattedValue)
+          )
+        : 0;
+
+      if (number >= this.max) {
         return 'q-input-number__button_is-disabled';
       }
 
@@ -168,7 +164,13 @@ export default {
     },
 
     decreaseClass() {
-      if (this.number <= this.min) {
+      const number = this.formattedValue
+        ? this.parseLocaleNumber(
+            this.getValueWithoutAdditions(this.formattedValue)
+          )
+        : 0;
+
+      if (number <= this.min) {
         return 'q-input-number__button_is-disabled';
       }
 
@@ -186,26 +188,11 @@ export default {
       }).format;
     },
 
-    currentValue() {
-      let value = this.userValue ?? this.number ?? '';
-      value = value ? this.getValueWithoutAdditions(value) : value;
-
-      const isNumeric = value !== '' && value !== '-';
-      value = !isNumeric ? value : this.localeFormat(value);
-
-      const prefix = (isNumeric && this.prefix) || '';
-      const suffix = (isNumeric && this.suffix) || '';
-
-      return `${prefix}${value}${suffix}`;
-    }
-  },
-
-  watch: {
-    value: {
-      handler(value) {
-        this.number = value === null ? null : Number(value);
-      },
-      immediate: true
+    formattedValue() {
+      return this.value !== null
+        ? `${this.prefix ?? ''}${this.localeFormat(this.value)}${this.suffix ??
+            ''}`
+        : '';
     }
   },
 
@@ -214,37 +201,22 @@ export default {
       target.setSelectionRange(position, position);
     },
 
-    handleIncreaseClick() {
-      const updatedNumber = Math.round((this.number + this.step) * 100) / 100;
-
-      if (updatedNumber > this.max) return;
-
-      this.userValue = updatedNumber;
-      this.changesEmmiter(updatedNumber, 'change');
-    },
-
-    handleDecreaseClick() {
-      const updatedNumber = Math.round((this.number - this.step) * 100) / 100;
-
-      if (updatedNumber < this.min) return;
-
-      this.userValue = updatedNumber;
-      this.changesEmmiter(updatedNumber, 'change');
-    },
-
-    handleBlur(event) {
-      this.$emit('blur', event);
-      if (this.validateEvent) this.qFormItem?.validateField('blur');
-    },
-
-    handleFocus(event) {
-      this.$emit('focus', event);
-    },
-
     getLocaleSeparator(type) {
       return Intl.NumberFormat(this.localizationTag)
         .format(type === 'decimal' ? 1.1 : 11111)
         .replace(/\p{Number}/gu, '');
+    },
+
+    parseLocaleNumber(stringNumber) {
+      return parseFloat(
+        stringNumber
+          .replace(new RegExp(`\\${this.getLocaleSeparator()}`, 'g'), '')
+          .replace(new RegExp(`\\${this.getLocaleSeparator('decimal')}`), '.')
+      );
+    },
+
+    getFormattedPartsLength(value, caretPos) {
+      return value.slice(0, caretPos).split(this.getLocaleSeparator()).length;
     },
 
     checkStringAdditions(value, addition) {
@@ -255,108 +227,6 @@ export default {
           : 0;
 
       return position === expectedPosition;
-    },
-
-    handleKeydown(event) {
-      const {
-        key,
-        target: { value, selectionStart, selectionEnd }
-      } = event;
-
-      // range selection check
-      if (selectionStart !== selectionEnd) return;
-
-      const prefixLength = this.prefix?.length ?? 0;
-      const suffixLength = this.suffix?.length ?? 0;
-
-      this.prevSelectionPos =
-        value === '-' ? selectionStart + 1 : selectionStart;
-
-      let caretPos = selectionStart;
-
-      if (key === 'Backspace' || key === 'Delete') {
-        const thousandSeparator = this.getLocaleSeparator();
-        const floatSeparator = this.getLocaleSeparator('decimal');
-
-        const valuePart =
-          key === 'Backspace'
-            ? value[selectionStart - 1]
-            : value[selectionStart];
-        const correction = key === 'Backspace' ? -1 : 1;
-
-        // move caret if deleted part is separator
-        if (valuePart === thousandSeparator || valuePart === floatSeparator) {
-          this.setCursorPosition(event.target, caretPos + correction);
-          this.prevSelectionPos = caretPos + correction;
-          this.prevValue = value;
-          return;
-        }
-      }
-
-      if (
-        this.prefix &&
-        this.checkStringAdditions(value, 'prefix') &&
-        caretPos < prefixLength
-      ) {
-        caretPos = prefixLength;
-        this.setCursorPosition(event.target, caretPos);
-        this.prevSelectionPos = caretPos;
-      }
-
-      if (
-        this.suffix &&
-        this.checkStringAdditions(value, 'suffix') &&
-        caretPos > value.length - suffixLength
-      ) {
-        caretPos = value.length - suffixLength;
-        this.setCursorPosition(event.target, caretPos);
-        this.prevSelectionPos = caretPos;
-      }
-
-      this.prevValue = value;
-    },
-
-    getFormattedPartsLength(value, caretPos) {
-      return value.slice(0, caretPos).split(this.getLocaleSeparator()).length;
-    },
-
-    handleKeyup(event) {
-      const { value, selectionStart, selectionEnd } = event.target;
-      if (selectionStart !== selectionEnd) return;
-
-      const isKeyDelete = event.key === 'Backspace' || event.key === 'Delete';
-      const correction = isKeyDelete ? -1 : 1;
-
-      const caretPos = this.prevSelectionPos + correction;
-
-      const prevValueLength = this.getFormattedPartsLength(
-        this.prevValue,
-        caretPos
-      );
-      const valueLength = this.getFormattedPartsLength(value, caretPos);
-
-      // add symbols and then format
-      if (prevValueLength > valueLength) {
-        this.setCursorPosition(event.target, caretPos - 1);
-
-        // remove symbols and then format
-      } else if (prevValueLength < valueLength) {
-        this.setCursorPosition(event.target, caretPos + 1);
-
-        // meta keys
-      } else if (this.prevValue !== value) {
-        this.setCursorPosition(event.target, caretPos);
-      }
-
-      this.prevSelectionPos = null;
-    },
-
-    parseLocaleNumber(stringNumber) {
-      return parseFloat(
-        stringNumber
-          .replace(new RegExp(`\\${this.getLocaleSeparator()}`, 'g'), '')
-          .replace(new RegExp(`\\${this.getLocaleSeparator('decimal')}`), '.')
-      );
     },
 
     getSplittedValue(value, addition) {
@@ -386,56 +256,304 @@ export default {
       return splittedValue;
     },
 
-    handleChangeInput(value, type) {
-      const splittedValue = this.getValueWithoutAdditions(value);
-
-      if (type === 'input' && splittedValue === '-') {
-        this.userValue = value;
-        return;
-      }
-
-      if (!splittedValue) {
-        this.userValue = null;
-        this.changesEmmiter(null, type);
-        return;
-      }
-
-      this.processUserValue(splittedValue, type);
+    isCharReadonly(char) {
+      return Number.isNaN(Number(char)) && char !== '-';
     },
 
-    processUserValue(value, type) {
-      const userValue = this.parseLocaleNumber(value);
-      this.userValue = null;
+    handleClick(event) {
+      const { input } = this.$refs.input.$refs;
+      const { value, selectionStart, selectionEnd } = input;
 
-      if (Number.isNaN(userValue) || value > this.max || value < this.min) {
+      if (selectionStart !== selectionEnd) {
+        event.preventDefault();
         return;
       }
 
-      if (type === 'change') {
-        this.changesEmmiter(userValue, type);
+      const prefixLength = this.prefix?.length ?? 0;
+      const suffixLength = this.suffix?.length ?? 0;
+
+      if (selectionStart < prefixLength + 1) {
+        this.setCursorPosition(input, prefixLength);
+      } else if (selectionStart > value.length - suffixLength - 1) {
+        this.setCursorPosition(input, value.length - suffixLength);
+      }
+    },
+
+    handlePaste(event) {
+      event.preventDefault();
+
+      const data = (event.clipboardData || window.clipboardData).getData(
+        'Text'
+      );
+
+      this.insertPasteText(event, data);
+    },
+
+    onInputKeyPress(event) {
+      event.preventDefault();
+
+      if (
+        // numbers
+        (event.keyCode < 48 || event.keyCode > 57) &&
+        // minus
+        event.keyCode !== 45 &&
+        event.key !== '.' &&
+        event.key !== ','
+      )
+        return;
+
+      this.insertText(event, event.key);
+    },
+
+    handleKeydown(event) {
+      const { value, selectionStart, selectionEnd } = event.target;
+      const prefixLength = this.prefix?.length ?? 0;
+      const suffixLength = this.suffix?.length ?? 0;
+
+      switch (event.key) {
+        case 'Backspace':
+        case 'Delete':
+          event.preventDefault();
+          this.insertText(event, event.key);
+          break;
+        case 'ArrowLeft':
+        case 'ArrowRight':
+          if (
+            (event.key === 'ArrowLeft' && selectionStart < prefixLength + 1) ||
+            (event.key === 'ArrowRight' &&
+              selectionEnd > value.length - suffixLength - 1)
+          ) {
+            event.preventDefault();
+          }
+          break;
+        case 'ArrowUp':
+          event.preventDefault();
+          this.setCursorPosition(event.target, prefixLength);
+          break;
+        case 'ArrowDown':
+          event.preventDefault();
+          this.setCursorPosition(event.target, value.length - suffixLength);
+          break;
+        default:
+          break;
+      }
+    },
+
+    insertPasteText(event, text) {
+      const parsedText = this.parseLocaleNumber(
+        this.getValueWithoutAdditions(text)
+      );
+      if (Number.isNaN(Number(parsedText))) return;
+
+      const { selectionStart, selectionEnd } = event.target;
+
+      const previousPart = this.getValueWithoutAdditions(
+        this.formattedValue.substring(0, selectionStart)
+      );
+      const lastPart = this.getValueWithoutAdditions(
+        this.formattedValue.substring(selectionEnd)
+      );
+
+      const newValue = this.parseLocaleNumber(
+        `${previousPart}${parsedText}${lastPart}`
+      );
+
+      this.updateValue(
+        event.target,
+        newValue.toFixed(this.precision),
+        selectionEnd
+      );
+    },
+
+    insertText(event, key) {
+      const { value, selectionStart, selectionEnd } = event.target;
+
+      let selectionMove = 0;
+      let selectionNewEnd = selectionEnd;
+      let selectionNewStart = selectionStart;
+      let insertedValue = '';
+
+      const prefixLength = this.prefix?.length ?? 0;
+      const suffixLength = this.suffix?.length ?? 0;
+
+      if (prefixLength && selectionStart <= prefixLength) {
+        selectionNewStart = prefixLength;
+      }
+
+      if (suffixLength && selectionEnd >= value.length - suffixLength) {
+        selectionNewEnd = value.length - suffixLength;
+      }
+
+      const previousPart = this.getValueWithoutAdditions(
+        this.formattedValue.substring(0, selectionNewStart)
+      );
+      const lastPart = this.getValueWithoutAdditions(
+        this.formattedValue.substring(selectionNewEnd)
+      );
+
+      if (
+        this.formattedValue &&
+        ((key === 'Backspace' && !previousPart.length) ||
+          (key === 'Delete' && !lastPart.length))
+      ) {
+        if (
+          selectionNewEnd - selectionNewStart ===
+          this.getValueWithoutAdditions(value).length
+        ) {
+          this.updateValue(event.target, null, selectionNewEnd);
+        }
         return;
       }
 
-      this.$emit('input', Number(userValue.toFixed(this.precision)));
-      if (this.validateEvent) this.qFormItem?.validateField('input');
+      const prevChar = previousPart.substring(previousPart.length - 1);
+      const nextChar = lastPart.substring(1, -1);
+
+      switch (key) {
+        case this.getLocaleSeparator('decimal'):
+          if (nextChar === this.getLocaleSeparator('decimal')) {
+            this.setCursorPosition(event.target, selectionStart + 1);
+          }
+          return;
+        case '-':
+          if (!this.formattedValue) {
+            this.$refs.input.$refs.input.value = '-';
+            return;
+          }
+          insertedValue = key;
+          break;
+        case 'Backspace':
+          selectionMove = this.isCharReadonly(prevChar) ? -2 : -1;
+          selectionNewEnd -= this.isCharReadonly(prevChar) ? 1 : 0;
+          break;
+        case 'Delete':
+          selectionMove = this.isCharReadonly(nextChar) ? 1 : 0;
+          selectionNewEnd += this.isCharReadonly(nextChar) ? 2 : 1;
+          break;
+        default:
+          if (!this.formattedValue) {
+            this.updateValue(
+              event.target,
+              Number(`-${key}`).toFixed(this.precision),
+              selectionNewEnd
+            );
+            return;
+          }
+          insertedValue = key;
+          break;
+      }
+
+      const valueSeparatedParts = [
+        value.substring(prefixLength, selectionNewStart + selectionMove),
+        value.substring(selectionNewEnd, value.length - suffixLength)
+      ];
+
+      if (
+        !valueSeparatedParts[0] &&
+        valueSeparatedParts[1].substring(1, -1) ===
+          this.getLocaleSeparator('decimal')
+      ) {
+        this.updateValue(event.target, null, selectionNewEnd);
+        return;
+      }
+
+      const newValue = this.parseLocaleNumber(
+        `${valueSeparatedParts[0]}${insertedValue}${valueSeparatedParts[1]}`
+      );
+
+      if (newValue > this.max || newValue < this.min) return;
+
+      this.updateValue(
+        event.target,
+        newValue.toFixed(this.precision),
+        selectionNewEnd,
+        newValue < 0 || key === '-'
+      );
+    },
+
+    updateValue(target, newValue, selectionEnd, isMinusSign) {
+      if (newValue === null) {
+        this.changesEmmiter(null);
+        return;
+      }
+
+      const minusZero = Number(newValue) === 0 && isMinusSign;
+
+      const formattedValue = `${this.prefix ?? ''}${this.localeFormat(
+        minusZero ? -0 : newValue
+      )}${this.suffix ?? ''}`;
+
+      const newLength = formattedValue.length;
+      const prefixLength = this.prefix?.length ?? 0;
+      const newCaretPosition =
+        target.value.length > 1
+          ? selectionEnd + (newLength - target.value.length || 1)
+          : target.value.length + prefixLength + 1;
+
+      this.$refs.input.$refs.input.value = formattedValue;
+
+      this.changesEmmiter(Number(minusZero ? -0 : newValue));
+
+      let movedCaret = newCaretPosition;
+
+      if (newCaretPosition < prefixLength) {
+        movedCaret = prefixLength;
+      } else if (newCaretPosition > formattedValue.length - prefixLength) {
+        movedCaret = formattedValue.length - prefixLength;
+      }
+
+      this.setCursorPosition(target, movedCaret);
+    },
+
+    handleIncreaseClick() {
+      let updatedNumber = this.formattedValue
+        ? this.parseLocaleNumber(
+            this.getValueWithoutAdditions(this.formattedValue)
+          )
+        : 0;
+      updatedNumber = Math.round((updatedNumber + this.step) * 100) / 100;
+
+      if (updatedNumber > this.max) return;
+
+      this.changesEmmiter(updatedNumber, 'change');
+    },
+
+    handleDecreaseClick() {
+      let updatedNumber = this.formattedValue
+        ? this.parseLocaleNumber(
+            this.getValueWithoutAdditions(this.formattedValue)
+          )
+        : 0;
+      updatedNumber = Math.round((updatedNumber - this.step) * 100) / 100;
+
+      if (updatedNumber < this.min) return;
+
+      this.changesEmmiter(updatedNumber, 'change');
+    },
+
+    handleBlur(event) {
+      this.$emit('blur', event);
+      this.changesEmmiter(
+        this.parseLocaleNumber(
+          this.getValueWithoutAdditions(event.target.value)
+        ),
+        'change'
+      );
+      if (this.validateEvent) this.qFormItem?.validateField('blur');
+    },
+
+    handleFocus(event) {
+      this.$emit('focus', event);
     },
 
     changesEmmiter(value, type) {
-      let passedData = null;
-
-      if (value || value === 0) {
-        this.number = Number(value.toFixed(this.precision));
-        passedData = this.number;
-      }
-
       if (type === 'change') {
-        this.$emit('input', passedData);
-        this.$emit('change', passedData);
+        this.$emit('input', value);
+        this.$emit('change', value);
         if (this.validateEvent) this.qFormItem?.validateField('change');
         return;
       }
 
-      this.$emit('input', passedData);
+      this.$emit('input', value);
       if (this.validateEvent) this.qFormItem?.validateField('input');
     }
   }

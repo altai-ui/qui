@@ -16,7 +16,7 @@ export const Default = (_, { argTypes }) => ({
   props: Object.keys(argTypes).filter(val => val !== 'value'),
   data() {
     return {
-      value: 1234
+      value: 1124
     };
   },
   methods: {

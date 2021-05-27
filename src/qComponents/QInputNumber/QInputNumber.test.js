@@ -17,16 +17,12 @@ describe('QInputNumber', () => {
     expect(element).toMatchSnapshot();
   });
 
-  it('data should match snapshot', () => {
-    expect(Component.data()).toMatchSnapshot();
-  });
-
   describe('computed', () => {
     it('increaseClass', async () => {
-      const instance = shallowMount(Component);
-
-      await instance.setData({
-        number: '9007199254740992'
+      const instance = shallowMount(Component, {
+        propsData: {
+          value: 9007199254740992
+        }
       });
 
       expect(instance.vm.increaseClass).toEqual(
@@ -35,10 +31,10 @@ describe('QInputNumber', () => {
     });
 
     it('decreaseClass', async () => {
-      const instance = shallowMount(Component);
-
-      await instance.setData({
-        number: '-9007199254740992'
+      const instance = shallowMount(Component, {
+        propsData: {
+          value: -9007199254740992
+        }
       });
 
       expect(instance.vm.decreaseClass).toEqual(
@@ -49,17 +45,137 @@ describe('QInputNumber', () => {
 
   describe('methods', () => {
     it('handleIncreaseClick', () => {
-      const { vm } = shallowMount(Component);
-      vm.handleIncreaseClick();
+      const instance = shallowMount(Component, {
+        propsData: {
+          value: 0
+        }
+      });
+      instance.vm.handleIncreaseClick();
 
-      expect(vm.userValue).toEqual(1);
+      expect(instance.emitted().change[0]).toEqual([1]);
     });
 
     it('handleDecreaseClick', () => {
-      const { vm } = shallowMount(Component);
-      vm.handleDecreaseClick();
+      const instance = shallowMount(Component, {
+        propsData: {
+          value: 0
+        }
+      });
+      instance.vm.handleDecreaseClick();
 
-      expect(vm.userValue).toEqual(-1);
+      expect(instance.emitted().change[0]).toEqual([-1]);
+    });
+
+    describe('getLocaleSeparator', () => {
+      it('should return decimal', () => {
+        const { vm } = shallowMount(Component);
+
+        expect(vm.getLocaleSeparator('decimal')).toEqual('.');
+      });
+
+      it('should return thousands', () => {
+        const { vm } = shallowMount(Component);
+
+        expect(vm.getLocaleSeparator()).toEqual(',');
+      });
+    });
+
+    it('parseLocaleNumber', () => {
+      const { vm } = shallowMount(Component);
+
+      expect(vm.parseLocaleNumber('123,123.0')).toEqual(123123);
+    });
+
+    describe('getLocaleSeparator', () => {
+      it('should return 2 parts', () => {
+        const { vm } = shallowMount(Component);
+
+        expect(vm.getFormattedPartsLength('1,120,120', 5)).toEqual(2);
+      });
+
+      it('should return 1 part', () => {
+        const { vm } = shallowMount(Component);
+
+        expect(vm.getFormattedPartsLength('1,234', 1)).toEqual(1);
+      });
+    });
+
+    describe('checkStringAdditions', () => {
+      it('should return prefix', () => {
+        const { vm } = shallowMount(Component, {
+          propsData: {
+            prefix: '>'
+          }
+        });
+
+        expect(vm.checkStringAdditions('>1120<', 'prefix')).toBeTruthy();
+      });
+
+      it('should return suffix', () => {
+        const { vm } = shallowMount(Component, {
+          propsData: {
+            suffix: '<'
+          }
+        });
+
+        expect(vm.checkStringAdditions('>1120<', 'suffix')).toBeTruthy();
+      });
+    });
+
+    describe('getSplittedValue', () => {
+      it('should return value from args', () => {
+        const defaultValue = '1120';
+        const { vm } = shallowMount(Component);
+
+        expect(vm.getSplittedValue(defaultValue, 'prefix')).toEqual(
+          defaultValue
+        );
+      });
+
+      it('should return string without prefix', () => {
+        const { vm } = shallowMount(Component, {
+          propsData: {
+            prefix: '>'
+          }
+        });
+
+        expect(vm.getSplittedValue('>1120<', 'prefix')).toEqual('1120<');
+      });
+
+      it('should return string without suffix', () => {
+        const { vm } = shallowMount(Component, {
+          propsData: {
+            suffix: '<'
+          }
+        });
+
+        expect(vm.getSplittedValue('>1120<', 'suffix')).toEqual('>1120');
+      });
+    });
+
+    it('getValueWithoutAdditions', () => {
+      const { vm } = shallowMount(Component, {
+        propsData: {
+          prefix: '>',
+          suffix: '<'
+        }
+      });
+
+      expect(vm.getValueWithoutAdditions('>1120<')).toEqual('1120');
+    });
+
+    describe('isCharReadonly', () => {
+      it('should return false if char is number', () => {
+        const { vm } = shallowMount(Component);
+
+        expect(vm.isCharReadonly('1')).toBeFalsy();
+      });
+
+      it('should return true if char is -', () => {
+        const { vm } = shallowMount(Component);
+
+        expect(vm.isCharReadonly('.')).toBeTruthy();
+      });
     });
   });
 });
