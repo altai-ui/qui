@@ -44,26 +44,28 @@ describe('QInputNumber', () => {
   });
 
   describe('methods', () => {
-    it('handleIncreaseClick', () => {
-      const instance = shallowMount(Component, {
-        propsData: {
-          value: 0
-        }
+    describe('handleChangeNumberButtonClick', () => {
+      it('increase', () => {
+        const instance = shallowMount(Component, {
+          propsData: {
+            value: 0
+          }
+        });
+        instance.vm.handleChangeNumberButtonClick(true);
+
+        expect(instance.emitted().change[0]).toEqual([1]);
       });
-      instance.vm.handleIncreaseClick();
 
-      expect(instance.emitted().change[0]).toEqual([1]);
-    });
+      it('decrease', () => {
+        const instance = shallowMount(Component, {
+          propsData: {
+            value: 0
+          }
+        });
+        instance.vm.handleChangeNumberButtonClick();
 
-    it('handleDecreaseClick', () => {
-      const instance = shallowMount(Component, {
-        propsData: {
-          value: 0
-        }
+        expect(instance.emitted().change[0]).toEqual([-1]);
       });
-      instance.vm.handleDecreaseClick();
-
-      expect(instance.emitted().change[0]).toEqual([-1]);
     });
 
     describe('getLocaleSeparator', () => {
@@ -119,37 +121,6 @@ describe('QInputNumber', () => {
         });
 
         expect(vm.checkStringAdditions('>1120<', 'suffix')).toBeTruthy();
-      });
-    });
-
-    describe('getSplittedValue', () => {
-      it('should return value from args', () => {
-        const defaultValue = '1120';
-        const { vm } = shallowMount(Component);
-
-        expect(vm.getSplittedValue(defaultValue, 'prefix')).toEqual(
-          defaultValue
-        );
-      });
-
-      it('should return string without prefix', () => {
-        const { vm } = shallowMount(Component, {
-          propsData: {
-            prefix: '>'
-          }
-        });
-
-        expect(vm.getSplittedValue('>1120<', 'prefix')).toEqual('1120<');
-      });
-
-      it('should return string without suffix', () => {
-        const { vm } = shallowMount(Component, {
-          propsData: {
-            suffix: '<'
-          }
-        });
-
-        expect(vm.getSplittedValue('>1120<', 'suffix')).toEqual('>1120');
       });
     });
 

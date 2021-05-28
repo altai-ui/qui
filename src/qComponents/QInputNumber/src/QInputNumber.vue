@@ -1,14 +1,11 @@
 <template>
-  <div
-    class="q-input-number"
-    :class="withControlsClass"
-  >
+  <div :class="inputNumberClass">
     <button
       v-if="controls"
       class="q-input-number__button_decrease q-input-number__button q-icon-minus"
       :disabled="isDisabled"
       :class="decreaseClass"
-      @click.prevent="handleDecreaseClick"
+      @click.prevent="handleChangeNumberButtonClick()"
     />
 
     <q-input
@@ -21,9 +18,9 @@
       @blur="handleBlur"
       @focus="handleFocus"
       @keydown.native="handleKeydown"
-      @keypress.native="onInputKeyPress"
       @click.native="handleClick"
-      @paste.native="handlePaste"
+      @keypress.prevent.native="onInputKeyPress"
+      @paste.prevent.native="handlePaste"
     />
 
     <button
@@ -31,7 +28,7 @@
       class="q-input-number__button_increase q-input-number__button q-icon-plus"
       :disabled="isDisabled"
       :class="increaseClass"
-      @click.prevent="handleIncreaseClick"
+      @click.prevent="handleChangeNumberButtonClick(true)"
     />
   </div>
 </template>
@@ -145,16 +142,15 @@ export default {
       return this.disabled || (this.qForm?.disabled ?? false);
     },
 
-    withControlsClass() {
-      return { 'q-input-number_with-controls': this.controls };
+    inputNumberClass() {
+      return {
+        'q-input-number': true,
+        'q-input-number_with-controls': this.controls
+      };
     },
 
     increaseClass() {
-      const number = this.formattedValue
-        ? this.parseLocaleNumber(
-            this.getValueWithoutAdditions(this.formattedValue)
-          )
-        : 0;
+      const number = this.parsedNumber;
 
       if (number >= this.max) {
         return 'q-input-number__button_is-disabled';
@@ -164,11 +160,7 @@ export default {
     },
 
     decreaseClass() {
-      const number = this.formattedValue
-        ? this.parseLocaleNumber(
-            this.getValueWithoutAdditions(this.formattedValue)
-          )
-        : 0;
+      const number = this.parsedNumber;
 
       if (number <= this.min) {
         return 'q-input-number__button_is-disabled';
@@ -189,10 +181,27 @@ export default {
     },
 
     formattedValue() {
-      return this.value !== null
-        ? `${this.prefix ?? ''}${this.localeFormat(this.value)}${this.suffix ??
-            ''}`
-        : '';
+      const prefix = this.prefix ?? '';
+      const suffix = this.suffix ?? '';
+      const value = this.localeFormat(this.value);
+
+      return this.value !== null ? `${prefix}${value}${suffix}` : '';
+    },
+
+    parsedNumber() {
+      return this.formattedValue
+        ? this.parseLocaleNumber(
+            this.getValueWithoutAdditions(this.formattedValue)
+          )
+        : 0;
+    },
+
+    prefixLength() {
+      return this.prefix?.length ?? 0;
+    },
+
+    suffixLength() {
+      return this.suffix?.length ?? 0;
     }
   },
 
@@ -229,31 +238,21 @@ export default {
       return position === expectedPosition;
     },
 
-    getSplittedValue(value, addition) {
-      if (
-        value &&
-        this[addition] &&
-        this.checkStringAdditions(value, addition)
-      ) {
-        const startCharReg = addition === 'prefix' ? '^' : '';
-        const endCharReg = addition === 'suffix' ? '$' : '';
-
-        return value.replace(
-          new RegExp(`${startCharReg}${this[addition]}${endCharReg}`, 'g'),
-          ''
-        );
-      }
-
-      return value;
-    },
-
     getValueWithoutAdditions(value) {
       if (!value) return value;
 
-      let splittedValue = this.getSplittedValue(value, 'prefix');
-      splittedValue = this.getSplittedValue(splittedValue, 'suffix');
+      const prefixReg = new RegExp(`^${this.prefix}`, 'g');
+      const suffixReg = new RegExp(`${this.suffix}$`, 'g');
 
-      return splittedValue;
+      let newValue = value;
+
+      if (this.prefix && this.checkStringAdditions(newValue, 'prefix'))
+        newValue = newValue.replace(prefixReg, '');
+
+      if (this.suffix && this.checkStringAdditions(newValue, 'suffix'))
+        newValue = newValue.replace(suffixReg, '');
+
+      return newValue;
     },
 
     isCharReadonly(char) {
@@ -269,19 +268,14 @@ export default {
         return;
       }
 
-      const prefixLength = this.prefix?.length ?? 0;
-      const suffixLength = this.suffix?.length ?? 0;
-
-      if (selectionStart < prefixLength + 1) {
-        this.setCursorPosition(input, prefixLength);
-      } else if (selectionStart > value.length - suffixLength - 1) {
-        this.setCursorPosition(input, value.length - suffixLength);
+      if (selectionStart < this.prefixLength + 1) {
+        this.setCursorPosition(input, this.prefixLength);
+      } else if (selectionStart > value.length - this.suffixLength - 1) {
+        this.setCursorPosition(input, value.length - this.suffixLength);
       }
     },
 
     handlePaste(event) {
-      event.preventDefault();
-
       const data = (event.clipboardData || window.clipboardData).getData(
         'Text'
       );
@@ -290,13 +284,9 @@ export default {
     },
 
     onInputKeyPress(event) {
-      event.preventDefault();
-
       if (
-        // numbers
-        (event.keyCode < 48 || event.keyCode > 57) &&
-        // minus
-        event.keyCode !== 45 &&
+        Number.isNaN(Number(event.key)) &&
+        event.key !== '-' &&
         event.key !== '.' &&
         event.key !== ','
       )
@@ -307,8 +297,6 @@ export default {
 
     handleKeydown(event) {
       const { value, selectionStart, selectionEnd } = event.target;
-      const prefixLength = this.prefix?.length ?? 0;
-      const suffixLength = this.suffix?.length ?? 0;
 
       switch (event.key) {
         case 'Backspace':
@@ -319,20 +307,24 @@ export default {
         case 'ArrowLeft':
         case 'ArrowRight':
           if (
-            (event.key === 'ArrowLeft' && selectionStart < prefixLength + 1) ||
+            (event.key === 'ArrowLeft' &&
+              selectionStart < this.prefixLength + 1) ||
             (event.key === 'ArrowRight' &&
-              selectionEnd > value.length - suffixLength - 1)
+              selectionEnd > value.length - this.suffixLength - 1)
           ) {
             event.preventDefault();
           }
           break;
         case 'ArrowUp':
           event.preventDefault();
-          this.setCursorPosition(event.target, prefixLength);
+          this.setCursorPosition(event.target, this.prefixLength);
           break;
         case 'ArrowDown':
           event.preventDefault();
-          this.setCursorPosition(event.target, value.length - suffixLength);
+          this.setCursorPosition(
+            event.target,
+            value.length - this.suffixLength
+          );
           break;
         default:
           break;
@@ -368,20 +360,20 @@ export default {
     insertText(event, key) {
       const { value, selectionStart, selectionEnd } = event.target;
 
-      let selectionMove = 0;
+      let moveSelection = 0;
       let selectionNewEnd = selectionEnd;
       let selectionNewStart = selectionStart;
       let insertedValue = '';
 
-      const prefixLength = this.prefix?.length ?? 0;
-      const suffixLength = this.suffix?.length ?? 0;
-
-      if (prefixLength && selectionStart <= prefixLength) {
-        selectionNewStart = prefixLength;
+      if (this.prefixLength && selectionStart <= this.prefixLength) {
+        selectionNewStart = this.prefixLength;
       }
 
-      if (suffixLength && selectionEnd >= value.length - suffixLength) {
-        selectionNewEnd = value.length - suffixLength;
+      if (
+        this.suffixLength &&
+        selectionEnd >= value.length - this.suffixLength
+      ) {
+        selectionNewEnd = value.length - this.suffixLength;
       }
 
       const previousPart = this.getValueWithoutAdditions(
@@ -419,21 +411,24 @@ export default {
             this.$refs.input.$refs.input.value = '-';
             return;
           }
+
+          if (selectionStart !== this.prefix.length || nextChar === key) return;
+
           insertedValue = key;
           break;
         case 'Backspace':
-          selectionMove = this.isCharReadonly(prevChar) ? -2 : -1;
+          moveSelection = this.isCharReadonly(prevChar) ? -2 : -1;
           selectionNewEnd -= this.isCharReadonly(prevChar) ? 1 : 0;
           break;
         case 'Delete':
-          selectionMove = this.isCharReadonly(nextChar) ? 1 : 0;
+          moveSelection = this.isCharReadonly(nextChar) ? 1 : 0;
           selectionNewEnd += this.isCharReadonly(nextChar) ? 2 : 1;
           break;
         default:
           if (!this.formattedValue) {
             this.updateValue(
               event.target,
-              Number(`-${key}`).toFixed(this.precision),
+              Number(key * -1).toFixed(this.precision),
               selectionNewEnd
             );
             return;
@@ -443,8 +438,8 @@ export default {
       }
 
       const valueSeparatedParts = [
-        value.substring(prefixLength, selectionNewStart + selectionMove),
-        value.substring(selectionNewEnd, value.length - suffixLength)
+        value.substring(this.prefixLength, selectionNewStart + moveSelection),
+        value.substring(selectionNewEnd, value.length - this.suffixLength)
       ];
 
       if (
@@ -478,16 +473,17 @@ export default {
 
       const minusZero = Number(newValue) === 0 && isMinusSign;
 
-      const formattedValue = `${this.prefix ?? ''}${this.localeFormat(
-        minusZero ? -0 : newValue
-      )}${this.suffix ?? ''}`;
+      const prefix = this.prefix ?? '';
+      const suffix = this.suffix ?? '';
+      const value = this.localeFormat(minusZero ? -0 : newValue);
+
+      const formattedValue = `${prefix}${value}${suffix}`;
 
       const newLength = formattedValue.length;
-      const prefixLength = this.prefix?.length ?? 0;
       const newCaretPosition =
         target.value.length > 1
           ? selectionEnd + (newLength - target.value.length || 1)
-          : target.value.length + prefixLength + 1;
+          : target.value.length + this.prefixLength + 1;
 
       this.$refs.input.$refs.input.value = formattedValue;
 
@@ -495,37 +491,23 @@ export default {
 
       let movedCaret = newCaretPosition;
 
-      if (newCaretPosition < prefixLength) {
-        movedCaret = prefixLength;
-      } else if (newCaretPosition > formattedValue.length - prefixLength) {
-        movedCaret = formattedValue.length - prefixLength;
+      if (newCaretPosition < this.prefixLength) {
+        movedCaret = this.prefixLength;
+      } else if (newCaretPosition > formattedValue.length - this.prefixLength) {
+        movedCaret = formattedValue.length - this.prefixLength;
       }
 
       this.setCursorPosition(target, movedCaret);
     },
 
-    handleIncreaseClick() {
-      let updatedNumber = this.formattedValue
-        ? this.parseLocaleNumber(
-            this.getValueWithoutAdditions(this.formattedValue)
-          )
-        : 0;
-      updatedNumber = Math.round((updatedNumber + this.step) * 100) / 100;
+    handleChangeNumberButtonClick(isIncrease) {
+      let updatedNumber = this.parsedNumber;
+      const step = isIncrease ? this.step : -this.step;
 
-      if (updatedNumber > this.max) return;
+      updatedNumber = Math.round((updatedNumber + step) * 100) / 100;
 
-      this.changesEmmiter(updatedNumber, 'change');
-    },
-
-    handleDecreaseClick() {
-      let updatedNumber = this.formattedValue
-        ? this.parseLocaleNumber(
-            this.getValueWithoutAdditions(this.formattedValue)
-          )
-        : 0;
-      updatedNumber = Math.round((updatedNumber - this.step) * 100) / 100;
-
-      if (updatedNumber < this.min) return;
+      if ((isIncrease && updatedNumber > this.max) || updatedNumber < this.min)
+        return;
 
       this.changesEmmiter(updatedNumber, 'change');
     },
