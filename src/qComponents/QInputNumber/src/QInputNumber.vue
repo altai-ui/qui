@@ -259,6 +259,24 @@ export default {
       return Number.isNaN(Number(char)) && char !== '-';
     },
 
+    getCleanSelections({ value, selectionStart, selectionEnd }) {
+      const selectionNewStart =
+        selectionStart <= this.prefixLength
+          ? this.prefixLength
+          : selectionStart;
+
+      const selectionNewEnd =
+        selectionEnd >= value.length - this.suffixLength
+          ? value.length - this.suffixLength
+          : selectionEnd;
+
+      return {
+        selectionNewStart,
+        selectionNewEnd,
+        value: this.getValueWithoutAdditions(value)
+      };
+    },
+
     handleClick(event) {
       const { input } = this.$refs.input.$refs;
       const { value, selectionStart, selectionEnd } = input;
@@ -291,6 +309,25 @@ export default {
         event.key !== ','
       )
         return;
+
+      const {
+        value,
+        selectionNewStart,
+        selectionNewEnd
+      } = this.getCleanSelections(event.target);
+
+      if (event.key === '-') {
+        if (
+          !this.formattedValue ||
+          selectionNewEnd - selectionNewStart === value.length
+        ) {
+          this.$refs.input.$refs.input.value = '-';
+        } else if (selectionNewStart === 1) {
+          this.insertText(event, event.key);
+        }
+
+        return;
+      }
 
       this.insertText(event, event.key);
     },
@@ -350,96 +387,102 @@ export default {
         `${previousPart}${parsedText}${lastPart}`
       );
 
-      this.updateValue(
+      this.updateInput(
         event.target,
         newValue.toFixed(this.precision),
         selectionEnd
       );
     },
 
+    getSelectionsAndInsertedValue() {},
+
     insertText(event, key) {
-      const { value, selectionStart, selectionEnd } = event.target;
+      const { selectionStart } = event.target;
+
+      const {
+        value,
+        selectionNewStart,
+        selectionNewEnd
+      } = this.getCleanSelections(event.target);
+
+      let movedSelectionEnd = selectionNewEnd;
 
       let moveSelection = 0;
-      let selectionNewEnd = selectionEnd;
-      let selectionNewStart = selectionStart;
       let insertedValue = '';
-
-      if (this.prefixLength && selectionStart <= this.prefixLength) {
-        selectionNewStart = this.prefixLength;
-      }
-
-      if (
-        this.suffixLength &&
-        selectionEnd >= value.length - this.suffixLength
-      ) {
-        selectionNewEnd = value.length - this.suffixLength;
-      }
 
       const previousPart = this.getValueWithoutAdditions(
         this.formattedValue.substring(0, selectionNewStart)
       );
       const lastPart = this.getValueWithoutAdditions(
-        this.formattedValue.substring(selectionNewEnd)
+        this.formattedValue.substring(movedSelectionEnd)
       );
 
       if (
-        this.formattedValue &&
-        ((key === 'Backspace' && !previousPart.length) ||
-          (key === 'Delete' && !lastPart.length))
+        (key === 'Backspace' && !previousPart.length) ||
+        (key === 'Delete' && !lastPart.length)
       ) {
-        if (
-          selectionNewEnd - selectionNewStart ===
-          this.getValueWithoutAdditions(value).length
-        ) {
-          this.updateValue(event.target, null, selectionNewEnd);
+        if (movedSelectionEnd - selectionNewStart === value.length) {
+          this.updateInput(event.target, null, movedSelectionEnd);
         }
+
+        if (value === '-') {
+          this.$refs.input.$refs.input.value = '';
+        }
+
         return;
       }
 
       const prevChar = previousPart.substring(previousPart.length - 1);
       const nextChar = lastPart.substring(1, -1);
 
+      if (key === this.getLocaleSeparator('decimal')) {
+        if (nextChar === this.getLocaleSeparator('decimal'))
+          this.setCursorPosition(event.target, selectionStart + 1);
+
+        return;
+      }
+
+      if (key === '-' && nextChar === key) return;
+
       switch (key) {
-        case this.getLocaleSeparator('decimal'):
-          if (nextChar === this.getLocaleSeparator('decimal')) {
-            this.setCursorPosition(event.target, selectionStart + 1);
-          }
-          return;
-        case '-':
-          if (!this.formattedValue) {
-            this.$refs.input.$refs.input.value = '-';
-            return;
-          }
-
-          if (selectionStart !== this.prefix.length || nextChar === key) return;
-
-          insertedValue = key;
-          break;
         case 'Backspace':
           moveSelection = this.isCharReadonly(prevChar) ? -2 : -1;
-          selectionNewEnd -= this.isCharReadonly(prevChar) ? 1 : 0;
+          movedSelectionEnd -= this.isCharReadonly(prevChar) ? 1 : 0;
           break;
         case 'Delete':
           moveSelection = this.isCharReadonly(nextChar) ? 1 : 0;
-          selectionNewEnd += this.isCharReadonly(nextChar) ? 2 : 1;
+          movedSelectionEnd += this.isCharReadonly(nextChar) ? 2 : 1;
           break;
         default:
-          if (!this.formattedValue) {
-            this.updateValue(
-              event.target,
-              Number(key * -1).toFixed(this.precision),
-              selectionNewEnd
-            );
-            return;
-          }
           insertedValue = key;
           break;
       }
 
+      if (insertedValue && !this.formattedValue) {
+        this.updateInput(
+          event.target,
+          Number(key * -1).toFixed(this.precision),
+          movedSelectionEnd
+        );
+        return;
+      }
+
+      this.updateValue(
+        event,
+        selectionNewStart + moveSelection,
+        movedSelectionEnd,
+        insertedValue,
+        key
+      );
+    },
+
+    updateValue(event, selectionStart, selectionEnd, insertedValue, key) {
+      const { target } = event;
+      const { value } = target;
+
       const valueSeparatedParts = [
-        value.substring(this.prefixLength, selectionNewStart + moveSelection),
-        value.substring(selectionNewEnd, value.length - this.suffixLength)
+        value.substring(this.prefixLength, selectionStart),
+        value.substring(selectionEnd, value.length - this.suffixLength)
       ];
 
       if (
@@ -447,7 +490,7 @@ export default {
         valueSeparatedParts[1].substring(1, -1) ===
           this.getLocaleSeparator('decimal')
       ) {
-        this.updateValue(event.target, null, selectionNewEnd);
+        this.updateInput(event.target, null, selectionEnd);
         return;
       }
 
@@ -457,15 +500,15 @@ export default {
 
       if (newValue > this.max || newValue < this.min) return;
 
-      this.updateValue(
+      this.updateInput(
         event.target,
         newValue.toFixed(this.precision),
-        selectionNewEnd,
+        selectionEnd,
         newValue < 0 || key === '-'
       );
     },
 
-    updateValue(target, newValue, selectionEnd, isMinusSign) {
+    updateInput(target, newValue, selectionEnd, isMinusSign) {
       if (newValue === null) {
         this.changesEmmiter(null);
         return;
@@ -514,12 +557,18 @@ export default {
 
     handleBlur(event) {
       this.$emit('blur', event);
-      this.changesEmmiter(
-        this.parseLocaleNumber(
-          this.getValueWithoutAdditions(event.target.value)
-        ),
-        'change'
-      );
+
+      const { value } = event.target;
+
+      const emittedValue =
+        !value || value === '-'
+          ? null
+          : this.parseLocaleNumber(
+              this.getValueWithoutAdditions(event.target.value)
+            );
+
+      this.changesEmmiter(emittedValue, 'change');
+
       if (this.validateEvent) this.qFormItem?.validateField('blur');
     },
 
@@ -529,13 +578,13 @@ export default {
 
     changesEmmiter(value, type) {
       if (type === 'change') {
-        this.$emit('input', value);
         this.$emit('change', value);
         if (this.validateEvent) this.qFormItem?.validateField('change');
         return;
       }
 
       this.$emit('input', value);
+      this.$emit('change', value);
       if (this.validateEvent) this.qFormItem?.validateField('input');
     }
   }
