@@ -10,7 +10,7 @@
 
 Responsive, user-friendly and lightweight library helping us build great products for our customers. This library for Vue 2.x
 
-Qui for Vue 3.x is [here](https://qvant-lab.github.io/qui-max/)! 🎉 
+Qui for Vue 3.x is [here](https://github.com/Qvant-lab/qui-max)! 🎉 
 
 [Storybook (live demo)](https://qvant-lab.github.io/qui/)
 
