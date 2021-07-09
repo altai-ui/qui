@@ -1,5 +1,8 @@
 <template>
-  <div class="q-range-selector">
+  <div
+    class="q-range-selector"
+    :class="{ 'is-vertical': vertical }"
+  >
     <div
       ref="path"
       class="q-range-selector__path"
@@ -16,8 +19,8 @@
         :styles="firstButtonStyle"
         :show-tooltip="showTooltip"
         :step="step"
-        @on-left-click="onKeyDown"
-        @on-right-click="onKeyDown"
+        @on-decrease="onKeyDown"
+        @on-increase="onKeyDown"
       />
 
       <range-selector-button
@@ -27,8 +30,8 @@
         :styles="secondButtonStyle"
         :show-tooltip="showTooltip"
         :step="step"
-        @on-left-click="onKeyDown"
-        @on-right-click="onKeyDown"
+        @on-decrease="onKeyDown"
+        @on-increase="onKeyDown"
       />
 
       <template v-if="showSteps">
@@ -81,6 +84,10 @@ export default {
     range: {
       type: Boolean,
       default: true
+    },
+    vertical: {
+      type: Boolean,
+      default: true
     }
   },
 
@@ -130,14 +137,26 @@ export default {
     },
 
     firstButtonStyle() {
+      if (this.vertical) return { bottom: `${this.firstPercent}%` };
+
       return { left: `${this.firstPercent}%` };
     },
 
     secondButtonStyle() {
+      if (this.vertical) return { bottom: `${this.secondPercent}%` };
+
       return { left: `${this.secondPercent}%` };
     },
 
     barStyle() {
+      if (this.vertical) {
+        return {
+          height: this.secondPercent
+            ? `${this.secondPercent - this.firstPercent}%`
+            : `${this.firstPercent}%`,
+          bottom: this.range ? `${this.firstPercent}%` : 0
+        };
+      }
       return {
         width: this.secondPercent
           ? `${this.secondPercent - this.firstPercent}%`
@@ -158,8 +177,15 @@ export default {
 
   methods: {
     onPathClick(event) {
-      const { left, width } = this.$refs.path.getBoundingClientRect();
-      const newValue = ((event.clientX - left) / width) * 100;
+      const {
+        left,
+        bottom,
+        width,
+        height
+      } = this.$refs.path.getBoundingClientRect();
+      const newValue = this.vertical
+        ? ((bottom - event.clientY) / height) * 100
+        : ((event.clientX - left) / width) * 100;
 
       const targetValue = this.steps.length
         ? this.steps.reduce((a, b) => {
@@ -191,6 +217,8 @@ export default {
     },
 
     getStopStyle(position) {
+      if (this.vertical) return { bottom: `${position}%` };
+
       return { left: `${position}%` };
     },
 

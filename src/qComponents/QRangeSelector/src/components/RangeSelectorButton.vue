@@ -2,9 +2,14 @@
   <div
     :tabindex="tabIndex"
     class="q-range-selector__button-wrapper focus-visible"
+    :class="{ 'q-range-selector__button-wrapper_focused': isFocused }"
     :style="styles"
-    @keydown.left="onLeftKeyDown"
-    @keydown.right="onRightKeyDown"
+    @focus="handleFocus"
+    @blur="handleBlur"
+    @keydown.left="onDecreaseKeyDown"
+    @keydown.right="onIncreaseKeyDown"
+    @keydown.down.prevent="onDecreaseKeyDown"
+    @keydown.up.prevent="onIncreaseKeyDown"
   >
     <div class="q-range-selector__button" />
     <div
@@ -43,15 +48,29 @@ export default {
     }
   },
 
+  data() {
+    return {
+      isFocused: false
+    };
+  },
+
   methods: {
-    onLeftKeyDown() {
-      const newValue = this.value - this.step;
-      this.$emit('on-left-click', { newValue, tabIndex: this.tabIndex });
+    handleFocus() {
+      this.isFocused = true;
     },
 
-    onRightKeyDown() {
+    handleBlur() {
+      this.isFocused = false;
+    },
+
+    onDecreaseKeyDown() {
+      const newValue = this.value - this.step;
+      this.$emit('on-decrease', { newValue, tabIndex: this.tabIndex });
+    },
+
+    onIncreaseKeyDown() {
       const newValue = this.value + this.step;
-      this.$emit('on-right-click', { newValue, tabIndex: this.tabIndex });
+      this.$emit('on-increase', { newValue, tabIndex: this.tabIndex });
     }
   }
 };

@@ -1,7 +1,12 @@
 .q-range-selector {
   position: relative;
-  width: 100%;
-  min-width: 500px;
+  width: 500px;
+
+  &.is-vertical {
+    width: auto;
+    min-width: 0;
+    height: 200px;
+  }
 
   &__path {
     position: relative;
@@ -12,22 +17,29 @@
     background-color: #e4e7ed;
     border-radius: 3px;
     cursor: pointer;
+
+    .is-vertical & {
+      width: 6px;
+      height: 100%;
+    }
   }
 
   &__bar {
     position: absolute;
     z-index: 1;
-    width: 23%;
     height: 6px;
     background-color: #409eff;
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
+    border-radius: 3px;
+
+    .is-vertical & {
+      width: 6px;
+      height: auto;
+    }
   }
 
   &__button-wrapper {
     position: absolute;
     top: -15px;
-    left: 23%;
     z-index: 1001;
     z-index: 2;
     display: flex;
@@ -41,7 +53,14 @@
     transform: translateX(-50%);
     user-select: none;
 
-    &:hover .q-range-selector__tooltip {
+    .is-vertical & {
+      top: auto;
+      left: -15px;
+      transform: translateY(50%);
+    }
+
+    &:hover .q-range-selector__tooltip,
+    &_focused .q-range-selector__tooltip {
       display: block;
     }
   }
