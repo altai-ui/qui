@@ -16,22 +16,30 @@
       <range-selector-button
         :tab-index="0"
         :value="firstValue"
-        :styles="firstButtonStyle"
         :show-tooltip="showTooltip"
         :step="step"
-        @on-decrease="onKeyDown"
-        @on-increase="onKeyDown"
+        :min="min"
+        :max="max"
+        :vertical="vertical"
+        @on-decrease="changeButtonPosition"
+        @on-increase="changeButtonPosition"
+        @on-drag-moving="handleDragMoving"
+        @on-drag-end="changeButtonPosition"
       />
 
       <range-selector-button
         v-if="range && secondValue"
         :tab-index="1"
         :value="secondValue"
-        :styles="secondButtonStyle"
         :show-tooltip="showTooltip"
         :step="step"
-        @on-decrease="onKeyDown"
-        @on-increase="onKeyDown"
+        :min="min"
+        :max="max"
+        :vertical="vertical"
+        @on-decrease="changeButtonPosition"
+        @on-increase="changeButtonPosition"
+        @on-drag-moving="handleDragMoving"
+        @on-drag-end="changeButtonPosition"
       />
 
       <template v-if="showSteps">
@@ -87,27 +95,18 @@ export default {
     },
     vertical: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
 
+  data() {
+    return {
+      firstValue: null,
+      secondValue: null
+    };
+  },
+
   computed: {
-    firstValue() {
-      if (!this.range) {
-        return Array.isArray(this.value) ? this.value[0] : this.value;
-      }
-      if (Array.isArray(this.value)) return Math.max(this.min, this.value[0]);
-
-      return Math.max(this.min, this.value);
-    },
-
-    secondValue() {
-      if (!this.range) return null;
-      if (Array.isArray(this.value)) return Math.min(this.max, this.value[1]);
-
-      return this.max;
-    },
-
     firstPercent() {
       const value = this.firstValue;
 
@@ -134,18 +133,6 @@ export default {
       if (value < this.min) left = 0;
 
       return left.toFixed(3);
-    },
-
-    firstButtonStyle() {
-      if (this.vertical) return { bottom: `${this.firstPercent}%` };
-
-      return { left: `${this.firstPercent}%` };
-    },
-
-    secondButtonStyle() {
-      if (this.vertical) return { bottom: `${this.secondPercent}%` };
-
-      return { left: `${this.secondPercent}%` };
     },
 
     barStyle() {
@@ -175,14 +162,49 @@ export default {
     }
   },
 
+  watch: {
+    value: {
+      handler() {
+        this.getValues();
+      },
+      immediate: true
+    }
+  },
+
+  mounted() {
+    this.getValues();
+  },
+
   methods: {
+    getValues() {
+      if (!this.range) {
+        this.firstValue = Array.isArray(this.value)
+          ? this.value[0]
+          : this.value;
+        this.secondValue = null;
+        return;
+      }
+      if (Array.isArray(this.value)) {
+        this.firstValue = Math.max(this.min, this.value[0]);
+        this.secondValue = Math.min(this.max, this.value[1]);
+        return;
+      }
+
+      this.firstValue = Math.max(this.min, this.value);
+      this.secondValue = this.max;
+    },
+
+    handleDragMoving({ newValue, tabIndex }) {
+      if (tabIndex === 0) {
+        this.firstValue = newValue;
+        return;
+      }
+
+      this.secondValue = newValue;
+    },
+
     onPathClick(event) {
-      const {
-        left,
-        bottom,
-        width,
-        height
-      } = this.$refs.path.getBoundingClientRect();
+      const { left, bottom, width, height } = this.getPathSize();
       const newValue = this.vertical
         ? ((bottom - event.clientY) / height) * 100
         : ((event.clientX - left) / width) * 100;
@@ -216,6 +238,22 @@ export default {
       this.changesEmmiter(newValues);
     },
 
+    getPathSize() {
+      const {
+        left,
+        bottom,
+        width,
+        height
+      } = this.$refs.path.getBoundingClientRect();
+
+      return {
+        left,
+        bottom,
+        width,
+        height
+      };
+    },
+
     getStopStyle(position) {
       if (this.vertical) return { bottom: `${position}%` };
 
@@ -231,7 +269,7 @@ export default {
       this.$emit('change', passedData);
     },
 
-    onKeyDown({ newValue, tabIndex }) {
+    changeButtonPosition({ newValue, tabIndex }) {
       const passedData =
         tabIndex === 0
           ? [newValue, this.secondValue]
