@@ -16,30 +16,16 @@
       <range-selector-button
         :tab-index="0"
         :value="firstValue"
-        :show-tooltip="showTooltip"
-        :step="step"
-        :min="min"
-        :max="max"
-        :vertical="vertical"
-        @on-decrease="changeButtonPosition"
-        @on-increase="changeButtonPosition"
-        @on-drag-moving="handleDragMoving"
-        @on-drag-end="changeButtonPosition"
+        @drag-moving="handleDragMoving"
+        @position-change="changeButtonPosition"
       />
 
       <range-selector-button
         v-if="range && secondValue"
         :tab-index="1"
         :value="secondValue"
-        :show-tooltip="showTooltip"
-        :step="step"
-        :min="min"
-        :max="max"
-        :vertical="vertical"
-        @on-decrease="changeButtonPosition"
-        @on-increase="changeButtonPosition"
-        @on-drag-moving="handleDragMoving"
-        @on-drag-end="changeButtonPosition"
+        @drag-moving="handleDragMoving"
+        @position-change="changeButtonPosition"
       />
 
       <template v-if="showSteps">
@@ -79,7 +65,8 @@ export default {
     },
     step: {
       type: Number,
-      default: 1
+      default: 1,
+      validator: value => value > 0
     },
     value: {
       type: [Number, Array],
@@ -107,6 +94,16 @@ export default {
   },
 
   computed: {
+    precision() {
+      let e = 1;
+      let p = 0;
+      while (Math.round(this.step * e) / e !== this.step) {
+        e *= 10;
+        p += 1;
+      }
+      return p;
+    },
+
     firstPercent() {
       const value = this.firstValue;
 
@@ -153,7 +150,7 @@ export default {
     },
 
     steps() {
-      if (!this.showSteps || this.min > this.max) return [];
+      if (this.min > this.max) return [];
 
       const stopsCount = (this.max - this.min) / this.step;
       const stepWidth = (100 * this.step) / (this.max - this.min);
@@ -194,26 +191,17 @@ export default {
       this.secondValue = this.max;
     },
 
-    handleDragMoving({ newValue, tabIndex }) {
-      if (tabIndex === 0) {
-        this.firstValue = newValue;
-        return;
-      }
-
-      this.secondValue = newValue;
-    },
-
     onPathClick(event) {
       const { left, bottom, width, height } = this.getPathSize();
       const newValue = this.vertical
         ? ((bottom - event.clientY) / height) * 100
         : ((event.clientX - left) / width) * 100;
 
-      const targetValue = this.steps.length
-        ? this.steps.reduce((a, b) => {
-            return Math.abs(b - newValue) < Math.abs(a - newValue) ? b : a;
-          })
-        : newValue;
+      const targetValue = this.steps
+        .reduce((a, b) => {
+          return Math.abs(b - newValue) < Math.abs(a - newValue) ? b : a;
+        })
+        .toFixed(this.precision);
 
       if (!this.range) {
         this.changesEmmiter(targetValue);
@@ -260,22 +248,29 @@ export default {
       return { left: `${position}%` };
     },
 
-    changesEmmiter(newValue) {
-      const passedData = this.range
-        ? newValue.map(val => Number(val.toFixed()))
-        : Number(newValue.toFixed());
+    handleDragMoving({ newValue, tabIndex }) {
+      if (tabIndex === 0) {
+        this.firstValue = newValue.toFixed(this.precision);
+        return;
+      }
 
-      this.$emit('input', passedData);
-      this.$emit('change', passedData);
+      this.secondValue = newValue.toFixed(this.precision);
+    },
+
+    changesEmmiter(newValue) {
+      this.$emit('input', newValue);
+      this.$emit('change', newValue);
     },
 
     changeButtonPosition({ newValue, tabIndex }) {
+      const fixedNewValue = newValue.toFixed(this.precision);
+
       const passedData =
         tabIndex === 0
-          ? [newValue, this.secondValue]
-          : [this.firstValue, newValue];
+          ? [fixedNewValue, this.secondValue]
+          : [this.firstValue, fixedNewValue];
 
-      this.changesEmmiter(this.range ? passedData : newValue);
+      this.changesEmmiter(this.range ? passedData : fixedNewValue);
     }
   }
 };

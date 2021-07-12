@@ -6,15 +6,15 @@
     :style="stylePosition"
     @focus="handleFocus"
     @blur="handleBlur"
-    @keydown.left="onDecreaseKeyDown"
-    @keydown.right="onIncreaseKeyDown"
-    @keydown.down.prevent="onDecreaseKeyDown"
-    @keydown.up.prevent="onIncreaseKeyDown"
+    @keydown.left="onArrowDown"
+    @keydown.right="onArrowDown"
+    @keydown.down.prevent="onArrowDown"
+    @keydown.up.prevent="onArrowDown"
     @mousedown.stop="handleButtonDrag"
   >
     <div class="q-range-selector__button" />
     <div
-      v-if="showTooltip"
+      v-if="$parent.showTooltip"
       class="q-range-selector__tooltip"
     >
       {{ value }}
@@ -32,27 +32,7 @@ export default {
       required: true
     },
     value: {
-      type: Number,
-      required: true
-    },
-    showTooltip: {
-      type: Boolean,
-      required: true
-    },
-    step: {
-      type: Number,
-      required: true
-    },
-    min: {
-      type: Number,
-      required: true
-    },
-    max: {
-      type: Number,
-      required: true
-    },
-    vertical: {
-      type: Boolean,
+      type: [Number, String],
       required: true
     }
   },
@@ -66,13 +46,13 @@ export default {
 
   computed: {
     buttonStyle() {
-      if (this.vertical) return { bottom: `${this.position}%` };
+      if (this.$parent.vertical) return { bottom: `${this.position}%` };
 
       return { left: `${this.position}%` };
     },
 
     stylePosition() {
-      if (this.vertical) return { bottom: `${this.position}%` };
+      if (this.$parent.vertical) return { bottom: `${this.position}%` };
 
       return { left: `${this.position}%` };
     }
@@ -83,6 +63,13 @@ export default {
   },
 
   methods: {
+    emitChanges() {
+      this.$emit('position-change', {
+        newValue: this.position,
+        tabIndex: this.tabIndex
+      });
+    },
+
     handleFocus() {
       this.isFocused = true;
     },
@@ -91,20 +78,22 @@ export default {
       this.isFocused = false;
     },
 
-    onDecreaseKeyDown() {
-      this.position = this.value - this.step;
-      this.$emit('on-decrease', {
-        newValue: this.position,
-        tabIndex: this.tabIndex
-      });
-    },
+    onArrowDown({ key }) {
+      const step =
+        key === 'ArrowLeft' || key === 'ArrowDown'
+          ? this.$parent.step * -1
+          : this.$parent.step;
+      const newPosition = this.position + step;
 
-    onIncreaseKeyDown() {
-      this.position = this.value + this.step;
-      this.$emit('on-increase', {
-        newValue: this.position,
-        tabIndex: this.tabIndex
-      });
+      if (newPosition < this.$parent.min) {
+        this.position = this.$parent.min;
+      } else if (newPosition > this.$parent.max) {
+        this.position = this.$parent.max;
+      } else {
+        this.position = newPosition;
+      }
+
+      this.emitChanges();
     },
 
     handleButtonDrag() {
@@ -115,16 +104,36 @@ export default {
     handleButtonMoving({ clientY, clientX }) {
       const { left, bottom, width, height } = this.$parent.getPathSize();
 
-      const newPosition = this.vertical
+      const newPosition = this.$parent.vertical
         ? ((bottom - clientY) / height) * 100
         : ((clientX - left) / width) * 100;
 
-      this.position =
-        this.tabIndex === 0
-          ? Math.max(this.min, newPosition.toFixed())
-          : Math.min(this.max, newPosition.toFixed());
+      const targetValue = this.$parent.steps.reduce((a, b) => {
+        return Math.abs(b - newPosition) < Math.abs(a - newPosition) ? b : a;
+      });
 
-      this.$emit('on-drag-moving', {
+      if (this.$parent.range) {
+        this.position =
+          this.tabIndex === 0
+            ? Math.max(this.$parent.min, targetValue)
+            : Math.min(this.$parent.max, targetValue);
+
+        this.$emit('drag-moving', {
+          newValue: this.position,
+          tabIndex: this.tabIndex
+        });
+        return;
+      }
+
+      if (targetValue < this.$parent.min) {
+        this.position = this.$parent.min;
+      } else if (targetValue > this.$parent.max) {
+        this.position = this.$parent.max;
+      } else {
+        this.position = targetValue;
+      }
+
+      this.$emit('drag-moving', {
         newValue: this.position,
         tabIndex: this.tabIndex
       });
@@ -133,11 +142,7 @@ export default {
     handleButtonMovingEnd() {
       document.removeEventListener('mousemove', this.handleButtonMoving);
       document.removeEventListener('mouseup', this.handleButtonMovingEnd);
-
-      this.$emit('on-drag-end', {
-        newValue: this.position,
-        tabIndex: this.tabIndex
-      });
+      this.emitChanges();
     }
   }
 };
