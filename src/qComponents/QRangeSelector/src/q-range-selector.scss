@@ -1,6 +1,6 @@
 .q-range-selector {
   position: relative;
-  width: 500px;
+  width: 100%;
 
   &.is-vertical {
     width: auto;
@@ -40,7 +40,6 @@
   &__button-wrapper {
     position: absolute;
     top: -15px;
-    z-index: 1001;
     z-index: 2;
     display: flex;
     justify-content: center;
@@ -59,9 +58,14 @@
       transform: translateY(50%);
     }
 
-    &:hover .q-range-selector__tooltip,
-    &_focused .q-range-selector__tooltip {
-      display: block;
+    &:hover,
+    &:focus {
+      z-index: 3;
+
+      .q-range-selector__tooltip {
+        z-index: 3;
+        display: block;
+      }
     }
   }
 

@@ -16,6 +16,7 @@
       <range-selector-button
         :tab-index="0"
         :value="firstValue"
+        :opposite-value="secondValue"
         @drag-moving="handleDragMoving"
         @position-change="changeButtonPosition"
       />
@@ -24,6 +25,7 @@
         v-if="range && secondValue"
         :tab-index="1"
         :value="secondValue"
+        :opposite-value="firstValue"
         @drag-moving="handleDragMoving"
         @position-change="changeButtonPosition"
       />
@@ -69,7 +71,7 @@ export default {
       validator: value => value > 0
     },
     value: {
-      type: [Number, Array],
+      type: [Number, String, Array],
       default: 0
     },
     showSteps: {
@@ -78,9 +80,13 @@ export default {
     },
     range: {
       type: Boolean,
-      default: true
+      default: false
     },
     vertical: {
+      type: Boolean,
+      default: false
+    },
+    stickToSteps: {
       type: Boolean,
       default: false
     }
@@ -152,10 +158,10 @@ export default {
     steps() {
       if (this.min > this.max) return [];
 
-      const stopsCount = (this.max - this.min) / this.step;
+      const stepsCount = (this.max - this.min) / this.step;
       const stepWidth = (100 * this.step) / (this.max - this.min);
 
-      return Array.from({ length: stopsCount }, (_, i) => i * stepWidth);
+      return Array.from({ length: stepsCount + 1 }, (_, i) => i * stepWidth);
     }
   },
 
@@ -197,11 +203,13 @@ export default {
         ? ((bottom - event.clientY) / height) * 100
         : ((event.clientX - left) / width) * 100;
 
-      const targetValue = this.steps
-        .reduce((a, b) => {
-          return Math.abs(b - newValue) < Math.abs(a - newValue) ? b : a;
-        })
-        .toFixed(this.precision);
+      const targetValue = this.stickToSteps
+        ? this.steps
+            .reduce((a, b) => {
+              return Math.abs(b - newValue) < Math.abs(a - newValue) ? b : a;
+            })
+            .toFixed(this.precision)
+        : newValue.toFixed(this.precision);
 
       if (!this.range) {
         this.changesEmmiter(targetValue);
@@ -218,6 +226,15 @@ export default {
       } else {
         isFirstButtonChanged = this.firstValue > this.secondValue;
       }
+
+      console.log(isFirstButtonChanged, targetValue, this.secondValue);
+      console.log(isFirstButtonChanged, targetValue, this.firstValue);
+
+      if (
+        (isFirstButtonChanged && targetValue > this.secondValue) ||
+        (!isFirstButtonChanged && targetValue < this.firstValue)
+      )
+        return;
 
       const newValues = isFirstButtonChanged
         ? [targetValue, this.secondValue]

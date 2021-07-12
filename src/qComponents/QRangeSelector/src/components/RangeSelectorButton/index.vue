@@ -34,6 +34,10 @@ export default {
     value: {
       type: [Number, String],
       required: true
+    },
+    oppositeValue: {
+      type: [Number, String],
+      default: null
     }
   },
 
@@ -58,8 +62,13 @@ export default {
     }
   },
 
-  mounted() {
-    this.position = this.value;
+  watch: {
+    value: {
+      handler(val) {
+        this.position = val;
+      },
+      immediate: true
+    }
   },
 
   methods: {
@@ -83,7 +92,22 @@ export default {
         key === 'ArrowLeft' || key === 'ArrowDown'
           ? this.$parent.step * -1
           : this.$parent.step;
+
       const newPosition = this.position + step;
+
+      console.log(
+        this.$parent.range,
+        this.tabIndex === 0,
+        newPosition > this.oppositeValue
+      );
+
+      if (
+        (this.$parent.range &&
+          this.tabIndex === 0 &&
+          newPosition > this.oppositeValue) ||
+        (this.tabIndex === 1 && newPosition < this.oppositeValue)
+      )
+        return;
 
       if (newPosition < this.$parent.min) {
         this.position = this.$parent.min;
@@ -108,11 +132,21 @@ export default {
         ? ((bottom - clientY) / height) * 100
         : ((clientX - left) / width) * 100;
 
-      const targetValue = this.$parent.steps.reduce((a, b) => {
-        return Math.abs(b - newPosition) < Math.abs(a - newPosition) ? b : a;
-      });
+      const targetValue = this.$parent.stickToSteps
+        ? this.$parent.steps.reduce((a, b) => {
+            return Math.abs(b - newPosition) < Math.abs(a - newPosition)
+              ? b
+              : a;
+          })
+        : newPosition;
 
       if (this.$parent.range) {
+        if (
+          (this.tabIndex === 0 && targetValue > this.oppositeValue) ||
+          (this.tabIndex === 1 && targetValue < this.oppositeValue)
+        )
+          return;
+
         this.position =
           this.tabIndex === 0
             ? Math.max(this.$parent.min, targetValue)
