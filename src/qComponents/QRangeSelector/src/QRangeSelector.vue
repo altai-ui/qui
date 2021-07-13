@@ -34,9 +34,20 @@
         <div
           v-for="(item, key) in steps"
           :key="key"
-          class="q-range-selector__stop"
+          class="q-range-selector__step"
           :style="getStopStyle(item)"
         />
+      </template>
+
+      <template v-if="captionsList">
+        <div
+          v-for="(item, key) in captionsList"
+          :key="key"
+          class="q-range-selector__caption"
+          :style="getStopStyle(item.position)"
+        >
+          {{ item.value }}
+        </div>
       </template>
     </div>
   </div>
@@ -89,6 +100,10 @@ export default {
     stickToSteps: {
       type: Boolean,
       default: false
+    },
+    captions: {
+      type: Object,
+      default: null
     }
   },
 
@@ -108,6 +123,13 @@ export default {
         p += 1;
       }
       return p;
+    },
+
+    captionsList() {
+      return Object.entries(this.captions).map(([key, value]) => ({
+        position: Number(key),
+        value
+      }));
     },
 
     firstPercent() {
@@ -203,7 +225,7 @@ export default {
         ? ((bottom - event.clientY) / height) * 100
         : ((event.clientX - left) / width) * 100;
 
-      const targetValue = this.stickToSteps
+      let targetValue = this.stickToSteps
         ? this.steps
             .reduce((a, b) => {
               return Math.abs(b - newValue) < Math.abs(a - newValue) ? b : a;
@@ -212,6 +234,9 @@ export default {
         : newValue.toFixed(this.precision);
 
       if (!this.range) {
+        if (targetValue > this.max) targetValue = this.max;
+        if (targetValue < this.min) targetValue = this.min;
+
         this.changesEmmiter(targetValue);
         return;
       }
@@ -226,9 +251,6 @@ export default {
       } else {
         isFirstButtonChanged = this.firstValue > this.secondValue;
       }
-
-      console.log(isFirstButtonChanged, targetValue, this.secondValue);
-      console.log(isFirstButtonChanged, targetValue, this.firstValue);
 
       if (
         (isFirstButtonChanged && targetValue > this.secondValue) ||
@@ -284,8 +306,8 @@ export default {
 
       const passedData =
         tabIndex === 0
-          ? [fixedNewValue, this.secondValue]
-          : [this.firstValue, fixedNewValue];
+          ? [Math.max(this.min, fixedNewValue), this.secondValue]
+          : [this.firstValue, Math.min(this.max, fixedNewValue)];
 
       this.changesEmmiter(this.range ? passedData : fixedNewValue);
     }

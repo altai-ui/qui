@@ -88,12 +88,24 @@
     background-color: #111;
   }
 
-  &__stop {
+  &__step {
     position: absolute;
     width: 6px;
     height: 6px;
     background-color: #fff;
     border-radius: 100%;
     transform: translateX(-50%);
+  }
+
+  &__caption {
+    position: absolute;
+    top: 15px;
+    transform: translateX(-50%);
+
+    .is-vertical & {
+      top: auto;
+      left: 15px;
+      transform: translateY(50%);
+    }
   }
 }

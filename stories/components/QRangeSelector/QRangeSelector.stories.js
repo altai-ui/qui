@@ -6,6 +6,7 @@ import WithoutTooltip from './WithoutTooltip';
 import Vertical from './Vertical';
 import Breakpoints from './Breakpoints';
 import StickToSteps from './StickToSteps';
+import Captions from './Captions';
 
 export default {
   title: 'Components/QRangeSelector',
@@ -34,8 +35,22 @@ export default {
   },
 
   args: {
-    value: [25, 75]
+    value: [25, 75],
+    captions: {
+      10: '>10<',
+      25: '!25!',
+      60: '45+15',
+      100: 'max'
+    }
   }
 };
 
-export { Default, Range, WithoutTooltip, Vertical, Breakpoints, StickToSteps };
+export {
+  Default,
+  Range,
+  WithoutTooltip,
+  Vertical,
+  Breakpoints,
+  StickToSteps,
+  Captions
+};
