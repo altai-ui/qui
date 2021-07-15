@@ -17,11 +17,6 @@ export default {
   ],
 
   argTypes: {
-    value: {
-      control: {
-        type: 'text'
-      }
-    },
     min: {
       control: {
         type: 'number'
@@ -31,16 +26,6 @@ export default {
       control: {
         type: 'number'
       }
-    }
-  },
-
-  args: {
-    value: [25, 75],
-    captions: {
-      10: '>10<',
-      25: '!25!',
-      60: '45+15',
-      100: 'max'
     }
   }
 };

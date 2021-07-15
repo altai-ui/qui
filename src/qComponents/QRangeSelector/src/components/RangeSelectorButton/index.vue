@@ -38,6 +38,10 @@ export default {
     oppositeValue: {
       type: [Number, String],
       default: null
+    },
+    percent: {
+      type: String,
+      required: true
     }
   },
 
@@ -49,16 +53,10 @@ export default {
   },
 
   computed: {
-    buttonStyle() {
-      if (this.$parent.vertical) return { bottom: `${this.position}%` };
-
-      return { left: `${this.position}%` };
-    },
-
     stylePosition() {
-      if (this.$parent.vertical) return { bottom: `${this.position}%` };
+      if (this.$parent.vertical) return { bottom: `${this.percent}%` };
 
-      return { left: `${this.position}%` };
+      return { left: `${this.percent}%` };
     }
   },
 
@@ -93,13 +91,7 @@ export default {
           ? this.$parent.step * -1
           : this.$parent.step;
 
-      const newPosition = this.position + step;
-
-      console.log(
-        this.$parent.range,
-        this.tabIndex === 0,
-        newPosition > this.oppositeValue
-      );
+      const newPosition = Number(this.position) + step;
 
       if (
         (this.$parent.range &&
@@ -126,21 +118,31 @@ export default {
     },
 
     handleButtonMoving({ clientY, clientX }) {
-      const { left, bottom, width, height } = this.$parent.getPathSize();
+      const {
+        min,
+        max,
+        range,
+        getPathSize,
+        stickToSteps,
+        steps
+      } = this.$parent;
+      const { left, bottom, width, height } = getPathSize();
 
-      const newPosition = this.$parent.vertical
+      const newPercent = this.vertical
         ? ((bottom - clientY) / height) * 100
         : ((clientX - left) / width) * 100;
 
-      const targetValue = this.$parent.stickToSteps
-        ? this.$parent.steps.reduce((a, b) => {
+      const newPosition = min + (newPercent * (max - min)) / 100;
+
+      const targetValue = stickToSteps
+        ? steps.reduce((a, b) => {
             return Math.abs(b - newPosition) < Math.abs(a - newPosition)
               ? b
               : a;
           })
         : newPosition;
 
-      if (this.$parent.range) {
+      if (range) {
         if (
           (this.tabIndex === 0 && targetValue > this.oppositeValue) ||
           (this.tabIndex === 1 && targetValue < this.oppositeValue)
@@ -149,8 +151,8 @@ export default {
 
         this.position =
           this.tabIndex === 0
-            ? Math.max(this.$parent.min, targetValue)
-            : Math.min(this.$parent.max, targetValue);
+            ? Math.max(min, targetValue)
+            : Math.min(max, targetValue);
 
         this.$emit('drag-moving', {
           newValue: this.position,
@@ -159,10 +161,10 @@ export default {
         return;
       }
 
-      if (targetValue < this.$parent.min) {
-        this.position = this.$parent.min;
-      } else if (targetValue > this.$parent.max) {
-        this.position = this.$parent.max;
+      if (targetValue < min) {
+        this.position = min;
+      } else if (targetValue > max) {
+        this.position = max;
       } else {
         this.position = targetValue;
       }

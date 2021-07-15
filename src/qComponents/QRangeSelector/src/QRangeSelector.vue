@@ -17,6 +17,7 @@
         :tab-index="0"
         :value="firstValue"
         :opposite-value="secondValue"
+        :percent="firstPercent"
         @drag-moving="handleDragMoving"
         @position-change="changeButtonPosition"
       />
@@ -26,20 +27,24 @@
         :tab-index="1"
         :value="secondValue"
         :opposite-value="firstValue"
+        :percent="secondPercent"
         @drag-moving="handleDragMoving"
         @position-change="changeButtonPosition"
       />
 
-      <template v-if="showSteps">
+      <div
+        v-if="showSteps"
+        class="q-range-selector__step-wrapper"
+      >
         <div
           v-for="(item, key) in steps"
           :key="key"
           class="q-range-selector__step"
           :style="getStopStyle(item)"
         />
-      </template>
+      </div>
 
-      <template v-if="captionsList">
+      <template v-if="captionsList.length">
         <div
           v-for="(item, key) in captionsList"
           :key="key"
@@ -126,10 +131,12 @@ export default {
     },
 
     captionsList() {
-      return Object.entries(this.captions).map(([key, value]) => ({
-        position: Number(key),
-        value
-      }));
+      return this.captions
+        ? Object.entries(this.captions).map(([key, value]) => ({
+            position: Number(key),
+            value
+          }))
+        : [];
     },
 
     firstPercent() {
@@ -221,9 +228,12 @@ export default {
 
     onPathClick(event) {
       const { left, bottom, width, height } = this.getPathSize();
-      const newValue = this.vertical
+
+      const newPercent = this.vertical
         ? ((bottom - event.clientY) / height) * 100
         : ((event.clientX - left) / width) * 100;
+
+      const newValue = this.min + (newPercent * (this.max - this.min)) / 100;
 
       let targetValue = this.stickToSteps
         ? this.steps
@@ -282,9 +292,11 @@ export default {
     },
 
     getStopStyle(position) {
-      if (this.vertical) return { bottom: `${position}%` };
+      const newPosition = ((position - this.min) * 100) / (this.max - this.min);
 
-      return { left: `${position}%` };
+      if (this.vertical) return { bottom: `${newPosition}%` };
+
+      return { left: `${newPosition}%` };
     },
 
     handleDragMoving({ newValue, tabIndex }) {
