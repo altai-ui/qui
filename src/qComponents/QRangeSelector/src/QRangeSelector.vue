@@ -1,12 +1,12 @@
 <template>
   <div
     class="q-range-selector"
-    :class="{ 'is-vertical': vertical }"
+    :class="{ 'q-range-selector_is-vertical': vertical }"
   >
     <div
       ref="path"
       class="q-range-selector__path"
-      @click="onPathClick"
+      @click="handlePathClick"
     >
       <div
         class="q-range-selector__bar"
@@ -18,8 +18,8 @@
         :value="firstValue"
         :opposite-value="secondValue"
         :percent="firstPercent"
-        @drag-moving="handleDragMoving"
-        @position-change="changeButtonPosition"
+        @drag-moving="handleDragMoving($event, 0)"
+        @position-change="handleButtonPositionChange($event, 0)"
       />
 
       <range-selector-button
@@ -28,8 +28,8 @@
         :value="secondValue"
         :opposite-value="firstValue"
         :percent="secondPercent"
-        @drag-moving="handleDragMoving"
-        @position-change="changeButtonPosition"
+        @drag-moving="handleDragMoving($event, 1)"
+        @position-change="handleButtonPositionChange($event, 1)"
       />
 
       <div
@@ -37,19 +37,19 @@
         class="q-range-selector__step-wrapper"
       >
         <div
-          v-for="(item, key) in steps"
+          v-for="(stepItem, key) in steps"
           :key="key"
           class="q-range-selector__step"
-          :style="getStopStyle(item)"
+          :style="getStepPositionStyle(stepItem)"
         />
       </div>
 
       <template v-if="captionsList.length">
         <div
-          v-for="(item, key) in captionsList"
+          v-for="(caption, key) in captionsList"
           :key="key"
           class="q-range-selector__caption"
-          :style="getStopStyle(item.position)"
+          :style="getStepPositionStyle(caption.position)"
         >
           {{ item.value }}
         </div>
@@ -88,7 +88,14 @@ export default {
     },
     value: {
       type: [Number, String, Array],
-      default: 0
+      default: 0,
+      validator: value => {
+        if (Array.isArray(value)) {
+          return value.every(val => !Number.isNaN(Number(val)));
+        }
+
+        return !Number.isNaN(Number(value));
+      }
     },
     showSteps: {
       type: Boolean,
@@ -121,66 +128,50 @@ export default {
 
   computed: {
     precision() {
-      let e = 1;
-      let p = 0;
-      while (Math.round(this.step * e) / e !== this.step) {
-        e *= 10;
-        p += 1;
+      let factor = 1;
+      let precision = 0;
+      while (Math.round(this.step * factor) / factor !== this.step) {
+        factor *= 10;
+        precision += 1;
       }
-      return p;
+      return precision;
     },
 
     captionsList() {
-      return this.captions
-        ? Object.entries(this.captions).map(([key, value]) => ({
-            position: Number(key),
-            value
-          }))
-        : [];
+      if (!this.captions) return [];
+
+      return Object.entries(this.captions).map(([key, value]) => ({
+        position: Number(key),
+        value
+      }));
     },
 
     firstPercent() {
-      const value = this.firstValue;
-
-      let left =
-        value > this.max
-          ? 100
-          : (100 * (value - this.min)) / (this.max - this.min);
-
-      if (value < this.min) left = 0;
-
-      return left.toFixed(3);
+      return this.getPercent(this.firstValue);
     },
 
     secondPercent() {
       if (!this.range) return null;
 
-      const value = this.secondValue;
-
-      let left =
-        value > this.max
-          ? 100
-          : (100 * (value - this.min)) / (this.max - this.min);
-
-      if (value < this.min) left = 0;
-
-      return left.toFixed(3);
+      return this.getPercent(this.secondValue);
     },
 
     barStyle() {
+      const widthHeight = this.secondPercent
+        ? `${this.secondPercent - this.firstPercent}%`
+        : `${this.firstPercent}%`;
+
+      const leftBottom = this.range ? `${this.firstPercent}%` : 0;
+
       if (this.vertical) {
         return {
-          height: this.secondPercent
-            ? `${this.secondPercent - this.firstPercent}%`
-            : `${this.firstPercent}%`,
-          bottom: this.range ? `${this.firstPercent}%` : 0
+          height: widthHeight,
+          bottom: leftBottom
         };
       }
       return {
-        width: this.secondPercent
-          ? `${this.secondPercent - this.firstPercent}%`
-          : `${this.firstPercent}%`,
-        left: this.range ? `${this.firstPercent}%` : 0
+        width: widthHeight,
+        left: leftBottom
       };
     },
 
@@ -203,30 +194,36 @@ export default {
     }
   },
 
-  mounted() {
-    this.getValues();
-  },
-
   methods: {
+    getPercent(value) {
+      if (value > this.max) return this.max.toFixed(3);
+      if (value < this.min) return this.min.toFixed(3);
+
+      const left = (100 * (value - this.min)) / (this.max - this.min);
+      return left.toFixed(3);
+    },
+
     getValues() {
+      const minValue = Array.isArray(this.value)
+        ? Math.max(this.min, this.value[0])
+        : Math.max(this.min, this.value);
+
+      this.firstValue = minValue;
+
       if (!this.range) {
-        this.firstValue = Array.isArray(this.value)
-          ? this.value[0]
-          : this.value;
         this.secondValue = null;
         return;
       }
+
       if (Array.isArray(this.value)) {
-        this.firstValue = Math.max(this.min, this.value[0]);
         this.secondValue = Math.min(this.max, this.value[1]);
         return;
       }
 
-      this.firstValue = Math.max(this.min, this.value);
       this.secondValue = this.max;
     },
 
-    onPathClick(event) {
+    handlePathClick(event) {
       const { left, bottom, width, height } = this.getPathSize();
 
       const newPercent = this.vertical
@@ -235,13 +232,15 @@ export default {
 
       const newValue = this.min + (newPercent * (this.max - this.min)) / 100;
 
-      let targetValue = this.stickToSteps
-        ? this.steps
-            .reduce((a, b) => {
-              return Math.abs(b - newValue) < Math.abs(a - newValue) ? b : a;
-            })
-            .toFixed(this.precision)
-        : newValue.toFixed(this.precision);
+      let targetValue = Number(newValue);
+
+      if (this.stickToSteps) {
+        targetValue = this.steps.reduce((a, b) =>
+          Math.abs(b - newValue) < Math.abs(a - newValue) ? b : a
+        );
+      }
+
+      targetValue = targetValue.toFixed(this.precision);
 
       if (!this.range) {
         if (targetValue > this.max) targetValue = this.max;
@@ -276,22 +275,10 @@ export default {
     },
 
     getPathSize() {
-      const {
-        left,
-        bottom,
-        width,
-        height
-      } = this.$refs.path.getBoundingClientRect();
-
-      return {
-        left,
-        bottom,
-        width,
-        height
-      };
+      return this.$refs.path.getBoundingClientRect();
     },
 
-    getStopStyle(position) {
+    getStepPositionStyle(position) {
       const newPosition = ((position - this.min) * 100) / (this.max - this.min);
 
       if (this.vertical) return { bottom: `${newPosition}%` };
@@ -299,13 +286,13 @@ export default {
       return { left: `${newPosition}%` };
     },
 
-    handleDragMoving({ newValue, tabIndex }) {
+    handleDragMoving(newValue, tabIndex) {
       if (tabIndex === 0) {
-        this.firstValue = newValue.toFixed(this.precision);
+        this.firstValue = Number(newValue).toFixed(this.precision);
         return;
       }
 
-      this.secondValue = newValue.toFixed(this.precision);
+      this.secondValue = Number(newValue).toFixed(this.precision);
     },
 
     changesEmmiter(newValue) {
@@ -313,8 +300,8 @@ export default {
       this.$emit('change', newValue);
     },
 
-    changeButtonPosition({ newValue, tabIndex }) {
-      const fixedNewValue = newValue.toFixed(this.precision);
+    handleButtonPositionChange(newValue, tabIndex) {
+      const fixedNewValue = Number(newValue).toFixed(this.precision);
 
       const passedData =
         tabIndex === 0

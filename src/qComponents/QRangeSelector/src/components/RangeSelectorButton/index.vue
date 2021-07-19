@@ -1,16 +1,16 @@
 <template>
   <div
     :tabindex="tabIndex"
-    class="q-range-selector__button-wrapper focus-visible"
+    class="q-range-selector__button-wrapper"
     :class="{ 'q-range-selector__button-wrapper_focused': isFocused }"
     :style="stylePosition"
     @focus="handleFocus"
     @blur="handleBlur"
-    @keydown.left="onArrowDown"
-    @keydown.right="onArrowDown"
-    @keydown.down.prevent="onArrowDown"
-    @keydown.up.prevent="onArrowDown"
-    @mousedown.stop="handleButtonDrag"
+    @keydown.left="handleKeyDown"
+    @keydown.right="handleKeyDown"
+    @keydown.down.prevent="handleKeyDown"
+    @keydown.up.prevent="handleKeyDown"
+    @mousedown="handleButtonDrag"
   >
     <div class="q-range-selector__button" />
     <div
@@ -69,12 +69,14 @@ export default {
     }
   },
 
+  destroyed() {
+    document.removeEventListener('mousemove', this.handleButtonMoving);
+    document.removeEventListener('mouseup', this.handleButtonMovingEnd);
+  },
+
   methods: {
     emitChanges() {
-      this.$emit('position-change', {
-        newValue: this.position,
-        tabIndex: this.tabIndex
-      });
+      this.$emit('position-change', this.position);
     },
 
     handleFocus() {
@@ -85,7 +87,7 @@ export default {
       this.isFocused = false;
     },
 
-    onArrowDown({ key }) {
+    handleKeyDown({ key }) {
       const step =
         key === 'ArrowLeft' || key === 'ArrowDown'
           ? this.$parent.step * -1
@@ -124,23 +126,26 @@ export default {
         range,
         getPathSize,
         stickToSteps,
-        steps
+        steps,
+        vertical
       } = this.$parent;
       const { left, bottom, width, height } = getPathSize();
 
-      const newPercent = this.vertical
+      const newPercent = vertical
         ? ((bottom - clientY) / height) * 100
         : ((clientX - left) / width) * 100;
 
+      console.log(newPercent);
+
       const newPosition = min + (newPercent * (max - min)) / 100;
 
-      const targetValue = stickToSteps
-        ? steps.reduce((a, b) => {
-            return Math.abs(b - newPosition) < Math.abs(a - newPosition)
-              ? b
-              : a;
-          })
-        : newPosition;
+      let targetValue = newPosition;
+
+      if (stickToSteps) {
+        targetValue = steps.reduce((a, b) =>
+          Math.abs(b - newPosition) < Math.abs(a - newPosition) ? b : a
+        );
+      }
 
       if (range) {
         if (
@@ -169,10 +174,7 @@ export default {
         this.position = targetValue;
       }
 
-      this.$emit('drag-moving', {
-        newValue: this.position,
-        tabIndex: this.tabIndex
-      });
+      this.$emit('drag-moving', this.position);
     },
 
     handleButtonMovingEnd() {
