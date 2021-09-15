@@ -1,20 +1,16 @@
 <template>
   <div class="slider-captions">
-    <div
+    <button
       v-for="(caption, index) in captionsList"
       :key="index"
-      class="slider-captions__item"
-      :style="getItemStyles(caption.position)"
+      type="button"
+      class="slider-captions__btn"
+      :class="getBtnClasses(caption.value)"
+      :style="getBtnStyles(caption.position)"
+      @click="handleCaptionLabelClick(caption.value)"
     >
-      <button
-        type="button"
-        class="slider-captions__btn"
-        :class="getBtnClasses(caption.value)"
-        @click="handleCaptionLabelClick(caption.value)"
-      >
-        {{ caption.label }}
-      </button>
-    </div>
+      {{ caption.label }}
+    </button>
   </div>
 </template>
 
@@ -40,7 +36,7 @@ export default {
   },
 
   methods: {
-    getItemStyles(position) {
+    getBtnStyles(position) {
       return this.$parent.vertical
         ? { bottom: `${position}%` }
         : { left: `${position}%` };

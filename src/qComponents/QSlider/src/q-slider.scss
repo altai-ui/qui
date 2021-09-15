@@ -95,7 +95,7 @@
       width: 20px;
       height: 100%;
 
-      &__item {
+      &__btn {
         top: auto;
         left: 0;
         transform: translateY(50%);
@@ -200,19 +200,16 @@
   height: 20px;
   margin-top: 8px;
 
-  &__item {
+  &__btn {
     position: absolute;
     top: 0;
-    transform: translateX(-50%);
-  }
-
-  &__btn {
     font-weight: var(--font-weight-base);
     font-size: var(--font-size-base);
     line-height: var(--line-height-base);
     color: rgba(var(--color-rgb-gray), 0.32);
     background-color: transparent;
     border: none;
+    transform: translateX(-50%);
 
     &:hover,
     &:focus,
