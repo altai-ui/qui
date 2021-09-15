@@ -27,7 +27,7 @@
 
     <range-selector-captions
       v-if="captions"
-      @select="handleCaptionSelect"
+      @change="handleCaptionChange"
     />
   </div>
 </template>
@@ -343,7 +343,6 @@ export default {
           'change',
           this.range ? [this.minValue, this.maxValue] : this.value
         );
-        // eslint-disable-next-line no-unused-expressions
         this.qFormItem?.validateField('change');
       });
     },
@@ -362,7 +361,7 @@ export default {
       this.emitChange();
     },
 
-    handleCaptionSelect(value) {
+    handleCaptionChange(value) {
       if (this.isDisabled) return;
 
       if (!this.range) {

@@ -9,8 +9,8 @@
       <button
         type="button"
         class="range-selector-captions__btn"
-        :class="getBtnClasses(caption.point)"
-        @click="handleCaptionLabelClick(caption.point)"
+        :class="getBtnClasses(caption.value)"
+        @click="handleCaptionLabelClick(caption.value)"
       >
         {{ caption.label }}
       </button>
@@ -30,12 +30,11 @@ export default {
 
       return Object.keys(captions)
         .map(parseFloat)
-        .sort((a, b) => a - b)
-        .filter(point => point <= max && point >= min)
-        .map(point => ({
-          point,
-          position: ((point - min) * 100) / (max - min),
-          label: captions[point]
+        .filter(value => value <= max && value >= min)
+        .map(value => ({
+          value,
+          position: ((value - min) * 100) / (max - min),
+          label: captions[value]
         }));
     }
   },
@@ -48,14 +47,15 @@ export default {
     },
 
     getBtnClasses(value) {
-      return value === this.$parent.startValue ||
-        value === this.$parent.endValue
+      const { startValue, endValue } = this.$parent;
+
+      return value === startValue || value === endValue
         ? 'q-range-selector-captions__btn_selected'
         : null;
     },
 
     handleCaptionLabelClick(value) {
-      this.$emit('select', value);
+      this.$emit('change', value);
     }
   }
 };

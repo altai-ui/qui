@@ -3,10 +3,7 @@
     type="button"
     :tabindex="tabIndex"
     class="range-selector-button"
-    :class="wrapperClasses"
     :style="wrapperStyle"
-    @focus="handleFocus"
-    @blur="handleBlur"
     @keydown.left="handleKeyDown"
     @keydown.right="handleKeyDown"
     @keydown.down.prevent="handleKeyDown"
@@ -42,11 +39,10 @@ export default {
   data() {
     return {
       isDragging: false,
-      isFocused: false,
       isClick: false,
-      startX: 0,
+      clientX: 0,
       currentX: 0,
-      startY: 0,
+      clientY: 0,
       currentY: 0,
       startPosition: 0,
       newPosition: null,
@@ -80,13 +76,6 @@ export default {
       });
 
       return Math.max.apply(null, precisionsList);
-    },
-
-    wrapperClasses() {
-      return {
-        'q-range-selector__button-wrapper_dragging': this.isDragging,
-        'q-range-selector__button-wrapper_focused': this.isFocused
-      };
     }
   },
 
@@ -97,14 +86,6 @@ export default {
   },
 
   methods: {
-    handleFocus() {
-      this.isFocused = true;
-    },
-
-    handleBlur() {
-      this.isFocused = false;
-    },
-
     setPosition(value) {
       if (value === null || Number.isNaN(value)) return;
 
@@ -152,10 +133,10 @@ export default {
       let diff = 0;
       if (vertical) {
         this.currentY = event.clientY;
-        diff = ((this.startY - this.currentY) / height) * 100;
+        diff = ((this.clientY - this.currentY) / height) * 100;
       } else {
         this.currentX = event.clientX;
-        diff = ((this.currentX - this.startX) / width) * 100;
+        diff = ((this.currentX - this.clientX) / width) * 100;
       }
 
       this.newPosition = this.startPosition + diff;
@@ -184,9 +165,9 @@ export default {
       this.isClick = true;
 
       if (this.$parent.vertical) {
-        this.startY = event.clientY;
+        this.clientY = event.clientY;
       } else {
-        this.startX = event.clientX;
+        this.clientX = event.clientX;
       }
 
       this.startPosition = parseFloat(this.currentPosition);
