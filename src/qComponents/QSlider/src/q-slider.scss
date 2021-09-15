@@ -45,7 +45,6 @@
     }
 
     .slider-bar {
-      width: 8px;
       background-color: rgba(var(--color-rgb-gray), 0.32);
     }
 
@@ -58,7 +57,6 @@
 
   &_is-vertical {
     width: auto;
-    min-width: 0;
     height: 196px;
 
     .q-slider {
