@@ -4,12 +4,14 @@ export default (_, { argTypes }) => ({
   ),
   data() {
     return {
-      value: [25, 75],
+      value: 20,
       captions: {
-        10: '>10<',
-        25: '!25!',
-        60: '45+15',
-        100: 'max'
+        0: '0',
+        20: '20%',
+        40: '40%',
+        60: '60%',
+        80: '80%',
+        100: '100%'
       }
     };
   },
@@ -17,8 +19,9 @@ export default (_, { argTypes }) => ({
     <q-range-selector 
       v-bind="$props" 
       v-model="value"
-      :min="10"
       :captions="captions"
+      :step="20"
+      show-steps
     />
   `
 });

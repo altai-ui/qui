@@ -5,6 +5,7 @@ Object {
   "alpha": 100,
   "elementToFocusAfterClosing": null,
   "hue": 0,
+  "isMousePressed": false,
   "saturation": 100,
   "tempColor": "",
   "value": 100,

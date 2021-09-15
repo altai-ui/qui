@@ -1,25 +1,26 @@
 <template>
-  <div
+  <button
+    type="button"
     :tabindex="tabIndex"
-    class="q-range-selector__button-wrapper"
-    :class="{ 'q-range-selector__button-wrapper_focused': isFocused }"
-    :style="stylePosition"
+    class="range-selector-button"
+    :class="wrapperClasses"
+    :style="wrapperStyle"
     @focus="handleFocus"
     @blur="handleBlur"
     @keydown.left="handleKeyDown"
     @keydown.right="handleKeyDown"
     @keydown.down.prevent="handleKeyDown"
     @keydown.up.prevent="handleKeyDown"
-    @mousedown="handleButtonDrag"
+    @mousedown="handleButtonDown"
   >
-    <div class="q-range-selector__button" />
+    <div class="range-selector-button__target" />
     <div
       v-if="$parent.showTooltip"
-      class="q-range-selector__tooltip"
+      class="range-selector-button__tooltip"
     >
-      {{ value }}
+      {{ formattedValue }}
     </div>
-  </div>
+  </button>
 </template>
 
 <script>
@@ -29,56 +30,73 @@ export default {
   props: {
     tabIndex: {
       type: Number,
-      required: true
+      default: 0
     },
+
     value: {
-      type: [Number, String],
-      required: true
-    },
-    oppositeValue: {
-      type: [Number, String],
-      default: null
-    },
-    percent: {
-      type: String,
-      required: true
+      type: Number,
+      default: 0
     }
   },
 
   data() {
     return {
+      isDragging: false,
       isFocused: false,
-      position: null
+      isClick: false,
+      startX: 0,
+      currentX: 0,
+      startY: 0,
+      currentY: 0,
+      startPosition: 0,
+      newPosition: null,
+      oldValue: this.value
     };
   },
 
   computed: {
-    stylePosition() {
-      if (this.$parent.vertical) return { bottom: `${this.percent}%` };
+    currentPosition() {
+      const { min, max } = this.$parent;
+      return `${((this.value - min) / (max - min)) * 100}%`;
+    },
 
-      return { left: `${this.percent}%` };
+    formattedValue() {
+      const { formatTooltip } = this.$parent;
+      return (formatTooltip && formatTooltip(this.value)) || this.value;
+    },
+
+    wrapperStyle() {
+      return this.$parent.vertical
+        ? { bottom: this.currentPosition }
+        : { left: this.currentPosition };
+    },
+
+    precision() {
+      const { min, max, step } = this.$parent;
+
+      const precisionsList = [min, max, step].map(value => {
+        const decimal = `${value}`.split('.')[1];
+        return decimal ? decimal.length : 0;
+      });
+
+      return Math.max.apply(null, precisionsList);
+    },
+
+    wrapperClasses() {
+      return {
+        'q-range-selector__button-wrapper_dragging': this.isDragging,
+        'q-range-selector__button-wrapper_focused': this.isFocused
+      };
     }
   },
 
   watch: {
-    value: {
-      handler(val) {
-        this.position = val;
-      },
-      immediate: true
+    isDragging(val) {
+      this.$parent.isDragging = val;
     }
   },
 
-  destroyed() {
-    document.removeEventListener('mousemove', this.handleButtonMoving);
-    document.removeEventListener('mouseup', this.handleButtonMovingEnd);
-  },
-
   methods: {
-    emitChanges() {
-      this.$emit('position-change', this.position);
-    },
-
     handleFocus() {
       this.isFocused = true;
     },
@@ -87,100 +105,109 @@ export default {
       this.isFocused = false;
     },
 
+    setPosition(value) {
+      if (value === null || Number.isNaN(value)) return;
+
+      let newPosition = value;
+      if (newPosition < 0) {
+        newPosition = 0;
+      } else if (newPosition > 100) {
+        newPosition = 100;
+      }
+
+      const { min, max, step } = this.$parent;
+
+      const lengthPerStep = 100 / ((max - min) / step);
+      const steps = Math.round(newPosition / lengthPerStep);
+
+      let result = steps * lengthPerStep * (max - min) * 0.01 + min;
+      result = parseFloat(result.toFixed(this.precision));
+      this.$emit('input', result);
+
+      if (!this.isDragging && this.value !== this.oldValue) {
+        this.oldValue = this.value;
+      }
+    },
+
+    handleButtonDown(event) {
+      if (this.$parent.isDisabled) return;
+
+      event.preventDefault();
+
+      this.handleDragStart(event);
+
+      window.addEventListener('mousemove', this.handleDragging);
+      window.addEventListener('mouseup', this.handleDragEnd);
+      window.addEventListener('contextmenu', this.handleDragEnd);
+    },
+
+    handleDragging(event) {
+      if (!this.isDragging) return;
+
+      this.isClick = false;
+
+      const { getPathSize, vertical } = this.$parent;
+      const { width, height } = getPathSize();
+
+      let diff = 0;
+      if (vertical) {
+        this.currentY = event.clientY;
+        diff = ((this.startY - this.currentY) / height) * 100;
+      } else {
+        this.currentX = event.clientX;
+        diff = ((this.currentX - this.startX) / width) * 100;
+      }
+
+      this.newPosition = this.startPosition + diff;
+      this.setPosition(this.newPosition);
+    },
+
     handleKeyDown({ key }) {
-      const step =
-        key === 'ArrowLeft' || key === 'ArrowDown'
-          ? this.$parent.step * -1
-          : this.$parent.step;
+      if (this.$parent.isDisabled) return;
 
-      const newPosition = Number(this.position) + step;
+      const { min, max, step } = this.$parent;
 
-      if (
-        (this.$parent.range &&
-          this.tabIndex === 0 &&
-          newPosition > this.oppositeValue) ||
-        (this.tabIndex === 1 && newPosition < this.oppositeValue)
-      )
-        return;
-
-      if (newPosition < this.$parent.min) {
-        this.position = this.$parent.min;
-      } else if (newPosition > this.$parent.max) {
-        this.position = this.$parent.max;
+      if (key === 'ArrowLeft' || key === 'ArrowDown') {
+        this.newPosition =
+          parseFloat(this.currentPosition) - (step / (max - min)) * 100;
       } else {
-        this.position = newPosition;
+        this.newPosition =
+          parseFloat(this.currentPosition) + (step / (max - min)) * 100;
       }
 
-      this.emitChanges();
+      this.setPosition(this.newPosition);
+      this.$parent.emitChange();
     },
 
-    handleButtonDrag() {
-      document.addEventListener('mousemove', this.handleButtonMoving);
-      document.addEventListener('mouseup', this.handleButtonMovingEnd);
-    },
+    handleDragStart(event) {
+      this.isDragging = true;
+      this.isClick = true;
 
-    handleButtonMoving({ clientY, clientX }) {
-      const {
-        min,
-        max,
-        range,
-        getPathSize,
-        stickToSteps,
-        steps,
-        vertical
-      } = this.$parent;
-      const { left, bottom, width, height } = getPathSize();
-
-      const newPercent = vertical
-        ? ((bottom - clientY) / height) * 100
-        : ((clientX - left) / width) * 100;
-
-      console.log(newPercent);
-
-      const newPosition = min + (newPercent * (max - min)) / 100;
-
-      let targetValue = newPosition;
-
-      if (stickToSteps) {
-        targetValue = steps.reduce((a, b) =>
-          Math.abs(b - newPosition) < Math.abs(a - newPosition) ? b : a
-        );
-      }
-
-      if (range) {
-        if (
-          (this.tabIndex === 0 && targetValue > this.oppositeValue) ||
-          (this.tabIndex === 1 && targetValue < this.oppositeValue)
-        )
-          return;
-
-        this.position =
-          this.tabIndex === 0
-            ? Math.max(min, targetValue)
-            : Math.min(max, targetValue);
-
-        this.$emit('drag-moving', {
-          newValue: this.position,
-          tabIndex: this.tabIndex
-        });
-        return;
-      }
-
-      if (targetValue < min) {
-        this.position = min;
-      } else if (targetValue > max) {
-        this.position = max;
+      if (this.$parent.vertical) {
+        this.startY = event.clientY;
       } else {
-        this.position = targetValue;
+        this.startX = event.clientX;
       }
 
-      this.$emit('drag-moving', this.position);
+      this.startPosition = parseFloat(this.currentPosition);
+      this.newPosition = this.startPosition;
     },
 
-    handleButtonMovingEnd() {
-      document.removeEventListener('mousemove', this.handleButtonMoving);
-      document.removeEventListener('mouseup', this.handleButtonMovingEnd);
-      this.emitChanges();
+    handleDragEnd() {
+      if (!this.isDragging) return;
+
+      this.$nextTick(() => {
+        this.isDragging = false;
+
+        if (!this.isClick) {
+          this.setPosition(this.newPosition);
+          this.$parent.emitChange();
+        }
+      });
+
+      window.removeEventListener('mousemove', this.handleDragging);
+      window.removeEventListener('mouseup', this.handleDragEnd);
+      window.removeEventListener('contextmenu', this.handleDragEnd);
     }
   }
 };

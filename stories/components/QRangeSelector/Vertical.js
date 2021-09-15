@@ -10,6 +10,7 @@ export default (_, { argTypes }) => ({
       v-bind="$props" 
       v-model="value"
       vertical
+      range
     />
   `
 });

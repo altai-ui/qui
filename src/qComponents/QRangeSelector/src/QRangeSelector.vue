@@ -1,314 +1,357 @@
 <template>
   <div
     class="q-range-selector"
-    :class="{ 'q-range-selector_is-vertical': vertical }"
+    :class="wrapperClasses"
+    :style="wrapperStyles"
+    role="slider"
   >
     <div
       ref="path"
       class="q-range-selector__path"
       @click="handlePathClick"
     >
-      <div
-        class="q-range-selector__bar"
-        :style="barStyle"
+      <range-selector-button
+        ref="startBtn"
+        v-model="startValue"
       />
+
+      <range-selector-bar />
 
       <range-selector-button
-        :tab-index="0"
-        :value="firstValue"
-        :opposite-value="secondValue"
-        :percent="firstPercent"
-        @drag-moving="handleDragMoving($event, 0)"
-        @position-change="handleButtonPositionChange($event, 0)"
+        v-if="range"
+        ref="endBtn"
+        v-model="endValue"
       />
 
-      <range-selector-button
-        v-if="range && secondValue"
-        :tab-index="1"
-        :value="secondValue"
-        :opposite-value="firstValue"
-        :percent="secondPercent"
-        @drag-moving="handleDragMoving($event, 1)"
-        @position-change="handleButtonPositionChange($event, 1)"
-      />
-
-      <div
-        v-if="showSteps"
-        class="q-range-selector__step-wrapper"
-      >
-        <div
-          v-for="(stepItem, key) in steps"
-          :key="key"
-          class="q-range-selector__step"
-          :style="getStepPositionStyle(stepItem)"
-        />
-      </div>
-
-      <template v-if="captionsList.length">
-        <div
-          v-for="(caption, key) in captionsList"
-          :key="key"
-          class="q-range-selector__caption"
-          :style="getStepPositionStyle(caption.position)"
-        >
-          {{ item.value }}
-        </div>
-      </template>
+      <range-selector-steps v-if="showSteps" />
     </div>
+
+    <range-selector-captions
+      v-if="captions"
+      @select="handleCaptionSelect"
+    />
   </div>
 </template>
 
 <script>
+import Emitter from '../../mixins/emitter';
+
+import RangeSelectorBar from './components/RangeSelectorBar';
 import RangeSelectorButton from './components/RangeSelectorButton';
+import RangeSelectorSteps from './components/RangeSelectorSteps';
+import RangeSelectorCaptions from './components/RangeSelectorCaptions';
 
 export default {
   name: 'QRangeSelector',
 
   components: {
-    RangeSelectorButton
+    RangeSelectorBar,
+    RangeSelectorButton,
+    RangeSelectorSteps,
+    RangeSelectorCaptions
+  },
+
+  mixins: [Emitter],
+
+  inject: {
+    qForm: {
+      default: null
+    },
+
+    qFormItem: {
+      default: null
+    }
   },
 
   props: {
+    value: {
+      type: [Number, Array],
+      default: null
+    },
+
     min: {
       type: Number,
       default: 0
     },
+
     max: {
       type: Number,
       default: 100
     },
-    showTooltip: {
-      type: Boolean,
-      default: true
-    },
+
     step: {
       type: Number,
-      default: 1,
-      validator: value => value > 0
+      default: 1
     },
-    value: {
-      type: [Number, String, Array],
-      default: 0,
-      validator: value => {
-        if (Array.isArray(value)) {
-          return value.every(val => !Number.isNaN(Number(val)));
-        }
 
-        return !Number.isNaN(Number(value));
-      }
-    },
     showSteps: {
       type: Boolean,
       default: false
     },
+
+    showTooltip: {
+      type: Boolean,
+      default: true
+    },
+
+    formatTooltip: {
+      type: Function,
+      default: null
+    },
+
+    captions: {
+      type: Object,
+      default: null
+    },
+
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+
     range: {
       type: Boolean,
       default: false
     },
+
     vertical: {
       type: Boolean,
       default: false
     },
-    stickToSteps: {
-      type: Boolean,
-      default: false
-    },
-    captions: {
-      type: Object,
+
+    height: {
+      type: String,
       default: null
     }
   },
 
   data() {
     return {
-      firstValue: null,
-      secondValue: null
+      startValue: null,
+      endValue: null,
+      oldValue: null,
+      isDragging: false
     };
   },
 
   computed: {
-    precision() {
-      let factor = 1;
-      let precision = 0;
-      while (Math.round(this.step * factor) / factor !== this.step) {
-        factor *= 10;
-        precision += 1;
-      }
-      return precision;
+    isDisabled() {
+      return this.disabled || (this.qForm?.disabled ?? false);
     },
 
-    captionsList() {
-      if (!this.captions) return [];
-
-      return Object.entries(this.captions).map(([key, value]) => ({
-        position: Number(key),
-        value
-      }));
-    },
-
-    firstPercent() {
-      return this.getPercent(this.firstValue);
-    },
-
-    secondPercent() {
-      if (!this.range) return null;
-
-      return this.getPercent(this.secondValue);
-    },
-
-    barStyle() {
-      const widthHeight = this.secondPercent
-        ? `${this.secondPercent - this.firstPercent}%`
-        : `${this.firstPercent}%`;
-
-      const leftBottom = this.range ? `${this.firstPercent}%` : 0;
-
-      if (this.vertical) {
-        return {
-          height: widthHeight,
-          bottom: leftBottom
-        };
-      }
+    wrapperClasses() {
       return {
-        width: widthHeight,
-        left: leftBottom
+        'q-range-selector_is-vertical': this.vertical,
+        'q-range-selector_is-disabled': this.isDisabled
       };
     },
 
-    steps() {
-      if (this.min > this.max) return [];
+    minValue() {
+      return Math.min(this.startValue, this.endValue);
+    },
 
-      const stepsCount = (this.max - this.min) / this.step;
-      const stepWidth = (100 * this.step) / (this.max - this.min);
+    maxValue() {
+      return Math.max(this.startValue, this.endValue);
+    },
 
-      return Array.from({ length: stepsCount + 1 }, (_, i) => i * stepWidth);
+    wrapperStyles() {
+      return this.vertical ? { height: this.height } : {};
+    },
+
+    isValueChanged() {
+      if (this.range) {
+        return ![this.minValue, this.maxValue].every(
+          (value, index) => value === this.oldValue[index]
+        );
+      }
+      return this.value !== this.oldValue;
     }
   },
 
   watch: {
-    value: {
-      handler() {
-        this.getValues();
-      },
-      immediate: true
+    value(val, oldVal) {
+      if (
+        this.isDragging ||
+        (Array.isArray(val) &&
+          Array.isArray(oldVal) &&
+          val.every((item, i) => item === oldVal[i]))
+      ) {
+        return;
+      }
+
+      this.setValues();
+    },
+
+    isDragging(val) {
+      if (!val) {
+        this.setValues();
+      }
+    },
+
+    startValue(val) {
+      if (this.range) {
+        this.$emit('input', [this.minValue, this.maxValue]);
+      } else {
+        this.$emit('input', val);
+      }
+    },
+
+    endValue() {
+      if (this.range) {
+        this.$emit('input', [this.minValue, this.maxValue]);
+      }
+    },
+
+    min() {
+      this.setValues();
+    },
+
+    max() {
+      this.setValues();
     }
   },
 
+  mounted() {
+    this.setupValues();
+  },
+
   methods: {
-    getPercent(value) {
-      if (value > this.max) return this.max.toFixed(3);
-      if (value < this.min) return this.min.toFixed(3);
+    setupValues() {
+      if (this.range) {
+        if (Array.isArray(this.value)) {
+          this.startValue = Math.max(this.min, this.value[0]);
+          this.endValue = Math.min(this.max, this.value[1]);
+        } else {
+          this.startValue = this.min;
+          this.endValue = this.max;
+        }
 
-      const left = (100 * (value - this.min)) / (this.max - this.min);
-      return left.toFixed(3);
-    },
-
-    getValues() {
-      const minValue = Array.isArray(this.value)
-        ? Math.max(this.min, this.value[0])
-        : Math.max(this.min, this.value);
-
-      this.firstValue = minValue;
-
-      if (!this.range) {
-        this.secondValue = null;
-        return;
-      }
-
-      if (Array.isArray(this.value)) {
-        this.secondValue = Math.min(this.max, this.value[1]);
-        return;
-      }
-
-      this.secondValue = this.max;
-    },
-
-    handlePathClick(event) {
-      const { left, bottom, width, height } = this.getPathSize();
-
-      const newPercent = this.vertical
-        ? ((bottom - event.clientY) / height) * 100
-        : ((event.clientX - left) / width) * 100;
-
-      const newValue = this.min + (newPercent * (this.max - this.min)) / 100;
-
-      let targetValue = Number(newValue);
-
-      if (this.stickToSteps) {
-        targetValue = this.steps.reduce((a, b) =>
-          Math.abs(b - newValue) < Math.abs(a - newValue) ? b : a
-        );
-      }
-
-      targetValue = targetValue.toFixed(this.precision);
-
-      if (!this.range) {
-        if (targetValue > this.max) targetValue = this.max;
-        if (targetValue < this.min) targetValue = this.min;
-
-        this.changesEmmiter(targetValue);
-        return;
-      }
-
-      let isFirstButtonChanged = true;
-
-      if (
-        Math.abs(this.firstValue - targetValue) <
-        Math.abs(this.secondValue - targetValue)
-      ) {
-        isFirstButtonChanged = this.firstValue < this.secondValue;
+        this.oldValue = [this.startValue, this.endValue];
       } else {
-        isFirstButtonChanged = this.firstValue > this.secondValue;
+        if (typeof this.value !== 'number' || Number.isNaN(this.value)) {
+          this.startValue = this.min;
+        } else {
+          this.startValue = Math.min(this.max, Math.max(this.min, this.value));
+        }
+
+        this.oldValue = this.startValue;
       }
+    },
 
-      if (
-        (isFirstButtonChanged && targetValue > this.secondValue) ||
-        (!isFirstButtonChanged && targetValue < this.firstValue)
-      )
-        return;
+    setValues() {
+      if (this.min > this.max) return;
 
-      const newValues = isFirstButtonChanged
-        ? [targetValue, this.secondValue]
-        : [this.firstValue, targetValue];
+      if (this.range && Array.isArray(this.value)) {
+        if (this.value[1] < this.min) {
+          this.$emit('input', [this.min, this.min]);
+        } else if (this.value[0] > this.max) {
+          this.$emit('input', [this.max, this.max]);
+        } else if (this.value[0] < this.min) {
+          this.$emit('input', [this.min, this.value[1]]);
+        } else if (this.value[1] > this.max) {
+          this.$emit('input', [this.value[0], this.max]);
+        } else {
+          this.startValue = this.value[0];
+          this.endValue = this.value[1];
 
-      this.changesEmmiter(newValues);
+          if (this.isValueChanged) {
+            // eslint-disable-next-line no-unused-expressions
+            this.qFormItem?.validateField('change', [
+              this.minValue,
+              this.maxValue
+            ]);
+            // this.dispatch('qFormItem', 'q.form.change', [this.minValue, this.maxValue])
+            this.oldValue = this.value.slice();
+          }
+        }
+      } else if (
+        !this.range &&
+        typeof this.value === 'number' &&
+        !Number.isNaN(this.value)
+      ) {
+        if (this.value < this.min) {
+          this.$emit('input', this.min);
+        } else if (this.value > this.max) {
+          this.$emit('input', this.max);
+        } else {
+          this.startValue = this.value;
+
+          if (this.isValueChanged) {
+            // eslint-disable-next-line no-unused-expressions
+            this.qFormItem?.validateField('change', this.value);
+            // this.dispatch('qFormItem', 'q.form.change', this.value)
+            this.oldValue = this.value;
+          }
+        }
+      }
     },
 
     getPathSize() {
       return this.$refs.path.getBoundingClientRect();
     },
 
-    getStepPositionStyle(position) {
-      const newPosition = ((position - this.min) * 100) / (this.max - this.min);
+    getNearestButton(value) {
+      let result;
 
-      if (this.vertical) return { bottom: `${newPosition}%` };
+      if (Math.abs(this.minValue - value) < Math.abs(this.maxValue - value)) {
+        result = this.startValue < this.endValue ? 'startBtn' : 'endBtn';
+      } else {
+        result = this.startValue > this.endValue ? 'startBtn' : 'endBtn';
+      }
 
-      return { left: `${newPosition}%` };
+      return result;
     },
 
-    handleDragMoving(newValue, tabIndex) {
-      if (tabIndex === 0) {
-        this.firstValue = Number(newValue).toFixed(this.precision);
+    setPosition(percent) {
+      const targetValue = this.min + (percent * (this.max - this.min)) / 100;
+
+      if (!this.range) {
+        this.$refs.startBtn.setPosition(percent);
         return;
       }
 
-      this.secondValue = Number(newValue).toFixed(this.precision);
+      const currentBtn = this.getNearestButton(targetValue);
+      this.$refs[currentBtn].setPosition(percent);
     },
 
-    changesEmmiter(newValue) {
-      this.$emit('input', newValue);
-      this.$emit('change', newValue);
+    emitChange() {
+      this.$nextTick(() => {
+        this.$emit(
+          'change',
+          this.range ? [this.minValue, this.maxValue] : this.value
+        );
+        // eslint-disable-next-line no-unused-expressions
+        this.qFormItem?.validateField('change');
+      });
     },
 
-    handleButtonPositionChange(newValue, tabIndex) {
-      const fixedNewValue = Number(newValue).toFixed(this.precision);
+    handlePathClick({ clientX, clientY }) {
+      if (this.isDisabled || this.isDragging) return;
 
-      const passedData =
-        tabIndex === 0
-          ? [Math.max(this.min, fixedNewValue), this.secondValue]
-          : [this.firstValue, Math.min(this.max, fixedNewValue)];
+      const { width, height, bottom, left } = this.getPathSize();
 
-      this.changesEmmiter(this.range ? passedData : fixedNewValue);
+      if (this.vertical) {
+        this.setPosition(((bottom - clientY) / height) * 100);
+      } else {
+        this.setPosition(((clientX - left) / width) * 100);
+      }
+
+      this.emitChange();
+    },
+
+    handleCaptionSelect(value) {
+      if (this.isDisabled) return;
+
+      if (!this.range) {
+        this.startValue = value;
+        return;
+      }
+
+      if (this.getNearestButton(value) === 'startBtn') {
+        this.startValue = value;
+      } else {
+        this.endValue = value;
+      }
     }
   }
 };

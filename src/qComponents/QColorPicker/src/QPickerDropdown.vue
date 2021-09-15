@@ -6,6 +6,8 @@
       v-click-outside="closeDropdown"
       class="q-picker-dropdown"
       tabindex="-1"
+      @mousedown="handleMouseDown"
+      @mouseup="handleMouseUp"
       @keyup.esc="closeDropdown"
     >
       <div class="q-picker-dropdown__base">
@@ -100,6 +102,7 @@ export default {
 
   data() {
     return {
+      isMousePressed: false,
       elementToFocusAfterClosing: null,
       tempColor: '',
       hue: 0,
@@ -173,12 +176,21 @@ export default {
   },
 
   methods: {
+    handleMouseDown() {
+      this.isMousePressed = true;
+    },
+
+    handleMouseUp() {
+      this.isMousePressed = false;
+    },
+
     closeDropdown() {
+      if (this.isMousePressed) return;
       this.$emit('close');
     },
 
     handleDocumentFocus(event) {
-      if (!this.$refs.dropdown.contains(event.target)) {
+      if (!this.$refs?.dropdown?.contains(event.target)) {
         this.$refs.dropdown.focus();
       }
     },
