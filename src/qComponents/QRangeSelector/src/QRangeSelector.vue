@@ -3,7 +3,6 @@
     class="q-range-selector"
     :class="wrapperClasses"
     :style="wrapperStyles"
-    role="slider"
   >
     <div
       ref="path"
@@ -34,8 +33,6 @@
 </template>
 
 <script>
-import Emitter from '../../mixins/emitter';
-
 import RangeSelectorBar from './components/RangeSelectorBar';
 import RangeSelectorButton from './components/RangeSelectorButton';
 import RangeSelectorSteps from './components/RangeSelectorSteps';
@@ -51,8 +48,6 @@ export default {
     RangeSelectorCaptions
   },
 
-  mixins: [Emitter],
-
   inject: {
     qForm: {
       default: null
@@ -64,61 +59,97 @@ export default {
   },
 
   props: {
+    /**
+     * binding value
+     */
     value: {
       type: [Number, Array],
       default: null
     },
 
+    /**
+     * minimum value
+     */
     min: {
       type: Number,
       default: 0
     },
 
+    /**
+     * maximum value
+     */
     max: {
       type: Number,
       default: 100
     },
 
+    /**
+     * step size
+     */
     step: {
       type: Number,
       default: 1
     },
 
+    /**
+     * whether to display breakpoints
+     */
     showSteps: {
       type: Boolean,
       default: false
     },
 
+    /**
+     * whether to display tooltip value
+     */
     showTooltip: {
       type: Boolean,
       default: true
     },
 
+    /**
+     * format to display tooltip value
+     */
     formatTooltip: {
       type: Function,
       default: null
     },
 
+    /**
+     * object consisting of a key and a value for quick selection
+     */
     captions: {
       type: Object,
       default: null
     },
 
+    /**
+     * whether RangeSelector is disabled
+     */
     disabled: {
       type: Boolean,
       default: false
     },
 
+    /**
+     * whether to select a range
+     */
     range: {
       type: Boolean,
       default: false
     },
 
+    /**
+     * vertical mode
+     */
     vertical: {
       type: Boolean,
       default: false
     },
 
+    /**
+     * Slider height, required in vertical mode
+     */
     height: {
       type: String,
       default: null
