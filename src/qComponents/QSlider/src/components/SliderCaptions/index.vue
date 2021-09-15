@@ -1,14 +1,14 @@
 <template>
-  <div class="range-selector-captions">
+  <div class="slider-captions">
     <div
       v-for="(caption, index) in captionsList"
       :key="index"
-      class="range-selector-captions__item"
+      class="slider-captions__item"
       :style="getItemStyles(caption.position)"
     >
       <button
         type="button"
-        class="range-selector-captions__btn"
+        class="slider-captions__btn"
         :class="getBtnClasses(caption.value)"
         @click="handleCaptionLabelClick(caption.value)"
       >
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: 'RangeSelectorCaptions',
+  name: 'SliderCaptions',
 
   computed: {
     captionsList() {
@@ -50,7 +50,7 @@ export default {
       const { startValue, endValue } = this.$parent;
 
       return value === startValue || value === endValue
-        ? 'q-range-selector-captions__btn_selected'
+        ? 'slider-captions__btn_selected'
         : null;
     },
 

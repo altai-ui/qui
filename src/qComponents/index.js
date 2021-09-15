@@ -26,9 +26,9 @@ import QInput from './QInput';
 import QInputNumber from './QInputNumber';
 import QPagination from './QPagination';
 import QPopover from './QPopover';
-import QRangeSelector from './QRangeSelector';
 import QScrollbar from './QScrollbar';
 import QSelect from './QSelect';
+import QSlider from './QSlider';
 import QOption from './QOption';
 import QTextarea from './QTextarea';
 import QTabs from './QTabs';
@@ -67,10 +67,10 @@ const Components = {
   QPopover,
   QRadio,
   QRadioGroup,
-  QRangeSelector,
   QRow,
   QScrollbar,
   QSelect,
+  QSlider,
   QTabPane,
   QTable,
   QTabs,
@@ -202,10 +202,10 @@ export {
   QPopover,
   QRadio,
   QRadioGroup,
-  QRangeSelector,
   QRow,
   QScrollbar,
   QSelect,
+  QSlider,
   QTabPane,
   QTable,
   QTabs,

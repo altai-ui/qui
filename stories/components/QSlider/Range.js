@@ -2,14 +2,14 @@ export default (_, { argTypes }) => ({
   props: Object.keys(argTypes).filter(val => val !== 'value'),
   data() {
     return {
-      value: null
+      value: [25, 75]
     };
   },
   template: `
-    <q-range-selector 
+    <q-slider 
       v-bind="$props" 
       v-model="value"
-      :show-tooltip="false"
+      range
     />
   `
 });

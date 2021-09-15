@@ -1,9 +1,9 @@
 <template>
-  <div class="range-selector-steps">
+  <div class="slider-steps">
     <div
       v-for="(item, key) in stepsList"
       :key="key"
-      class="range-selector-steps__item"
+      class="slider-steps__item"
       :style="getStopStyle(item)"
     />
   </div>
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'RangeSelectorSteps',
+  name: 'SliderSteps',
 
   computed: {
     stepsCount() {

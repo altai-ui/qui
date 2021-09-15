@@ -1,31 +1,31 @@
 <template>
   <div
-    class="q-range-selector"
+    class="q-slider"
     :class="wrapperClasses"
     :style="wrapperStyles"
   >
     <div
       ref="path"
-      class="q-range-selector__path"
+      class="q-slider__path"
       @click="handlePathClick"
     >
-      <range-selector-button
+      <slider-button
         ref="startBtn"
         v-model="startValue"
       />
 
-      <range-selector-bar />
+      <slider-bar />
 
-      <range-selector-button
+      <slider-button
         v-if="range"
         ref="endBtn"
         v-model="endValue"
       />
 
-      <range-selector-steps v-if="showSteps" />
+      <slider-steps v-if="showSteps" />
     </div>
 
-    <range-selector-captions
+    <slider-captions
       v-if="captions"
       @change="handleCaptionChange"
     />
@@ -33,19 +33,19 @@
 </template>
 
 <script>
-import RangeSelectorBar from './components/RangeSelectorBar';
-import RangeSelectorButton from './components/RangeSelectorButton';
-import RangeSelectorSteps from './components/RangeSelectorSteps';
-import RangeSelectorCaptions from './components/RangeSelectorCaptions';
+import SliderBar from './components/SliderBar';
+import SliderButton from './components/SliderButton';
+import SliderSteps from './components/SliderSteps';
+import SliderCaptions from './components/SliderCaptions';
 
 export default {
-  name: 'QRangeSelector',
+  name: 'QSlider',
 
   components: {
-    RangeSelectorBar,
-    RangeSelectorButton,
-    RangeSelectorSteps,
-    RangeSelectorCaptions
+    SliderBar,
+    SliderButton,
+    SliderSteps,
+    SliderCaptions
   },
 
   inject: {
@@ -124,7 +124,7 @@ export default {
     },
 
     /**
-     * whether RangeSelector is disabled
+     * whether Slider is disabled
      */
     disabled: {
       type: Boolean,
@@ -172,8 +172,8 @@ export default {
 
     wrapperClasses() {
       return {
-        'q-range-selector_is-vertical': this.vertical,
-        'q-range-selector_is-disabled': this.isDisabled
+        'q-slider_is-vertical': this.vertical,
+        'q-slider_is-disabled': this.isDisabled
       };
     },
 

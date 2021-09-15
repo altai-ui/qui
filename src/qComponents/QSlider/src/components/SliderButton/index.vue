@@ -2,7 +2,7 @@
   <button
     type="button"
     :tabindex="tabIndex"
-    class="range-selector-button"
+    class="slider-button"
     :style="wrapperStyle"
     @keydown.left="handleKeyDown"
     @keydown.right="handleKeyDown"
@@ -10,10 +10,10 @@
     @keydown.up.prevent="handleKeyDown"
     @mousedown="handleButtonDown"
   >
-    <div class="range-selector-button__target" />
+    <div class="slider-button__target" />
     <div
       v-if="$parent.showTooltip"
-      class="range-selector-button__tooltip"
+      class="slider-button__tooltip"
     >
       {{ formattedValue }}
     </div>
@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: 'RangeSelectorButton',
+  name: 'SliderButton',
 
   props: {
     tabIndex: {

@@ -1,4 +1,4 @@
-.q-range-selector {
+.q-slider {
   position: relative;
   width: 100%;
 
@@ -14,12 +14,14 @@
   }
 
   &_is-disabled {
-    .q-range-selector__path {
-      cursor: default;
+    .q-slider {
+      &__path {
+        cursor: default;
+      }
     }
 
-    .range-selector-button {
-      .range-selector-button__target {
+    .slider-button {
+      &__target {
         background-color: var(--color-tertiary-gray-light);
 
         &:hover {
@@ -28,7 +30,7 @@
       }
 
       &:focus {
-        .range-selector-button__target {
+        .slider-button__target {
           background-color: var(--color-tertiary-gray-light);
         }
       }
@@ -36,18 +38,18 @@
       &:hover {
         cursor: not-allowed;
 
-        .range-selector-button__target {
+        .slider-button__target {
           background-color: var(--color-tertiary-gray-light);
         }
       }
     }
 
-    .range-selector-bar {
+    .slider-bar {
       width: 8px;
       background-color: rgba(var(--color-rgb-gray), 0.32);
     }
 
-    .range-selector-captions {
+    .slider-captions {
       &__btn {
         cursor: default;
       }
@@ -59,25 +61,25 @@
     min-width: 0;
     height: 196px;
 
-    .q-range-selector {
+    .q-slider {
       &__path {
         width: 8px;
         height: 100%;
       }
     }
 
-    .range-selector-button {
+    .slider-button {
       top: auto;
       left: -14px;
       transform: translateY(50%);
     }
 
-    .range-selector-bar {
+    .slider-bar {
       width: 8px;
       height: auto;
     }
 
-    .range-selector-steps {
+    .slider-steps {
       &__item {
         top: auto;
         width: 8px;
@@ -86,7 +88,7 @@
       }
     }
 
-    .range-selector-captions {
+    .slider-captions {
       position: absolute;
       top: 0;
       left: 12px;
@@ -102,9 +104,9 @@
   }
 }
 
-.range-selector-button {
+.slider-button {
   position: absolute;
-  top: -14px;
+  top: -15px;
   z-index: 2;
   display: flex;
   justify-content: center;
@@ -149,11 +151,11 @@
     z-index: 3;
     outline: none;
 
-    .range-selector-button__target {
+    .slider-button__target {
       background-color: var(--color-primary);
     }
 
-    .range-selector-button__tooltip {
+    .slider-button__tooltip {
       z-index: 3;
       visibility: visible;
       opacity: 1;
@@ -161,7 +163,7 @@
   }
 }
 
-.range-selector-bar {
+.slider-bar {
   position: absolute;
   z-index: 1;
   height: 8px;
@@ -169,7 +171,7 @@
   border-radius: 3px;
 }
 
-.range-selector-steps {
+.slider-steps {
   position: relative;
   width: 100%;
   height: 100%;
@@ -192,7 +194,7 @@
   }
 }
 
-.range-selector-captions {
+.slider-captions {
   position: relative;
   width: 100%;
   height: 20px;

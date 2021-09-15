@@ -1,13 +1,13 @@
 <template>
   <div
-    class="range-selector-bar"
+    class="slider-bar"
     :style="barStyle"
   />
 </template>
 
 <script>
 export default {
-  name: 'RangeSelectorBar',
+  name: 'SliderBar',
 
   computed: {
     barSize() {

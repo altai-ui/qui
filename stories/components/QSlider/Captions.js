@@ -16,7 +16,7 @@ export default (_, { argTypes }) => ({
     };
   },
   template: `
-    <q-range-selector 
+    <q-slider 
       v-bind="$props" 
       v-model="value"
       :captions="captions"
