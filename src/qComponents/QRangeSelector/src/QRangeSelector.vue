@@ -286,20 +286,14 @@ export default {
           this.endValue = this.value[1];
 
           if (this.isValueChanged) {
-            // eslint-disable-next-line no-unused-expressions
             this.qFormItem?.validateField('change', [
               this.minValue,
               this.maxValue
             ]);
-            // this.dispatch('qFormItem', 'q.form.change', [this.minValue, this.maxValue])
             this.oldValue = this.value.slice();
           }
         }
-      } else if (
-        !this.range &&
-        typeof this.value === 'number' &&
-        !Number.isNaN(this.value)
-      ) {
+      } else if (typeof this.value === 'number' && !Number.isNaN(this.value)) {
         if (this.value < this.min) {
           this.$emit('input', this.min);
         } else if (this.value > this.max) {
@@ -308,9 +302,7 @@ export default {
           this.startValue = this.value;
 
           if (this.isValueChanged) {
-            // eslint-disable-next-line no-unused-expressions
             this.qFormItem?.validateField('change', this.value);
-            // this.dispatch('qFormItem', 'q.form.change', this.value)
             this.oldValue = this.value;
           }
         }
