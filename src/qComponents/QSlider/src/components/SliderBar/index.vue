@@ -23,15 +23,17 @@ export default {
     },
 
     barStyle() {
-      return this.$parent.vertical
-        ? {
-            height: this.barSize,
-            bottom: this.barStart
-          }
-        : {
-            width: this.barSize,
-            left: this.barStart
-          };
+      if (this.$parent.vertical) {
+        return {
+          height: this.barSize,
+          bottom: this.barStart
+        };
+      }
+
+      return {
+        width: this.barSize,
+        left: this.barStart
+      };
     }
   }
 };
