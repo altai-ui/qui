@@ -1,10 +1,10 @@
 <template>
-  <div class="slider-captions">
+  <div class="q-slider-captions">
     <button
       v-for="(caption, index) in captionsList"
       :key="index"
       type="button"
-      class="slider-captions__btn"
+      class="q-slider-captions__btn"
       :class="getBtnClasses(caption.value)"
       :style="getBtnStyles(caption.position)"
       @click="handleCaptionLabelClick(caption.value)"
@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'SliderCaptions',
+  name: 'QSliderCaptions',
 
   computed: {
     captionsList() {
@@ -46,7 +46,7 @@ export default {
       const { startValue, endValue } = this.$parent;
 
       return value === startValue || value === endValue
-        ? 'slider-captions__btn_selected'
+        ? 'q-slider-captions__btn_selected'
         : null;
     },
 

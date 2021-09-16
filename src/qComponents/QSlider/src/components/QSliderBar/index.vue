@@ -1,13 +1,13 @@
 <template>
   <div
-    class="slider-bar"
+    class="q-slider-bar"
     :style="barStyle"
   />
 </template>
 
 <script>
 export default {
-  name: 'SliderBar',
+  name: 'QSliderBar',
 
   computed: {
     barSize() {

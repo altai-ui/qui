@@ -1,9 +1,9 @@
 <template>
-  <div class="slider-steps">
+  <div class="q-slider-steps">
     <div
       v-for="(item, key) in stepsList"
       :key="key"
-      class="slider-steps__item"
+      class="q-slider-steps__item"
       :style="getStopStyle(item)"
     />
   </div>
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'SliderSteps',
+  name: 'QSliderSteps',
 
   computed: {
     stepsCount() {

@@ -20,7 +20,7 @@
       }
     }
 
-    .slider-button {
+    .q-slider-button {
       &__target {
         background-color: var(--color-tertiary-gray-light);
 
@@ -30,7 +30,7 @@
       }
 
       &:focus {
-        .slider-button__target {
+        .q-slider-button__target {
           background-color: var(--color-tertiary-gray-light);
         }
       }
@@ -38,17 +38,17 @@
       &:hover {
         cursor: not-allowed;
 
-        .slider-button__target {
+        .q-slider-button__target {
           background-color: var(--color-tertiary-gray-light);
         }
       }
     }
 
-    .slider-bar {
+    .q-slider-bar {
       background-color: rgba(var(--color-rgb-gray), 0.32);
     }
 
-    .slider-captions {
+    .q-slider-captions {
       &__btn {
         cursor: default;
       }
@@ -66,18 +66,18 @@
       }
     }
 
-    .slider-button {
+    .q-slider-button {
       top: auto;
       left: -14px;
       transform: translateY(50%);
     }
 
-    .slider-bar {
+    .q-slider-bar {
       width: 8px;
       height: auto;
     }
 
-    .slider-steps {
+    .q-slider-steps {
       &__item {
         top: auto;
         width: 8px;
@@ -86,7 +86,7 @@
       }
     }
 
-    .slider-captions {
+    .q-slider-captions {
       position: absolute;
       top: 0;
       left: 12px;
@@ -102,7 +102,7 @@
   }
 }
 
-.slider-button {
+.q-slider-button {
   position: absolute;
   top: -15px;
   z-index: 2;
@@ -149,11 +149,11 @@
     z-index: 3;
     outline: none;
 
-    .slider-button__target {
+    .q-slider-button__target {
       background-color: var(--color-primary);
     }
 
-    .slider-button__tooltip {
+    .q-slider-button__tooltip {
       z-index: 3;
       visibility: visible;
       opacity: 1;
@@ -161,7 +161,7 @@
   }
 }
 
-.slider-bar {
+.q-slider-bar {
   position: absolute;
   z-index: 1;
   height: 8px;
@@ -169,7 +169,7 @@
   border-radius: 3px;
 }
 
-.slider-steps {
+.q-slider-steps {
   position: relative;
   width: 100%;
   height: 100%;
@@ -192,7 +192,7 @@
   }
 }
 
-.slider-captions {
+.q-slider-captions {
   position: relative;
   width: 100%;
   height: 20px;

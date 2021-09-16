@@ -9,23 +9,23 @@
       class="q-slider__path"
       @click="handlePathClick"
     >
-      <slider-button
+      <q-slider-button
         ref="startBtn"
         v-model="startValue"
       />
 
-      <slider-bar />
+      <q-slider-bar />
 
-      <slider-button
+      <q-slider-button
         v-if="range"
         ref="endBtn"
         v-model="endValue"
       />
 
-      <slider-steps v-if="showSteps" />
+      <q-slider-steps v-if="showSteps" />
     </div>
 
-    <slider-captions
+    <q-slider-captions
       v-if="captions"
       @change="handleCaptionChange"
     />
@@ -33,19 +33,19 @@
 </template>
 
 <script>
-import SliderBar from './components/SliderBar';
-import SliderButton from './components/SliderButton';
-import SliderSteps from './components/SliderSteps';
-import SliderCaptions from './components/SliderCaptions';
+import QSliderBar from './components/QSliderBar';
+import QSliderButton from './components/QSliderButton';
+import QSliderSteps from './components/QSliderSteps';
+import QSliderCaptions from './components/QSliderCaptions';
 
 export default {
   name: 'QSlider',
 
   components: {
-    SliderBar,
-    SliderButton,
-    SliderSteps,
-    SliderCaptions
+    QSliderBar,
+    QSliderButton,
+    QSliderSteps,
+    QSliderCaptions
   },
 
   inject: {
