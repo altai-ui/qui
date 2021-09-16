@@ -314,15 +314,11 @@ export default {
     },
 
     getNearestButton(value) {
-      let result;
-
       if (Math.abs(this.minValue - value) < Math.abs(this.maxValue - value)) {
-        result = this.startValue < this.endValue ? 'startBtn' : 'endBtn';
-      } else {
-        result = this.startValue > this.endValue ? 'startBtn' : 'endBtn';
+        return this.startValue < this.endValue ? 'startBtn' : 'endBtn';
       }
 
-      return result;
+      return this.startValue > this.endValue ? 'startBtn' : 'endBtn';
     },
 
     setPosition(percent) {
