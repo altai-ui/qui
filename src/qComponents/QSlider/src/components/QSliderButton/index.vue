@@ -71,7 +71,7 @@ export default {
       const { min, max, step } = this.$parent;
 
       const precisionsList = [min, max, step].map(value => {
-        const decimal = `${value}`.split('.')[1];
+        const decimal = String(value).split('.')[1];
         return decimal ? decimal.length : 0;
       });
 
