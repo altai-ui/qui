@@ -12,7 +12,7 @@
   >
     <div class="q-slider-button__target" />
     <div
-      v-if="$parent.showTooltip"
+      v-if="showTooltip"
       class="q-slider-button__tooltip"
     >
       {{ formattedValue }}
@@ -28,6 +28,41 @@ export default {
     tabIndex: {
       type: Number,
       default: 0
+    },
+
+    showTooltip: {
+      type: Boolean,
+      default: true
+    },
+
+    min: {
+      type: Number,
+      default: 0
+    },
+
+    max: {
+      type: Number,
+      default: 100
+    },
+
+    step: {
+      type: Number,
+      default: 1
+    },
+
+    formatTooltip: {
+      type: Function,
+      default: null
+    },
+
+    vertical: {
+      type: Boolean,
+      default: false
+    },
+
+    disabled: {
+      type: Boolean,
+      default: false
     },
 
     value: {
@@ -52,25 +87,23 @@ export default {
 
   computed: {
     currentPosition() {
-      const { min, max } = this.$parent;
-      return `${((this.value - min) / (max - min)) * 100}%`;
+      return `${((this.value - this.min) / (this.max - this.min)) * 100}%`;
     },
 
     formattedValue() {
-      const { formatTooltip } = this.$parent;
-      return (formatTooltip && formatTooltip(this.value)) || this.value;
+      return (
+        (this.formatTooltip && this.formatTooltip(this.value)) || this.value
+      );
     },
 
     wrapperStyle() {
-      return this.$parent.vertical
+      return this.vertical
         ? { bottom: this.currentPosition }
         : { left: this.currentPosition };
     },
 
     precision() {
-      const { min, max, step } = this.$parent;
-
-      const precisionsList = [min, max, step].map(value => {
+      const precisionsList = [this.min, this.max, this.step].map(value => {
         const decimal = String(value).split('.')[1];
         return decimal ? decimal.length : 0;
       });
@@ -80,8 +113,8 @@ export default {
   },
 
   watch: {
-    isDragging(val) {
-      this.$parent.isDragging = val;
+    isDragging(value) {
+      this.$emit('dragging', value);
     }
   },
 
@@ -96,12 +129,11 @@ export default {
         newPosition = 100;
       }
 
-      const { min, max, step } = this.$parent;
-
-      const lengthPerStep = 100 / ((max - min) / step);
+      const lengthPerStep = 100 / ((this.max - this.min) / this.step);
       const steps = Math.round(newPosition / lengthPerStep);
 
-      let result = steps * lengthPerStep * (max - min) * 0.01 + min;
+      let result =
+        steps * lengthPerStep * (this.max - this.min) * 0.01 + this.min;
       result = parseFloat(result.toFixed(this.precision));
       this.$emit('input', result);
 
@@ -111,7 +143,7 @@ export default {
     },
 
     handleButtonDown(event) {
-      if (this.$parent.isDisabled) return;
+      if (this.disabled) return;
 
       event.preventDefault();
 
@@ -127,11 +159,10 @@ export default {
 
       this.isClick = false;
 
-      const { getPathSize, vertical } = this.$parent;
-      const { width, height } = getPathSize();
+      const { width, height } = this.$parent.getPathSize();
 
       let diff = 0;
-      if (vertical) {
+      if (this.vertical) {
         this.currentY = event.clientY;
         diff = ((this.clientY - this.currentY) / height) * 100;
       } else {
@@ -144,27 +175,27 @@ export default {
     },
 
     handleKeyDown({ key }) {
-      if (this.$parent.isDisabled) return;
-
-      const { min, max, step } = this.$parent;
+      if (this.disabled) return;
 
       if (key === 'ArrowLeft' || key === 'ArrowDown') {
         this.newPosition =
-          parseFloat(this.currentPosition) - (step / (max - min)) * 100;
+          parseFloat(this.currentPosition) -
+          (this.step / (this.max - this.min)) * 100;
       } else {
         this.newPosition =
-          parseFloat(this.currentPosition) + (step / (max - min)) * 100;
+          parseFloat(this.currentPosition) +
+          (this.step / (this.max - this.min)) * 100;
       }
 
       this.setPosition(this.newPosition);
-      this.$parent.emitChange();
+      this.$emit('change');
     },
 
     handleDragStart(event) {
       this.isDragging = true;
       this.isClick = true;
 
-      if (this.$parent.vertical) {
+      if (this.vertical) {
         this.clientY = event.clientY;
       } else {
         this.clientX = event.clientX;
@@ -182,7 +213,7 @@ export default {
 
         if (!this.isClick) {
           this.setPosition(this.newPosition);
-          this.$parent.emitChange();
+          this.$emit('change');
         }
       });
 

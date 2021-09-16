@@ -12,6 +12,15 @@
       <q-slider-button
         ref="startBtn"
         v-model="startValue"
+        :show-tooltip="showTooltip"
+        :min="min"
+        :max="max"
+        :step="step"
+        :format-tooltip="formatTooltip"
+        :vertical="vertical"
+        :disabled="isDisabled"
+        @dragging="handleButtonDragging"
+        @change="emitChange"
       />
 
       <q-slider-bar />
@@ -20,6 +29,15 @@
         v-if="range"
         ref="endBtn"
         v-model="endValue"
+        :show-tooltip="showTooltip"
+        :min="min"
+        :max="max"
+        :step="step"
+        :format-tooltip="formatTooltip"
+        :vertical="vertical"
+        :disabled="isDisabled"
+        @dragging="handleButtonDragging"
+        @change="emitChange"
       />
 
       <q-slider-steps v-if="showSteps" />
@@ -370,6 +388,10 @@ export default {
       } else {
         this.endValue = value;
       }
+    },
+
+    handleButtonDragging(value) {
+      this.isDragging = value;
     }
   }
 };
