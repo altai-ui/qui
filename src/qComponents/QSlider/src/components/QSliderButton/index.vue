@@ -3,6 +3,7 @@
     type="button"
     :tabindex="tabIndex"
     class="q-slider-button"
+    :class="btnClasses"
     :style="wrapperStyle"
     @keydown.left.prevent="handleKeyDown"
     @keydown.right.prevent="handleKeyDown"
@@ -86,6 +87,12 @@ export default {
   },
 
   computed: {
+    btnClasses() {
+      return {
+        'q-slider-button_show-tooltip': this.isDragging
+      };
+    },
+
     currentPosition() {
       return `${((this.value - this.min) / (this.max - this.min)) * 100}%`;
     },

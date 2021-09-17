@@ -1,6 +1,6 @@
 .q-slider-button {
   position: absolute;
-  top: -15px;
+  top: 50%;
   z-index: 2;
   display: flex;
   justify-content: center;
@@ -12,7 +12,7 @@
   text-align: center;
   background-color: transparent;
   border: none;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   user-select: none;
 
   &__target {
@@ -29,6 +29,7 @@
     bottom: 100%;
     min-width: 24px;
     padding: 5px 4px;
+    font-weight: var(--font-weight-base);
     text-align: center;
     color: var(--color-primary-black);
     white-space: nowrap;
@@ -41,12 +42,14 @@
   }
 
   &:hover,
-  &:focus {
+  &:focus,
+  &_show-tooltip {
     z-index: 3;
     outline: none;
 
     .q-slider-button__target {
       background-color: var(--color-primary);
+      box-shadow: none;
     }
 
     .q-slider-button__tooltip {
