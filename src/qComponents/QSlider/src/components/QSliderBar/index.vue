@@ -9,21 +9,58 @@
 export default {
   name: 'QSliderBar',
 
+  props: {
+    range: {
+      type: Boolean,
+      default: false
+    },
+
+    vertical: {
+      type: Boolean,
+      default: false
+    },
+
+    min: {
+      type: Number,
+      default: 0
+    },
+
+    max: {
+      type: Number,
+      default: 100
+    },
+
+    minValue: {
+      type: Number,
+      default: null
+    },
+
+    maxValue: {
+      type: Number,
+      default: null
+    },
+
+    startValue: {
+      type: Number,
+      default: null
+    }
+  },
+
   computed: {
     barSize() {
-      const { range, maxValue, minValue, max, min, startValue } = this.$parent;
-      return range
-        ? `${(100 * (maxValue - minValue)) / (max - min)}%`
-        : `${(100 * (startValue - min)) / (max - min)}%`;
+      return this.range
+        ? `${(100 * (this.maxValue - this.minValue)) / (this.max - this.min)}%`
+        : `${(100 * (this.startValue - this.min)) / (this.max - this.min)}%`;
     },
 
     barStart() {
-      const { range, minValue, max, min } = this.$parent;
-      return range ? `${(100 * (minValue - min)) / (max - min)}%` : '0%';
+      return this.range
+        ? `${(100 * (this.minValue - this.min)) / (this.max - this.min)}%`
+        : '0%';
     },
 
     barStyle() {
-      if (this.$parent.vertical) {
+      if (this.vertical) {
         return {
           height: this.barSize,
           bottom: this.barStart

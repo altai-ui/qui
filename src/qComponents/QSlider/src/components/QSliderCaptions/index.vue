@@ -18,34 +18,62 @@
 export default {
   name: 'QSliderCaptions',
 
+  props: {
+    vertical: {
+      type: Boolean,
+      default: false
+    },
+
+    captions: {
+      type: Object,
+      default: null
+    },
+
+    min: {
+      type: Number,
+      default: 0
+    },
+
+    max: {
+      type: Number,
+      default: 100
+    },
+
+    startValue: {
+      type: Number,
+      default: null
+    },
+
+    endValue: {
+      type: Number,
+      default: null
+    }
+  },
+
   computed: {
     captionsList() {
-      const { captions, min, max } = this.$parent;
+      if (!this.captions) return [];
 
-      if (!captions) return [];
-
-      return Object.keys(captions)
+      return Object.keys(this.captions)
         .map(parseFloat)
-        .filter(value => value <= max && value >= min)
+        .filter(value => value <= this.max && value >= this.min)
         .map(value => ({
           value,
-          position: ((value - min) * 100) / (max - min),
-          label: captions[value]
+          position: ((value - this.min) * 100) / (this.max - this.min),
+          label: this.captions[value]
         }));
     }
   },
 
   methods: {
     getBtnStyles(position) {
-      return this.$parent.vertical
+      return this.vertical
         ? { bottom: `${position}%` }
         : { left: `${position}%` };
     },
 
     getBtnClasses(value) {
-      const { startValue, endValue } = this.$parent;
-
-      return value === startValue || value === endValue
+      return value === this.startValue || value === this.endValue
         ? 'q-slider-captions__btn_selected'
         : null;
     },

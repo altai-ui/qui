@@ -13,17 +13,39 @@
 export default {
   name: 'QSliderSteps',
 
+  props: {
+    vertical: {
+      type: Boolean,
+      default: false
+    },
+
+    min: {
+      type: Number,
+      default: 0
+    },
+
+    max: {
+      type: Number,
+      default: 100
+    },
+
+    step: {
+      type: Number,
+      default: 1
+    }
+  },
+
   computed: {
     stepsCount() {
-      return (this.$parent.max - this.$parent.min) / this.$parent.step;
+      return (this.max - this.min) / this.step;
     },
 
     stepsWidth() {
-      return (100 * this.$parent.step) / (this.$parent.max - this.$parent.min);
+      return (100 * this.step) / (this.max - this.min);
     },
 
     stepsList() {
-      if (this.$parent.min > this.$parent.max) return [];
+      if (this.min > this.max) return [];
 
       return Array.from(
         { length: this.stepsCount + 1 },
@@ -34,7 +56,7 @@ export default {
 
   methods: {
     getStopStyle(position) {
-      return this.$parent.vertical
+      return this.vertical
         ? { bottom: `${position}%` }
         : { left: `${position}%` };
     }

@@ -23,7 +23,15 @@
         @change="emitChange"
       />
 
-      <q-slider-bar />
+      <q-slider-bar
+        :range="range"
+        :vertical="vertical"
+        :min="min"
+        :max="max"
+        :min-value="minValue"
+        :max-value="maxValue"
+        :start-value="startValue"
+      />
 
       <q-slider-button
         v-if="range"
@@ -40,11 +48,23 @@
         @change="emitChange"
       />
 
-      <q-slider-steps v-if="showSteps" />
+      <q-slider-steps
+        v-if="showSteps"
+        :vertical="vertical"
+        :min="min"
+        :max="max"
+        :step="step"
+      />
     </div>
 
     <q-slider-captions
       v-if="captions"
+      :vertical="vertical"
+      :captions="captions"
+      :min="min"
+      :max="max"
+      :start-value="startValue"
+      :end-value="endValue"
       @change="handleCaptionChange"
     />
   </div>
