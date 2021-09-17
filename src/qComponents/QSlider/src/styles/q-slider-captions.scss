@@ -1,0 +1,24 @@
+.q-slider-captions {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  margin-top: 8px;
+
+  &__btn {
+    position: absolute;
+    top: 0;
+    font-weight: var(--font-weight-base);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: rgba(var(--color-rgb-gray), 0.32);
+    background-color: transparent;
+    border: none;
+    transform: translateX(-50%);
+
+    &:hover,
+    &:focus,
+    &_selected {
+      color: var(--color-primary-black);
+    }
+  }
+}
