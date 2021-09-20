@@ -1,4 +1,4 @@
-export default (_, { argTypes }) => ({
+const DisabledStory = (_, { argTypes }) => ({
   props: Object.keys(argTypes).filter(val => val !== 'value'),
 
   data() {
@@ -11,7 +11,12 @@ export default (_, { argTypes }) => ({
     <q-slider 
       v-bind="$props" 
       v-model="value"
-      disabled
     />
   `
 });
+
+DisabledStory.args = {
+  disabled: true
+};
+
+export default DisabledStory;

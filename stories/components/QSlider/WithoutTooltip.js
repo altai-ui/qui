@@ -1,15 +1,22 @@
-export default (_, { argTypes }) => ({
+const WithoutTooltipStory = (_, { argTypes }) => ({
   props: Object.keys(argTypes).filter(val => val !== 'value'),
+
   data() {
     return {
       value: null
     };
   },
+
   template: `
     <q-slider 
       v-bind="$props" 
       v-model="value"
-      :show-tooltip="false"
     />
   `
 });
+
+WithoutTooltipStory.args = {
+  showTooltip: false
+};
+
+export default WithoutTooltipStory;

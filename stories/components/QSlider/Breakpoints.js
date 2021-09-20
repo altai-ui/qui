@@ -1,4 +1,4 @@
-export const BreakpointsStory = (_, { argTypes }) => ({
+const BreakpointsStory = (_, { argTypes }) => ({
   props: Object.keys(argTypes).filter(val => val !== 'value'),
 
   data() {
