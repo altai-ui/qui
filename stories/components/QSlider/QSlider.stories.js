@@ -11,30 +11,11 @@ import Vertical from './Vertical';
 export default {
   title: 'Components/QSlider',
   component: QSlider,
-
   decorators: [
-    () => ({ template: '<div style="width: 80vw;"><story /></div>' })
-  ],
-
-  argTypes: {
-    min: {
-      control: {
-        type: 'number'
-      }
-    },
-
-    max: {
-      control: {
-        type: 'number'
-      }
-    },
-
-    step: {
-      control: {
-        type: 'number'
-      }
-    }
-  }
+    () => ({
+      template: '<div style="width: 80vw;"><story /></div>'
+    })
+  ]
 };
 
 export {
