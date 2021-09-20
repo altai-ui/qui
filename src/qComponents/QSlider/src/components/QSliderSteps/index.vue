@@ -1,10 +1,10 @@
 <template>
   <div class="q-slider-steps">
     <div
-      v-for="(item, key) in stepsList"
+      v-for="(stepItem, key) in stepsList"
       :key="key"
-      class="q-slider-steps__item"
-      :style="getStopStyle(item)"
+      class="q-slider-steps__step"
+      :style="getStopStyle(stepItem)"
     />
   </div>
 </template>

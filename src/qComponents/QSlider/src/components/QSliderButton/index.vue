@@ -125,6 +125,12 @@ export default {
     }
   },
 
+  beforeDestroy() {
+    document.removeEventListener('mousemove', this.handleDragging);
+    document.removeEventListener('mouseup', this.handleDragEnd);
+    document.removeEventListener('contextmenu', this.handleDragEnd);
+  },
+
   methods: {
     setPosition(value) {
       if (value === null || Number.isNaN(value)) return;
@@ -156,12 +162,12 @@ export default {
 
       this.handleDragStart(event);
 
-      window.addEventListener('mousemove', this.handleDragging);
-      window.addEventListener('mouseup', this.handleDragEnd);
-      window.addEventListener('contextmenu', this.handleDragEnd);
+      document.addEventListener('mousemove', this.handleDragging);
+      document.addEventListener('mouseup', this.handleDragEnd);
+      document.addEventListener('contextmenu', this.handleDragEnd);
     },
 
-    handleDragging(event) {
+    handleDragging({ clientX, clientY }) {
       if (!this.isDragging) return;
 
       this.isClick = false;
@@ -170,10 +176,10 @@ export default {
 
       let diff = 0;
       if (this.vertical) {
-        this.currentY = event.clientY;
+        this.currentY = clientY;
         diff = ((this.clientY - this.currentY) / height) * 100;
       } else {
-        this.currentX = event.clientX;
+        this.currentX = clientX;
         diff = ((this.currentX - this.clientX) / width) * 100;
       }
 
@@ -198,14 +204,14 @@ export default {
       this.$emit('change');
     },
 
-    handleDragStart(event) {
+    handleDragStart({ clientX, clientY }) {
       this.isDragging = true;
       this.isClick = true;
 
       if (this.vertical) {
-        this.clientY = event.clientY;
+        this.clientY = clientY;
       } else {
-        this.clientX = event.clientX;
+        this.clientX = clientX;
       }
 
       this.startPosition = parseFloat(this.currentPosition);
@@ -224,9 +230,9 @@ export default {
         }
       });
 
-      window.removeEventListener('mousemove', this.handleDragging);
-      window.removeEventListener('mouseup', this.handleDragEnd);
-      window.removeEventListener('contextmenu', this.handleDragEnd);
+      document.removeEventListener('mousemove', this.handleDragging);
+      document.removeEventListener('mouseup', this.handleDragEnd);
+      document.removeEventListener('contextmenu', this.handleDragEnd);
     }
   }
 };
