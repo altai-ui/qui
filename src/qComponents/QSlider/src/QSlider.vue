@@ -252,23 +252,18 @@ export default {
     },
 
     isDragging(val) {
-      if (!val) {
-        this.setValues();
-      }
+      if (val) return;
+      this.setValues();
     },
 
     startValue(val) {
-      if (this.range) {
-        this.$emit('input', [this.minValue, this.maxValue]);
-      } else {
-        this.$emit('input', val);
-      }
+      const values = this.range ? [this.minValue, this.maxValue] : val;
+      this.$emit('input', values);
     },
 
     endValue() {
-      if (this.range) {
-        this.$emit('input', [this.minValue, this.maxValue]);
-      }
+      if (!this.range) return;
+      this.$emit('input', [this.minValue, this.maxValue]);
     },
 
     min() {
@@ -310,15 +305,17 @@ export default {
     setValues() {
       if (this.min > this.max) return;
 
+      let emitValue;
+
       if (this.range && Array.isArray(this.value)) {
         if (this.value[1] < this.min) {
-          this.$emit('input', [this.min, this.min]);
+          emitValue = [this.min, this.min];
         } else if (this.value[0] > this.max) {
-          this.$emit('input', [this.max, this.max]);
+          emitValue = [this.max, this.max];
         } else if (this.value[0] < this.min) {
-          this.$emit('input', [this.min, this.value[1]]);
+          emitValue = [this.min, this.value[1]];
         } else if (this.value[1] > this.max) {
-          this.$emit('input', [this.value[0], this.max]);
+          emitValue = [this.value[0], this.max];
         } else {
           this.startValue = this.value[0];
           this.endValue = this.value[1];
@@ -333,9 +330,9 @@ export default {
         }
       } else if (typeof this.value === 'number' && !Number.isNaN(this.value)) {
         if (this.value < this.min) {
-          this.$emit('input', this.min);
+          emitValue = this.min;
         } else if (this.value > this.max) {
-          this.$emit('input', this.max);
+          emitValue = this.max;
         } else {
           this.startValue = this.value;
 
@@ -345,6 +342,8 @@ export default {
           }
         }
       }
+
+      this.$emit('input', emitValue);
     },
 
     getPathSize() {

@@ -1,16 +1,23 @@
-export default (_, { argTypes }) => ({
+export const BreakpointsStory = (_, { argTypes }) => ({
   props: Object.keys(argTypes).filter(val => val !== 'value'),
+
   data() {
     return {
       value: null
     };
   },
+
   template: `
     <q-slider 
       v-bind="$props" 
       v-model="value"
-      :step="10"
-      show-steps
     />
   `
 });
+
+BreakpointsStory.args = {
+  showSteps: true,
+  step: 10
+};
+
+export default BreakpointsStory;
