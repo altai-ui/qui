@@ -266,6 +266,11 @@ export default {
       this.$emit('input', [this.minValue, this.maxValue]);
     },
 
+    range(value) {
+      if (!value) return;
+      this.endValue = this.max;
+    },
+
     min() {
       this.setValues();
     },
