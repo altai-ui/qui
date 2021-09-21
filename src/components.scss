@@ -6,7 +6,8 @@
 @import '../qComponents/QCol/src/q-col.scss';
 @import '../qComponents/QCollapseItem/src/q-collapse-item.scss';
 @import '../qComponents/QColorPicker/src/q-color-picker.scss';
-@import '../qComponents/QContextMenu/src/q-context-menu.scss';
+@import '../qComponents/QContextMenu/src/q-context-menu.scss'; //
+@import '../qComponents/QDatePicker/src/q-date-picker.scss';
 @import '../qComponents/QDialog/src/q-dialog.scss';
 @import '../qComponents/QDrawer/src/q-drawer.scss';
 @import '../qComponents/QFormItem/src/q-form-item.scss';
@@ -14,6 +15,7 @@
 @import '../qComponents/QInputNumber/src/q-input-number.scss';
 @import '../qComponents/QMessageBox/src/q-message-box.scss';
 @import '../qComponents/QNotification/src/q-notification.scss';
+@import '../qComponents/QOption/src/q-option.scss';
 @import '../qComponents/QPagination/src/q-pagination.scss';
 @import '../qComponents/QPopover/src/q-popover.scss';
 @import '../qComponents/QRadio/src/q-radio.scss';
@@ -21,12 +23,11 @@
 @import '../qComponents/QRow/src/q-row.scss';
 @import '../qComponents/QScrollbar/src/q-scrollbar.scss';
 @import '../qComponents/QSelect/src/q-select.scss';
-@import '../qComponents/QOption/src/q-option.scss';
-@import '../qComponents/QTabs/src/q-tabs.scss';
+@import '../qComponents/QSlider/src/q-slider.scss';
+@import '../qComponents/QTable/src/q-table.scss';
 @import '../qComponents/QTabPane/src/q-tab-pane.scss';
+@import '../qComponents/QTabs/src/q-tabs.scss';
 @import '../qComponents/QTag/src/q-tag.scss';
 @import '../qComponents/QTextarea/src/q-textarea.scss';
-@import '../qComponents/QUpload/src/q-upload.scss';
-@import '../qComponents/QDatePicker/src/q-date-picker.scss';
 @import '../qComponents/QTimePicker/src/q-time-picker.scss';
-@import '../qComponents/QTable/src/q-table.scss';
+@import '../qComponents/QUpload/src/q-upload.scss';

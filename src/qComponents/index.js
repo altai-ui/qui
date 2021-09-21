@@ -28,6 +28,7 @@ import QPagination from './QPagination';
 import QPopover from './QPopover';
 import QScrollbar from './QScrollbar';
 import QSelect from './QSelect';
+import QSlider from './QSlider';
 import QOption from './QOption';
 import QTextarea from './QTextarea';
 import QTabs from './QTabs';
@@ -69,6 +70,7 @@ const Components = {
   QRow,
   QScrollbar,
   QSelect,
+  QSlider,
   QTabPane,
   QTable,
   QTabs,
@@ -203,6 +205,7 @@ export {
   QRow,
   QScrollbar,
   QSelect,
+  QSlider,
   QTabPane,
   QTable,
   QTabs,
