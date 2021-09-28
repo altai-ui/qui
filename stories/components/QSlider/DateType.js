@@ -33,7 +33,12 @@ DateTypeStory.args = {
   range: true,
   step: 1000 * 60 * 30, // 30 minutes
   showSteps: true,
+  captionStep: 1000 * 60 * 120, // 2 hour
   formatTooltip(value) {
+    if (!value) return null;
+    return format(value, 'dd MMM yyyy HH:mm');
+  },
+  formatCaption(value) {
     if (!value) return null;
     return format(value, 'HH:mm');
   }

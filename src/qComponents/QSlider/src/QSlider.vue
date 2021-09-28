@@ -30,7 +30,7 @@
     </div>
 
     <q-slider-captions
-      v-if="captions"
+      v-if="isCaptionsShown"
       @change="handleCaptionChange"
     />
   </div>
@@ -96,6 +96,14 @@ export default {
     },
 
     /**
+     * caption step size
+     */
+    captionStep: {
+      type: Number,
+      default: 1
+    },
+
+    /**
      * whether to display breakpoints
      */
     showSteps: {
@@ -115,6 +123,14 @@ export default {
      * format to display tooltip value
      */
     formatTooltip: {
+      type: Function,
+      default: null
+    },
+
+    /**
+     * format to display caption value
+     */
+    formatCaption: {
       type: Function,
       default: null
     },
@@ -184,6 +200,10 @@ export default {
   computed: {
     isDisabled() {
       return this.disabled || (this.qForm?.disabled ?? false);
+    },
+
+    isCaptionsShown() {
+      return Boolean(this.captions) || Boolean(this.formatCaption);
     },
 
     minValue() {

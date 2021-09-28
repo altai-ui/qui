@@ -33,6 +33,10 @@ export default {
       return this.slider.maxByType;
     },
 
+    captionStep() {
+      return this.slider.captionStep;
+    },
+
     startValue() {
       return this.slider.startValue;
     },
@@ -41,11 +45,42 @@ export default {
       return this.slider.endValue;
     },
 
+    type() {
+      return this.slider.type;
+    },
+
     captions() {
       return this.slider.captions;
     },
 
+    formatCaption() {
+      return this.slider.formatCaption;
+    },
+
+    stepsCount() {
+      return (this.max - this.min) / this.captionStep;
+    },
+
+    stepsWidth() {
+      return (100 * this.captionStep) / (this.max - this.min);
+    },
+
+    stepSize() {
+      return (this.max - this.min) / this.stepsCount;
+    },
+
     captionsList() {
+      if (this.type === 'date' && this.formatCaption) {
+        return Array.from(
+          { length: this.stepsCount + 1 },
+          (_, item) => this.min + item * this.stepSize
+        ).map((value, index) => ({
+          value,
+          position: index * this.stepsWidth,
+          label: this.formatCaption(value)
+        }));
+      }
+
       if (!this.captions) return [];
 
       return Object.keys(this.captions)
