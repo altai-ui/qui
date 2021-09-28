@@ -18,39 +18,33 @@
 export default {
   name: 'QSliderCaptions',
 
-  props: {
-    vertical: {
-      type: Boolean,
-      default: false
-    },
-
-    captions: {
-      type: Object,
-      default: null
-    },
-
-    min: {
-      type: Number,
-      default: 0
-    },
-
-    max: {
-      type: Number,
-      default: 100
-    },
-
-    startValue: {
-      type: Number,
-      default: null
-    },
-
-    endValue: {
-      type: Number,
-      default: null
-    }
-  },
+  inject: ['slider'],
 
   computed: {
+    vertical() {
+      return this.slider.vertical;
+    },
+
+    min() {
+      return this.slider.minByType;
+    },
+
+    max() {
+      return this.slider.maxByType;
+    },
+
+    startValue() {
+      return this.slider.startValue;
+    },
+
+    endValue() {
+      return this.slider.endValue;
+    },
+
+    captions() {
+      return this.slider.captions;
+    },
+
     captionsList() {
       if (!this.captions) return [];
 
