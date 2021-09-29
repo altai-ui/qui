@@ -31,9 +31,9 @@ DateTypeStory.args = {
   max: endDate,
   type: 'date',
   range: true,
-  step: 1000 * 60 * 30, // 30 minutes
+  step: 1000 * 60 * 30,
   showSteps: true,
-  captionStep: 1000 * 60 * 120, // 2 hour
+  captionStep: 1000 * 60 * 120,
   formatTooltip(value) {
     if (!value) return null;
     return format(value, 'dd MMM yyyy HH:mm');
