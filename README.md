@@ -4,13 +4,13 @@
 
 <p align="center" class="unchanged rich-diff-level-one">
 <!--BADGES-->
-<span class="badge-shields"><a href="https://qvant-lab.github.io/qui" title="storybook"><img src="https://img.shields.io/badge/storybook-yes-green.svg" alt="storybook" /></a></span> <span class="badge-shields"><img src="https://img.shields.io/badge/responsive-yes-green.svg" /></span> <span class="badge-npmversion"><a href="https://npmjs.org/package/@qvant/qui" title="View this project on NPM"><img src="https://img.shields.io/npm/v/@qvant/qui.svg" alt="NPM version" /></a></span> <span class="badge-npmdownloads"><a href="https://npmjs.org/package/@qvant/qui" title="View this project on NPM"><img src="https://img.shields.io/npm/dm/@qvant/qui.svg" alt="NPM downloads" /></a></span></br><span class="badge-daviddm"><a href="https://david-dm.org/Qvant-lab/qui" title="View the status of this project's dependencies on DavidDM"><img src="https://img.shields.io/david/Qvant-lab/qui.svg" alt="Dependency Status" /></a></span> <span class="badge-daviddmdev"><a href="https://david-dm.org/Qvant-lab/qui#info=devDependencies" title="View the status of this project's development dependencies on DavidDM"><img src="https://img.shields.io/david/dev/Qvant-lab/qui.svg" alt="Dev Dependency Status" /></a></span><!--/BADGES--></p>
+<span class="badge-shields"><a href="https://qvant-lab.github.io/qui" title="storybook"><img src="https://img.shields.io/badge/storybook-yes-green.svg" alt="storybook" /></a></span> <span class="badge-shields"><img src="https://img.shields.io/badge/responsive-yes-green.svg" /></span> <span class="badge-npmversion"><a href="https://npmjs.org/package/@qvant/qui" title="View this project on NPM"><img src="https://img.shields.io/npm/v/@qvant/qui.svg" alt="NPM version" /></a></span> <span class="badge-npmdownloads"><a href="https://npmjs.org/package/@qvant/qui" title="View this project on NPM"><img src="https://img.shields.io/npm/dm/@qvant/qui.svg" alt="NPM downloads" /></a></span></span><!--/BADGES--></p>
 
 # A Vue.js Neumorphism Design System for Web
 
 Responsive, user-friendly and lightweight library helping us build great products for our customers. This library for Vue 2.x
 
-Qui for Vue 3.x is [here](https://github.com/Qvant-lab/qui-max)! 🎉 
+‼️ Currently we are working on [Qui Max](https://github.com/Qvant-lab/qui-max) for Vue 3.x, it is more complex and modern version of Qui - we recommend use it instead of this package. Qui remains for Vue 2.x, but we can't claim it will support well.
 
 [Storybook (live demo)](https://qvant-lab.github.io/qui/)
 
