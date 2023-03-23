@@ -424,6 +424,7 @@ export default {
 
   data() {
     return {
+      lolkek: 0,
       timer: 2,
       isLoadingAnimationComplete: true,
       loaderWrapperHeight: 0,
@@ -1099,6 +1100,7 @@ export default {
     changeColumnsOrder({ newPositionIndex, oldPositionIndex }, groupKey) {
       const columns = cloneDeep(this.groupsOfColumns);
       const group = columns.find(({ key }) => key === groupKey);
+
       if (group?.columns) {
         group.columns.splice(
           newPositionIndex,
