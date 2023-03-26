@@ -7,6 +7,7 @@ import Captions from './Captions';
 import Range from './Range';
 import Disabled from './Disabled';
 import Vertical from './Vertical';
+import DateType from './DateType';
 
 export default {
   title: 'Components/QSlider',
@@ -15,7 +16,10 @@ export default {
     () => ({
       template: '<div style="width: 80vw;"><story /></div>'
     })
-  ]
+  ],
+  argTypes: {
+    type: { control: { type: 'none' } }
+  }
 };
 
 export {
@@ -25,5 +29,6 @@ export {
   Captions,
   Range,
   Disabled,
-  Vertical
+  Vertical,
+  DateType
 };

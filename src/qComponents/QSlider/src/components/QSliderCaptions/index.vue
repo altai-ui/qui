@@ -18,40 +18,69 @@
 export default {
   name: 'QSliderCaptions',
 
-  props: {
-    vertical: {
-      type: Boolean,
-      default: false
-    },
-
-    captions: {
-      type: Object,
-      default: null
-    },
-
-    min: {
-      type: Number,
-      default: 0
-    },
-
-    max: {
-      type: Number,
-      default: 100
-    },
-
-    startValue: {
-      type: Number,
-      default: null
-    },
-
-    endValue: {
-      type: Number,
-      default: null
-    }
-  },
+  inject: ['slider'],
 
   computed: {
+    vertical() {
+      return this.slider.vertical;
+    },
+
+    min() {
+      return this.slider.minByType;
+    },
+
+    max() {
+      return this.slider.maxByType;
+    },
+
+    captionStep() {
+      return this.slider.captionStep;
+    },
+
+    startValue() {
+      return this.slider.startValue;
+    },
+
+    endValue() {
+      return this.slider.endValue;
+    },
+
+    type() {
+      return this.slider.type;
+    },
+
+    captions() {
+      return this.slider.captions;
+    },
+
+    formatCaption() {
+      return this.slider.formatCaption;
+    },
+
+    stepsCount() {
+      return (this.max - this.min) / this.captionStep;
+    },
+
+    stepsWidth() {
+      return (100 * this.captionStep) / (this.max - this.min);
+    },
+
+    stepSize() {
+      return (this.max - this.min) / this.stepsCount;
+    },
+
     captionsList() {
+      if (this.type === 'date' && this.formatCaption) {
+        return Array.from(
+          { length: this.stepsCount + 1 },
+          (_, item) => this.min + item * this.stepSize
+        ).map((value, index) => ({
+          value,
+          position: index * this.stepsWidth,
+          label: this.formatCaption(value)
+        }));
+      }
+
       if (!this.captions) return [];
 
       return Object.keys(this.captions)

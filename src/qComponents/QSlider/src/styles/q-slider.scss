@@ -24,27 +24,17 @@
 
     .q-slider-button {
       &__target {
-        background-color: var(--color-tertiary-gray-light);
-
-        &:hover {
-          background-color: var(--color-tertiary-gray-light);
-        }
+        background-color: var(--color-primary);
       }
 
       &:focus {
         .q-slider-button__target {
-          background-color: var(--color-tertiary-gray-light);
           box-shadow: var(--box-shadow-hover);
         }
       }
 
       &:hover {
         cursor: not-allowed;
-
-        .q-slider-button__target {
-          background-color: var(--color-tertiary-gray-light);
-          box-shadow: var(--box-shadow-hover);
-        }
       }
     }
 

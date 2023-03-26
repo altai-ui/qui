@@ -13,29 +13,25 @@
 export default {
   name: 'QSliderSteps',
 
-  props: {
-    vertical: {
-      type: Boolean,
-      default: false
-    },
-
-    min: {
-      type: Number,
-      default: 0
-    },
-
-    max: {
-      type: Number,
-      default: 100
-    },
-
-    step: {
-      type: Number,
-      default: 1
-    }
-  },
+  inject: ['slider'],
 
   computed: {
+    min() {
+      return this.slider.minByType;
+    },
+
+    max() {
+      return this.slider.maxByType;
+    },
+
+    step() {
+      return this.slider.step;
+    },
+
+    vertical() {
+      return this.slider.vertical;
+    },
+
     stepsCount() {
       return (this.max - this.min) / this.step;
     },

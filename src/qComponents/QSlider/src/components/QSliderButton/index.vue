@@ -25,48 +25,15 @@
 export default {
   name: 'QSliderButton',
 
+  inject: ['slider'],
+
   props: {
-    tabIndex: {
-      type: Number,
-      default: 0
-    },
-
-    showTooltip: {
-      type: Boolean,
-      default: true
-    },
-
-    min: {
-      type: Number,
-      default: 0
-    },
-
-    max: {
-      type: Number,
-      default: 100
-    },
-
-    step: {
-      type: Number,
-      default: 1
-    },
-
-    formatTooltip: {
-      type: Function,
-      default: null
-    },
-
-    vertical: {
-      type: Boolean,
-      default: false
-    },
-
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-
     value: {
+      type: Number,
+      default: 0
+    },
+
+    tabIndex: {
       type: Number,
       default: 0
     }
@@ -91,6 +58,38 @@ export default {
       return {
         'q-slider-button_show-tooltip': this.isDragging
       };
+    },
+
+    min() {
+      return this.slider.minByType;
+    },
+
+    max() {
+      return this.slider.maxByType;
+    },
+
+    step() {
+      return this.slider.step;
+    },
+
+    showTooltip() {
+      return this.slider.showTooltip;
+    },
+
+    vertical() {
+      return this.slider.vertical;
+    },
+
+    disabled() {
+      return this.slider.disabled;
+    },
+
+    formatTooltip() {
+      return this.slider.formatTooltip;
+    },
+
+    type() {
+      return this.slider.type;
     },
 
     currentPosition() {
@@ -147,7 +146,10 @@ export default {
 
       let result =
         steps * lengthPerStep * (this.max - this.min) * 0.01 + this.min;
-      result = parseFloat(result.toFixed(this.precision));
+      if (this.type === 'number') {
+        result = parseFloat(result.toFixed(this.precision));
+      }
+
       this.$emit('input', result);
 
       if (!this.isDragging && this.value !== this.oldValue) {

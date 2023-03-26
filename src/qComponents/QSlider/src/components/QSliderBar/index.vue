@@ -9,44 +9,37 @@
 export default {
   name: 'QSliderBar',
 
-  props: {
-    range: {
-      type: Boolean,
-      default: false
-    },
-
-    vertical: {
-      type: Boolean,
-      default: false
-    },
-
-    min: {
-      type: Number,
-      default: 0
-    },
-
-    max: {
-      type: Number,
-      default: 100
-    },
-
-    minValue: {
-      type: Number,
-      default: null
-    },
-
-    maxValue: {
-      type: Number,
-      default: null
-    },
-
-    startValue: {
-      type: Number,
-      default: null
-    }
-  },
+  inject: ['slider'],
 
   computed: {
+    range() {
+      return this.slider.range;
+    },
+
+    vertical() {
+      return this.slider.vertical;
+    },
+
+    min() {
+      return this.slider.minByType;
+    },
+
+    max() {
+      return this.slider.maxByType;
+    },
+
+    minValue() {
+      return this.slider.minValue;
+    },
+
+    maxValue() {
+      return this.slider.maxValue;
+    },
+
+    startValue() {
+      return this.slider.startValue;
+    },
+
     barSize() {
       return this.range
         ? `${(100 * (this.maxValue - this.minValue)) / (this.max - this.min)}%`

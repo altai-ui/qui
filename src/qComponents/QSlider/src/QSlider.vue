@@ -12,59 +12,25 @@
       <q-slider-button
         ref="startBtn"
         v-model="startValue"
-        :show-tooltip="showTooltip"
-        :min="min"
-        :max="max"
-        :step="step"
-        :format-tooltip="formatTooltip"
-        :vertical="vertical"
-        :disabled="isDisabled"
         @dragging="handleButtonDragging"
         @change="emitChange"
       />
 
-      <q-slider-bar
-        :range="range"
-        :vertical="vertical"
-        :min="min"
-        :max="max"
-        :min-value="minValue"
-        :max-value="maxValue"
-        :start-value="startValue"
-      />
+      <q-slider-bar />
 
       <q-slider-button
         v-if="range"
         ref="endBtn"
         v-model="endValue"
-        :show-tooltip="showTooltip"
-        :min="min"
-        :max="max"
-        :step="step"
-        :format-tooltip="formatTooltip"
-        :vertical="vertical"
-        :disabled="isDisabled"
         @dragging="handleButtonDragging"
         @change="emitChange"
       />
 
-      <q-slider-steps
-        v-if="showSteps"
-        :vertical="vertical"
-        :min="min"
-        :max="max"
-        :step="step"
-      />
+      <q-slider-steps v-if="showSteps" />
     </div>
 
     <q-slider-captions
-      v-if="captions"
-      :vertical="vertical"
-      :captions="captions"
-      :min="min"
-      :max="max"
-      :start-value="startValue"
-      :end-value="endValue"
+      v-if="isCaptionsShown"
       @change="handleCaptionChange"
     />
   </div>
@@ -109,7 +75,7 @@ export default {
      * minimum value
      */
     min: {
-      type: Number,
+      type: [Number, Date],
       default: 0
     },
 
@@ -117,7 +83,7 @@ export default {
      * maximum value
      */
     max: {
-      type: Number,
+      type: [Number, Date],
       default: 100
     },
 
@@ -125,6 +91,14 @@ export default {
      * step size
      */
     step: {
+      type: Number,
+      default: 1
+    },
+
+    /**
+     * caption step size
+     */
+    captionStep: {
       type: Number,
       default: 1
     },
@@ -149,6 +123,14 @@ export default {
      * format to display tooltip value
      */
     formatTooltip: {
+      type: Function,
+      default: null
+    },
+
+    /**
+     * format to display caption value
+     */
+    formatCaption: {
       type: Function,
       default: null
     },
@@ -191,7 +173,19 @@ export default {
     height: {
       type: String,
       default: null
+    },
+
+    type: {
+      type: String,
+      default: 'number',
+      validator: value => ['number', 'date'].includes(value)
     }
+  },
+
+  provide() {
+    return {
+      slider: this
+    };
   },
 
   data() {
@@ -208,11 +202,8 @@ export default {
       return this.disabled || (this.qForm?.disabled ?? false);
     },
 
-    wrapperClasses() {
-      return {
-        'q-slider_is-vertical': this.vertical,
-        'q-slider_is-disabled': this.isDisabled
-      };
+    isCaptionsShown() {
+      return Boolean(this.captions) || Boolean(this.formatCaption);
     },
 
     minValue() {
@@ -221,6 +212,25 @@ export default {
 
     maxValue() {
       return Math.max(this.startValue, this.endValue);
+    },
+
+    minByType() {
+      return this.min instanceof Date && this.type === 'date'
+        ? this.min.getTime()
+        : this.min;
+    },
+
+    maxByType() {
+      return this.max instanceof Date && this.type === 'date'
+        ? this.max.getTime()
+        : this.max;
+    },
+
+    wrapperClasses() {
+      return {
+        'q-slider_is-vertical': this.vertical,
+        'q-slider_is-disabled': this.isDisabled
+      };
     },
 
     wrapperStyles() {
@@ -288,19 +298,22 @@ export default {
     setupValues() {
       if (this.range) {
         if (Array.isArray(this.value)) {
-          this.startValue = Math.max(this.min, this.value[0]);
-          this.endValue = Math.min(this.max, this.value[1]);
+          this.startValue = Math.max(this.minByType, this.value[0]);
+          this.endValue = Math.min(this.maxByType, this.value[1]);
         } else {
-          this.startValue = this.min;
-          this.endValue = this.max;
+          this.startValue = this.minByType;
+          this.endValue = this.maxByType;
         }
 
         this.oldValue = [this.startValue, this.endValue];
       } else {
         if (typeof this.value !== 'number' || Number.isNaN(this.value)) {
-          this.startValue = this.min;
+          this.startValue = this.minByType;
         } else {
-          this.startValue = Math.min(this.max, Math.max(this.min, this.value));
+          this.startValue = Math.min(
+            this.maxByType,
+            Math.max(this.minByType, this.value)
+          );
         }
 
         this.oldValue = this.startValue;
@@ -308,38 +321,38 @@ export default {
     },
 
     setValues() {
-      if (this.min > this.max) return;
+      if (this.minByType > this.maxByType) return;
 
       let emitValue;
 
       if (this.range && Array.isArray(this.value)) {
-        if (this.value[1] < this.min) {
-          emitValue = [this.min, this.min];
-        } else if (this.value[0] > this.max) {
-          emitValue = [this.max, this.max];
-        } else if (this.value[0] < this.min) {
-          emitValue = [this.min, this.value[1]];
-        } else if (this.value[1] > this.max) {
-          emitValue = [this.value[0], this.max];
+        if (this.value[1] < this.minByType) {
+          emitValue = [this.minByType, this.minByType];
+        } else if (this.value[0] > this.maxByType) {
+          emitValue = [this.maxByType, this.maxByType];
+        } else if (this.value[0] < this.minByType) {
+          emitValue = [this.minByType, this.value[1]];
+        } else if (this.value[1] > this.maxByType) {
+          emitValue = [this.value[0], this.maxByType];
         } else {
-          this.startValue = this.value[0];
-          this.endValue = this.value[1];
+          emitValue = this.value;
 
           if (this.isValueChanged) {
             this.qFormItem?.validateField('change', [
               this.minValue,
               this.maxValue
             ]);
+
             this.oldValue = this.value.slice();
           }
         }
       } else if (typeof this.value === 'number' && !Number.isNaN(this.value)) {
-        if (this.value < this.min) {
-          emitValue = this.min;
-        } else if (this.value > this.max) {
-          emitValue = this.max;
+        if (this.value < this.minByType) {
+          emitValue = this.minByType;
+        } else if (this.value > this.maxByType) {
+          emitValue = this.maxByType;
         } else {
-          this.startValue = this.value;
+          emitValue = this.value;
 
           if (this.isValueChanged) {
             this.qFormItem?.validateField('change', this.value);
@@ -351,10 +364,6 @@ export default {
       this.$emit('input', emitValue);
     },
 
-    getPathSize() {
-      return this.$refs.path.getBoundingClientRect();
-    },
-
     getNearestButton(value) {
       if (Math.abs(this.minValue - value) < Math.abs(this.maxValue - value)) {
         return this.startValue < this.endValue ? 'startBtn' : 'endBtn';
@@ -364,7 +373,8 @@ export default {
     },
 
     setPosition(percent) {
-      const targetValue = this.min + (percent * (this.max - this.min)) / 100;
+      const targetValue =
+        this.minByType + (percent * (this.maxByType - this.minByType)) / 100;
 
       if (!this.range) {
         this.$refs.startBtn.setPosition(percent);
@@ -383,6 +393,10 @@ export default {
         );
         this.qFormItem?.validateField('change');
       });
+    },
+
+    getPathSize() {
+      return this.$refs.path.getBoundingClientRect();
     },
 
     handlePathClick({ clientX, clientY }) {
